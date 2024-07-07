@@ -20,7 +20,7 @@ const limiterMax = process.env.RATE_LIMITER_MAX || 50;
 const limiterWindow = process.env.RATE_LIMITER_WINDOW_MS || 60000;
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: [`${process.env.FRONTEND_URL}`, `${process.env.DEV_FRONTEND_URL}`],
   optionsSuccessStatus: 200,
 };
 
