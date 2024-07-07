@@ -1,14 +1,15 @@
+import "dotenv/config";
 import express from "express";
+import { rateLimiter } from "./middlewares/rateLimiter.middleware.mjs";
+import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
-import "dotenv/config";
-import { rateLimiter } from "./middlewares/rateLimiter.middleware.mjs";
 import logger from "./utils/logger.mjs";
 import morgan from "morgan";
 import errorHandler from "./middlewares/errorHandler.middleware.mjs";
 import apiV1Routes from "./routes/api/v1/index.mjs";
-import swaggerUi from "swagger-ui-express";
 import { loadSwaggerDocument } from "./utils/swagger.mjs";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 
@@ -24,6 +25,8 @@ const corsOptions = {
 };
 
 app.use(rateLimiter(limiterMax, limiterWindow));
+
+app.use(compression());
 
 app.use(helmet());
 
