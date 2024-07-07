@@ -2,7 +2,7 @@ import express from "express";
 
 import authRoutes from "./auth.route.mjs";
 // import userRoutes from "./user.route.mjs";
-// import profilesRoutes from "./profiles.route.mjs";
+import profilesRoutes from "./profiles.route.mjs";
 // import messagesRoutes from "./messages.route.mjs";
 // import packageRoutes from "./package.route.mjs";
 // import paymentRoutes from "./payment.route.mjs";
@@ -18,7 +18,7 @@ const router = express.Router();
 
 router.use("/auth", authRoutes);
 // router.use("/users", userRoutes);
-// router.use("/profiles", profilesRoutes);
+router.use("/profiles", profilesRoutes);
 // router.use("/messages", messagesRoutes);
 // router.use("/packages", packageRoutes);
 // router.use("/payment", paymentRoutes);

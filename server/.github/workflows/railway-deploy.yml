@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: development
 
     steps:
       - name: Checkout Repository
@@ -17,7 +18,7 @@ jobs:
         run: npm install -g railway
 
       - name: Log in to Railway
-        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
+        run: railway login --token ${{ secrets.RAILWAY_TOKEN_MERRY_MATCH }}
 
       - name: Deploy to Railway
         run: railway up

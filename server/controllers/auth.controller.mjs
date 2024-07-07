@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { createUser, findUserByUsername } from "../models/user.model.mjs";
 
+// POST
 export const registerUser = async (req, res) => {
   const { username, password, email } = req.body;
   try {
