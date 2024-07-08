@@ -33,8 +33,8 @@ export const updateAvatar = async (userId, files) => {
 
       const result = await connectionPool.query(
         `
-        INSERT INTO profile_pictures (profile_id, cloudinary_id, url, updated_at)
-        VALUES ($1, $2, $3, NOW())
+        INSERT INTO profile_pictures (profile_id, cloudinary_id, url)
+        VALUES ($1, $2, $3)
         RETURNING *
         `,
         [userId, pictureURIs.publicId, pictureURIs.url]
