@@ -13,6 +13,7 @@ import profilesRoutes from "./profiles.route.mjs";
 // import blockRoutes from "./blockUser.route.mjs";
 // import searchRoutes from "./search.route.mjs";
 // import hobbiesRoutes from "./hobbies.route.mjs";
+import supabaseAuthIsAdminMiddleware from "../../../middlewares/supabaseAuthIsAdminMiddleware.mjs";
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.use("/profiles", profilesRoutes);
 // router.use("/transactionRoutes", transactionRoutes);
 // router.use("/matchingRoutes", matchingRoutes);
 // router.use("/complaintRoutes", complaintsRoutes);
-// router.use("/adminRoutes", adminRoutes);
+// router.use("/admin",[supabaseAuthIsAdminMiddleware], adminRoutes);
 // router.use("/blockRoutes", blockRoutes);
 // router.use("/searchRoutes", searchRoutes);
 // router.use("/hobbiesRoutes", hobbiesRoutes);

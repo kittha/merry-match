@@ -22,7 +22,7 @@ export const createrUser = async (reqBody) => {
       );
     }
 
-    await client.query("BEGIN");
+    await connectionPool.query("BEGIN");
 
     const userIdResult = await connectionPool.query(
       `

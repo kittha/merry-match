@@ -6,6 +6,7 @@
 //   updatePackageById,
 //   deletePackageById,
 // } from "../../../controllers/package.controller.mjs";
+import supabaseAuthIsAdminMiddleware from "../../../middlewares/supabaseAuthIsAdminMiddleware.mjs";
 
 // const router = express.Router();
 
@@ -13,10 +14,10 @@
 
 // router.get("/:packageId", getPackageById);
 
-// router.post("/", createPackage);
+// router.post("/",[supabaseAuthIsAdminMiddleware], createPackage);
 
-// router.put("/:packageId", updatePackageById);
+// router.put("/:packageId",[supabaseAuthIsAdminMiddleware], updatePackageById);
 
-// router.delete("/:packageId", deletePackageById);
+// router.delete("/:packageId",[supabaseAuthIsAdminMiddleware], deletePackageById);
 
 // export default router;
