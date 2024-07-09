@@ -5,16 +5,26 @@ import { signUp, signIn, getUser } from "../services/supabaseAuth.service.mjs";
 // POST
 export const registerUser = async (req, res) => {
   try {
-    const { formData } = req.body;
+    const { email, username, password } = req.body;
+    if (!email || !username || !password) {
+      console.error(
+        "Both username, email, password must be provided for sign-in."
+      );
+      return res
+        .status(401)
+        .json({ message: "Invalid username, email, or password" });
+    }
 
     // `task:auth` signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
-    const { data } = await signUp(formData);
+    const { data } = await signUp(req.body);
 
     // `task:infoDB` register user information into our own database @/models/user.model.mjs
-    const result = await createrUser(formData);
+    const result = await createrUser(req.body);
+
+    console.log("Created user_id:", result);
 
     return res.status(200).json({
-      message: `User ${data.user.email} has been created successfully`,
+      message: `User ${result} has been created successfully`,
       data: data,
     });
   } catch (error) {
@@ -25,9 +35,8 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-  const { email, password } = req.body;
   try {
-    const data = await signIn(email, password);
+    const data = await signIn(req.body);
 
     return res.status(200).json({
       message: "User signed in successfully.",

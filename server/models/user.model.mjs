@@ -1,10 +1,10 @@
 import connectionPool from "../configs/db.mjs";
 
-export const createrUser = async (formData) => {
+export const createrUser = async (reqBody) => {
   try {
     const {
+      username,
       email,
-      password,
       name,
       date_of_birth,
       location,
@@ -14,7 +14,13 @@ export const createrUser = async (formData) => {
       racial_preferences,
       meeting_interests,
       bio,
-    } = formData;
+    } = reqBody;
+
+    if (!email || !username) {
+      throw new Error(
+        "Both username, email, password must be provided for sign-up."
+      );
+    }
 
     await client.query("BEGIN");
 

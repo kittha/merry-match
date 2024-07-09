@@ -1,21 +1,16 @@
 import { supabase } from "../utils/supabaseClient.mjs";
 import connectionPool from "../configs/db.mjs";
 
-export const signUp = async (formData) => {
+export const signUp = async (reqBody) => {
   try {
-    const {
-      email,
-      password,
-      name,
-      date_of_birth,
-      location,
-      city,
-      sexual_identities,
-      sexual_preferences,
-      racial_preferences,
-      meeting_interests,
-      bio,
-    } = formData;
+    const { email, password } = reqBody;
+
+    if (!email || !password) {
+      throw new Error(
+        "Both username, email, password must be provided for sign-up."
+      );
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -26,7 +21,7 @@ export const signUp = async (formData) => {
       throw error;
     }
 
-    console.log("User signed up successfully:", data.user.email);
+    console.log("User signed up successfully:");
     return data;
   } catch (error) {
     console.error("Error occurred during signIn:", error);
@@ -34,8 +29,10 @@ export const signUp = async (formData) => {
   }
 };
 
-export const signIn = async (email, password) => {
+export const signIn = async (reqBody) => {
   try {
+    const { email, password } = reqBody;
+
     if (!email || !password) {
       throw new Error("Both email and password must be provided for sign-in.");
     }
