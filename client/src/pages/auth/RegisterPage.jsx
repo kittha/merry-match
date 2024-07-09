@@ -25,20 +25,22 @@ const RegisterPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="font-Nunito bg-[url('/src/assets/register/register-section-bg.svg')]  flex flex-col items-center justify-center w-screen h-screen bg-cover">
-        <div className="flex justify-center items-center flex-col w-4/5 h-[950px]">
-          <header className="flex flex-row items-center justify-evenly w-[90vw] h-[20%] mt-[150px] mb-[2%]">
-            <div className="flex flex-col items-start justify-center">
-              <p className="text-sm text-[#7B4429] mb-1">REGISTER</p>
-              <h1 className="text-5xl text-[#A62D82] leading-[125%] drop-shadow-md font-extrabold w-full text-left">
+      <div className="font-Nunito bg-[url('/src/assets/registerpage/register-section-bg.svg')] flex flex-col items-center justify-center w-screen h-screen bg-cover">
+        <div className="flex justify-center items-center flex-col w-[930px] h-[950px]">
+          <header className="flex flex-row  justify-between w-full h-[20%] mt-[150px] mb-[2%]">
+            <div className="flex flex-col items-start justify-center w-[50%]">
+              <p className="text-[14px] text-[#7B4429] mb-1 font-[600]">
+                REGISTER
+              </p>
+              <h1 className="text-5xl text-[#A62D82] leading-[125%] font-extrabold w-full text-left">
                 Join us and start <br /> matching
               </h1>
             </div>
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row justify-end items-end w-[50%] ">
               {step === 1 && (
-                <div className="w-[430px] h-[80px] flex flex-row items-center ml-[30%] ">
+                <div className="w-[430px] h-[80px] flex flex-row justify-end ">
                   {/* Content */}
-                  <div className="w-[246px] h-[80px] shrink border-[1px] ml-1 mr-1 border-[#A62D82] rounded-3xl flex flex-row items-center justify-evenly">
+                  <div className="w-[246px] h-[80px] border-[1px] border-[#A62D82] rounded-3xl flex flex-row items-center justify-evenly">
                     <div className=" bg-[#F1F2F6] w-[48px] h-[48px] rounded-2xl flex flex-col items-center justify-center">
                       <p className="text-[24px] text-[#A62D82] font-[700]">1</p>
                     </div>
@@ -50,13 +52,13 @@ const RegisterPage = () => {
                     </div>
                   </div>
 
-                  <div className="w-[80px] h-[80px] border-[1px] ml-1 mr-1 border-[#E4E6ED] rounded-3xl text-center text-[#C8CCDB]  flex flex-col items-center justify-center">
+                  <div className="w-[80px] h-[80px] border-[1px]  border-[#E4E6ED] rounded-3xl text-center text-[#C8CCDB]  flex flex-col items-center justify-center ml-[12px]">
                     <div className=" bg-[#F1F2F6] w-[48px] h-[48px] rounded-2xl flex flex-col items-center justify-center">
                       <p className="text-[24px] text-[#9aa1b9] font-[700]">2</p>
                     </div>
                   </div>
 
-                  <div className="w-[80px] h-[80px] border-[1px] ml-1 mr-1 border-[#E4E6ED] rounded-3xl text-center text-[#C8CCDB]  flex flex-col items-center justify-center">
+                  <div className="w-[80px] h-[80px] border-[1px]  border-[#E4E6ED] rounded-3xl text-center text-[#C8CCDB]  flex flex-col items-center justify-center ml-[12px]">
                     <div className=" bg-[#F1F2F6] w-[48px] h-[48px] rounded-2xl flex flex-col items-center justify-center">
                       <p className="text-[24px] text-[#9aa1b9] font-[700]">3</p>
                     </div>
@@ -123,25 +125,50 @@ const RegisterPage = () => {
           {/* Form input */}
           {step === 1 && <BasicInformation />}
           {step === 2 && <IdentitiesAndInterests />}
-          {step === 3 && (
-            <div className="w-full flex flex-col items-center">
-              {<ProfilePictures />}
-            </div>
-          )}
+          {step === 3 && <ProfilePictures />}
+
           {/*  Button  */}
           <div className=" w-[100vw] h-[10vh] mt-5 border-t border-[#E4E6ED] bg-[white] mb-5 pb-10 flex flex-col items-center justify-center">
             <div className=" w-[100vw]">
               <div className=" w-[100%] mt-[2%] flex flex-row justify-center content-end bg-[white]">
                 <p className="flex justify-start items-start content-start mt-[1.5%] mr-[70%]">
-                  {step === 1 && "1/3"} {step === 2 && "2/3"}{" "}
-                  {step === 3 && "3/3"}
+                  {step === 1 && (
+                    <div>
+                      <span className="text-[#646D89] text-[16px] leading-[24px]">
+                        1
+                      </span>
+                      <span className="text-[#9AA1B9] text-[16px] leading-[24px]">
+                        /3
+                      </span>
+                    </div>
+                  )}{" "}
+                  {step === 2 && (
+                    <div>
+                      <span className="text-[#646D89] text-[16px] leading-[24px]">
+                        2
+                      </span>
+                      <span className="text-[#9AA1B9] text-[16px] leading-[24px]">
+                        /3
+                      </span>
+                    </div>
+                  )}{" "}
+                  {step === 3 && (
+                    <div>
+                      <span className="text-[#646D89] text-[16px] leading-[24px]">
+                        3
+                      </span>
+                      <span className="text-[#9AA1B9] text-[16px] leading-[24px]">
+                        /3
+                      </span>
+                    </div>
+                  )}
                 </p>
 
                 {/* Go Back button */}
                 <button
                   onClick={handleBack}
                   type="button"
-                  className="text-[#C70039] hover:text-black font-[800] "
+                  className="text-[#C70039] hover:text-black font-[700] "
                 >
                   🡐 Back
                 </button>
@@ -151,7 +178,7 @@ const RegisterPage = () => {
                   <button
                     type=""
                     onClick={handleNext}
-                    className="mt-[0.5%] text-white bg-[#C70039] hover:bg-red-800  font-[800] rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 ml-5"
+                    className="drop-shadow-register  text-[16px] leading-[24px] mt-[0.5%] text-white bg-[#C70039] hover:bg-red-800 font-[700] rounded-[99px]  px-[24px] py-[12px] text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 disabled:bg-[#F1F2F6] disabled:text-[#646D89] ml-5"
                   >
                     Next step
                   </button>
@@ -161,7 +188,7 @@ const RegisterPage = () => {
                   <button
                     type=""
                     onClick={handleNext}
-                    className="mt-[0.5%] text-white  font-[800] bg-[#C70039] hover:bg-red-800 rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 ml-5"
+                    className="drop-shadow-register  text-[16px] leading-[24px]  mt-[0.5%] text-white bg-[#C70039] hover:bg-red-800 font-[700] rounded-[99px]  px-[24px] py-[12px] text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 disabled:bg-[#F1F2F6] disabled:text-[#646D89] ml-5"
                   >
                     Next step
                   </button>
@@ -170,7 +197,7 @@ const RegisterPage = () => {
                 {step === 3 && (
                   <button
                     type="submit"
-                    className="mt-[0.5%] text-white bg-[#C70039] hover:bg-red-800 font-[700] rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 disabled:bg-[#F1F2F6] disabled:text-[#646D89] ml-5"
+                    className="drop-shadow-register text-[16px] leading-[24px] mt-[0.5%] text-white bg-[#C70039] hover:bg-red-800 font-[700] rounded-[99px]  px-[24px] py-[12px] text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 disabled:bg-[#F1F2F6] disabled:text-[#646D89] ml-5"
                   >
                     Confirm
                   </button>

@@ -32,13 +32,13 @@ function IdentitiesAndInterests() {
     setHobby(newHobbies);
   };
   return (
-    <div className="w-[100%] h-[80%] flex justify-center mb-[223px]">
+    <div className="w-[100%] h-[80%] flex justify-center mb-[223px] mt-[80px]">
       <div className="flex flex-col  w-[full]">
         <h1 className="IdentitiesAndInterestes text-[#A62D82] mt-[20px] font-[700] text-[24px] leading-[30px]">
           Identities and Interestes
         </h1>
-        <div className="column1 flex">
-          <div className="flex flex-col mr-[12px] mt-[24px]">
+        <div className="column1 flex mt-[24px]">
+          <div className="flex flex-col mr-[12px] ">
             <label
               htmlFor="SexualIdentities"
               className="font-[400] text-[16px] leading-[24px]"
@@ -46,7 +46,7 @@ function IdentitiesAndInterests() {
               Sexual identities
             </label>
             <select
-              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2 mt-[4px]"
               id="name"
               value={sexualIdentity}
               onChange={(event) => {
@@ -62,7 +62,7 @@ function IdentitiesAndInterests() {
             </select>
           </div>
 
-          <div className="flex flex-col ml-[12px] mt-[24px]">
+          <div className="flex flex-col ml-[12px] ">
             <label
               htmlFor="SexualPreferences"
               className="font-[400] text-[16px] leading-[24px]"
@@ -71,7 +71,7 @@ function IdentitiesAndInterests() {
             </label>
 
             <select
-              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2 mt-[4px]"
               id="name"
               value={sexualPreference}
               onChange={(event) => {
@@ -87,8 +87,8 @@ function IdentitiesAndInterests() {
             </select>
           </div>
         </div>
-        <div className="column2 flex">
-          <div className="flex flex-col mr-[12px] mt-[24px]">
+        <div className="column2 flex mt-[40px]">
+          <div className="flex flex-col mr-[12px] ">
             <label
               htmlFor="RacialPreferences"
               className="font-[400] text-[16px] leading-[24px]]"
@@ -97,7 +97,7 @@ function IdentitiesAndInterests() {
             </label>
 
             <select
-              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2 mt-[4px]"
               id="name"
               value={racialPreference}
               onChange={(event) => {
@@ -123,7 +123,7 @@ function IdentitiesAndInterests() {
             </select>
           </div>
 
-          <div className="flex flex-col ml-[12px] mt-[24px]">
+          <div className="flex flex-col ml-[12px]">
             <label
               htmlFor="MeetingInterests"
               className="font-[400] text-[16px] leading-[24px]"
@@ -132,7 +132,7 @@ function IdentitiesAndInterests() {
             </label>
 
             <select
-              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2 mt-[4px]"
               id="name"
               value={meetingInterest}
               onChange={(event) => {
@@ -150,15 +150,15 @@ function IdentitiesAndInterests() {
           </div>
         </div>
 
-        <div className="column3 flex flex-col">
-          <div className="flex flex-col mr-[12px] mt-[24px]">
+        <div className="column3 flex flex-col mt-[40px]">
+          <div className="flex flex-col mr-[12px] ">
             <label
               htmlFor="Hobbies"
               className="font-[400] text-[16px] leading-[24px]]"
             >
               Hobbies / Interests (Maximum 10)
             </label>
-            <div className="flex flex-row border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-[930px] h-[53px]">
+            <div className="flex flex-row border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-[930px] h-[53px] mt-[4px]">
               {hobby.map((item, index) => (
                 <div
                   key={index}

@@ -33,18 +33,21 @@ function BasicInformation() {
   };
 
   return (
-    <div className="w-[105%] h-[80%] flex justify-center">
-      <div className="flex flex-col  w-[full]">
+    <div className="w-full h-[80%] flex justify-center mb-[112px] mt-[80px]">
+      <div className="flex flex-col ">
         <h1 className="basicInformation text-[#A62D82] mt-[20px] font-[800] text-[24px]">
           Basic Information
         </h1>
-        <div className="column1 flex">
-          <div className="flex flex-col mr-[12px] mt-[24px]">
-            <label htmlFor="name" className="font-[600] ">
+        <div className="column1 flex mt-[24px]">
+          <div className="flex flex-col mr-[12px] ">
+            <label
+              htmlFor="name"
+              className="font-[400] text-[16px] leading-[24px] "
+            >
               Name
             </label>
             <input
-              className="w-[453px] h-[48px] border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               id="name"
               value={name}
               placeholder="Name"
@@ -55,13 +58,16 @@ function BasicInformation() {
             />
           </div>
 
-          <div className="flex flex-col ml-[12px] mt-[24px]">
-            <label htmlFor="birth" className="font-[600]">
+          <div className="flex flex-col ml-[12px]">
+            <label
+              htmlFor="birth"
+              className="font-[400] text-[16px] leading-[24px]]"
+            >
               Date of birth
             </label>
 
             <DatePicker
-              className="w-[453px] h-[48px] border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               selected={selectDate}
               placeholderText="Select date"
               dateFormat="dd/MM/yyyy"
@@ -71,19 +77,22 @@ function BasicInformation() {
             />
           </div>
         </div>
-        <div className="column2 flex">
-          <div className="flex flex-col mr-[12px] mt-[40px]">
-            <label htmlFor="location" className="font-[600]">
+        <div className="column2 flex mt-[40px]">
+          <div className="flex flex-col mr-[12px] ">
+            <label
+              htmlFor="location"
+              className="font-[400] text-[16px] leading-[24px]"
+            >
               Location
             </label>
             <select
-              className="w-[453px] h-[48px] border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               onChange={(e) => handleCountry(e)}
               value={country}
               required
             >
               <option disabled value="">
-                -- Select Country--
+                Select Country
               </option>
               {Countrydata.map((getcountry, index) => (
                 <option
@@ -97,18 +106,21 @@ function BasicInformation() {
             </select>
           </div>
 
-          <div className="flex flex-col ml-[12px] mt-[40px]">
-            <label htmlFor="city" className="font-[600]">
+          <div className="flex flex-col ml-[12px] ">
+            <label
+              htmlFor="city"
+              className="font-[400] text-[16px] leading-[24px]"
+            >
               City
             </label>
             <select
-              className="w-[453px] h-[48px] border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               onChange={(e) => handleState(e)}
               value={city}
               required
             >
               <option disabled value="">
-                -- Select City --
+                Select City
               </option>
               {state.map((getStateData, index) => (
                 <option value={getStateData.state_name} key={index}>
@@ -119,9 +131,12 @@ function BasicInformation() {
           </div>
         </div>
 
-        <div className="column3 flex">
-          <div className="flex flex-col mr-[12px] mt-[24px]">
-            <label htmlFor="username" className="font-[600] ">
+        <div className="column3 flex mt-[40px]">
+          <div className="flex flex-col mr-[12px]">
+            <label
+              htmlFor="username"
+              className="font-[400] text-[16px] leading-[24px]"
+            >
               Username
             </label>
             <input
@@ -129,12 +144,15 @@ function BasicInformation() {
               placeholder="At least 6 characters"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-[453px] h-[48px] border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
           </div>
 
-          <div className="flex flex-col ml-[12px] mt-[24px]">
-            <label htmlFor="email" className="font-[600]">
+          <div className="flex flex-col ml-[12px] ">
+            <label
+              htmlFor="email"
+              className="font-[400] text-[16px] leading-[24px]"
+            >
               Email
             </label>
 
@@ -143,14 +161,17 @@ function BasicInformation() {
               placeholder="name@website.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-[453px] h-[48px] border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
           </div>
         </div>
 
-        <div className="column4 flex">
-          <div className="flex flex-col mr-[12px] mt-[24px]">
-            <label htmlFor="password" className="font-[600] ">
+        <div className="column4 flex mt-[40px]">
+          <div className="flex flex-col mr-[12px] ">
+            <label
+              htmlFor="password"
+              className="font-[400] text-[16px] leading-[24px] "
+            >
               Password
             </label>
             <input
@@ -158,12 +179,15 @@ function BasicInformation() {
               placeholder="At least 8 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-[453px] h-[48px] border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
           </div>
 
-          <div className="flex flex-col ml-[12px] mt-[24px]">
-            <label htmlFor="confirmpassword" className="font-[600]">
+          <div className="flex flex-col ml-[12px] ">
+            <label
+              htmlFor="confirmpassword"
+              className="font-[400] text-[16px] leading-[24px]"
+            >
               Confirm Password
             </label>
 
@@ -172,7 +196,7 @@ function BasicInformation() {
               placeholder="At least 8 characters"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-[453px] h-[48px] border-[#D6D9E4] rounded-lg p-2"
+              className="w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
           </div>
         </div>
