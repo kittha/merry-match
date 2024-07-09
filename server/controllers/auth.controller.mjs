@@ -1,12 +1,17 @@
 // import bcrypt from "bcrypt";
-// import { createUser, findUserByUsername } from "../models/user.model.mjs";
-import { signUp, signIn, getUser } from "../services/auth.mjs";
+import { createrUser } from "../models/user.model.mjs";
+import { signUp, signIn, getUser } from "../services/supabaseAuth.service.mjs";
 
 // POST
 export const registerUser = async (req, res) => {
-  const { formData } = req.body;
   try {
+    const { formData } = req.body;
+
+    // `task:auth` signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
     const { data } = await signUp(formData);
+
+    // `task:infoDB` register user information into our own database @/models/user.model.mjs
+    const result = await createrUser(formData);
 
     return res.status(200).json({
       message: `User ${data.user.email} has been created successfully`,
@@ -36,17 +41,17 @@ export const loginUser = async (req, res) => {
 };
 
 export const fetchUser = async (req, res) => {
-  const jwtToken = req.body;
-  const user = getUser(jwtToken);
-
-  if (!user) {
-    console.error("No user is signed in");
-    return null;
-  }
-
-  console.log("Authenticated user:", user);
-  return user;
   try {
+    const jwtToken = req.body;
+    const user = getUser(jwtToken);
+
+    if (!user) {
+      console.error("No user is signed in");
+      return null;
+    }
+
+    console.log("Authenticated user:", user);
+    return user;
   } catch (error) {
     res.status(500).json({
       message: "Internal server error",

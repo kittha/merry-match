@@ -1,52 +1,61 @@
 import connectionPool from "../configs/db.mjs";
-import bcrypt from "bcrypt";
 
-const saltRounds = 10;
-
-export const createUser = async (username, password, email) => {
-  const roleUser = 2;
+export const createrUser = async (formData) => {
   try {
-    const hashPassword = await bcrypt.hash(password, saltRounds);
-    const result = await connectionPool.query(
+    const {
+      email,
+      password,
+      name,
+      date_of_birth,
+      location,
+      city,
+      sexual_identities,
+      sexual_preferences,
+      racial_preferences,
+      meeting_interests,
+      bio,
+    } = formData;
+
+    await client.query("BEGIN");
+
+    const userIdResult = await connectionPool.query(
       `
-      INSERT INTO users (username, password, email, role_id)
-      VALUES ($1, $2, $3, $4)
-      RETURNING id
+      INSERT INTO users (email)
+      VALUES ($1)
+      RETURNING user_id
       `,
-      [username, hashPassword, email, roleUser]
+      [email]
     );
-    const userId = result.rows[0].id;
-    console.log(`User created successfully: ${username} (ID: ${userId})`);
-    return userId;
-  } catch (error) {
-    console.error(`Error creating user: ${error.message}`);
-    throw error;
-  }
-};
 
-export const findUserByUsername = async (username) => {
-  try {
-    const result = await connectionPool.query(
+    const userId = userIdResult.rows[0].user_id;
+
+    await connectionPool.query(
       `
-      SELECT *
-      FROM users
-      WHERE username=$1
+     INSERT INTO user_profiles (user_id, name, date_of_birth, location, city, sexual_identities, sexual_preferences, racial_preferences, meeting_interests, bio)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       `,
-      [username]
+      [
+        (userId,
+        name,
+        date_of_birth,
+        location,
+        city,
+        sexual_identities,
+        sexual_preferences,
+        racial_preferences,
+        meeting_interests,
+        bio),
+      ]
     );
-    const user = result.rows[0];
 
-    if (user) {
-      console.log(`User found by username: ${username}`);
-    } else {
-      console.log(`User not found with username: ${username}`);
-    }
-
-    return user || null;
+    await connectionPool.query("COMMIT");
+    console.log("User signed up successfully:", userId);
+    return;
   } catch (error) {
-    console.error(
-      `Error finding user by username=${username}: ${error.message}`
-    );
+    await connectionPool.query("ROLLBACK");
+    console.error("Error occurred during signUp:", error);
     throw error;
+  } finally {
+    connectionPool.release();
   }
 };

@@ -28,7 +28,7 @@ app.use(rateLimiter(limiterMax, limiterWindow));
 
 app.use(compression());
 
-// app.use(helmet());
+app.use(helmet());
 
 app.use(
   morgan("combined", {
@@ -41,12 +41,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/status", (req, res) => {
-  return res.json("Server API is working");
+  return res.status(200).json("Server API is working");
 });
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
-
 app.use("/api/v1", apiV1Routes);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
 
 app.get("*", (req, res) => {
   return res.status(404).json("Not Found");

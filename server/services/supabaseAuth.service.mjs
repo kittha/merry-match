@@ -16,7 +16,6 @@ export const signUp = async (formData) => {
       meeting_interests,
       bio,
     } = formData;
-
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -27,42 +26,11 @@ export const signUp = async (formData) => {
       throw error;
     }
 
-    const result = await connectionPool.query(
-      `
-      INSERT INTO users (email)
-      VALUES ($1)
-      RETURNING user_id
-      `,
-      [email]
-    );
-
-    const result2 = await connectionPool.query(
-      `
-     INSERT INTO user_profiles (user_id, name, date_of_birth, location, city, sexual_identities, sexual_preferences, racial_preferences, meeting_interests, bio)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-      `,
-      [
-        (userId,
-        name,
-        date_of_birth,
-        location,
-        city,
-        sexual_identities,
-        sexual_preferences,
-        racial_preferences,
-        meeting_interests,
-        bio),
-      ]
-    );
-    await client.query("COMMIT");
     console.log("User signed up successfully:", data.user.email);
     return data;
   } catch (error) {
-    await client.query("ROLLBACK");
-    console.error("Error occurred during signUp:", error);
+    console.error("Error occurred during signIn:", error);
     throw error;
-  } finally {
-    client.release();
   }
 };
 
