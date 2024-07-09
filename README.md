@@ -12,11 +12,11 @@ _Merry Match_ is the right place for you!
 
 ## Collaborators
 
-@[Marquizx](https://github.com/Marquizx)
-@[VarisaB](https://github.com/VarisaB)
-@[kittha](https://github.com/kittha)
-@[paphonwat](https://github.com/paphonwat)
-@[revieww12](https://github.com/revieww12)
+@[Marquizx](https://github.com/Marquizx)  
+@[VarisaB](https://github.com/VarisaB)  
+@[kittha](https://github.com/kittha)  
+@[paphonwat](https://github.com/paphonwat)  
+@[revieww12](https://github.com/revieww12)  
 @[titykp](https://github.com/titykp)
 
 ---
