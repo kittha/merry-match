@@ -7,24 +7,24 @@ import vector4 from '../../assets/HomePage/vector4.png'
 
 const Header = () => {
   return (
-    <div className="relative bg-[#160404] text-white w-screen h-[846px]">
-      <div className="container mx-auto flex flex-col items-center justify-center h-screen w-[1440px] px-[150px]">
+    <div className="relative bg-[#160404] text-white w-screen lg:h-[846px] h-[1035px]">
+      <div className="container mx-auto flex flex-col items-center justify-center h-screen lg:w-[1440px] w-[375px]  lg:px-[150px]">
         <div className="flex flex-col items-center justify-start w-full h-full">
-          <div className="flex w-full justify-between items-center h-[758px] z-10 relative">
-            <img src={headerimage2} alt="Image 1" className="translate-y-48" />
-            <div className="flex flex-col items-center justify-start h-auto gap-4">
-              <h3 className="text-[60px] text-white text-center font-extrabold leading-snug mt-20 text-4xl ">
-                Make the <br />
+        <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:h-[758px] z-10 relative">
+          <img src={headerimage2} alt="Image 1" className="lg:translate-y-48 lg:-translate-x-0 translate-y-10 translate-x-28 lg:order-1 order-3 w-1/2 lg:w-auto " />
+            <div className="flex flex-col items-center justify-start h-auto gap-4 lg:order-2 order-2 text-center px-4 lg:px-0">
+              <h3 className="text-[60px] text-white font-extrabold leading-snug lg:mt-20 mt-8">
+                Make the <br/>
                 first ‘Merry’
               </h3>
-              <h4 className="text-[20px] font-semibold text-white text-center leading-relaxed mt-4">
-                If you feel lonely, let’s start meeting <br /> new people in your area! <br /> Don’t forget to get Merry with us
+              <h4 className="text-[20px] font-semibold text-white leading-relaxed lg:mt-4 mt-2">
+                If you feel lonely, let’s start meeting <br className="hidden lg:block" /> new people in your area! <br className="hidden lg:block" /> Don’t forget to get Merry with us
               </h4>
-              <button className="bg-[#C70039] shadow-lg rounded-full text-white h-[48px] w-[163px] font-bold mt-8 hover:translate-y-[-0.25rem] hover:scale-105 hover:bg-pink-300 duration-300">
+              <button className="bg-[#C70039] shadow-lg rounded-full text-white h-[48px] w-[163px] font-bold lg:mt-8 mt-4 hover:translate-y-[-0.25rem] hover:scale-105 hover:bg-pink-300 duration-300">
                 Start Matching!
               </button>
             </div>
-            <img src={headerimage1} alt="Image 2" className="-translate-y-48"/>
+            <img src={headerimage1} alt="Image 2" className="lg:-translate-y-48  lg:translate-x-0 -translate-x-32 lg:order-3 order-1 w-1/2 lg:w-auto" />
             <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
                 <img src={vector1} alt="vector 1" className="object-contain animate-pulse" />
             </div>
