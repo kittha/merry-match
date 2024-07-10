@@ -8,10 +8,6 @@ export const createUser = async (reqBody, avatarUri) => {
   try {
     await connectionPool.query("BEGIN");
 
-    // const {
-    //   data: { user },
-    // } = await supabase.auth.getUser();
-
     const {
       username,
       email,
@@ -38,10 +34,10 @@ export const createUser = async (reqBody, avatarUri) => {
 
     // Add user data to users table
     const resultFromUsers = await connectionPool.query(
-      `INSERT INTO users (auth_id, username, email, created_at, updated_at)
-      VALUES ($1, $2, $3, $4, $5)
+      `INSERT INTO users (username, email, created_at, updated_at)
+      VALUES ($1, $2, $3, $4)
       RETURNING user_id`,
-      [null, username, email, created_at, updated_at]
+      [username, email, created_at, updated_at]
     );
     //user.id
 
@@ -107,25 +103,6 @@ export const createUser = async (reqBody, avatarUri) => {
     await connectionPool.query("COMMIT");
   } catch (error) {
     await connectionPool.query("ROLLBACK");
-    console.error("Error occurred during signUp:", error);
-    throw error;
-  }
-};
-
-export const doesUserExist = async (email) => {
-  try {
-    const result = await connectionPool.query(
-      `
-      SELECT *
-      FROM auth.users
-      WHERE email = $1
-      `,
-      [email]
-    );
-    console.log("I'm at user Model");
-
-    return result;
-  } catch (error) {
     console.error("Error occurred during signUp:", error);
     throw error;
   }

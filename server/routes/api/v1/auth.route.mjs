@@ -23,7 +23,7 @@ router.post(
   [avatarUpload, validateSignUp, checkUserDoesNotExist],
   registerUser
 );
-router.post("/login", [validateSignIn], loginUser);
+router.post("/login", [avatarUpload, validateSignIn], loginUser);
 // router.post("/logout", logoutUser);
 // router.post("/forgot-password", forgotPassword);
 // router.post("/reset-password/:token", resetPassword);

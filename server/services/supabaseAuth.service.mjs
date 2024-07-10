@@ -32,7 +32,6 @@ export const signUp = async (reqBody) => {
 export const signIn = async (reqBody) => {
   try {
     const { email, password } = reqBody;
-
     if (!email || !password) {
       throw new Error("Both email and password must be provided for sign-in.");
     }
@@ -55,16 +54,16 @@ export const signIn = async (reqBody) => {
   }
 };
 
-export const getUser = async (jwtToken) => {
-  try {
-    const { user, error } = supabase.auth.user(jwtToken);
-    if (error) {
-      console.error("Error from Supabase Auth:", error);
-      throw error;
-    }
-    return user;
-  } catch (error) {
-    console.error("Error occurred while fetching user:", error);
-    throw error;
-  }
-};
+// export const getUser = async (jwtToken) => {
+//   try {
+//     const { user, error } = supabase.auth.user(jwtToken);
+//     if (error) {
+//       console.error("Error from Supabase Auth:", error);
+//       throw error;
+//     }
+//     return user;
+//   } catch (error) {
+//     console.error("Error occurred while fetching user:", error);
+//     throw error;
+//   }
+// };

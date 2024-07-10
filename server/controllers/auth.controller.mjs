@@ -1,6 +1,7 @@
 // import bcrypt from "bcrypt";
 import { createUser, getUserRole } from "../models/auth.model.mjs";
-import { signUp, signIn, getUser } from "../services/supabaseAuth.service.mjs";
+import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
+import { getUser } from "../models/user.model.mjs";
 import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
 
 // POST
@@ -21,8 +22,8 @@ export const registerUser = async (req, res) => {
     // console.log("Registering user with data:", req.body);
 
     // signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
-    // const { data } = await signUp(req.body);
-    // console.log("Data after signUp with Supabase Auth: ", data);
+    const { data } = await signUp(req.body);
+    console.log("Data after signUp with Supabase Auth: ", data);
 
     // upload avatar to Cloudinary; then got avatar uri & url
     let avatarUri = null;
@@ -53,11 +54,21 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const dataFromSupabaseAuth = await signIn(req.body);
+    const { session } = await signIn(req.body);
+    console.log("get session from supabase auth");
 
-    if (!data || !data.user || !data.user.id) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+    const { user, avatars } = await getUser(session.user.email);
+    console.log("get data from database");
+
+    const data = {
+      username: user.username,
+      avatars,
+      session,
+    };
+
+    // if (!data || !data.user || !data.user.id) {
+    //   return res.status(401).json({ message: "Invalid credentials" });
+    // }
 
     // const authId = data.user.id;
 
@@ -72,6 +83,8 @@ export const loginUser = async (req, res) => {
     // } else {
     //   res.status(403).send("Unauthorized");
     // }
+
+    return res.status(200).json({ data: session });
   } catch (error) {
     console.error("Error in loginUser:", error);
     res.status(500).json({

@@ -1,4 +1,4 @@
-import { getUser } from "../services/supabaseAuth.service.mjs";
+import { getUser } from "../models/user.model.mjs";
 import connectionPool from "../configs/db.mjs";
 
 const supabaseAuthIsAdminMiddleware = async (req, res, next) => {

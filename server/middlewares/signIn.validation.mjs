@@ -1,6 +1,6 @@
 export const validateSignIn = (req, res, next) => {
   const { username, password, email } = req.body;
-
+  console.log(req.body);
   // if (!username || !password || !email) {
   //   return res.status(400).json({
   //     message: "400 Bad Request: Please input username or password or email.",
