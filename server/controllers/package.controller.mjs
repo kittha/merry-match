@@ -56,15 +56,6 @@ export const getPackageById = async (req, res) => {
 export const createPackage = async (req, res) => {
   try {
     const { name, price, merry_limit, details } = req.body;
-    if (!name || !price || !merry_limit || !details) {
-      console.error(
-        "Name, price, merry_limit, details must be provided to create package."
-      );
-      return res.status(401).json({
-        message:
-          "Name, price, merry_limit, details must be provided to create package.",
-      });
-    }
 
     const result = await createPackageFromModel(
       name,
