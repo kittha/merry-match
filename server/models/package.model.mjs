@@ -113,3 +113,28 @@ export const updatePackageById = async (packageId, packageDetails) => {
     throw error;
   }
 };
+
+/**
+ *
+ * @param {number} packageId - The Number of package id.
+ * @returns - The response object, the important "key" is rowCount and rows[] ,used to send response back to the client.
+ */
+export const deletePackageById = async (packageId) => {
+  try {
+    const deleteResult = await connectionPool.query(
+      `
+      DELETE
+      FROM packages
+      WHERE package_id = $1
+      RETURNING *
+      `,
+      [packageId]
+    );
+    console.log(deleteResult);
+
+    return deleteResult;
+  } catch (error) {
+    console.error("Error deleting package:", error);
+    throw error;
+  }
+};

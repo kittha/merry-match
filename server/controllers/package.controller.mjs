@@ -3,6 +3,7 @@ import {
   getPackageById as getPackageByIdFromModel,
   createPackage as createPackageFromModel,
   updatePackageById as updatePackageByIdFromModel,
+  deletePackageById as deletePackageByIdFromModel,
 } from "../models/package.model.mjs";
 
 /**
@@ -99,6 +100,38 @@ export const updatePackageById = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+/**
+ *
+ * @param {object} req - The request object, contain params id.
+ * @param {object} res - The response object, contain message and detail of deleted package.
+ */
+export const deletePackageById = async (req, res) => {
+  try {
+    const packageId = req.params.packageId;
+
+    const deleteResult = await deletePackageByIdFromModel(packageId);
+
+    if (deleteResult.rowCount === 0) {
+      console.error(
+        `Package with id ${packageId} does not exist or was not deleted.`
+      );
+      return res.status(404).json({
+        message: `Package with id ${packageId} does not exist or was not deleted.`,
+      });
+    }
+
+    return res.status(200).json({
+      message: `Package with id ${packageId} deleted successfully. This json file attached the detail of the deleted package.`,
+      data: deleteResult.rows[0],
+    });
+  } catch (error) {
+    console.error("Error deleting package:", error);
+    return res.status(500).json({
       message: "Internal server error",
     });
   }
