@@ -12,12 +12,17 @@ import {
 import { validateSignUp } from "../../../middlewares/signUp.validation.mjs";
 import { validateSignIn } from "../../../middlewares/signIn.validation.mjs";
 import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
+import { checkUserDoesNotExist } from "../../../middlewares/checkUserDoesNotExist.middleware.mjs";
 
 const router = express.Router();
 
 // avatarUploadMiddleware must come first!
 // If not, the header "multipart/form-data" will cause error to other function
-router.post("/register", [avatarUpload, validateSignUp], registerUser);
+router.post(
+  "/register",
+  [avatarUpload, validateSignUp, checkUserDoesNotExist],
+  registerUser
+);
 router.post("/login", [validateSignIn], loginUser);
 // router.post("/logout", logoutUser);
 // router.post("/forgot-password", forgotPassword);

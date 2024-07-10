@@ -101,3 +101,21 @@ export const createUser = async (reqBody, avatarUri) => {
     throw error;
   }
 };
+
+export const doesUserExist = async (email) => {
+  try {
+    const result = await connectionPool.query(
+      `
+      SELECT *
+      FROM auth.users
+      WHERE email = $1
+      `,
+      [email]
+    );
+
+    return result;
+  } catch (error) {
+    console.error("Error occurred during signUp:", error);
+    throw error;
+  }
+};
