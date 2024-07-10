@@ -8,7 +8,7 @@ import vector4 from '../../assets/HomePage/vector4.png'
 const Header = () => {
   return (
     <div className="relative bg-[#160404] text-white w-screen lg:h-[846px] h-[1035px] overflow-hidden">
-      <div className="container mx-auto flex flex-col items-center justify-center h-screen lg:w-[1440px] w-full lg:px-[150px] px-4">
+      <div className="container mx-auto flex flex-col items-center justify-center h-screen lg:w-[1440px] w-full lg:px-[50px] px-4">
         <div className="flex flex-col items-center justify-start w-full h-full">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:h-[758px] z-10 relative">
             <img src={headerimage2} alt="Image 1" className="lg:translate-y-48 lg:-translate-x-0 translate-y-10 translate-x-28 lg:order-1 order-3 w-2/3 lg:w-auto" />
@@ -25,13 +25,13 @@ const Header = () => {
               </button>
             </div>
             <img src={headerimage1} alt="Image 2" className="lg:-translate-y-48 lg:translate-x-0 -translate-y-8 -translate-x-28 lg:order-3 order-1 w-56 lg:w-auto" />
-            <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none hidden lg:flex">
+            <div className="absolute inset-0  items-center justify-center z-0 pointer-events-none hidden lg:flex">
               <img src={vector1} alt="vector 1" className="object-contain animate-pulse" />
             </div>
-            <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none hidden lg:flex">
+            <div className="absolute inset-0  items-center justify-center z-0 pointer-events-none hidden lg:flex">
               <img src={vector3} alt="vector 3" className="absolute top-[24%] left-[63%] object-contain animate-bounce" />
             </div>
-            <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none hidden lg:flex">
+            <div className="absolute inset-0  items-center justify-center z-0 pointer-events-none hidden lg:flex">
               <img src={vector4} alt="vector 4" className="absolute top-[68%] right-[3.5%] object-contain animate-bounce" />
             </div>
           </div>
