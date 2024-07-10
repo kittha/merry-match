@@ -1,7 +1,7 @@
 export const validateSignUp = (req, res, next) => {
   console.log("I'm at validateSignUp");
 
-  console.log("Incoming request body: ", req.body);
+  // console.log("Incoming request body: ", req.body);
 
   const { username, password, email } = req.body;
 

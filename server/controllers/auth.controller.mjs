@@ -1,12 +1,12 @@
 // import bcrypt from "bcrypt";
-import { createUser } from "../models/user.model.mjs";
-import { getUserRole } from "../models/auth.model.mjs";
+import { createUser, getUserRole } from "../models/auth.model.mjs";
 import { signUp, signIn, getUser } from "../services/supabaseAuth.service.mjs";
 import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
 
 // POST
 export const registerUser = async (req, res) => {
   try {
+    // check datetime format
     // validate required input
     const { email, username, password } = req.body;
     if (!email || !username || !password) {
@@ -18,18 +18,18 @@ export const registerUser = async (req, res) => {
         .json({ message: "Invalid username, email, or password" });
     }
 
-    console.log("Registering user with data:", req.body);
+    // console.log("Registering user with data:", req.body);
 
     // signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
-    const { data } = await signUp(req.body);
-    console.log("Data after signUp with Supabase Auth: ", data);
+    // const { data } = await signUp(req.body);
+    // console.log("Data after signUp with Supabase Auth: ", data);
 
     // upload avatar to Cloudinary; then got avatar uri & url
     let avatarUri = null;
     if (req.files) {
       console.log("Uploading avatar...");
       avatarUri = await cloudinaryUpload(req.files);
-      console.log("Avatar uploaded:", avatarUri);
+      // console.log("Avatar uploaded:", avatarUri);
     } else {
       console.log("No avatar provided.");
     }
@@ -53,25 +53,25 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const data = await signIn(req.body);
+    const dataFromSupabaseAuth = await signIn(req.body);
 
     if (!data || !data.user || !data.user.id) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const userId = data.user.id;
+    // const authId = data.user.id;
 
-    console.log("UserId is: ", userId);
-    const userRole = await getUserRole(userId);
-    console.log("User role is: ", userRole);
+    // console.log("authId is: ", authId);
+    // const userRole = await getUserRole(authId);
+    // console.log("User role is: ", userRole);
 
-    if (userRole === "Admin") {
-      res.redirect("/admin");
-    } else if (userRole === "user") {
-      res.redirect("/landing-page");
-    } else {
-      res.status(403).send("Unauthorized");
-    }
+    // if (userRole === "Admin") {
+    //   res.redirect("/admin");
+    // } else if (userRole === "user") {
+    //   res.redirect("/landing-page");
+    // } else {
+    //   res.status(403).send("Unauthorized");
+    // }
   } catch (error) {
     console.error("Error in loginUser:", error);
     res.status(500).json({
