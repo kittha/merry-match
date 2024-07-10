@@ -106,6 +106,7 @@ export const updatePackageById = async (req, res) => {
 };
 
 /**
+ * Delete packages by id from the Merry Match application.
  *
  * @param {object} req - The request object, contain params id.
  * @param {object} res - The response object, contain message and detail of deleted package.

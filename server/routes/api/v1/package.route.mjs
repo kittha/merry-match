@@ -15,13 +15,13 @@ router.get("/", getAllPackages);
 
 router.get("/:packageId", getPackageById);
 
-// add IsAdmin Middleware
+// TODO: add IsAdmin Middleware
 router.post("/", [validatePackageData], createPackage);
 
-// add IsAdmin Middleware
+// TODO: add IsAdmin Middleware
 router.put("/:packageId", [validatePackageData], updatePackageById);
 
-// add IsAdmin Middleware
+// TODO: add IsAdmin Middleware
 router.delete("/:packageId", [], deletePackageById);
 
 export default router;

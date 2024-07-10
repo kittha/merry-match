@@ -3,7 +3,7 @@ import connectionPool from "../configs/db.mjs";
 /**
  * Get all packages data from the Merry Match application.
  *
- * @param {*} req - The request object, contain nothing.
+ * @param {*} req - The request object, contain non important things.
  * @returns - A Array of Objects(packages)
  */
 export const getAllPackages = async (req) => {
