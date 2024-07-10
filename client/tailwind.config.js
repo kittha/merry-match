@@ -6,8 +6,12 @@ export default {
       fontFamily: {
         Nunito: "Nunito",
       },
+      dropShadow: {
+        register: "2px 2px 12px 0px #40328529",
+      },
     },
+    variants: {},
+    plugins: [],
   },
-  plugins: [],
 };
 
