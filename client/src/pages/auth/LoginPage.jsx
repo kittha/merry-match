@@ -1,6 +1,9 @@
 import bannerLogin from "/src/assets/loginpage/bannerLogin.png";
+import { useNavigate } from "react-router-dom";
+
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-[url('/src/assets/loginpage/register-section-bg.svg')] bg-cover w-[1440px] h-[936px] flex justify-center m-0 p-0">
       <div className="mt-[80px] mb-[179px] w-[1119px] h-[677px] flex flex-row justify-center items-center gap-[216px]">
@@ -39,7 +42,9 @@ const LoginPage = () => {
             <p className="text-black font-[400] text-[16px] leading-[24px]">
               Don't have an account?
             </p>
-            <button className="text-[#C70039] font-[700] text-[16px] leading-[24px]">
+            <button className="text-[#C70039] font-[700] text-[16px] leading-[24px]"
+              onClick={() => { navigate("/register");}}
+            >
               Register
             </button>
           </div>
