@@ -5,7 +5,9 @@ import { signUp, signIn, getUser } from "../services/supabaseAuth.service.mjs";
 
 // POST
 export const registerUser = async (req, res) => {
+  // multipart/form-data incoming
   try {
+    // validate required input
     const { email, username, password } = req.body;
     if (!email || !username || !password) {
       console.error(
@@ -20,11 +22,11 @@ export const registerUser = async (req, res) => {
     const { data } = await signUp(req.body);
 
     // `task:infoDB` register user information into our own database @/models/user.model.mjs
-    const result = await createrUser(req.body);
+    const result = await createrUser(req);
 
     console.log("Created user_id:", result);
 
-    return res.status(200).json({
+    return res.status(201).json({
       message: `User ${result} has been created successfully`,
       data: data,
     });

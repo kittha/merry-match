@@ -20,7 +20,7 @@ export const getUserAvatar = async (userId) => {
 };
 
 // POST
-export const updateAvatar = async (userId, files) => {
+export const uploadAvatar = async (userId, files) => {
   try {
     const fileUrls = await cloudinaryUpload(files);
 

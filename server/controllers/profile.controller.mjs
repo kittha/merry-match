@@ -1,5 +1,5 @@
 import {
-  updateAvatar as updateAvatarFromModel,
+  uploadAvatar as uploadAvatarFromModel,
   getUserAvatar as getUserAvatarFromModel,
 } from "../models/profile.model.mjs";
 
@@ -27,7 +27,7 @@ export const uploadAvatar = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const uploadResult = await updateAvatarFromModel(userId, req.files);
+    const uploadResult = await uploadAvatarFromModel(userId, req.files);
 
     if (!uploadResult) {
       return res.status(500).json({

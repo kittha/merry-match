@@ -1,6 +1,8 @@
 import connectionPool from "../configs/db.mjs";
+import { uploadAvatar } from "./profile.model.mjs";
 
-export const createrUser = async (reqBody) => {
+export const createrUser = async (req) => {
+  const reqBody = req.body;
   try {
     const {
       username,
@@ -53,6 +55,14 @@ export const createrUser = async (reqBody) => {
         bio),
       ]
     );
+
+    const uploadResult = await uploadAvatar(userId, req.files);
+
+    if (!uploadResult) {
+      return res.status(500).json({
+        message: "Avatar upload failed.",
+      });
+    }
 
     await connectionPool.query("COMMIT");
     console.log("User signed up successfully:", userId);
