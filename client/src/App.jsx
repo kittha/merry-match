@@ -1,5 +1,5 @@
-import Sidebar from "./components/packagelist/Sidebar";
-import Topbar from "./components/packagelist/Topbar";
+import Sidebar from "./components/packageviewandedit/Sidebar";
+import Topbar from "./components/packageviewandedit/Topbar";
 
 function App() {
   return (
