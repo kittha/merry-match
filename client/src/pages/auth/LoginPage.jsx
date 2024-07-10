@@ -1,7 +1,16 @@
 import bannerLogin from "/src/assets/loginpage/bannerLogin.png";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  // const { login, state } = useAuth();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // login({ usename, password });
+  };
   const navigate = useNavigate();
   return (
     <div className="lg:bg-[url('/src/assets/loginpage/login-bg.svg')] bg-cover w-screen h-auto min-h-screen flex justify-center m-0 p-0 pt-[52px] lg:pt-[88px]">
@@ -13,7 +22,10 @@ const LoginPage = () => {
             className="w-full lg:w-[450px] h-auto px-[99px] lg:p-0 "
           />
         </section>
-        <section className="right flex flex-col w-full lg:w-auto h-auto lg:h-[534px] justify-center font-Nunito">
+        <form
+          onSubmit={handleSubmit}
+          className="right flex flex-col w-full lg:w-auto h-auto lg:h-[534px] justify-center font-Nunito"
+        >
           <p className="text-[#7B4429] font-[600] text-[14px] leading-[21px]">
             LOGIN
           </p>
@@ -27,7 +39,10 @@ const LoginPage = () => {
             className="w-full lg:w-[453px] h-[48px] border-[#D6D9E4] border mt-[4px] rounded-lg px-[12px] py-[16px] "
             type="text"
             placeholder="Enter Username or Email"
-            onChange={(e) => {}}
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
           <label className="mt-[24px] lg:mt-[40px] font-[400] text-[16px] leading-[24px]">
             Password
@@ -36,7 +51,10 @@ const LoginPage = () => {
             className="w-full lg:w-[453px] h-[48px] border-[#D6D9E4] border mt-[4px] rounded-lg px-[12px] py-[16px] "
             type="password"
             placeholder="Enter Password"
-            onChange={(e) => {}}
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
           <button className="w-full lg:w-[450px] h-[48px] bg-[#C70039] px-[24px] py-[12px] mt-[24px] lg:mt-[40px] rounded-[99px] text-[16px] font-[700] leading-[24px] text-white text-center">
             Log in
@@ -54,7 +72,7 @@ const LoginPage = () => {
               Register
             </button>
           </div>
-        </section>
+        </form>
       </div>
     </div>
   );
