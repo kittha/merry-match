@@ -21,8 +21,8 @@ function CardFeature(props) {
 }
 function SecondSection() {
   return (
-    <section className="bg-[#160404] w-screen h-full m-0 p-0">
-      <div className="lg:w-[1440px] lg:h-[622px] w-[375px] h-full bg-[#160404] pb-10 mx-auto">
+    <section className="bg-[#160404] w-screen h-full">
+      <div className="lg:w-[1440px] lg:h-[622px] min-[320px]:w-auto w-[375px] h-auto bg-[#160404] pb-10 mx-auto">
         <div className="lg:w-[1120px] lg:h-[454px] w-[343px] h-[1444px] flex flex-col gap-[48px] pt-[80px] mx-auto">
           <h2 className="w-[343px] h-[58px] font-nunito font-extrabold text-[46px] leading-[57.5px] text-center text-[#DF89C6] lg:w-[1120px] lg:h-[58px]">
             How to Merry
