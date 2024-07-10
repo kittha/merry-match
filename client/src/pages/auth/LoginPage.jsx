@@ -1,49 +1,55 @@
 import bannerLogin from "/src/assets/loginpage/bannerLogin.png";
 import { useNavigate } from "react-router-dom";
 
-
 const LoginPage = () => {
   const navigate = useNavigate();
   return (
-    <div className="bg-[url('/src/assets/loginpage/register-section-bg.svg')] bg-cover w-[1440px] h-[936px] flex justify-center m-0 p-0">
-      <div className="mt-[80px] mb-[179px] w-[1119px] h-[677px] flex flex-row justify-center items-center gap-[216px]">
-        <section className="left w-[450px] h-[677px]">
-          <img src={bannerLogin} alt="banner" />
+    <div className="lg:bg-[url('/src/assets/loginpage/login-bg.svg')] bg-cover w-screen h-auto min-h-screen flex justify-center m-0 p-0 pt-[52px] lg:pt-[88px]">
+      <div className="lg:mt-[80px] lg:mb-[179px] w-full  flex flex-col lg:flex-row lg:justify-center justify-start mt-[40px] items-center gap-[40px] lg:gap-[216px] px-[16px]">
+        <section className="left w-full lg:w-[450px] h-auto lg:h-[677px] flex justify-center lg:justify-start">
+          <img
+            src={bannerLogin}
+            alt="banner"
+            className="w-full lg:w-[450px] h-auto px-[99px] lg:p-0 "
+          />
         </section>
-        <section className="right flex flex-col w-[453px] h-[534px] justify-center font-Nunito">
+        <section className="right flex flex-col w-full lg:w-auto h-auto lg:h-[534px] justify-center font-Nunito">
           <p className="text-[#7B4429] font-[600] text-[14px] leading-[21px]">
             LOGIN
           </p>
-          <h1 className="text-[46px] text-[#A62D82] leading-[57.5px] font-[800] ">
-            Welcome back to <br /> Merry Match
+          <h1 className="text-[32px] lg:text-[46px] text-[#A62D82] leading-[40px] lg:leading-[57.5px] font-[800] mt-[16px] lg:mt-0">
+            Welcome back to <br className="hidden lg:block" /> Merry Match
           </h1>
-          <label className="mt-[37px] font-[400] text-[16px] leading-[24px]">
+          <label className="mt-[24px] lg:mt-[37px] font-[400] text-[16px] leading-[24px]">
             Username or Email
           </label>
           <input
-            className="w-[453px] h-[48px] border-[#D6D9E4] border mt-[4px] rounded-lg px-[12px] py-[16px] "
+            className="w-full lg:w-[453px] h-[48px] border-[#D6D9E4] border mt-[4px] rounded-lg px-[12px] py-[16px] "
             type="text"
             placeholder="Enter Username or Email"
             onChange={(e) => {}}
           />
-          <label className="mt-[40px] font-[400] text-[16px] leading-[24px]">
+          <label className="mt-[24px] lg:mt-[40px] font-[400] text-[16px] leading-[24px]">
             Password
           </label>
           <input
-            className="w-[453px] h-[48px] border-[#D6D9E4] border mt-[4px] rounded-lg px-[12px] py-[16px] "
-            type="text"
+            className="w-full lg:w-[453px] h-[48px] border-[#D6D9E4] border mt-[4px] rounded-lg px-[12px] py-[16px] "
+            type="password"
             placeholder="Enter Password"
             onChange={(e) => {}}
           />
-          <button className="w-[453px] h-[48px] bg-[#C70039] px-[24px] py-[12px] mt-[40px] rounded-[99px] text-[16px] font-[700] leading-[24px] text-white text-center">
+          <button className="w-full lg:w-[450px] h-[48px] bg-[#C70039] px-[24px] py-[12px] mt-[24px] lg:mt-[40px] rounded-[99px] text-[16px] font-[700] leading-[24px] text-white text-center">
             Log in
           </button>
-          <div className="flex gap-[4px] mt-[40px]">
+          <div className="flex gap-[4px] mt-[24px] lg:mt-[40px]  lg:justify-start">
             <p className="text-black font-[400] text-[16px] leading-[24px]">
               Don't have an account?
             </p>
-            <button className="text-[#C70039] font-[700] text-[16px] leading-[24px]"
-              onClick={() => { navigate("/register");}}
+            <button
+              className="text-[#C70039] font-[700] text-[16px] leading-[24px]"
+              onClick={() => {
+                navigate("/register");
+              }}
             >
               Register
             </button>
@@ -53,4 +59,5 @@ const LoginPage = () => {
     </div>
   );
 };
+
 export default LoginPage;
