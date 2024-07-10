@@ -7,11 +7,11 @@ import vector4 from '../../assets/HomePage/vector4.png'
 
 const Header = () => {
   return (
-    <div className="relative bg-[#160404] text-white w-screen lg:h-[846px] h-[1035px] overflow-hidden">
+    <div className="relative bg-[#160404] text-white w-full lg:h-[846px] h-[1035px] overflow-hidden">
       <div className="container mx-auto flex flex-col items-center justify-center h-screen lg:w-[1440px] w-full lg:px-[50px] px-4">
         <div className="flex flex-col items-center justify-start w-full h-full">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:h-[758px] z-10 relative">
-            <img src={headerimage2} alt="Image 1" className="lg:translate-y-48 lg:-translate-x-0 translate-y-10 translate-x-28 lg:order-1 order-3 w-2/3 lg:w-auto" />
+            <img src={headerimage2} alt="Image 1" className="lg:translate-y-48 lg:translate-x-10 translate-y-10 translate-x-28 lg:order-1 order-3 w-2/3 lg:w-auto" />
             <div className="flex flex-col items-center justify-start h-auto gap-4 lg:order-2 order-2 text-center px-4 lg:px-0">
               <h3 className="text-[50px] text-white font-Nunito font-extrabold leading-snug lg:mt-20">
                 Make the <br/>
@@ -24,7 +24,7 @@ const Header = () => {
                 Start Matching!
               </button>
             </div>
-            <img src={headerimage1} alt="Image 2" className="lg:-translate-y-48 lg:translate-x-0 -translate-y-8 -translate-x-28 lg:order-3 order-1 w-56 lg:w-auto" />
+            <img src={headerimage1} alt="Image 2" className="lg:-translate-y-48 lg:-translate-x-10 -translate-y-8 -translate-x-28 lg:order-3 order-1 w-56 lg:w-auto" />
             <div className="absolute inset-0  items-center justify-center z-0 pointer-events-none hidden lg:flex">
               <img src={vector1} alt="vector 1" className="object-contain animate-pulse" />
             </div>
