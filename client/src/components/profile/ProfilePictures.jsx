@@ -1,13 +1,51 @@
 import deleteButton from "/src/assets/profilepicture/deleteButton.svg";
+import { useState } from "react";
 
 function ProfilePictures() {
-  const avatars = {
-    key1: null,
-    key2: null,
-    key3: null,
-    key4: null,
-    key5: null,
+  const [avatars, setAvatars] = useState({
+    image1: null,
+    image2: null,
+    image3: null,
+    image4: null,
+    image5: null,
+  });
+
+  const handleFileChange = (event, avatarKey) => {
+    console.log(event.target.value);
+    const selectedFile = event.target.files[0];
+    setAvatars((prevAvatars) => ({
+      ...prevAvatars,
+      [avatarKey]: selectedFile,
+    }));
+    event.target.value = null;
   };
+
+  const handleDeleteClick = (avatarKey) => {
+    setAvatars((prevAvatars) => ({
+      ...prevAvatars,
+      [avatarKey]: null,
+    }));
+  };
+
+  const handleDragStart = (event, avatarKey) => {
+    event.dataTransfer.setData("avatarKey", avatarKey);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event, targetAvatarKey) => {
+    const sourceAvatarKey = event.dataTransfer.getData("avatarKey");
+    if (sourceAvatarKey !== targetAvatarKey) {
+      const updatedAvatars = { ...avatars };
+      const temp = updatedAvatars[targetAvatarKey];
+      updatedAvatars[targetAvatarKey] = updatedAvatars[sourceAvatarKey];
+      updatedAvatars[sourceAvatarKey] = temp;
+      setAvatars(updatedAvatars);
+    }
+  };
+
   return (
     <div className="w-full h-[80%] flex justify-center mb-[341px]">
       <div className="section-container flex flex-col h-[249px] mt-[80px]">
@@ -20,25 +58,49 @@ function ProfilePictures() {
           </p>
         </div>
         <div className="picture-list  flex flex-row gap-6 mt-[24px] ">
-          {Object.keys(avatars).map((avatarKey) => {
-            // const file = avatars[avatarKey];
-            return (
-              <div key={avatarKey} className="picture-container relative">
-                <img
-                  className="picture-preview w-[167px] aspect-square rounded-2xl"
-                  src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"
-                  // {URL.createObjectURL(file)}
-                  // alt={file.name}
-                />
-                {/*  onClick={(event) => handleRemoveImage(event, avatarKey)} */}
-                <img
-                  className="image-remove-button absolute -top-4 -right-4"
-                  src={deleteButton}
-                  onClick={() => {}}
-                />
-              </div>
-            );
-          })}
+          {Object.keys(avatars).map((avatarKey) => (
+            <div
+              key={avatarKey}
+              className="input-container"
+              draggable
+              onDragStart={(event) => handleDragStart(event, avatarKey)}
+              onDragOver={(event) => handleDragOver(event)}
+              onDrop={(event) => handleDrop(event, avatarKey)}
+            >
+              {avatars[avatarKey] ? (
+                <div className="image-preview-container w-[167px] h-[167px]">
+                  <img
+                    key={avatarKey}
+                    className="image-preview w-[167px] h-[167px] rounded-2xl "
+                    src={URL.createObjectURL(avatars[avatarKey])}
+                    alt={`Preview ${avatarKey}`}
+                  />
+                  <button
+                    className="rounded-full w-[24px] h-[24px] bg-[#AF2758]  relative bottom-44 left-[150px] text-white"
+                    onClick={() => handleDeleteClick(avatarKey)}
+                  >
+                    <p className="relative bottom-[2px]">x</p>
+                  </button>
+                </div>
+              ) : (
+                <label htmlFor={`upload-${avatarKey}`}>
+                  <div className="upload-placeholder">
+                    <div className="placeholder-content w-[167px] h-[167px] bg-gray-200 rounded-2xl flex flex-col justify-center items-center cursor-pointer text-[#7D2262]">
+                      <p>+</p>
+                      <p>Upload photo</p>
+                    </div>
+                  </div>
+                </label>
+              )}
+              <input
+                id={`upload-${avatarKey}`}
+                name="avatar"
+                type="file"
+                onChange={(event) => handleFileChange(event, avatarKey)}
+                hidden
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
