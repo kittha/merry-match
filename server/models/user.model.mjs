@@ -23,8 +23,10 @@ export const createUser = async (reqBody) => {
       hobbies,
     } = reqBody;
 
+
     const created_at = new Date();
     const updated_at = new Date();
+
 
     // Add user data to user_profile table
     const resultFromUsers = await connectionPool.query(

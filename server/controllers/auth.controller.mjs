@@ -1,5 +1,6 @@
 // import bcrypt from "bcrypt";
 import { createrUser } from "../models/user.model.mjs";
+import { getUserRole } from "../models/auth.model.mjs";
 import { signUp, signIn, getUser } from "../services/supabaseAuth.service.mjs";
 
 // POST
@@ -38,10 +39,17 @@ export const loginUser = async (req, res) => {
   try {
     const data = await signIn(req.body);
 
-    return res.status(200).json({
-      message: "User signed in successfully.",
-      data: data,
-    });
+    const userId = data.user.id;
+
+    const userRole = await getUserRole(userId);
+
+    if (userRole === "Admin") {
+      res.redirect("/admin");
+    } else if (userRole === "user") {
+      res.redirect("/landing-page");
+    } else {
+      res.status(403).send("Unauthorized");
+    }
   } catch (error) {
     res.status(500).json({
       message: "Internal server error",
