@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getAllPackages,
-  getPackageByParams,
+  getPackageById,
   createPackage,
   updatePackageById,
 } from "../../../controllers/package.controller.mjs";
@@ -15,12 +15,12 @@ const router = express.Router();
 
 router.get("/", getAllPackages);
 
-router.get("/:packageName", getPackageByParams);
+router.get("/:packageId", getPackageById);
 
-// add IdAdmin Middleware
+// add IsAdmin Middleware
 router.post("/", [], createPackage);
 
-// add IdAdmin Middleware
+// add IsAdmin Middleware
 router.put("/:packageId", [], updatePackageById);
 
 // router.delete("/:packageId",[supabaseAuthIsAdminMiddleware], deletePackageById);
