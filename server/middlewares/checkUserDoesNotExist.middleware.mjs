@@ -10,7 +10,7 @@ export const checkUserDoesNotExist = async (req, res, next) => {
   try {
     const result = doesUserExist(email);
 
-    if (result.rows.length > 0) {
+    if (result.rowCount > 0) {
       return res.status(400).json({ error: "Email already exists" });
     }
 

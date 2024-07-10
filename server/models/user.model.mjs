@@ -112,6 +112,9 @@ export const doesUserExist = async (email) => {
       `,
       [email]
     );
+    console.log("I'm at user Model");
+
+    console.log(result);
 
     return result;
   } catch (error) {
