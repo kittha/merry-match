@@ -1,11 +1,11 @@
 // import bcrypt from "bcrypt";
-import { createrUser } from "../models/user.model.mjs";
+import { createUser } from "../models/user.model.mjs";
 import { getUserRole } from "../models/auth.model.mjs";
 import { signUp, signIn, getUser } from "../services/supabaseAuth.service.mjs";
+import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
 
 // POST
 export const registerUser = async (req, res) => {
-  // multipart/form-data incoming
   try {
     // validate required input
     const { email, username, password } = req.body;
@@ -18,21 +18,35 @@ export const registerUser = async (req, res) => {
         .json({ message: "Invalid username, email, or password" });
     }
 
-    // `task:auth` signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
+    console.log("Registering user with data:", req.body);
+
+    // signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
     const { data } = await signUp(req.body);
+    console.log("Data after signUp with Supabase Auth: ", data);
+
+    // upload avatar to Cloudinary; then got avatar uri & url
+    let avatarUri = null;
+    if (req.files) {
+      console.log("Uploading avatar...");
+      avatarUri = await cloudinaryUpload(req.files);
+      console.log("Avatar uploaded:", avatarUri);
+    } else {
+      console.log("No avatar provided.");
+    }
 
     // `task:infoDB` register user information into our own database @/models/user.model.mjs
-    const result = await createrUser(req);
-
-    console.log("Created user_id:", result);
+    console.log("Creating user in database...");
+    await createUser(req.body, avatarUri);
+    console.log("User registration completed");
 
     return res.status(201).json({
-      message: `User ${result} has been created successfully`,
-      data: data,
+      message: `User has been created successfully`,
     });
   } catch (error) {
+    console.error("Error occurred during user registration:", error);
     res.status(500).json({
       message: "Internal server error",
+      error: error.message,
     });
   }
 };
@@ -41,9 +55,15 @@ export const loginUser = async (req, res) => {
   try {
     const data = await signIn(req.body);
 
+    if (!data || !data.user || !data.user.id) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
     const userId = data.user.id;
 
+    console.log("UserId is: ", userId);
     const userRole = await getUserRole(userId);
+    console.log("User role is: ", userRole);
 
     if (userRole === "Admin") {
       res.redirect("/admin");
@@ -53,6 +73,7 @@ export const loginUser = async (req, res) => {
       res.status(403).send("Unauthorized");
     }
   } catch (error) {
+    console.error("Error in loginUser:", error);
     res.status(500).json({
       message: "Internal server error",
     });

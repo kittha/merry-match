@@ -1,9 +1,14 @@
 import connectionPool from "../configs/db.mjs";
-import { uploadAvatar } from "./profile.model.mjs";
+import { supabase } from "../utils/supabaseClient.mjs";
 
-export const createrUser = async (req) => {
-  const reqBody = req.body;
+export const createUser = async (reqBody, avatarUri) => {
   try {
+    await connectionPool.query("BEGIN");
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     const {
       username,
       email,
@@ -16,34 +21,28 @@ export const createrUser = async (req) => {
       racial_preferences,
       meeting_interests,
       bio,
+      hobbies,
     } = reqBody;
 
-    if (!email || !username) {
-      throw new Error(
-        "Both username, email, password must be provided for sign-up."
-      );
-    }
+    const created_at = new Date();
+    const updated_at = new Date();
 
-    await connectionPool.query("BEGIN");
-
-    const userIdResult = await connectionPool.query(
-      `
-      INSERT INTO users (email)
-      VALUES ($1)
-      RETURNING user_id
-      `,
-      [email]
+    // Add user data to user table
+    const resultFromUsers = await connectionPool.query(
+      `INSERT INTO users (auth_id, username, email, created_at, updated_at)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING user_id`,
+      [user.id, username, email, created_at, updated_at]
     );
 
-    const userId = userIdResult.rows[0].user_id;
-
-    await connectionPool.query(
-      `
-     INSERT INTO user_profiles (user_id, name, date_of_birth, location, city, sexual_identities, sexual_preferences, racial_preferences, meeting_interests, bio)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-      `,
+    const { user_id } = resultFromUsers.rows[0];
+    // Add user data to user_profiles table
+    const resultFromProfiles = await connectionPool.query(
+      `INSERT INTO user_profiles (user_id, name, date_of_birth, location, city, sexual_identities, sexual_preferences, racial_preferences, meeting_interests, bio, created_at, updated_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      RETURNING profile_id`,
       [
-        (userId,
+        user_id,
         name,
         date_of_birth,
         location,
@@ -52,26 +51,53 @@ export const createrUser = async (req) => {
         sexual_preferences,
         racial_preferences,
         meeting_interests,
-        bio),
+        bio,
+        created_at,
+        updated_at,
       ]
     );
 
-    const uploadResult = await uploadAvatar(userId, req.files);
+    const { profile_id } = resultFromProfiles.rows[0];
+    // Add hobbies/interests data to hobbies table
+    // hobbies = ['tag1', 'tag2', ...]
+    for (let tag of hobbies) {
+      try {
+        await connectionPool.query(
+          `INSERT INTO hobbies (profile_id, content, created_at, updated_at)
+          VALUES ($1, $2, $3, $4)`,
+          [profile_id, tag, created_at, updated_at]
+        );
+      } catch (error) {
+        console.error("Error occurred while inserting hobbies:", error);
+        throw error;
+      }
+    }
 
-    if (!uploadResult) {
-      return res.status(500).json({
-        message: "Avatar upload failed.",
-      });
+    // Add profile pictures to profile_pictures table
+    // fileUrls = [{
+    //   url: result.secure_url,
+    //   publicId: result.public_id,
+    // }, ...];
+    for (let file of avatarUri) {
+      try {
+        await connectionPool.query(
+          `INSERT INTO profile_pictures (profile_id, cloudinary_id, url, created_at, updated_at)
+          VALUES ($1, $2, $3, $4, $5)`,
+          [profile_id, file.publicId, file.url, created_at, updated_at]
+        );
+      } catch (error) {
+        console.error(
+          "Error occurred while inserting profile pictures:",
+          error
+        );
+        throw error;
+      }
     }
 
     await connectionPool.query("COMMIT");
-    console.log("User signed up successfully:", userId);
-    return;
   } catch (error) {
     await connectionPool.query("ROLLBACK");
     console.error("Error occurred during signUp:", error);
     throw error;
-  } finally {
-    connectionPool.release();
   }
 };

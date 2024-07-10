@@ -1,4 +1,6 @@
 export const validateSignUp = (req, res, next) => {
+  console.log("Incoming request body: ", req.body);
+
   const { username, password, email } = req.body;
 
   if (!username || !password || !email) {

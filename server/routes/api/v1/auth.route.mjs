@@ -15,7 +15,9 @@ import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 
 const router = express.Router();
 
-router.post("/register", [validateSignUp, avatarUpload], registerUser);
+// avatarUploadMiddleware must come first!
+// If not, the header "multipart/form-data" will cause error to other function
+router.post("/register", [avatarUpload, validateSignUp], registerUser);
 router.post("/login", [validateSignIn], loginUser);
 // router.post("/logout", logoutUser);
 // router.post("/forgot-password", forgotPassword);
