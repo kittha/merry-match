@@ -4,9 +4,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        Nunito: ["Nunito"],
+        Nunito: "Nunito",
       },
     },
   },
   plugins: [],
 };
+
