@@ -8,7 +8,7 @@ export const checkUserDoesNotExist = async (req, res, next) => {
   }
 
   try {
-    const result = doesUserExist(email);
+    const result = await doesUserExist(email);
 
     // TODO re-test
     if (result.rowCount > 0) {

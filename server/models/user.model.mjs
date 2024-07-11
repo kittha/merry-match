@@ -1,5 +1,11 @@
 import connectionPool from "../configs/db.mjs";
 
+/**
+ * Check if user exist in the registry of Merry Match application.
+ *
+ * @param {string} email
+ * @returns
+ */
 export const doesUserExist = async (email) => {
   try {
     const result = await connectionPool.query(
@@ -10,7 +16,6 @@ export const doesUserExist = async (email) => {
         `,
       [email]
     );
-    console.log("I'm at user Model");
 
     return result;
   } catch (error) {
@@ -19,6 +24,12 @@ export const doesUserExist = async (email) => {
   }
 };
 
+/**
+ * Get user data (from table: users, user_profiles, hobbies, profile_picture) from email from the Merry Match application.
+ *
+ * @param {string} email
+ * @returns {object} - The data object, containing the user, profile, hobbies, avatar key:value pairs.
+ */
 export const getUser = async (email) => {
   try {
     // get data from users table

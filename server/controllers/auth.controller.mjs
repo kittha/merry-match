@@ -4,7 +4,13 @@ import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
 import { getUser } from "../models/user.model.mjs";
 import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
 
-// POST
+/**
+ * Register User for the Merry Match application.
+ *
+ * @param {object} req - The request object, contain many key:value of form input. For example: username, email, password, avatar, hobbies[]
+ * @param {object} res - The response object, used to send response back to the client If register is success or failure.
+ * @returns
+ */
 export const registerUser = async (req, res) => {
   try {
     // check datetime format
@@ -52,6 +58,13 @@ export const registerUser = async (req, res) => {
   }
 };
 
+/**
+ * Login User for the Merry Match application.
+ *
+ * @param {object} req - The request object, contain key:value of usename and password.
+ * @param {object} res - The response object, used to send response back to the client If login is success or failure.
+ * @returns
+ */
 export const loginUser = async (req, res) => {
   try {
     const { session } = await signIn(req.body);
@@ -93,6 +106,13 @@ export const loginUser = async (req, res) => {
   }
 };
 
+/**
+ * Fetch User details (from table users, user_profiles, hobbies, avatars) from the Merry Match application.
+ *
+ * @param {object} req - The request object, contain jwt token.
+ * @param {object} res - The response object, used to send data (from table users, user_profiles, hobbies, profile_pictures) and response back to the client.
+ * @returns
+ */
 export const fetchUser = async (req, res) => {
   try {
     const jwtToken = req.body;
