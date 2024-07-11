@@ -80,11 +80,10 @@ const Navbar = () => {
         <div className="lg:hidden fixed inset-0 top-[52px] bg-white z-10 font-Nunito text-gray-700 font-medium">
             <div className="flex justify-center items-center p-[16px] pt-[24px]">
               <button
-                className="flex justify-center items-center bg-gradient-to-r from-[#742138] to-[#A878BF] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[343px] font-[700]"
+                className="flex justify-center items-center bg-[#C70039] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[343px] font-[700]"
                 onClick={() => { navigate("/"); setIsOpen(false); }}
               >
-                <img src="../src/assets/Navbar/icon1.png" alt="icon1" className="mr-2"/>
-                More limit Merry!
+                Login
               </button>
             </div>
         </div>
