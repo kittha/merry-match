@@ -27,12 +27,14 @@ export const getUser = async (email) => {
       [email]
     );
     const userId = userResult.rows[0].user_id;
+    // console.log(userId);
 
     // get data from user_profiles table
     const profileResult = await connectionPool.query(
       `SELECT * FROM user_profiles WHERE user_id = $1`,
       [userId]
     );
+
     const profileId = profileResult.rows[0].profile_id;
 
     // get data from hobbies table

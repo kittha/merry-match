@@ -84,7 +84,7 @@ export const loginUser = async (req, res) => {
     //   res.status(403).send("Unauthorized");
     // }
 
-    return res.status(200).json({ data: session });
+    return res.status(200).json(data);
   } catch (error) {
     console.error("Error in loginUser:", error);
     res.status(500).json({
