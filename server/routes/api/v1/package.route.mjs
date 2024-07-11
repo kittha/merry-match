@@ -1,28 +1,27 @@
 import express from "express";
 import {
   getAllPackages,
-  getPackageByParams,
+  getPackageById,
   createPackage,
   updatePackageById,
+  deletePackageById,
 } from "../../../controllers/package.controller.mjs";
-// import {
-//   createPackage,
-//   deletePackageById,
-// } from "../../../controllers/package.controller.mjs";
 import supabaseAuthIsAdminMiddleware from "../../../middlewares/supabaseAuthIsAdminMiddleware.mjs";
+import { validatePackageData } from "../../../middlewares/validatePackageData.validation.mjs";
 
 const router = express.Router();
 
 router.get("/", getAllPackages);
 
-router.get("/:packageName", getPackageByParams);
+router.get("/:packageId", getPackageById);
 
-// add IdAdmin Middleware
-router.post("/", [], createPackage);
+// TODO: add IsAdmin Middleware
+router.post("/", [validatePackageData], createPackage);
 
-// add IdAdmin Middleware
-router.put("/:packageId", [], updatePackageById);
+// TODO: add IsAdmin Middleware
+router.put("/:packageId", [validatePackageData], updatePackageById);
 
-// router.delete("/:packageId",[supabaseAuthIsAdminMiddleware], deletePackageById);
+// TODO: add IsAdmin Middleware
+router.delete("/:packageId", [], deletePackageById);
 
 export default router;
