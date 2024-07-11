@@ -5,7 +5,7 @@ import SecondSection from "../../components/homepage/SecondSection";
 import ThirdSection from "../../components/homepage/ThirdSection";
 import Footer from "../../components/homepage/Footer";
 
-const HomePage = () => {
+const HomePageAuthen = () => {
   return (
     <div>
       <Header />
@@ -17,4 +17,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomePageAuthen;
