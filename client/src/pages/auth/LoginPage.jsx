@@ -1,15 +1,16 @@
 import bannerLogin from "/src/assets/loginpage/bannerLogin.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/authentication";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const { login, state } = useAuth();
+  const { login, state } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // login({ usename, password });
+    login({ email: username, password });
   };
   const navigate = useNavigate();
   return (
@@ -56,10 +57,9 @@ const LoginPage = () => {
               setPassword(e.target.value);
             }}
           />
-          <button className="w-full lg:w-[450px] h-[48px] bg-[#C70039] px-[24px] py-[12px] mt-[24px] lg:mt-[40px] rounded-[99px] text-[16px] font-[700] leading-[24px] text-white text-center"
-          onClick={() => {
-            navigate("/");
-          }}
+          <button
+            className="w-full lg:w-[450px] h-[48px] bg-[#C70039] px-[24px] py-[12px] mt-[24px] lg:mt-[40px] rounded-[99px] text-[16px] font-[700] leading-[24px] text-white text-center"
+            type="submit"
           >
             Log in
           </button>
