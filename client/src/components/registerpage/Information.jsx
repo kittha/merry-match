@@ -33,7 +33,7 @@ function BasicInformation() {
   };
 
   return (
-    <div className="w-full h-full flex justify-center mb-[112px]  mt-[37px] lg:mt-[80px]">
+    <div className="w-[100%] h-[80%] flex justify-center mb-[35px] lg:mb-[112px] mt-[37px] lg:mt-[80px]">
       <div className="flex flex-col w-screen lg:w-[930px]">
         <h1 className="basicInformation text-[#A62D82]   font-[700] text-[24px]">
           Basic Information

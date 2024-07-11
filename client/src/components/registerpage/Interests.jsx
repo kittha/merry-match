@@ -32,7 +32,7 @@ function IdentitiesAndInterests() {
   };
 
   return (
-    <div className="w-[100%] h-[80%] flex justify-center mb-[223px] mt-[37px] lg:mt-[80px]">
+    <div className="w-[100%] h-[80%] flex justify-center mb-[34px] lg:mb-[223px] mt-[37px] lg:mt-[80px]">
       <div className="flex flex-col w-screen lg:w-[930px]">
         <h1 className="IdentitiesAndInterestes text-[#A62D82]  font-[700] text-[24px] leading-[30px]">
           Identities and Interests
@@ -62,7 +62,7 @@ function IdentitiesAndInterests() {
             </select>
           </div>
 
-          <div className="flex flex-col lg:ml-[12px]">
+          <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
             <label
               htmlFor="SexualPreferences"
               className="font-[400] text-[16px] leading-[24px]"
@@ -122,7 +122,7 @@ function IdentitiesAndInterests() {
             </select>
           </div>
 
-          <div className="flex flex-col lg:ml-[12px]">
+          <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
             <label
               htmlFor="MeetingInterests"
               className="font-[400] text-[16px] leading-[24px]"
