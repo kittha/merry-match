@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+
         Nunito: "Nunito",
       },
       dropShadow: {
@@ -17,4 +18,5 @@ export default {
     },
   },
   plugins: ["daistui"],
+
 };
