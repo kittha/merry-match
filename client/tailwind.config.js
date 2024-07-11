@@ -13,5 +13,6 @@ export default {
     variants: {},
     plugins: [],
   },
+  plugins: ["daistui"],
 };
 
