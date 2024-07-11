@@ -9,10 +9,10 @@ function CardFeature(props) {
         />
       </div>
       <div className="lg:w-[198px] lg:h-[124px] w-[279px] h-[100px] p-[2px] flex flex-col lg:gap-[12px]">
-        <h4 className="lg:w-[194px] lg:h-[60px] w-[275px] h-[60px] font-nunito font-bold text-2xl leading-[30px] text-center text-white">
+        <h4 className="lg:w-[194px] lg:h-[60px] w-[275px] h-[60px] font-Nunito font-bold text-2xl leading-[30px] text-center text-white">
           {props.title}
         </h4>
-        <p className="lg:w-[194px] lg:h-[48px] w-[275px] h-[24px] font-nunito font-normal text-base leading-6 text-center text-[#C8CCDB]">
+        <p className="lg:w-[194px] lg:h-[48px] w-[275px] h-[24px] font-Nunito font-normal text-base leading-6 text-center text-[#C8CCDB]">
           {props.detail}
         </p>
       </div>
@@ -22,9 +22,9 @@ function CardFeature(props) {
 function SecondSection() {
   return (
     <section className="bg-[#160404] w-full h-full">
-      <div className="lg:w-[1440px] lg:h-[622px] min-[320px]:w-auto w-[375px] h-auto bg-[#160404] pb-10 mx-auto">
+      <div className="lg:w-full lg:h-[622px] min-[320px]:w-auto w-[375px] h-auto bg-[#160404] pb-10 mx-auto">
         <div className="lg:w-[1120px] lg:h-[454px] w-[343px] h-[1444px] flex flex-col gap-[48px] pt-[80px] mx-auto">
-          <h2 className="w-[343px] h-[58px] font-nunito font-extrabold text-[46px] leading-[57.5px] text-center text-[#DF89C6] lg:w-[1120px] lg:h-[58px]">
+          <h2 className="w-[343px] h-[58px] font-Nunito font-extrabold text-[46px] leading-[57.5px] text-center text-[#DF89C6] lg:w-[1120px] lg:h-[58px]">
             How to Merry
           </h2>
           <div className="flex lg:flex-row gap-[24px] justify-center items-center flex-col lg:mx-auto">
