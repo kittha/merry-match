@@ -6,6 +6,10 @@ export default {
       fontFamily: {
         Nunito: "Nunito",
       },
+      dropShadow: {
+        RedButton: "2px 2px 12px #40328529",
+        PinkButton: "2px 2px 12px #40328514",
+      },
     },
   },
   plugins: [],

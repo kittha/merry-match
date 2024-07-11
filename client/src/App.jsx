@@ -1,11 +1,9 @@
-import Sidebar from "./components/packageviewandedit/Sidebar";
-import Topbar from "./components/packageviewandedit/Topbar";
+import DeletePackage from "./components/packageviewandedit/Deletepackage";
 
 function App() {
   return (
     <div className="flex">
-      <Sidebar />
-      <Topbar />
+      <DeletePackage />
     </div>
   );
 }
