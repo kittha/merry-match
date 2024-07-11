@@ -7,7 +7,7 @@ import RegisterPage from "../auth/RegisterPage";
 
 const UnauthenticatedApp = () => {
   return (
-    <Router>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -15,7 +15,7 @@ const UnauthenticatedApp = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
-    </Router>
+    </>
   );
 };
 
