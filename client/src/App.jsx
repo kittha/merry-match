@@ -12,6 +12,8 @@ const App = () => {
         <Route path="*" element={<UnauthenticatedApp />} />
       </Routes>
     </Router>
+
+    <UnauthenticatedApp />
   );
 };
 */}

@@ -49,7 +49,7 @@ const Navbar = () => {
           </button>
         </div>
         
-        {/* Hamburger Menu for Mobile */}
+        {/*------------------------------------------------ Hamburger Menu for Mobile ------------------------------------------------------*/}
         <div className="lg:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -59,7 +59,8 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Desktop Menu */}
+         {/*---------------------------------------- Desktop Menu -------------------------------------------------------------------*/}
+
          <div className="hidden lg:flex lg:items-center lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent mr-[160px]">
          <Link to="why-merry" smooth={true} duration={500} className="block lg:inline-block py-2 lg:py-0 ml-8 lg:text-left">
             <h2 onClick={() => { navigate("/"); setIsOpen(false); }}>Why Merry Match?</h2>
@@ -75,14 +76,15 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/*-------------------------------------------- Mobile Menu -----------------------------------------------------------------------*/}
         {isOpen && (
         <div className="lg:hidden fixed inset-0 top-[52px] bg-white z-10 font-Nunito text-gray-700 font-medium">
             <div className="flex justify-center items-center p-[16px] pt-[24px]">
               <button
                 className="flex justify-center items-center bg-[#C70039] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[343px] font-[700]"
-                onClick={() => { navigate("/"); setIsOpen(false); }}
+                onClick={() => { navigate("/login"); setIsOpen(false); }}
               >
+                <img src="../src/assets/Navbar/icon1.png" alt="icon1" className="mr-2"/>
                 Login
               </button>
             </div>
