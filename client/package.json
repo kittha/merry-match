@@ -10,8 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@esbuild/linux-x64": "^0.23.0",
-    "@rollup/rollup-linux-x64-gnu": "^4.18.1",
     "axios": "^1.7.2",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
