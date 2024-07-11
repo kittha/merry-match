@@ -45,7 +45,7 @@ function ProfilePictures() {
   };
 
   return (
-    <div className="w-full h-auto flex justify-center lg:justify-start lg:mb-[341px]">
+    <div className="w-full h-auto flex justify-center lg:justify-start mb-[12px] lg:mb-[341px]">
       <div className="section-container flex flex-col mt-[37px] lg:mt-[80px] w-full  ">
         <div className="section-header">
           <h2 className="text-[#A62D82] text-[24px] font-[700] leading-[30px]">
@@ -55,7 +55,7 @@ function ProfilePictures() {
             Upload at least 2 photos
           </p>
         </div>
-        <div className="picture-list flex  flex-row flex-wrap gap-2  lg:gap-4  mt-[24px]  lg:justify-start mb-[12px]">
+        <div className="picture-list flex  flex-row flex-wrap gap-2  lg:gap-3  mt-[24px]  lg:justify-start">
           {Object.keys(avatars).map((avatarKey) => (
             <div
               key={avatarKey}
