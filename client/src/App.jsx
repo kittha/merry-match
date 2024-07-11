@@ -1,11 +1,7 @@
-import DeletePackage from "./components/packageviewandedit/Deletepackage";
+import PackageListPage from "./pages/admin/PackageListPage";
 
 function App() {
-  return (
-    <div className="flex">
-      <DeletePackage />
-    </div>
-  );
+  return <PackageListPage />;
 }
 
 export default App;
