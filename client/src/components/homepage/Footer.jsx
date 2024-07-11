@@ -14,8 +14,8 @@ function Logo(props) {
 function Footer() {
   return (
     <footer className="bg-[#F6F7FC] w-full h-full">
-      <div className="w-[340px] h-[345px] lg:w-full lg:h-[371px] bg-[#F6F7FC] mx-auto">
-        <div className="w-[340px] h-[275px] ld:w-[1120px] flex flex-col justify-space-between gab-[48px] relative top-[48px] lg:left-[160px]">
+      <div className="w-[340px] h-[345px] lg:w-[1120px] lg:h-[371px] bg-[#F6F7FC] mx-auto">
+        <div className=" ld:w-[1120px] flex flex-col justify-space-between gab-[48px] relative top-[48px]">
           <div className="lg:w-[1120px] lg:h-[110px] w-[327px] h-[120px] mx-auto">
             <img
               src="./src/assets/footer-img/logo1.png"
