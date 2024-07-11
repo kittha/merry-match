@@ -84,19 +84,21 @@ export const createUser = async (reqBody, avatarUri) => {
     //   url: result.secure_url,
     //   publicId: result.public_id,
     // }, ...];
-    for (let file of avatarUri) {
-      try {
-        await connectionPool.query(
-          `INSERT INTO profile_pictures (profile_id, cloudinary_id, url, created_at, updated_at)
-          VALUES ($1, $2, $3, $4, $5)`,
-          [profile_id, file.publicId, file.url, created_at, updated_at]
-        );
-      } catch (error) {
-        console.error(
-          "Error occurred while inserting profile pictures:",
-          error
-        );
-        throw error;
+    if (avatarUri) {
+      for (let file of avatarUri) {
+        try {
+          await connectionPool.query(
+            `INSERT INTO profile_pictures (profile_id, cloudinary_id, url, created_at, updated_at)
+            VALUES ($1, $2, $3, $4, $5)`,
+            [profile_id, file.publicId, file.url, created_at, updated_at]
+          );
+        } catch (error) {
+          console.error(
+            "Error occurred while inserting profile pictures:",
+            error
+          );
+          throw error;
+        }
       }
     }
 

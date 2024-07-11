@@ -22,13 +22,13 @@ export const registerUser = async (req, res) => {
     // console.log("Registering user with data:", req.body);
 
     // signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
-    const { data } = await signUp(req.body);
-    console.log("Data after signUp with Supabase Auth: ", data);
+    // const { data } = await signUp(req.body);
+    // console.log("Data after signUp with Supabase Auth: ", data);
 
     // upload avatar to Cloudinary; then got avatar uri & url
     let avatarUri = null;
-    if (req.files) {
-      console.log("Uploading avatar...");
+    console.log(Object.keys(req.files).length);
+    if (Object.keys(req.files).length !== 0) {
       avatarUri = await cloudinaryUpload(req.files);
       // console.log("Avatar uploaded:", avatarUri);
     } else {
