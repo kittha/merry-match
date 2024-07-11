@@ -19,14 +19,30 @@ const transports = [
   }),
 ];
 
-if (process.env.NODE_ENV === "production") {
-  transports.push(
-    new winston.transports.Syslog({
-      host: `${process.env.PAPERTRAIL_HOST}`,
-      port: process.env.PAPERTRAIL_PORT,
-      logFormat: logFormat,
-    })
-  );
+if (
+  process.env.NODE_ENV === "production" ||
+  process.env.NODE_ENV === "development"
+) {
+  if (process.env.PAPERTRAIL_HOST) {
+    transports.push(
+      new winston.transports.Syslog({
+        host: process.env.PAPERTRAIL_HOST,
+        port: process.env.PAPERTRAIL_PORT,
+        logFormat: logFormat,
+      })
+    );
+  } else {
+    // Fallback behavior when PAPERTRAIL_HOST is not defined
+    transports.push(
+      new winston.transports.Console({
+        format: combine(
+          timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+          errors({ stack: true }),
+          logFormat
+        ),
+      })
+    );
+  }
 }
 
 // Always keep log in UTC+0.

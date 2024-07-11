@@ -1,19 +1,32 @@
 import express from "express";
-import { registerUser } from "../../../controllers/auth.controller.mjs";
+import {
+  registerUser,
+  loginUser,
+  fetchUser,
+} from "../../../controllers/auth.controller.mjs";
 // import {
-//   loginUser,
-//   logoutUser,
+// logoutUser,
 //   forgotPassword,
 //   resetPassword,
 // } from "../../../controllers/auth.controller.mjs";
-import { validateUsernamePassword } from "../../../middlewares/username-password.validation.mjs";
+import { validateSignUp } from "../../../middlewares/signUp.validation.mjs";
+import { validateSignIn } from "../../../middlewares/signIn.validation.mjs";
+import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
+import { checkUserDoesNotExist } from "../../../middlewares/checkUserDoesNotExist.middleware.mjs";
 
 const router = express.Router();
 
-router.post("/register", [validateUsernamePassword], registerUser);
-// router.post("/login", loginUser);
+// avatarUploadMiddleware must come first!
+// If not, the header "multipart/form-data" will cause error to other function
+router.post(
+  "/register",
+  [avatarUpload, validateSignUp, checkUserDoesNotExist],
+  registerUser
+);
+router.post("/login", [avatarUpload, validateSignIn], loginUser);
 // router.post("/logout", logoutUser);
 // router.post("/forgot-password", forgotPassword);
 // router.post("/reset-password/:token", resetPassword);
+router.get("/:tokenId", fetchUser);
 
 export default router;

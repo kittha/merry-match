@@ -1,7 +1,11 @@
 import connectionPool from "../configs/db.mjs";
 import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
 
-// GET
+/**
+ *
+ * @param {number} userId
+ * @returns {array} - The Array of Objects, In the Object it contains many key:value pairs of picture_id, profile_id, cloudinary_id, url, created_at, updated_at.
+ */
 export const getUserAvatar = async (userId) => {
   try {
     const result = await connectionPool.query(
@@ -19,8 +23,13 @@ export const getUserAvatar = async (userId) => {
   }
 };
 
-// POST
-export const updateAvatar = async (userId, files) => {
+/**
+ *
+ * @param {number} userId
+ * @param {object} files - The Object which contain key:value pair. Key is avatar. Value is Array of Objects. Each Object contain key:value pair of fieldname, originalname, encoding, mimetype, destination, filename, path, size.
+ * @returns {boolean}
+ */
+export const uploadAvatar = async (userId, files) => {
   try {
     const fileUrls = await cloudinaryUpload(files);
 
@@ -33,8 +42,9 @@ export const updateAvatar = async (userId, files) => {
 
       const result = await connectionPool.query(
         `
-        INSERT INTO profile_pictures (profile_id, cloudinary_id, url, updated_at)
-        VALUES ($1, $2, $3, NOW())
+
+        INSERT INTO profile_pictures (profile_id, cloudinary_id, url)
+        VALUES ($1, $2, $3)
         RETURNING *
         `,
         [userId, pictureURIs.publicId, pictureURIs.url]

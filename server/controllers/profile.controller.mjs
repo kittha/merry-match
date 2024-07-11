@@ -1,9 +1,15 @@
 import {
-  updateAvatar as updateAvatarFromModel,
+  uploadAvatar as uploadAvatarFromModel,
   getUserAvatar as getUserAvatarFromModel,
 } from "../models/profile.model.mjs";
 
-// GET
+/**
+ *
+ * @param {object} req - The request object, contain user id.
+ * @param {object} res
+ * @returns - The response object, containing the information message with the json file
+ * In the json file, It's the Array of Objects, In the Object it contains many key:value pairs of picture_id, profile_id, cloudinary_id, url, created_at, updated_at.
+ */
 export const getUserAvatar = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -22,12 +28,17 @@ export const getUserAvatar = async (req, res) => {
   }
 };
 
-// POST
+/**
+ *
+ * @param {object} req - The request object, contain user id, files(Object).
+ * @param {object} res - The response object, containing the response message.
+ * @returns
+ */
 export const uploadAvatar = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const uploadResult = await updateAvatarFromModel(userId, req.files);
+    const uploadResult = await uploadAvatarFromModel(userId, req.files);
 
     if (!uploadResult) {
       return res.status(500).json({

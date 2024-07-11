@@ -10,6 +10,17 @@ _Merry Match_ is the right place for you!
 
 ---
 
+## Collaborators
+
+@[Marquizx](https://github.com/Marquizx)  
+@[VarisaB](https://github.com/VarisaB)  
+@[kittha](https://github.com/kittha)  
+@[paphonwat](https://github.com/paphonwat)  
+@[revieww12](https://github.com/revieww12)  
+@[titykp](https://github.com/titykp)
+
+---
+
 ## Tech Stack
 
 **Client:**
@@ -25,7 +36,7 @@ PostgreSQL
 Cloudinary
 
 **Infrastructure Platform:**
-Vercel, Railway.app
+Railway.app, Supabase, Vercel
 
 **Software Development and Project Management Tools:**
 Agile, Scrum, Git, GitHub, Trello, Figma
