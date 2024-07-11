@@ -67,7 +67,7 @@ export const getUser = async (email) => {
       avatars: avatarsResult.rows,
     };
 
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.error("Error occurred during signIn:", error);

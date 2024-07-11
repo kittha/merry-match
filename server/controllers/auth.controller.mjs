@@ -1,8 +1,9 @@
 // import bcrypt from "bcrypt";
-import { createUser, getUserRole } from "../models/auth.model.mjs";
+import { createUser } from "../models/auth.model.mjs";
 import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
 import { getUser } from "../models/user.model.mjs";
 import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
+import { getRole } from "../models/role.model.mjs";
 
 /**
  * Register User for the Merry Match application.
@@ -73,9 +74,15 @@ export const loginUser = async (req, res) => {
     const { user, avatars } = await getUser(session.user.email);
     console.log("get data from database");
 
+    const { name } = await getRole(user.role_id);
+
+    const avatarsUrl = avatars.map((avatar) => avatar.url);
+
     const data = {
+      id: user.user_id,
       username: user.username,
-      avatars,
+      role: name,
+      avatars: avatarsUrl,
       session,
     };
 
