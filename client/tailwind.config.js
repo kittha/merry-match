@@ -9,10 +9,12 @@ export default {
       dropShadow: {
         register: "2px 2px 12px 0px #40328529",
       },
+      backgroundImage: {
+        "register-bg": "url(/src/assets/registerpage/register-section-bg.svg)",
+      },
+      variants: {},
+      plugins: [],
     },
-    variants: {},
-    plugins: [],
   },
   plugins: ["daistui"],
 };
-

@@ -1,6 +1,5 @@
-import deleteButton from "/src/assets/profilepicture/deleteButton.svg";
 import { useState } from "react";
-
+import plus from "../../assets/profilepicture/plus.png";
 function ProfilePictures() {
   const [avatars, setAvatars] = useState({
     image1: null,
@@ -11,7 +10,6 @@ function ProfilePictures() {
   });
 
   const handleFileChange = (event, avatarKey) => {
-    console.log(event.target.value);
     const selectedFile = event.target.files[0];
     setAvatars((prevAvatars) => ({
       ...prevAvatars,
@@ -47,8 +45,8 @@ function ProfilePictures() {
   };
 
   return (
-    <div className="w-full h-[80%] flex justify-center mb-[341px]">
-      <div className="section-container flex flex-col h-[249px] mt-[80px]">
+    <div className="w-full h-auto flex justify-center lg:justify-start lg:mb-[341px]">
+      <div className="section-container flex flex-col mt-[37px] lg:mt-[80px] w-full  ">
         <div className="section-header">
           <h2 className="text-[#A62D82] text-[24px] font-[700] leading-[30px]">
             Profile pictures
@@ -57,38 +55,36 @@ function ProfilePictures() {
             Upload at least 2 photos
           </p>
         </div>
-        <div className="picture-list  flex flex-row gap-6 mt-[24px] ">
+        <div className="picture-list flex  flex-row flex-wrap gap-2  lg:gap-4  mt-[24px]  lg:justify-start mb-[12px]">
           {Object.keys(avatars).map((avatarKey) => (
             <div
               key={avatarKey}
               className="input-container"
               draggable
               onDragStart={(event) => handleDragStart(event, avatarKey)}
-              onDragOver={(event) => handleDragOver(event)}
+              onDragOver={handleDragOver}
               onDrop={(event) => handleDrop(event, avatarKey)}
             >
               {avatars[avatarKey] ? (
-                <div className="image-preview-container w-[167px] h-[167px]">
+                <div className="image-preview-container w-[167px] h-[167px] relative">
                   <img
                     key={avatarKey}
-                    className="image-preview w-[167px] h-[167px] rounded-2xl "
+                    className="image-preview w-[167px] h-[167px] rounded-2xl object-cover"
                     src={URL.createObjectURL(avatars[avatarKey])}
                     alt={`Preview ${avatarKey}`}
                   />
                   <button
-                    className="rounded-full w-[24px] h-[24px] bg-[#AF2758]  relative bottom-44 left-[150px] text-white"
+                    className="deleteButton w-[24px] h-[24px] bg-[#AF2758] rounded-full text-white flex justify-center items-center absolute top-2 right-2"
                     onClick={() => handleDeleteClick(avatarKey)}
                   >
-                    <p className="relative bottom-[2px]">x</p>
+                    x
                   </button>
                 </div>
               ) : (
                 <label htmlFor={`upload-${avatarKey}`}>
-                  <div className="upload-placeholder">
-                    <div className="placeholder-content w-[167px] h-[167px] bg-gray-200 rounded-2xl flex flex-col justify-center items-center cursor-pointer text-[#7D2262]">
-                      <p>+</p>
-                      <p>Upload photo</p>
-                    </div>
+                  <div className="upload-placeholder gap-2 w-[167px] h-[167px]  bg-[#F1F2F6] rounded-2xl flex flex-col justify-center items-center cursor-pointer text-[#7D2262]">
+                    <img src={plus}></img>
+                    <p className="text-[14px] font-[500]">Upload photo</p>
                   </div>
                 </label>
               )}
