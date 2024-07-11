@@ -1,11 +1,12 @@
 import React from "react";
-import UnauthenticatedApp from './pages/router/UnauthenticatedApp';
+import UnauthenticatedApp from "./pages/router/UnauthenticatedApp";
+import AuthenticatedApp from "./pages/router/AuthenticatedApp";
+import { useAuth } from "./contexts/authentication";
 
 const App = () => {
-  return (
-    <UnauthenticatedApp/>
-  );
+  const auth = useAuth();
+
+  return auth.isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 };
 
 export default App;
-
