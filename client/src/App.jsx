@@ -1,12 +1,12 @@
-import "./App.css";
-import HomePage from "./pages/users/HomePage";
+import React from 'react';
+import UnauthenticatedApp from './pages/router/UnauthenticatedApp';
 
-function App() {
+const App = () => {
   return (
-    <>
-      <HomePage />
-    </>
+    <UnauthenticatedApp />
+
   );
-}
+};
 
 export default App;
+
