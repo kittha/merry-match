@@ -59,7 +59,7 @@ const Navbar = () => {
           </button>
         </div>
 
-         {/* Desktop Menu */}
+        {/* Desktop Menu */}
          <div className="hidden lg:flex lg:items-center lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent mr-[160px]">
          <Link to="why-merry" smooth={true} duration={500} className="block lg:inline-block py-2 lg:py-0 ml-8 lg:text-left">
             <h2 onClick={() => { navigate("/"); setIsOpen(false); }}>Why Merry Match?</h2>
