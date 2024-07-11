@@ -56,7 +56,11 @@ const LoginPage = () => {
               setPassword(e.target.value);
             }}
           />
-          <button className="w-full lg:w-[450px] h-[48px] bg-[#C70039] px-[24px] py-[12px] mt-[24px] lg:mt-[40px] rounded-[99px] text-[16px] font-[700] leading-[24px] text-white text-center">
+          <button className="w-full lg:w-[450px] h-[48px] bg-[#C70039] px-[24px] py-[12px] mt-[24px] lg:mt-[40px] rounded-[99px] text-[16px] font-[700] leading-[24px] text-white text-center"
+          onClick={() => {
+            navigate("/");
+          }}
+          >
             Log in
           </button>
           <div className="flex gap-[4px] mt-[24px] lg:mt-[40px]  lg:justify-start">
