@@ -1,5 +1,5 @@
 import { useState } from "react";
-import plus from "../../assets/profilepicture/plus.png";
+import plus from "../../../public/assets/profilepicture/plus.png";
 function ProfilePictures() {
   const [avatars, setAvatars] = useState({
     image1: null,

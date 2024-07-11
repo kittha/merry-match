@@ -18,7 +18,7 @@ function Footer() {
         <div className=" ld:w-[1120px] flex flex-col justify-space-between gab-[48px] relative top-[48px]">
           <div className="lg:w-[1120px] lg:h-[110px] w-[327px] h-[120px] mx-auto">
             <img
-              src="./src/assets/footer-img/logo1.png"
+              src="./public/assets/footer-img/logo1.png"
               className="w-[238.57px] h-[80px] p-[22.5px 8.7px 20px 7.46px] mx-auto"
               alt="logo1"
             />
@@ -29,19 +29,19 @@ function Footer() {
           
           <div className="lg:w-[1120px] h-[117px] w-[327px] flex flex-col gap-[24px] pt-[24px] mx-auto">
           <div className="flex flex-col gap-[24px] pt-[2px] border-b-[1px] border-[#E4E6ED]"></div>
-            <p className="w-auto h-[21px] font-nunito font-medium text-sm leading-[21px] text-[#9AA1B9] text-center mx-auto">
+            <p className="w-auto h-[32px] font-nunito font-medium text-sm leading-[21px] text-[#9AA1B9] text-center mx-auto">
               copyright ©2022 merrymatch.com All rights reserved
             </p>
 
             <div className="w-[176px] h-[48px] flex flex-row gap-[16px] mx-auto">
               <a href="https://www.facebook.com/">
-                <Logo image="./src/assets/footer-img/logo2.png" alt="logo2" />
+                <Logo image="./public/assets/footer-img/logo2.png" alt="logo2" />
               </a>
               <a href="https://www.instagram.com/accounts/login/?hl=en">
-                <Logo image="./src/assets/footer-img/logo3.png" alt="logo3" />
+                <Logo image="./public/assets/footer-img/logo3.png" alt="logo3" />
               </a>
               <a href="https://x.com/">
-                <Logo image="./src/assets/footer-img/logo4.png" alt="logo4" />
+                <Logo image="./public/assets/footer-img/logo4.png" alt="logo4" />
               </a>
             </div>
           </div>
