@@ -14,7 +14,7 @@ const LoginPage = () => {
   };
   const navigate = useNavigate();
   return (
-    <div className="lg:bg-[url('/src/assets/loginpage/login-bg.svg')] bg-cover w-screen h-auto min-h-screen flex justify-center m-0 p-0 pt-[52px] lg:pt-[88px]">
+    <div className="lg:bg-[url('../../../public/assets/loginpage/login-bg.svg')] bg-cover w-screen h-auto min-h-screen flex justify-center m-0 p-0 pt-[52px] lg:pt-[88px]">
       <div className="lg:mt-[80px] lg:mb-[179px] w-full  flex flex-col lg:flex-row lg:justify-center justify-start mt-[40px] items-center gap-[40px] lg:gap-[216px] px-[16px]">
         <section className="left w-full lg:w-[450px] h-auto lg:h-[677px] flex justify-center lg:justify-start">
           <img
