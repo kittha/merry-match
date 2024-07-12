@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FormContext } from "../../contexts/FormProvider";
 import Countrydata from "/src/mock-city/Countrydata.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function BasicInformation() {
-  //states form 1
+  const { formData, handleChange } = useContext(FormContext);
   const [state, setState] = useState([]);
-  const [name, setName] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  //DatePicker
   const [selectDate, setSelectDate] = useState(null);
+
+  useEffect(() => {
+    if (formData.country) {
+      const selectedCountry = Countrydata.find(
+        (country) => country.country_name === formData.country
+      );
+      if (selectedCountry) {
+        setState(selectedCountry.states);
+      }
+    }
+    if (formData.birthday) {
+      setSelectDate(new Date(formData.birthday));
+    }
+  }, [formData.country, formData.birthday]);
 
   const handleCountry = (e) => {
     const getCountryId = e.target.value;
@@ -24,18 +29,18 @@ function BasicInformation() {
       (country) => country.country_name === getCountryId
     ).states;
     setState(getStateData);
-    setCountry(getCountryId);
+    handleChange("country", getCountryId);
   };
 
   const handleState = (e) => {
     const city = e.target.value;
-    setCity(city);
+    handleChange("city", city);
   };
 
   return (
     <div className="w-[100%] h-[80%] flex justify-center mb-[35px] lg:mb-[112px] mt-[37px] lg:mt-[80px]">
       <div className="flex flex-col w-screen lg:w-[930px]">
-        <h1 className="basicInformation text-[#A62D82]   font-[700] text-[24px]">
+        <h1 className="basicInformation text-[#A62D82] font-[700] text-[24px]">
           Basic Information
         </h1>
         <div className="column1 flex mt-[24px] lg:flex-row flex-col">
@@ -49,12 +54,10 @@ function BasicInformation() {
             <input
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               id="name"
-              value={name}
+              value={formData.name}
               placeholder="Name"
               required
-              onChange={(event) => {
-                setName(event.target.value);
-              }}
+              onChange={(event) => handleChange("name", event.target.value)}
             />
           </div>
 
@@ -73,6 +76,7 @@ function BasicInformation() {
               dateFormat="dd/MM/yyyy"
               onChange={(date) => {
                 setSelectDate(date);
+                handleChange("birthday", date);
               }}
             />
           </div>
@@ -88,7 +92,7 @@ function BasicInformation() {
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               onChange={(e) => handleCountry(e)}
-              value={country}
+              value={formData.country}
               required
             >
               <option disabled value="">
@@ -116,7 +120,7 @@ function BasicInformation() {
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               onChange={(e) => handleState(e)}
-              value={city}
+              value={formData.city}
               required
             >
               <option disabled value="">
@@ -142,8 +146,8 @@ function BasicInformation() {
             <input
               type="text"
               placeholder="At least 6 characters"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={formData.username}
+              onChange={(e) => handleChange("username", e.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
           </div>
@@ -159,8 +163,8 @@ function BasicInformation() {
             <input
               type="email"
               placeholder="name@website.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) => handleChange("email", e.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
           </div>
@@ -177,8 +181,8 @@ function BasicInformation() {
             <input
               type="password"
               placeholder="At least 8 characters"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={(e) => handleChange("password", e.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
           </div>
@@ -194,8 +198,8 @@ function BasicInformation() {
             <input
               type="password"
               placeholder="At least 8 characters"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={formData.confirmPassword}
+              onChange={(e) => handleChange("confirmPassword", e.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
           </div>
