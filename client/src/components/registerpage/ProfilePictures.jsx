@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import plus from "../../assets/profilepicture/plus.png";
+import plus from "../../../public/assets/profilepicture/plus.png";
 import { FormContext } from "../../contexts/FormProvider";
 
 function ProfilePictures() {
