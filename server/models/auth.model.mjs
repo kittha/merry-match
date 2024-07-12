@@ -64,20 +64,20 @@ export const createUser = async (reqBody, avatarUri) => {
     );
 
     const { profile_id } = resultFromProfiles.rows[0];
-    // Add hobbies/interests data to hobbies table
-    // hobbies = ['tag1', 'tag2', ...]
-    for (let tag of hobbies) {
-      try {
-        await connectionPool.query(
-          `INSERT INTO hobbies (profile_id, content, created_at, updated_at)
-          VALUES ($1, $2, $3, $4)`,
-          [profile_id, tag, created_at, updated_at]
-        );
-      } catch (error) {
-        console.error("Error occurred while inserting hobbies:", error);
-        throw error;
-      }
-    }
+    // // Add hobbies/interests data to hobbies table
+    // // hobbies = ['tag1', 'tag2', ...]
+    // for (let tag of hobbies) {
+    //   try {
+    //     await connectionPool.query(
+    //       `INSERT INTO hobbies (profile_id, content, created_at, updated_at)
+    //       VALUES ($1, $2, $3, $4)`,
+    //       [profile_id, tag, created_at, updated_at]
+    //     );
+    //   } catch (error) {
+    //     console.error("Error occurred while inserting hobbies:", error);
+    //     throw error;
+    //   }
+    // }
 
     // Add profile pictures to profile_pictures table
     // fileUrls = [{
