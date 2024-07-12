@@ -1,4 +1,4 @@
-import bannerLogin from "/src/assets/loginpage/bannerLogin.png";
+import bannerLogin from "../../../public/assets/loginpage/bannerLogin.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";

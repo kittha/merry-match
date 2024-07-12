@@ -1,10 +1,10 @@
 import React from 'react';
-import vector2 from '../../assets/HomePage/vector2.png';
+import vector2 from '../../../public/assets/HomePage/vector2.png'
 
 function FirstSection() {
   return (
-    <div>
-      <div className="w-full bg-[#160404] lg:h-[533px] h-auto lg:flex justify-center items-center space-x-9 relative">
+    <div id="first-section">
+      <div className="w-full bg-[#160404] lg:h-[533px] h-auto lg:flex justify-center items-center space-x-9 relative pt-10 ">
         <div className="lg:w-[549px] lg:h-[325px] lg:flex lg:flex-col justify-center px-0 lg:px-160">
           <h1 className="text-[#DF89C6] text-[46px] font-Nunito font-[800] lg:pl-10 px-4 2xl:pl-0" id="why-merry">
             Why Merry Match?
@@ -23,9 +23,10 @@ function FirstSection() {
           </p>
         </div>
 
-        <div className="lg:w-[549px] lg:h-[325px] w-[280px] lg:mt-0 mt-10 lg:pb-0 pb-28">
+        <div className="lg:w-[549px] lg:h-[325px] w-[300px] lg:mt-0 mt-10 lg:pb-0 pb-16 flex justify-center items-center mx-auto">
           <img src={vector2} alt="Vector 2" className="max-w-full h-auto" />
         </div>
+
       </div>
     </div>
   );
