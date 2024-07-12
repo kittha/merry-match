@@ -24,6 +24,23 @@ export const doesUserExist = async (email) => {
   }
 };
 
+export const createUser = async (data) => {
+  const { username, email, role } = data;
+  const currentDateTime = new Date();
+  try {
+    const result = await connectionPool.query(
+      `INSERT INTO users (username, email, created_at, updated_at)
+      VALUES ($1, $2, $3, $4)
+      RETURNING user_id`,
+      [username, email, currentDateTime, currentDateTime]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in user model", error.message);
+    throw error;
+  }
+};
+
 /**
  * Get user data (from table: users, user_profiles, hobbies, profile_picture) from email from the Merry Match application.
  *

@@ -65,3 +65,59 @@ export const uploadAvatar = async (userId, files) => {
     throw error;
   }
 };
+
+export const createProfile = async (userId, data) => {
+  const {
+    name,
+    date_of_birth,
+    location,
+    city,
+    sexual_identities,
+    sexual_preferences,
+    racial_preferences,
+    meeting_interests,
+    bio,
+    hobbies,
+  } = data;
+  const currentDateTime = new Date();
+
+  try {
+    const result = await connectionPool.query(
+      `INSERT INTO profiles (
+        user_id, 
+        name, 
+        date_of_birth, 
+        location, 
+        city, 
+        sexual_identities, 
+        sexual_preferences, 
+        racial_preferences, 
+        meeting_interests,
+        hobbies, 
+        bio, 
+        created_at, 
+        updated_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      RETURNING profile_id`,
+      [
+        userId,
+        name,
+        date_of_birth,
+        location,
+        city,
+        sexual_identities,
+        sexual_preferences,
+        racial_preferences,
+        meeting_interests,
+        hobbies,
+        bio,
+        currentDateTime,
+        currentDateTime,
+      ]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in profile model", error.message);
+    throw error;
+  }
+};
