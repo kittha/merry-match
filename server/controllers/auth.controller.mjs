@@ -3,7 +3,10 @@ import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
 import { getUser, createUser } from "../models/user.model.mjs";
 import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
 import { createProfile } from "../models/profile.model.mjs";
-import { createProfilePicture } from "../models/profilePicture.mjs";
+import {
+  createProfilePicture,
+  getProfilePicture,
+} from "../models/profilePicture.mjs";
 import { getRole } from "../models/role.model.mjs";
 
 /**
@@ -19,9 +22,9 @@ export const registerUser = async (req, res) => {
 
     // console.log("Registering user with data:", req.body);
 
-    // // signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
-    // const { data } = await signUp(req.body);
-    // console.log("Data after signUp with Supabase Auth: ", data);
+    // signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
+    await signUp(req.body);
+    console.log("signUp with Supabase Auth success");
 
     // upload avatar to Cloudinary; then got avatar uri & url
     let avatarUri = null;
@@ -34,8 +37,8 @@ export const registerUser = async (req, res) => {
 
     // `task:infoDB` register user information into our own database @/models/user.model.mjs
     const { user_id } = await createUser(req.body);
-    const { profile_id } = await createProfile(user_id, req.body);
-    await createProfilePicture(profile_id, avatarUri);
+    await createProfile(user_id, req.body);
+    await createProfilePicture(user_id, avatarUri);
     console.log("User registration completed");
 
     return res.status(201).json({
@@ -61,17 +64,18 @@ export const loginUser = async (req, res) => {
   try {
     const { session } = await signIn(req.body);
     console.log("get session from supabase auth");
-
-    const { user, avatars } = await getUser(session.user.email);
-    console.log("get data from database");
-
-    const { name } = await getRole(user.role_id);
-
+    //get user data from database
+    const userResult = await getUser(session.user.email);
+    const userId = userResult.user_id;
+    // get role name from database
+    const { name } = await getRole(userId);
+    // get avatars from database
+    const avatars = await getProfilePicture(userId);
     const avatarsUrl = avatars.map((avatar) => avatar.url);
 
     const data = {
-      id: user.user_id,
-      username: user.username,
+      id: userId,
+      username: userResult.username,
       role: name,
       avatars: avatarsUrl,
       session,

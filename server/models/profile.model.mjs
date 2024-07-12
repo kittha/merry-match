@@ -121,3 +121,16 @@ export const createProfile = async (userId, data) => {
     throw error;
   }
 };
+
+export const getProfile = async (userId) => {
+  try {
+    const result = await connectionPool.query(
+      `SELECT * FROM profiles WHERE user_id = $1`,
+      [userId]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in profile model", error.message);
+    throw error;
+  }
+};
