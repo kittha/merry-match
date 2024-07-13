@@ -3,10 +3,7 @@ import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
 import { getUser, createUser } from "../models/user.model.mjs";
 import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
 import { createProfile } from "../models/profile.model.mjs";
-import {
-  createProfilePicture,
-  getProfilePicture,
-} from "../models/profilePicture.mjs";
+import { createAvatars, getAvatars } from "../models/profilePicture.mjs";
 import { getRole } from "../models/role.model.mjs";
 
 /**
@@ -38,7 +35,7 @@ export const registerUser = async (req, res) => {
     // `task:infoDB` register user information into our own database @/models/user.model.mjs
     const { user_id } = await createUser(req.body);
     await createProfile(user_id, req.body);
-    await createProfilePicture(user_id, avatarUri);
+    await createAvatars(user_id, avatarUri);
     console.log("User registration completed");
 
     return res.status(201).json({
@@ -70,7 +67,7 @@ export const loginUser = async (req, res) => {
     // get role name from database
     const { name } = await getRole(userId);
     // get avatars from database
-    const avatars = await getProfilePicture(userId);
+    const avatars = await getAvatars(userId);
     const avatarsUrl = avatars.map((avatar) => avatar.url);
 
     const data = {

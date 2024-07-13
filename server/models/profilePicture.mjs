@@ -1,24 +1,6 @@
 import connectionPool from "../configs/db.mjs";
 
-export const getAvatars = async (userId) => {
-  try {
-    const result = await connectionPool.query(
-      `SELECT * FROM roles WHERE role_id = $1`,
-      [roleId]
-    );
-
-    if (result.rows.length === 0) {
-      return { message: `user role not found` };
-    }
-
-    return result.rows[0];
-  } catch (error) {
-    console.error("Error occurred while fetching user:", error);
-    throw error;
-  }
-};
-
-export const createProfilePicture = async (userId, avatarUri) => {
+export const createAvatars = async (userId, avatarUri) => {
   const currentDateTime = new Date();
   if (avatarUri) {
     for (let file of avatarUri) {
@@ -34,14 +16,14 @@ export const createProfilePicture = async (userId, avatarUri) => {
           [userId, file.publicId, file.url, currentDateTime, currentDateTime]
         );
       } catch (error) {
-        console.error("Error in profile picture model: ", error.message);
+        console.error("Error in profile picture model: ", error);
         throw error;
       }
     }
   }
 };
 
-export const getProfilePicture = async (userId) => {
+export const getAvatars = async (userId) => {
   try {
     const result = await connectionPool.query(
       `SELECT * FROM profile_pictures 
@@ -51,7 +33,23 @@ export const getProfilePicture = async (userId) => {
 
     return result.rows;
   } catch (error) {
-    console.error("Error in profile picture model: ", error.message);
+    console.error("Error in profile picture model: ", error);
     throw error;
   }
+};
+
+export const updateAvatars = async (userId, avatarUri) => {
+  /**avatarUri structure
+    avatarUri = {
+      url: result.secure_url,
+      publicId: result.public_id,
+    }
+    **/
+  // TODO: check path if exists not startwith("http") something --> don't upload to cloudinary!!!
+  // get data from profile_pictures table
+  // const avatarsResult = await connectionPool.query(
+  //   `SELECT * FROM profile_pictures WHERE profile_id = $1`,
+  //   [profileId]
+  // );
+  // const avatars = avatarsResult.rows;
 };

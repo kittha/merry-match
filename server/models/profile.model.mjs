@@ -4,31 +4,10 @@ import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
 /**
  *
  * @param {number} userId
- * @returns {array} - The Array of Objects, In the Object it contains many key:value pairs of picture_id, profile_id, cloudinary_id, url, created_at, updated_at.
- */
-export const getUserAvatar = async (userId) => {
-  try {
-    const result = await connectionPool.query(
-      `
-        SELECT * 
-        FROM profile_pictures
-        WHERE profile_id = $1;
-        `,
-      [userId]
-    );
-    return result.rows;
-  } catch {
-    console.error("Error fetching avatar:", error);
-    throw error;
-  }
-};
-
-/**
- *
- * @param {number} userId
  * @param {object} files - The Object which contain key:value pair. Key is avatar. Value is Array of Objects. Each Object contain key:value pair of fieldname, originalname, encoding, mimetype, destination, filename, path, size.
  * @returns {boolean}
  */
+//ยังใช้อยู่มั้ย??
 export const uploadAvatar = async (userId, files) => {
   try {
     const fileUrls = await cloudinaryUpload(files);
@@ -76,8 +55,8 @@ export const createProfile = async (userId, data) => {
     sexual_preferences,
     racial_preferences,
     meeting_interests,
-    bio,
     hobbies,
+    bio,
   } = data;
   const currentDateTime = new Date();
 
@@ -117,7 +96,7 @@ export const createProfile = async (userId, data) => {
     );
     return result.rows[0];
   } catch (error) {
-    console.error("Error in profile model", error.message);
+    console.error("Error in profile model", error);
     throw error;
   }
 };
@@ -130,7 +109,59 @@ export const getProfile = async (userId) => {
     );
     return result.rows[0];
   } catch (error) {
-    console.error("Error in profile model", error.message);
+    console.error("Error in profile model", error);
+    throw error;
+  }
+};
+
+export const updateProfile = async (userId, data) => {
+  const {
+    name,
+    date_of_birth,
+    location,
+    city,
+    sexual_identities,
+    sexual_preferences,
+    racial_preferences,
+    meeting_interests,
+    hobbies,
+    bio,
+  } = data;
+  const currentDateTime = new Date();
+  try {
+    await connectionPool.query(
+      `UPDATE profiles SET 
+          name = $2, 
+          date_of_birth = $3, 
+          location = $4, 
+          city = $5, 
+          sexual_identities = $6, 
+          sexual_preferences = $7, 
+          racial_preferences = $8, 
+          meeting_interests = $9,
+          hobbies = $10
+          bio = $11, 
+          updated_at = $12
+        WHERE user_id = $1
+        RETURNING *`,
+      [
+        userId,
+        name,
+        date_of_birth,
+        location,
+        city,
+        sexual_identities,
+        sexual_preferences,
+        racial_preferences,
+        meeting_interests,
+        hobbies,
+        bio,
+        currentDateTime,
+      ]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in profile model", error);
     throw error;
   }
 };
