@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
+import NavbarAuthen from "../../components/navbar/NavbarAuthen";
 import Countrydata from "/src/mock-city/Countrydata.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import plus from "../../assets/profilepicture/plus.png";
 import Footer from "../../components/homepage/Footer";
-import NavbarAuthen from "../../components/navbar/NavbarAuthen";
 
 function UserProfilePage() {
   const [state, setState] = useState([]);
