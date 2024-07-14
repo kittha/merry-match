@@ -131,7 +131,7 @@ function UserProfilePage() {
                   Let’s make profile <br /> to let others know you
                 </h2>
               </header>
-              <div className="lg:w-[414px] w-[338px] lg:h-[145px] h-[48px] flex flex-row items-end justify-center lg:mt-0 mt-[2450px] mx-auto">
+              <div className="lg:w-[414px] w-[338px] lg:h-[145px] h-[48px] flex flex-row items-end justify-center lg:mt-0 md:mt-[2300px] mt-[2450px] mx-auto">
                 <div className="flex gap-[16px]">
                   <button className="w-[162px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full p-[12px 24px] bg-[#FFE1EA] text-[#95002B] text-center font-bold text-base leading-6">
                     Preview Profile
