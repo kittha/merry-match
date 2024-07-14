@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Countrydata from "/src/mock-city/Countrydata.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,6 +17,14 @@ function UserProfilePage() {
 
   //DatePicker
   const [selectDate, setSelectDate] = useState(null);
+
+  const datePickerRef = useRef(null);
+
+  const handleIconClick = () => {
+    if (datePickerRef.current) {
+      datePickerRef.current.setOpen(true); // Open the date picker programmatically
+    }
+  };
 
   const handleCountry = (e) => {
     const getCountryId = e.target.value;
@@ -158,7 +166,7 @@ function UserProfilePage() {
                   />
                 </div>
 
-                <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
+                <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px] relative">
                   <label
                     htmlFor="birth"
                     className="font-[400] text-[16px] leading-[24px]"
@@ -168,13 +176,19 @@ function UserProfilePage() {
 
                   <DatePicker
                     className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
+                    ref={datePickerRef}
                     selected={selectDate}
                     placeholderText="Select date"
                     dateFormat="dd/MM/yyyy"
                     onChange={(date) => {
                       setSelectDate(date);
                     }}
-                    disabled
+                  />
+                  <img
+                    src="./src/assets/userProfile/calendar.png"
+                    alt="calendar"
+                    className="h-[24px] w-[24px] absolute top-12 right-4 transform -translate-y-1/2 cursor-pointer"
+                    onClick={handleIconClick}
                   />
                 </div>
               </div>
