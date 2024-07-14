@@ -183,6 +183,7 @@ function UserProfilePage() {
                     onChange={(date) => {
                       setSelectDate(date);
                     }}
+                    disabled
                   />
                   <img
                     src="./src/assets/userProfile/calendar.png"
