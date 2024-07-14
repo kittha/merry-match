@@ -55,7 +55,7 @@ function AuthProvider(props) {
   const register = async (data) => {
     try {
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/register`,
         data
       );
       navigate("/login");
