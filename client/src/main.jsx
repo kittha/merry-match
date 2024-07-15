@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import ProfilePopup from "./components/profilepage/ProfilePopup.jsx"
+import ModalPopup from "./components/editpage/ModalPopup.jsx"
 import App from "./App.jsx";
 import "./index.css";
 import jwtInterceptor from "./utils/jwtInterceptor.js";
@@ -22,7 +23,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <AuthProvider>
         <FormProvider>
-          <ProfilePopup />
+          <ModalPopup />
         </FormProvider>
       </AuthProvider>
     </BrowserRouter>
