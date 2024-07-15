@@ -30,9 +30,9 @@ export const createUser = async (data) => {
   try {
     const result = await connectionPool.query(
       `INSERT INTO users (username, email, created_at, updated_at)
-      VALUES ($1, $2, $3, $4)
+      VALUES ($1, $2, $3, $3)
       RETURNING user_id`,
-      [username, email, currentDateTime, currentDateTime]
+      [username, email, currentDateTime]
     );
     return result.rows[0];
   } catch (error) {
@@ -47,11 +47,11 @@ export const createUser = async (data) => {
  * @param {string} email
  * @returns {object} - The data object, containing the user, profile, hobbies, avatar key:value pairs.
  */
-export const getUser = async (email) => {
+export const getUser = async (id) => {
   try {
     const result = await connectionPool.query(
-      `SELECT * FROM users WHERE email = $1`,
-      [email]
+      `SELECT * FROM users WHERE email = $1 OR user_id::text = $1`,
+      [id]
     );
 
     return result.rows[0];
@@ -78,7 +78,6 @@ export const updateUser = async (userId, data) => {
 };
 
 export const deleteUser = async (userId) => {
-  //ต้องลบจาก supabase auth ด้วย ทำที่ controller
   try {
     const result = await connectionPool.query(
       `DELETE FROM users WHERE user_id = $1`,
