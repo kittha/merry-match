@@ -1,8 +1,9 @@
 // import bcrypt from "bcrypt";
-import { createUser } from "../models/auth.model.mjs";
 import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
-import { getUser } from "../models/user.model.mjs";
+import { getUser, createUser } from "../models/user.model.mjs";
 import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
+import { createProfile } from "../models/profile.model.mjs";
+import { createAvatars, getAvatars } from "../models/profilePicture.model.mjs";
 import { getRole } from "../models/role.model.mjs";
 
 /**
@@ -14,39 +15,27 @@ import { getRole } from "../models/role.model.mjs";
  */
 export const registerUser = async (req, res) => {
   try {
-    // check datetime format
-    // validate required input
-    console.log(req.body);
-
-    const { email, username, password } = req.body;
-    if (!email || !username || !password) {
-      console.error(
-        "Both username, email, password must be provided for sign-in."
-      );
-      return res
-        .status(401)
-        .json({ message: "Invalid username, email, or password" });
-    }
+    // TODO: check datetime format
 
     // console.log("Registering user with data:", req.body);
 
     // signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs
-    // const { data } = await signUp(req.body);
-    // console.log("Data after signUp with Supabase Auth: ", data);
+    await signUp(req.body);
+    console.log("signUp with Supabase Auth success");
 
     // upload avatar to Cloudinary; then got avatar uri & url
     let avatarUri = null;
-    // console.log(Object.keys(req.files).length); // <-- @2024-07-12T1405 this line cause error
-    if (req.files && Object.keys(req.files).length !== 0) {
+    if (Object.keys(req.files).length !== 0) {
       avatarUri = await cloudinaryUpload(req.files);
-      // console.log("Avatar uploaded:", avatarUri);
+      console.log("Avatar uploaded");
     } else {
       console.log("No avatar provided.");
     }
 
     // `task:infoDB` register user information into our own database @/models/user.model.mjs
-    console.log("Creating user in database...");
-    await createUser(req.body, avatarUri);
+    const { user_id } = await createUser(req.body);
+    await createProfile(user_id, req.body);
+    await createAvatars(user_id, avatarUri);
     console.log("User registration completed");
 
     return res.status(201).json({
@@ -72,39 +61,22 @@ export const loginUser = async (req, res) => {
   try {
     const { session } = await signIn(req.body);
     console.log("get session from supabase auth");
-
-    const { user, avatars } = await getUser(session.user.email);
-    console.log("get data from database");
-
-    const { name } = await getRole(user.role_id);
-
+    //get user data from database
+    const userResult = await getUser(session.user.email);
+    const userId = userResult.user_id;
+    // get role name from database
+    const { name } = await getRole(userId);
+    // get avatars from database
+    const avatars = await getAvatars(userId);
     const avatarsUrl = avatars.map((avatar) => avatar.url);
 
     const data = {
-      id: user.user_id,
-      username: user.username,
+      id: userId,
+      username: userResult.username,
       role: name,
       avatars: avatarsUrl,
       session,
     };
-
-    // if (!data || !data.user || !data.user.id) {
-    //   return res.status(401).json({ message: "Invalid credentials" });
-    // }
-
-    // const authId = data.user.id;
-
-    // console.log("authId is: ", authId);
-    // const userRole = await getUserRole(authId);
-    // console.log("User role is: ", userRole);
-
-    // if (userRole === "Admin") {
-    //   res.redirect("/admin");
-    // } else if (userRole === "user") {
-    //   res.redirect("/landing-page");
-    // } else {
-    //   res.status(403).send("Unauthorized");
-    // }
 
     return res.status(200).json(data);
   } catch (error) {
