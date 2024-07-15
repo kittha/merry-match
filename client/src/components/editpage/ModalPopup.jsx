@@ -1,6 +1,8 @@
 import React from "react";
+import { useAuth } from "../../contexts/authentication";
 
-const ModalPopup = () => {
+const ModalPopup = ({ close, userId }) => {
+    const { deleteuser } = useAuth()
     return (
         <div className="DeleteButton w-[33rem] h-[12.5rem] bg-white rounded-[24px] flex flex-col z-30 shadow-2xl ">
             <div className="flex flex-row space-x-[45%]">
