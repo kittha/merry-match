@@ -5,7 +5,7 @@ import "./index.css";
 import jwtInterceptor from "./utils/jwtInterceptor.js";
 import { AuthProvider } from "./contexts/authentication.jsx";
 import { BrowserRouter } from "react-router-dom";
-import UserProfilePage from "./pages/users/UserProfilePage.jsx";
+
 
 if (import.meta.env.VITE_NODE_ENV === "development") {
   console.log("Running in development mode");

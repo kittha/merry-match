@@ -9,7 +9,7 @@ import Footer from "../../components/homepage/Footer";
 function UserProfilePage() {
   const [state, setState] = useState([]);
   const [name, setName] = useState("");
-  const [birthday, setBirthday] = useState("");
+  //const [birthday, setBirthday] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [username, setUsername] = useState("");
@@ -183,7 +183,7 @@ function UserProfilePage() {
                     onChange={(date) => {
                       setSelectDate(date);
                     }}
-                    disabled
+              
                   />
                   <img
                     src="./src/assets/userProfile/calendar.png"
