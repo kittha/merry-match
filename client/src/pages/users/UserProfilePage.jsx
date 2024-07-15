@@ -1,10 +1,12 @@
-import { useState, useRef } from "react";
+import axios from "axios";
+import { useState, useRef, useEffect } from "react";
 import NavbarAuthen from "../../components/navbar/NavbarAuthen";
 import Countrydata from "/src/mock-city/Countrydata.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import plus from "../../assets/profilepicture/plus.png";
+import plus from "/assets/profilepicture/plus.png";
 import Footer from "../../components/homepage/Footer";
+import { useParams } from "react-router-dom";
 
 function UserProfilePage() {
   const [state, setState] = useState([]);
@@ -111,6 +113,22 @@ function UserProfilePage() {
       setAvatars(updatedAvatars);
     }
   };
+  const userId = useParams();
+  //console.log(userId)
+  const getUserProfile = async () => {
+    try{
+      const result = await axios.get("http://localhost:4000/api/v1/profiles/"+userId);
+      console.log(result);
+      setName(result.data.name)
+      
+    }catch(error){
+      console.error(error);
+    }
+    
+  };
+  useEffect(() => {
+    getUserProfile();
+  }, []);
 
   return (
     <>
@@ -183,7 +201,6 @@ function UserProfilePage() {
                     onChange={(date) => {
                       setSelectDate(date);
                     }}
-              
                   />
                   <img
                     src="./src/assets/userProfile/calendar.png"

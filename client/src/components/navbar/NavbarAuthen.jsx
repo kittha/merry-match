@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Portal from "./Portal";
@@ -194,7 +194,7 @@ const NavbarAuthen = () => {
                       alt="icon2"
                       className="mr-2  pl-4"
                     />
-                    <button onClick={() => navigate("/")}>Profile</button>
+                    <button onClick={() => navigate("/user-profile/:userId")}>Profile</button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px]">
                     <img
