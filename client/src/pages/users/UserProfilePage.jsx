@@ -117,7 +117,7 @@ function UserProfilePage() {
   //console.log(userId)
   const getUserProfile = async () => {
     try{
-      const result = await axios.get("http://localhost:4000/api/v1/profiles/"+userId);
+      const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`);
       console.log(result);
       setName(result.data.name)
       
