@@ -16,6 +16,8 @@ export const registerUser = async (req, res) => {
   try {
     // check datetime format
     // validate required input
+    console.log(req.body);
+
     const { email, username, password } = req.body;
     if (!email || !username || !password) {
       console.error(
@@ -34,8 +36,8 @@ export const registerUser = async (req, res) => {
 
     // upload avatar to Cloudinary; then got avatar uri & url
     let avatarUri = null;
-    console.log(Object.keys(req.files).length);
-    if (Object.keys(req.files).length !== 0) {
+    // console.log(Object.keys(req.files).length); // <-- @2024-07-12T1405 this line cause error
+    if (req.files && Object.keys(req.files).length !== 0) {
       avatarUri = await cloudinaryUpload(req.files);
       // console.log("Avatar uploaded:", avatarUri);
     } else {

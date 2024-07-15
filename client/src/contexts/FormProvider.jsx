@@ -182,31 +182,28 @@ export const FormProvider = ({ children }) => {
     console.log("Form Data Submitted: ", formData);
 
     try {
-      await register(formData);
-      console.log("Registration successful");
+      const sentFormData = new FormData();
 
-      setFormData({
-        name: "",
-        birthday: "",
-        country: "",
-        city: "",
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        sexualIdentity: "",
-        sexualPreference: "",
-        racialPreference: "",
-        meetingInterest: "",
-        hobbies: [],
-        avatars: {
-          image1: null,
-          image2: null,
-          image3: null,
-          image4: null,
-          image5: null,
-        },
-      });
+      sentFormData.append("name", formData.name);
+      sentFormData.append("birthday", formData.birthday);
+      sentFormData.append("country", formData.country);
+      sentFormData.append("city", formData.city);
+      sentFormData.append("username", formData.username);
+      sentFormData.append("email", formData.email);
+      sentFormData.append("password", formData.password);
+      sentFormData.append("confirmPassword", formData.confirmPassword);
+      sentFormData.append("sexualIdentity", formData.sexualIdentity);
+      sentFormData.append("sexualPreference", formData.sexualPreference);
+      sentFormData.append("racialPreference", formData.racialPreference);
+      sentFormData.append("meetingInterest", formData.meetingInterest);
+      sentFormData.append("hobbies", formData.hobbies);
+
+      for (let avatarKey in formData.avatars) {
+        sentFormData.append("avatar", formData.avatars[avatarKey]);
+      }
+
+      await register(sentFormData);
+      console.log("Registration successful");
     } catch (error) {
       console.error("Registration failed:", error);
     }
