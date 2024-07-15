@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { Link as ScrollLink } from 'react-scroll';
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-scroll';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
@@ -17,7 +17,7 @@ const Navbar = () => {
           }}
         >
           <img
-            src="../src/assets/HomePage/header-merrymatch-logo.svg"
+            src="../public/assets/HomePage/header-merrymatch-logo.svg"
             alt="merry match logo"
             className="lg:ml-[170px] h-[44px] mr-24"
           />
@@ -29,7 +29,7 @@ const Navbar = () => {
             }}
           >
             <img
-              src="../src/assets/Navbar/icon_bell.png"
+              src="../public/assets/Navbar/icon_bell.png"
               alt="merry match message"
               className="h-[26px] w-[26px]"
             />
@@ -41,7 +41,7 @@ const Navbar = () => {
           >
             {isVisible && (
             <img
-              src="../src/assets/Navbar/icon_chat.png"
+              src="../public/assets/Navbar/icon_chat.png"
               alt="merry match nofication"
               className="h-[26px] w-[26px]"
             />
@@ -61,13 +61,13 @@ const Navbar = () => {
 
          {/*---------------------------------------- Desktop Menu -------------------------------------------------------------------*/}
 
-         <div className="hidden lg:flex lg:items-center lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent mr-[160px]">
-          <Link to="why-merry" smooth={true} duration={500} className="block lg:inline-block py-2 lg:py-0 ml-8 lg:text-left">
-            <h2 onClick={() => { navigate("/"); setIsOpen(false); }}>Why Merry Match?</h2>
-          </Link>
-          <Link to="how-to-merry" smooth={true} duration={500} className="block lg:inline-block py-2 lg:py-0 ml-8 lg:text-left">
-            <h2 onClick={() => { navigate("/"); setIsOpen(false); }}>How to Merry</h2>
-          </Link>
+        <div className="hidden lg:flex lg:items-center lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent mr-[160px]">
+          <ScrollLink to="first-section" smooth={true} duration={500} className="block lg:inline-block py-2 lg:py-0 ml-8 lg:text-left">
+            <button onClick={() => { navigate("/"); setIsOpen(false); }}>Why Merry Match?</button>
+          </ScrollLink>
+          <ScrollLink to="second-section" smooth={true} duration={500} className="block lg:inline-block py-2 lg:py-0 ml-8 lg:text-left">
+            <button onClick={() => { navigate("/"); setIsOpen(false); }}>How to Merry</button>
+          </ScrollLink>
           <button
             className="button-nav bg-[#c70039] shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] lg:h-[48px] h-[41px] lg:w-[90px] w-[343px] font-[700] hover:bg-[#FFE1EA] hover:text-[#95002B] lg:ml-8 block lg:inline-block my-2 lg:my-0 mx-auto lg:mx-0"
             onClick={() => { navigate("/login"); setIsOpen(false); }}
@@ -84,7 +84,6 @@ const Navbar = () => {
                 className="flex justify-center items-center bg-[#C70039] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[343px] font-[700]"
                 onClick={() => { navigate("/login"); setIsOpen(false); }}
               >
-                <img src="../src/assets/Navbar/icon1.png" alt="icon1" className="mr-2"/>
                 Login
               </button>
             </div>

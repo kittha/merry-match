@@ -5,6 +5,7 @@ import "./index.css";
 import jwtInterceptor from "./utils/jwtInterceptor.js";
 import { AuthProvider } from "./contexts/authentication.jsx";
 import { BrowserRouter } from "react-router-dom";
+import { FormProvider } from "./contexts/FormProvider.jsx";
 
 if (import.meta.env.VITE_NODE_ENV === "development") {
   console.log("Running in development mode");
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <FormProvider>
+          <App />
+        </FormProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

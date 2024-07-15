@@ -1,34 +1,25 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import { FormContext } from "../../contexts/FormProvider";
 
 function IdentitiesAndInterests() {
-  //states form 2
-  const [sexualIdentity, setSexualIdentity] = useState("");
-  const [sexualPreference, setSexualPreference] = useState("");
-  const [racialPreference, setRacialPreference] = useState("");
-  const [meetingInterest, setMeetingInterest] = useState("");
-
-  //states hobbies
-  const [hobby, setHobby] = useState([]);
+  const { formData, handleChange, addHobby, deleteHobby } =
+    useContext(FormContext);
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
-
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      const newHobbies = [...hobby, inputValue];
-      setHobby(newHobbies);
-      setInputValue("");
+      if (formData.hobbies.length < 10) {
+        addHobby(inputValue);
+        setInputValue("");
+      } else {
+        alert("You can only add up to 10 hobbies.");
+      }
     }
-  };
-
-  const deleteHobby = (index) => {
-    const newHobbies = [...hobby];
-    newHobbies.splice(index, 1);
-    setHobby(newHobbies);
   };
 
   return (
@@ -48,9 +39,9 @@ function IdentitiesAndInterests() {
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2 mt-[4px]"
               id="name"
-              value={sexualIdentity}
+              value={formData.sexualIdentity}
               onChange={(event) => {
-                setSexualIdentity(event.target.value);
+                handleChange("sexualIdentity", event.target.value);
               }}
             >
               <option disabled value="">
@@ -72,9 +63,9 @@ function IdentitiesAndInterests() {
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2 mt-[4px]"
               id="name"
-              value={sexualPreference}
+              value={formData.sexualPreference}
               onChange={(event) => {
-                setSexualPreference(event.target.value);
+                handleChange("sexualPreference", event.target.value);
               }}
             >
               <option disabled value="">
@@ -98,9 +89,9 @@ function IdentitiesAndInterests() {
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2 mt-[4px]"
               id="name"
-              value={racialPreference}
+              value={formData.racialPreference}
               onChange={(event) => {
-                setRacialPreference(event.target.value);
+                handleChange("racialPreference", event.target.value);
               }}
             >
               <option disabled value="">
@@ -132,9 +123,9 @@ function IdentitiesAndInterests() {
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg p-2 mt-[4px]"
               id="name"
-              value={meetingInterest}
+              value={formData.meetingInterest}
               onChange={(event) => {
-                setMeetingInterest(event.target.value);
+                handleChange("meetingInterest", event.target.value);
               }}
             >
               <option disabled value="">
@@ -157,7 +148,7 @@ function IdentitiesAndInterests() {
               Hobbies / Interests (Maximum 10)
             </label>
             <div className="flex flex-row flex-wrap border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-full lg:w-[930px] mt-[4px]">
-              {hobby.map((item, index) => (
+              {formData.hobbies.map((item, index) => (
                 <div
                   key={index}
                   className="flex items-center px-[8px] py-[4px]  gap-[8px] rounded-[6px] bg-[#F4EBF2] text-[#7D2262]"

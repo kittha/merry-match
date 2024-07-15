@@ -22,32 +22,32 @@ function CardFeature(props) {
 function SecondSection() {
   return (
     <section className="bg-[#160404] w-full h-full">
-      <div className="lg:w-full lg:h-[622px] min-[320px]:w-auto w-[375px] h-auto bg-[#160404] pb-10 mx-auto">
+      <div id="second-section" className="lg:w-full lg:h-[622px] min-[320px]:w-auto w-[375px] h-auto bg-[#160404] pb-10 pt-10 mx-auto">
         <div className="lg:w-[1120px] lg:h-[454px] w-[343px] h-[1444px] flex flex-col gap-[48px] pt-[80px] mx-auto">
           <h2 className="w-[343px] h-[58px] font-Nunito font-extrabold text-[46px] leading-[57.5px] text-center text-[#DF89C6] lg:w-[1120px] lg:h-[58px]">
             How to Merry
           </h2>
           <div className="flex lg:flex-row gap-[24px] justify-center items-center flex-col lg:mx-auto">
             <CardFeature
-              image="./src/assets/section2-img/icon1.png"
+              image="./public/assets/HomePage/section2-img/icon1.png"
               title="Upload your cool picture"
               detail="Lorem ipsum is a placeholder text"
               alt="icon1"
             />
             <CardFeature
-              image="./src/assets/section2-img/icon2.png"
+              image="./public/assets/HomePage/section2-img/icon2.png"
               title="Explore and find the one you like"
               detail="Lorem ipsum is a placeholder text"
               alt="icon2"
             />
             <CardFeature
-              image="./src/assets/section2-img/icon3.png"
+              image="./public/assets/HomePage/section2-img/icon3.png"
               title="Click ‘Merry’ for get to know!"
               detail="Lorem ipsum is a placeholder text"
               alt="icon3"
             />
             <CardFeature
-              image="./src/assets/section2-img/icon4.png"
+              image="./public/assets/HomePage/section2-img/icon4.png"
               title="Start chating and relationship "
               detail="Lorem ipsum is a placeholder text"
               alt="icon4"
