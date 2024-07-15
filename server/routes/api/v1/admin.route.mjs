@@ -1,8 +1,14 @@
-// import express from "express";
-// import { getDashboardData } from "../../../controllers/admin.controller.mjs";
+import express from "express";
+import {
+  getAllComplaints,
+  getComplaintById,
+  updateComplaintStatus,
+} from "../../../controllers/admin.controller.mjs";
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get("/dashboard", getDashboardData);
+router.get("/", getAllComplaints);
+router.get("/:complaintId", getComplaintById);
+router.put("/:complaintId/status", updateComplaintStatus);
 
-// export default router;
+export default router;

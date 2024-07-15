@@ -1,19 +1,8 @@
-// import express from "express";
-// import {
-//   getAllComplaints,
-//   getComplaintById,
-//   submitComplaint,
-//   updateComplaintStatus,
-// } from "../../../controllers/complaint.controller.mjs";
+import express from "express";
+import { fileComplaint } from "../../../controllers/complaints.controller.mjs";
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get("/", getAllComplaints);
+router.post("/", fileComplaint);
 
-// router.get("/:complaintId", getComplaintById);
-
-// router.post("/:matchingId", submitComplaint);
-
-// router.put("/:matchingId", updateComplaintStatus); // [resolved, pending, canceled]
-
-// export default router;
+export default router;

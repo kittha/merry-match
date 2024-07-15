@@ -1,15 +1,14 @@
 import connectionPool from "../configs/db.mjs";
-import { jwtDecode } from "jwt-decode";
 
 /**
- * Check Is user is a member? & role is admin or not?
+ * Check Is user is a member?
  *
  * @param {object} req -  The request object, containing the header with Bearer token (JWT) with/without data in body.
  * @param {object} res - The response object
  * @param {object} next
  * @returns
  */
-const supabaseAuthIsAdminMiddleware = async (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
   try {
     // chech if request has header "Authorization"
     if (!req.headers.authorization) {
@@ -41,12 +40,14 @@ const supabaseAuthIsAdminMiddleware = async (req, res, next) => {
       [userEmail]
     );
 
-    const userRole = supabaseQueryResult.rows[0].role_id;
+    const user = supabaseQueryResult.rows[0];
 
-    // if userRole isn't 1 (role Admin) then response back "code 401: Unauthorized"
-    if (userRole !== 1) {
+    // if no userRole (eg.role 1 = admin, role 2 = user) then response back "code 401: Unauthorized"
+    if (user.role_id !== 1 || user.role_id !== 2) {
       return res.status(401).json({ error: "Unauthorized" });
     }
+
+    req.user = user;
     next();
   } catch (error) {
     console.error("Error in Supabase authentication middleware:", error);
@@ -54,4 +55,4 @@ const supabaseAuthIsAdminMiddleware = async (req, res, next) => {
   }
 };
 
-export default supabaseAuthIsAdminMiddleware;
+export default authenticateUser;

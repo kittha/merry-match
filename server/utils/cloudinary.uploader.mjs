@@ -5,6 +5,8 @@ import { Console } from "console";
 
 export const cloudinaryUpload = async (files) => {
   try {
+    console.log(files);
+
     const fileUrls = [];
     for (let file of files.avatar) {
       const result = await cloudinary.uploader.upload(file.path, {
