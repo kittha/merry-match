@@ -9,6 +9,7 @@ import { validatePicture } from "../../../middlewares/picture.validation.mjs";
 import { bioCharacterLength } from "../../../middlewares/bio.validation.mjs";
 import { validateHobbiesArrayLength } from "../../../middlewares/hobbyArrayLength.validation.mjs";
 import { blockEmailChange } from "../../../middlewares/blockEmailChange.middleware.mjs";
+import { authorizeUser } from "../../../middlewares/authorization.middleware.mjs";
 
 const router = express.Router();
 
@@ -24,6 +25,7 @@ router.put(
     bioCharacterLength,
     validateHobbiesArrayLength,
     blockEmailChange,
+    authorizeUser,
   ],
   updateUserProfileById
 );
