@@ -4,7 +4,7 @@ import MainContent from "../../components/packagelist/Maincontent";
 
 function PackageListPage() {
   return (
-    <div className="flex">
+    <div className="flex ">
       <Sidebar />
       <div className="flex flex-col">
         <Topbar />
