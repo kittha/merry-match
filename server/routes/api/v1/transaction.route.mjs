@@ -1,7 +1,7 @@
 // import express from "express";
 // import {
 //   getAllTransactions,
-//   getUserTransactions,
+//   getUserTransactionsById,
 //   createTransaction,
 // } from "../../../controllers/transaction.controller.mjs";
 
@@ -9,7 +9,7 @@
 
 // router.get("/", getAllTransactions);
 
-// router.get("/:userId", getUserTransactions);
+// router.get("/:userId", getUserTransactionsById);
 
 // router.post("/", createTransaction);
 

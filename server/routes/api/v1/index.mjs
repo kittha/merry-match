@@ -3,6 +3,7 @@ import express from "express";
 import adminRoutes from "./admin.route.mjs";
 import authRoutes from "./auth.route.mjs";
 import fileComplaint from "./complaints.route.mjs";
+import membershipRoutes from "./membership.route.mjs";
 import merryRoutes from "./merry.route.mjs";
 // import merryListRoutes from "./merrylist.route.mjs"
 // import messagesRoutes from "./messages.route.mjs";
@@ -20,6 +21,7 @@ const router = express.Router();
 router.use("/admin", [authenticateAdmin], adminRoutes);
 router.use("/auth", authRoutes);
 router.use("/complaints", [authenticateUser], fileComplaint);
+// router.use("/membership", membershipRoutes); // Aggregator Endpoint
 router.use("/merry", merryRoutes);
 // router.use("/merryList", merryListRoutes)
 // router.use("/messages", messagesRoutes);
