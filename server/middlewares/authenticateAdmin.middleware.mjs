@@ -41,12 +41,16 @@ const authenticateAdmin = async (req, res, next) => {
       [userEmail]
     );
 
-    const userRole = supabaseQueryResult.rows[0].role_id;
+    const user = supabaseQueryResult.rows[0];
+
+    const userRole = user.role_id;
 
     // if userRole isn't 1 (role Admin) then response back "code 401: Unauthorized"
     if (userRole !== 1) {
       return res.status(401).json({ error: "Unauthorized" });
     }
+
+    req.user = user;
     next();
   } catch (error) {
     console.error("Error in Supabase authentication middleware:", error);

@@ -24,23 +24,29 @@ export const getAllComplaints = async () => {
 export const getComplaintById = async (complaintId) => {
   const result = await connectionPool.query(
     `
-        SELECt *
+        SELECT *
         FROM complaints
         WHERE complaint_id = $1
         `,
     [complaintId]
   );
+
   const complaint = result.rows[0];
   return complaint;
 };
 
 export const updateComplaintStatus = async (complaintId, status) => {
-  await connectionPool.query(
+  console.log(complaintId, status);
+
+  const result = await connectionPool.query(
     `
         UPDATE complaints
         SET status = $1
-        WHERE id = $2
+        WHERE complaint_id = $2
         `,
     [status, complaintId]
   );
+  result = result.rows[0];
+
+  return result;
 };
