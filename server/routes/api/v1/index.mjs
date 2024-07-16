@@ -3,7 +3,7 @@ import express from "express";
 import adminRoutes from "./admin.route.mjs";
 import authRoutes from "./auth.route.mjs";
 import fileComplaint from "./complaints.route.mjs";
-import membershipRoutes from "./membership.route.mjs";
+// import membershipRoutes from "./membership.route.mjs";
 import merryRoutes from "./merry.route.mjs";
 // import merryListRoutes from "./merrylist.route.mjs"
 // import messagesRoutes from "./messages.route.mjs";
