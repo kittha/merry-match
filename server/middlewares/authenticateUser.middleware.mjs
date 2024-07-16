@@ -1,4 +1,5 @@
 import connectionPool from "../configs/db.mjs";
+import { jwtDecode } from "jwt-decode";
 
 /**
  * Check Is user is a member?

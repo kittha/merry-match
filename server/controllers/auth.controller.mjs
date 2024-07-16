@@ -24,7 +24,7 @@ export const registerUser = async (req, res) => {
     console.log("signUp with Supabase Auth success");
 
     // upload avatar to Cloudinary; then got avatar uri & url
-    avatarUri = await cloudinaryUpload(req.files);
+    const avatarUri = await cloudinaryUpload(req.files);
 
     // `task:infoDB` register user information into our own database @/models/user.model.mjs
     const { user_id } = await createUser(req.body);
