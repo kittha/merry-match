@@ -30,6 +30,6 @@ router.put(
   updateUserProfileById
 );
 
-router.delete("/:userId", deleteUserById);
+router.delete("/:userId", [authorizeUser], deleteUserById);
 
 export default router;
