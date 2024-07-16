@@ -1,0 +1,47 @@
+name: Deploy to Railway
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  deploy-development:
+    if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Railway CLI
+        run: npm install -g railway
+
+      - name: Log in to Railway
+        run: railway login --token ${{ secrets.RAILWAY_TOKEN_MERRY_MATCH }}
+
+      - name: Deploy to Railway
+        run: railway up
+
+  deploy-production:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Railway CLI
+        run: npm install -g railway
+
+      - name: Log in to Railway
+        run: railway login --token ${{ secrets.RAILWAY_TOKEN_MERRY_MATCH }}
+
+      - name: Deploy to Railway
+        run: railway up
