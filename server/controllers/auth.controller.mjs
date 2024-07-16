@@ -1,7 +1,7 @@
 // import bcrypt from "bcrypt";
 import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
 import { getUser, createUser } from "../models/user.model.mjs";
-import cloudinaryUpload from "../utils/cloudinary.uploader.mjs";
+import { cloudinaryUpload } from "../utils/cloudinary.uploader.mjs";
 import { createProfile } from "../models/profile.model.mjs";
 import { createAvatars, getAvatars } from "../models/profilePicture.model.mjs";
 import { getRole } from "../models/role.model.mjs";
