@@ -119,7 +119,8 @@ function UserProfilePage() {
   // console.log(userState.data.id);
 
   // const userId = userState.data.id;
-  const userId = useParams();
+  const { userId } = useParams();
+  console.log(userId);
   const getUserProfile = async () => {
     try {
       const result = await axios.get(

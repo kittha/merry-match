@@ -27,7 +27,8 @@ const NavbarAuthen = () => {
     setBellMenuOpen(false);
   };
 
-  const { logout } = useAuth();
+  const { logout, state } = useAuth();
+  // console.log(state.user.id);
 
   const handleLogout = () => {
     logout();
@@ -123,7 +124,10 @@ const NavbarAuthen = () => {
                       alt="icon2"
                       className="ml-1 mr-3 h-[32px] w-[32px]"
                     />
-                    <button onClick={() => navigate("/")} className="text-start">
+                    <button
+                      onClick={() => navigate("/")}
+                      className="text-start"
+                    >
                       ‘Khal Drogo’ Just Merry you! Click here to see profile
                     </button>
                   </div>
@@ -133,7 +137,10 @@ const NavbarAuthen = () => {
                       alt="icon2"
                       className="ml-1 mr-3 h-[32px] w-[32px]"
                     />
-                    <button onClick={() => navigate("/")} className="text-start">
+                    <button
+                      onClick={() => navigate("/")}
+                      className="text-start"
+                    >
                       ‘Daeny’ Merry you back! Let’s start conversation now
                     </button>
                   </div>
@@ -143,7 +150,10 @@ const NavbarAuthen = () => {
                       alt="icon2"
                       className="ml-1 mr-3 h-[32px] w-[32px]"
                     />
-                    <button onClick={() => navigate("/")} className="text-start">
+                    <button
+                      onClick={() => navigate("/")}
+                      className="text-start"
+                    >
                       ‘Ygritte’ Merry you back! Let’s start conversation now
                     </button>
                   </div>
@@ -194,7 +204,11 @@ const NavbarAuthen = () => {
                       alt="icon2"
                       className="mr-2  pl-4"
                     />
-                    <button onClick={() => navigate("/user-profile/:userId")}>Profile</button>
+                    <button
+                      onClick={() => navigate(`/user-profile/${state.user.id}`)}
+                    >
+                      Profile
+                    </button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px]">
                     <img
@@ -210,7 +224,9 @@ const NavbarAuthen = () => {
                       alt="icon4"
                       className="mr-2 pl-4"
                     />
-                    <button onClick={() => navigate("/")}>Merry Membership</button>
+                    <button onClick={() => navigate("/")}>
+                      Merry Membership
+                    </button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px] mb-1">
                     <img
