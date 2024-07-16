@@ -7,7 +7,7 @@ import {
   deletePackageById,
 } from "../../../controllers/package.controller.mjs";
 import authenticateAdmin from "../../../middlewares/authenticateAdmin.middleware.mjs";
-import { validatePackageData } from "../../../middlewares/validatePackageData.validation.mjs";
+import { validatePackageData } from "../../../middlewares/packageData.validation.mjs";
 
 const router = express.Router();
 
