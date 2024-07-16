@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import plus from "/assets/profilepicture/plus.png";
 import Footer from "../../components/homepage/Footer";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../../contexts/authentication";
 
 function UserProfilePage() {
   const [state, setState] = useState([]);
@@ -16,6 +17,7 @@ function UserProfilePage() {
   const [city, setCity] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const { state: userState } = useAuth();
 
   //DatePicker
   const [selectDate, setSelectDate] = useState(null);
@@ -113,18 +115,21 @@ function UserProfilePage() {
       setAvatars(updatedAvatars);
     }
   };
+
+  // console.log(userState.data.id);
+
+  // const userId = userState.data.id;
   const userId = useParams();
-  //console.log(userId)
   const getUserProfile = async () => {
-    try{
-      const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`);
+    try {
+      const result = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`
+      );
       console.log(result);
-      setName(result.data.name)
-      
-    }catch(error){
+      setName(result.data.name);
+    } catch (error) {
       console.error(error);
     }
-    
   };
   useEffect(() => {
     getUserProfile();

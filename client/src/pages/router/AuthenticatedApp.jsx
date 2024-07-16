@@ -1,8 +1,7 @@
-import HomePageAuthen from '../users/HomePageAuthen';
-import NavbarAuthen from '../../components/navbar/NavbarAuthen';
+import HomePageAuthen from "../users/HomePageAuthen";
+import NavbarAuthen from "../../components/navbar/NavbarAuthen";
 import { Routes, Route } from "react-router-dom";
 import UserProfilePage from "../users/UserProfilePage";
-
 
 const AuthenticatedApp = () => {
   return (

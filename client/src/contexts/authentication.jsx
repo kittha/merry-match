@@ -27,8 +27,12 @@ function AuthProvider(props) {
       const token = result.data.session.access_token;
       localStorage.setItem("token", token);
 
-      const userDataFromToken = jwtDecode(token);
-      setState({ ...state, user: userDataFromToken });
+      // const userDataFromToken = jwtDecode(token);
+      // console.log(userDataFromToken);
+
+      const userDataFromPayload = result.data;
+
+      setState({ ...state, user: userDataFromPayload });
 
       navigate("/");
     } catch (error) {
