@@ -1,5 +1,6 @@
 import connectionPool from "../configs/db.mjs";
-import { jwtDecode } from "jwt-decode";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 /**
  * Check Is user is a member? & role is admin or not?
@@ -18,39 +19,50 @@ const authenticateAdmin = async (req, res, next) => {
 
     // read JWT Token -> get uuid from token
     const accessToken = req.headers.authorization.split(" ")[1];
-    const decoded = jwtDecode(accessToken);
-
-    const userUuid = decoded.user_metadata.sub;
-
-    // (temporary structure) use uuid to search row of user info in database
-    const supabaseAuthQueryResult = await connectionPool.query(
-      `
-      SELECT *
-      FROM auth.users 
-      WHERE id = $1
-      `,
-      [userUuid]
+    let decodedData = "";
+    jwt.verify(
+      accessToken,
+      process.env.SUPABASE_JWT_TOKEN,
+      (error, decoded) => {
+        if (error) {
+          console.error("Token verification failed:", error);
+        } else {
+          console.log("Token is valid");
+          decodedData = decoded;
+        }
+      }
     );
 
-    // then identify user email (unique value) (email has strong authentication, I think we can trust this uniqueness)
-    const userEmail = supabaseAuthQueryResult.rows[0].email;
+    const userEmail = decodedData.email;
 
+    // then identify user email (unique value) (email has strong authentication, I think we can trust this uniqueness)
     // use email to search user role
     const supabaseQueryResult = await connectionPool.query(
       `SELECT * FROM users WHERE email = $1`,
       [userEmail]
     );
 
-    const user = supabaseQueryResult.rows[0];
+    const userDataFromDatabase = supabaseQueryResult.rows[0];
 
-    const userRole = user.role_id;
-
-    // if userRole isn't 1 (role Admin) then response back "code 401: Unauthorized"
-    if (userRole !== 1) {
+    if (!userDataFromDatabase) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    req.user = user;
+    const { user_id, username, role_id } = userDataFromDatabase;
+
+    // if userRole isn't 1 (role Admin) then response back "code 401: Unauthorized"
+    if (role_id !== 1) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const bundledUserData = {
+      ...decodedData,
+      user_id,
+      username,
+      role_id,
+    };
+
+    req.user = bundledUserData;
     next();
   } catch (error) {
     console.error("Error in Supabase authentication middleware:", error);

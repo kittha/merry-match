@@ -22,7 +22,7 @@ router.use("/admin", [authenticateAdmin], adminRoutes);
 router.use("/auth", authRoutes);
 router.use("/complaints", [authenticateUser], fileComplaint);
 // router.use("/membership", [authenticateUser], membershipRoutes); // Aggregator Endpoint
-router.use("/merry", [], merryRoutes);
+router.use("/merry", [authenticateUser], merryRoutes);
 // router.use("/merry", [authenticateUser], merryRoutes);
 // router.use("/merryList", [authenticateUser], merryListRoutes)
 // router.use("/messages", messagesRoutes);

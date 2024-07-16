@@ -39,7 +39,7 @@ export const addMerry = async (userId, merryUserId) => {
       [userId, merryUserId, newStatus, currentDateTime]
     );
 
-    console.log("Insertion/Update result:", result.rows);
+    // console.log("Insertion/Update result:", result.rows);
 
     // If the new status is 'merry_match', update the reverse direction as well
     if (newStatus === "merry_match") {
