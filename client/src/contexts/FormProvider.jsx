@@ -185,22 +185,25 @@ export const FormProvider = ({ children }) => {
       const sentFormData = new FormData();
 
       sentFormData.append("name", formData.name);
-      sentFormData.append("birthday", formData.birthday);
-      sentFormData.append("country", formData.country);
+      sentFormData.append("date_of_birth", formData.birthday);
+      sentFormData.append("location", formData.country);
       sentFormData.append("city", formData.city);
       sentFormData.append("username", formData.username);
       sentFormData.append("email", formData.email);
       sentFormData.append("password", formData.password);
       sentFormData.append("confirmPassword", formData.confirmPassword);
-      sentFormData.append("sexualIdentity", formData.sexualIdentity);
-      sentFormData.append("sexualPreference", formData.sexualPreference);
-      sentFormData.append("racialPreference", formData.racialPreference);
-      sentFormData.append("meetingInterest", formData.meetingInterest);
-      sentFormData.append("hobbies", formData.hobbies);
+      sentFormData.append("sexual_identities", formData.sexualIdentity);
+      sentFormData.append("sexual_preferences", formData.sexualPreference);
+      sentFormData.append("racial_preferences", formData.racialPreference);
+      sentFormData.append("meeting_interests", formData.meetingInterest);
 
+      for (var i = 0; i < formData.hobbies.length; i++) {
+        sentFormData.append("hobbies[]", formData.hobbies[i]);
+      }
       for (let avatarKey in formData.avatars) {
         sentFormData.append("avatar", formData.avatars[avatarKey]);
       }
+      console.log(sentFormData);
 
       await register(sentFormData);
       console.log("Registration successful");
