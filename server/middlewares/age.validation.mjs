@@ -1,5 +1,4 @@
 export const ageValidator = (req, res, next) => {
-  // const { birthdate } = req.body.date_of_birth;
   const { date_of_birth } = req.body;
 
   if (!date_of_birth) {
