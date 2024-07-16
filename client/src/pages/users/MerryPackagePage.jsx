@@ -1,3 +1,4 @@
+import icon from "../../../public/assets/package/correct-icon.svg";
 import Footer from "../../components/homepage/Footer";
 
 const MerryPackage = () => {
@@ -19,19 +20,38 @@ const MerryPackage = () => {
         <main className="card-container lg:w-full lg:h-[438px] flex lg:flex-row gap-6">
           {arr.map((value) => {
             return (
-              <div className="card w-[357px] h-full border rounded-[32px] p-10 flex flex-col gap-6">
+              <div className="card w-[357px] h-full border border-[#D6D9E4] rounded-[32px] p-10 flex flex-col gap-6 bg-white">
                 <img
                   src="#"
                   alt="icon-package"
                   className="icon w-[60px] h-[60px] bg-gray-500"
                 />
-                <div className="top w-full h-[78px] bg-pink-300">
-                  <h3>Basic</h3>
-                  <p>THB</p>
+                <div className="top w-full h-[78px] flex flex-col gap-2">
+                  <h3 className="text-[#411032] text-[32px] leading-10 font-bold h-10">
+                    Basic
+                  </h3>
+                  <div className="price-container flex h-[30px] gap-2 items-end">
+                    <p className="text-xl text-[#2A2E3F] font-semibold">THB</p>
+                    <p className="text-[#9AA1B9]">/Month</p>
+                  </div>
                 </div>
-                <div className="detail w-full h-[100px] bg-pink-400"></div>
-                <hr />
-                <button className="choose-package bg-[#FFE1EA] rounded-full px-6 py-3">
+                <div className="detail-container w-full h-[100px] border-[#E4E6ED] border-b flex flex-col gap-4">
+                  {arr.slice(0, 2).map(() => {
+                    return (
+                      <div className="detail flex gap-3">
+                        <img
+                          src={icon}
+                          width="15.28"
+                          height="15.28"
+                          alt="correct-icon"
+                          className="icon w-6 h-6 object-none"
+                        />
+                        <p className="text-[#424C6B]">Details</p>
+                      </div>
+                    );
+                  })}
+                </div>
+                <button className="choose-package bg-[#FFE1EA] rounded-full px-6 py-3 text-[#95002B] font-bold shadow-[2px_2px_12px_0px_rgba(64,50,133,0.08)]">
                   Choose Package
                 </button>
               </div>
