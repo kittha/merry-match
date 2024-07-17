@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
-import NavbarAuthen from "../../components/navbar/NavbarAuthen";
 import Countrydata from "/src/mock-city/Countrydata.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,6 +8,7 @@ import Footer from "../../components/homepage/Footer";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
 import CalendarIcon from "/assets/userprofile/calendar.png";
+import ProfilePopup from "../../components/profilepage/ProfilePopup";
 
 function UserProfilePage() {
   const [state, setState] = useState([]);
@@ -26,6 +26,16 @@ function UserProfilePage() {
   const [hobbies, setHobbies] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [bio, setBio] = useState("");
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+  
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const { state: userState } = useAuth();
 
@@ -148,7 +158,7 @@ function UserProfilePage() {
 
   return (
     <>
-      <div className="lg:w-screen w-auto lg:h-screen bg-[#FCFCFE] flex flex-col gap-[80px]">
+      <div className="lg:w-screen w-auto lg:h-screen bg-[#FCFCFE] flex flex-col gap-[80px] pt-[120px]">
         <div className="lg:w-screen w-auto mx-auto  bg-[#FCFCFE]">
           <div className="lg:w-[931px] lg:h-[1647px] w-auto h-auto flex flex-col items-center lg:items-end gap-[80px] pb-[50px] mx-auto font-Nunito">
             <div className="lg:w-[931px] h-[145px] w-auto flex lg:flex-row flex-col lg:gap-[80px] gap-[20px]">
@@ -163,9 +173,13 @@ function UserProfilePage() {
               </header>
               <div className="lg:w-[414px] w-[338px] lg:h-[145px] h-[48px] flex flex-row items-end justify-center lg:mt-0 md:mt-[2300px] mt-[2450px] mx-auto">
                 <div className="flex gap-[16px]">
-                  <button className="w-[162px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full p-[12px 24px] bg-[#FFE1EA] text-[#95002B] text-center font-bold text-base leading-6">
-                    Preview Profile
-                  </button>
+                <button 
+                  className="w-[162px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full bg-[#FFE1EA] text-[#95002B] text-center font-bold text-base leading-6"
+                  onClick={openPopup}
+                >
+                  Preview Profile
+                </button>
+                {isPopupOpen && <ProfilePopup onClose={closePopup} />}
                   <button className="w-[156px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full font-bold text-base leading-6 text-center text-[#FFFFFF] bg-[#C70039]">
                     Update Profile
                   </button>
