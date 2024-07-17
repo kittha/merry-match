@@ -8,6 +8,7 @@ import plus from "/assets/profilepicture/plus.png";
 import Footer from "../../components/homepage/Footer";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
+import CalendarIcon from "/assets/userprofile/calendar.png";
 
 function UserProfilePage() {
   const [state, setState] = useState([]);
@@ -25,7 +26,6 @@ function UserProfilePage() {
   const [hobbies, setHobbies] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [bio, setBio] = useState("");
-  const [currentLength, setCurrentLength] = useState(0);
 
   const { state: userState } = useAuth();
 
@@ -215,7 +215,7 @@ function UserProfilePage() {
                     }}
                   />
                   <img
-                    src="./src/assets/userProfile/calendar.png"
+                    src={CalendarIcon}
                     alt="calendar"
                     className="h-[24px] w-[24px] absolute top-12 right-4 transform -translate-y-1/2 cursor-pointer"
                     onClick={handleIconClick}
@@ -480,7 +480,6 @@ function UserProfilePage() {
                       const text = event.target.value;
                       if (text.length <= 150) {
                         setBio(text);
-                        setCurrentLength(text.length);
                       }
                     }}
                   >
