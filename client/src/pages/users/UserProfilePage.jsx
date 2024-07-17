@@ -12,15 +12,21 @@ import { useAuth } from "../../contexts/authentication";
 function UserProfilePage() {
   const [state, setState] = useState([]);
   const [name, setName] = useState("");
-  //const [birthday, setBirthday] = useState("");
+  const [birthday, setBirthday] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const { state: userState } = useAuth();
-
-  //DatePicker
   const [selectDate, setSelectDate] = useState(null);
+  const [sexualIdentity, setSexualIdentity] = useState("");
+  const [sexualPreference, setSexualPreference] = useState("");
+  const [racialPreference, setRacialPreference] = useState("");
+  const [meetingInterest, setMeetingInterest] = useState("");
+  const [hobbies, setHobbies] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [aboutMe, setAboutMe] = useState("");
+
+  const { state: userState } = useAuth();
 
   const datePickerRef = useRef(null);
 
@@ -44,16 +50,6 @@ function UserProfilePage() {
     setCity(city);
   };
 
-  //states form 2
-  const [sexualIdentity, setSexualIdentity] = useState("");
-  const [sexualPreference, setSexualPreference] = useState("");
-  const [racialPreference, setRacialPreference] = useState("");
-  const [meetingInterest, setMeetingInterest] = useState("");
-
-  //states hobbies
-  const [hobby, setHobby] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -61,16 +57,16 @@ function UserProfilePage() {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      const newHobbies = [...hobby, inputValue];
-      setHobby(newHobbies);
+      const newHobbies = [...hobbies, inputValue];
+      setHobbies(newHobbies);
       setInputValue("");
-    }
+     }
   };
 
   const deleteHobby = (index) => {
-    const newHobbies = [...hobby];
+    const newHobbies = [...hobbies];
     newHobbies.splice(index, 1);
-    setHobby(newHobbies);
+    setHobbies(newHobbies);
   };
 
   const [avatars, setAvatars] = useState({
@@ -128,6 +124,19 @@ function UserProfilePage() {
       );
       console.log(result);
       setName(result.data.name);
+      setCountry(result.data.location)
+      setCity(result.data.city);
+      setUsername(result.data.username);
+      setEmail(result.data.email);
+      setBirthday(result.data.date_of_birth);
+      setSexualIdentity(result.data.sexual_identities);
+      setSexualPreference(result.data.sexual_preferences);
+      setRacialPreference(result.data.racial_preferences);
+      setMeetingInterest(result.data.meeting_interests);
+      setHobbies(result.data.hobbies);
+      //setAvatars(result.data.avatars)
+      //setAboutMe(result.data.bio);
+
     } catch (error) {
       console.error(error);
     }
@@ -140,9 +149,6 @@ function UserProfilePage() {
     <>
       <div className="lg:w-screen w-auto lg:h-screen bg-[#FCFCFE] flex flex-col gap-[80px]">
         <div className="lg:w-screen w-auto mx-auto  bg-[#FCFCFE]">
-          <nav className="lg:w-[562.67px] w-auto lg:mb-[120px] mb-[50px]">
-            <NavbarAuthen />
-          </nav>
 
           <div className="lg:w-[931px] lg:h-[1647px] w-auto h-auto flex flex-col items-center lg:items-end gap-[80px] pb-[50px] mx-auto font-Nunito">
             <div className="lg:w-[931px] h-[145px] w-auto flex lg:flex-row flex-col lg:gap-[80px] gap-[20px]">
@@ -201,7 +207,7 @@ function UserProfilePage() {
                   <DatePicker
                     className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
                     ref={datePickerRef}
-                    selected={selectDate}
+                    selected={birthday}
                     placeholderText="Select date"
                     dateFormat="dd/MM/yyyy"
                     onChange={(date) => {
@@ -216,6 +222,7 @@ function UserProfilePage() {
                   />
                 </div>
               </div>
+              
               <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
                 <div className="flex flex-col lg:mr-[12px]">
                   <label
@@ -231,7 +238,7 @@ function UserProfilePage() {
                     required
                   >
                     <option disabled value="">
-                      Select Country
+                    {country}
                     </option>
                     {Countrydata.map((getcountry, index) => (
                       <option
@@ -259,7 +266,7 @@ function UserProfilePage() {
                     required
                   >
                     <option disabled value="">
-                      Select City
+                    {city}
                     </option>
                     {state.map((getStateData, index) => (
                       <option value={getStateData.state_name} key={index}>
@@ -330,7 +337,7 @@ function UserProfilePage() {
                     }}
                   >
                     <option disabled value="">
-                      Select Your Sexual Identity
+                    {sexualIdentity}
                     </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -354,7 +361,7 @@ function UserProfilePage() {
                     }}
                   >
                     <option disabled value="">
-                      Select Your Sexual Preference
+                    {sexualPreference}
                     </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -380,7 +387,7 @@ function UserProfilePage() {
                     }}
                   >
                     <option disabled value="">
-                      Select Your Racial Preference
+                    {racialPreference}
                     </option>
                     <option value="Asian">Asian</option>
                     <option value="Black or African American">
@@ -416,7 +423,7 @@ function UserProfilePage() {
                     }}
                   >
                     <option disabled value="">
-                      Select Your Meeting Interests
+                    {meetingInterest}
                     </option>
                     <option value="Long-term">Long-term Relationships</option>
                     <option value="Casual">Casual Dating</option>
@@ -435,7 +442,7 @@ function UserProfilePage() {
                     Hobbies / Interests (Maximum 10)
                   </label>
                   <div className="flex flex-row flex-wrap border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-full lg:w-[930px] mt-[4px]">
-                    {hobby.map((item, index) => (
+                    {hobbies.map((item, index) => (
                       <div
                         key={index}
                         className="flex items-center px-[8px] py-[4px]  gap-[8px] rounded-[6px] bg-[#F4EBF2] text-[#7D2262]"
@@ -448,7 +455,7 @@ function UserProfilePage() {
                       className="border-[1px] font-normal border-none rounded-lg py-[12px] px-[12px] focus:outline-none flex-grow min-w-[200px]"
                       type="text"
                       id="Hobbies"
-                      value={inputValue}
+                      value={hobbies}
                       onChange={handleInputChange}
                       onKeyDown={handleKeyDown}
                     />
@@ -468,7 +475,8 @@ function UserProfilePage() {
                   <textarea
                     className="textarea lg:w-[931px] w-auto h-[120px] rounded-[8px] border border-1 pt-3 pl-3 pb-3 pr-3 resize-none"
                     placeholder="I know nothing..but you"
-                  ></textarea>
+                  >
+                  </textarea>
                 </div>
               </div>
             </div>
