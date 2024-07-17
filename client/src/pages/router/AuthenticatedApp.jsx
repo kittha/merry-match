@@ -6,6 +6,8 @@ import PaymentFormPage from "../users/PaymentFormPage";
 import PaymentSuccessPage from "../users/PaymentSuccessPage";
 import { MembershipPage } from "../users/MembershipPage";
 import MerryPackage from "../users/MerryPackagePage";
+import ComplaintPage from "../users/ComplaintPage";
+
 const AuthenticatedApp = () => {
   return (
     <div>
@@ -18,6 +20,7 @@ const AuthenticatedApp = () => {
         <Route path="/payment/success" element={<PaymentSuccessPage />} />
         <Route path="/membership" element={<MembershipPage />} />
         <Route path="/package" element={<MerryPackage />} />
+        <Route path="/compliants/:userId" element={<ComplaintPage />} />
         <Route path="*" element={<HomePageAuthen />} />
       </Routes>
     </div>
