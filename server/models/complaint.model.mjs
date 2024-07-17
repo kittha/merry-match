@@ -3,7 +3,7 @@ import connectionPool from "../configs/db.mjs";
 export const createComplaint = async (userId, issue, description) => {
   await connectionPool.query(
     `
-        INSERT INTO complaints (userId, issue, description, status)
+        INSERT INTO complaints (created_by, issue, description, status)
         VALUES ($1, $2, $3, $4)
         `,
     [userId, issue, description, "pending"]
@@ -36,8 +36,6 @@ export const getComplaintById = async (complaintId) => {
 };
 
 export const updateComplaintStatus = async (complaintId, status) => {
-  console.log(complaintId, status);
-
   const result = await connectionPool.query(
     `
         UPDATE complaints
@@ -46,7 +44,5 @@ export const updateComplaintStatus = async (complaintId, status) => {
         `,
     [status, complaintId]
   );
-  result = result.rows[0];
-
-  return result;
+  return;
 };

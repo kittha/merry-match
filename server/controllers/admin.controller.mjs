@@ -34,7 +34,9 @@ export const updateComplaintStatus = async (req, res) => {
   const status = req.body.status;
   try {
     await updateComplaintStatusFromModel(complaintId, status);
-    return res.status(200);
+    return res
+      .status(200)
+      .json({ message: "Update Complaint Status Success." });
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve complaint." });
   }

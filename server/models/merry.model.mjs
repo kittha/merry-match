@@ -82,6 +82,20 @@ export const undoMerry = async (userId, merryUserId) => {
         ? checkStatusResult.rows[0].status
         : "none";
 
+    // if (currentStatus === "merry_match") {
+    //   // If the status is 'merry_match', update it to 'merry'
+    //   await connectionPool.query(
+    //     `
+    //     UPDATE match_status
+    //     SET status = 'merry'
+    //         updated_at = $3,
+    //         matched_at = $4
+    //     WHERE user_id_1 = $2 AND user_id_2 = $1
+    //     `,
+    //     [userId, merryUserId, currentDateTime, currentDateTime]
+    //   );
+    // }
+
     if (currentStatus === "merry_match") {
       // If the status is 'merry_match', update it to 'merry'
       await connectionPool.query(
