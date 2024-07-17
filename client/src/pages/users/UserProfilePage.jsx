@@ -24,7 +24,8 @@ function UserProfilePage() {
   const [meetingInterest, setMeetingInterest] = useState("");
   const [hobbies, setHobbies] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [aboutMe, setAboutMe] = useState("");
+  const [bio, setBio] = useState("");
+  const [currentLength, setCurrentLength] = useState(0);
 
   const { state: userState } = useAuth();
 
@@ -55,12 +56,12 @@ function UserProfilePage() {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && hobbies.length <= 9) {
       event.preventDefault();
       const newHobbies = [...hobbies, inputValue];
       setHobbies(newHobbies);
       setInputValue("");
-     }
+    }
   };
 
   const deleteHobby = (index) => {
@@ -124,7 +125,7 @@ function UserProfilePage() {
       );
       console.log(result);
       setName(result.data.name);
-      setCountry(result.data.location)
+      setCountry(result.data.location);
       setCity(result.data.city);
       setUsername(result.data.username);
       setEmail(result.data.email);
@@ -134,9 +135,9 @@ function UserProfilePage() {
       setRacialPreference(result.data.racial_preferences);
       setMeetingInterest(result.data.meeting_interests);
       setHobbies(result.data.hobbies);
+      setBio(result.data.bio);
       //setAvatars(result.data.avatars)
       //setAboutMe(result.data.bio);
-
     } catch (error) {
       console.error(error);
     }
@@ -149,7 +150,6 @@ function UserProfilePage() {
     <>
       <div className="lg:w-screen w-auto lg:h-screen bg-[#FCFCFE] flex flex-col gap-[80px]">
         <div className="lg:w-screen w-auto mx-auto  bg-[#FCFCFE]">
-
           <div className="lg:w-[931px] lg:h-[1647px] w-auto h-auto flex flex-col items-center lg:items-end gap-[80px] pb-[50px] mx-auto font-Nunito">
             <div className="lg:w-[931px] h-[145px] w-auto flex lg:flex-row flex-col lg:gap-[80px] gap-[20px]">
               <header className="lg:w-[517px] h-[145px] flex flex-col gap-[8px] lg:mt-0 mt-[60px] lg:pl-0 pl-[20px]">
@@ -222,7 +222,7 @@ function UserProfilePage() {
                   />
                 </div>
               </div>
-              
+
               <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
                 <div className="flex flex-col lg:mr-[12px]">
                   <label
@@ -238,7 +238,7 @@ function UserProfilePage() {
                     required
                   >
                     <option disabled value="">
-                    {country}
+                      {country}
                     </option>
                     {Countrydata.map((getcountry, index) => (
                       <option
@@ -266,7 +266,7 @@ function UserProfilePage() {
                     required
                   >
                     <option disabled value="">
-                    {city}
+                      {city}
                     </option>
                     {state.map((getStateData, index) => (
                       <option value={getStateData.state_name} key={index}>
@@ -337,7 +337,7 @@ function UserProfilePage() {
                     }}
                   >
                     <option disabled value="">
-                    {sexualIdentity}
+                      {sexualIdentity}
                     </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -361,7 +361,7 @@ function UserProfilePage() {
                     }}
                   >
                     <option disabled value="">
-                    {sexualPreference}
+                      {sexualPreference}
                     </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -387,7 +387,7 @@ function UserProfilePage() {
                     }}
                   >
                     <option disabled value="">
-                    {racialPreference}
+                      {racialPreference}
                     </option>
                     <option value="Asian">Asian</option>
                     <option value="Black or African American">
@@ -423,7 +423,7 @@ function UserProfilePage() {
                     }}
                   >
                     <option disabled value="">
-                    {meetingInterest}
+                      {meetingInterest}
                     </option>
                     <option value="Long-term">Long-term Relationships</option>
                     <option value="Casual">Casual Dating</option>
@@ -455,7 +455,7 @@ function UserProfilePage() {
                       className="border-[1px] font-normal border-none rounded-lg py-[12px] px-[12px] focus:outline-none flex-grow min-w-[200px]"
                       type="text"
                       id="Hobbies"
-                      value={hobbies}
+                      value={inputValue}
                       onChange={handleInputChange}
                       onKeyDown={handleKeyDown}
                     />
@@ -475,7 +475,16 @@ function UserProfilePage() {
                   <textarea
                     className="textarea lg:w-[931px] w-auto h-[120px] rounded-[8px] border border-1 pt-3 pl-3 pb-3 pr-3 resize-none"
                     placeholder="I know nothing..but you"
+                    value={bio}
+                    onChange={(event) => {
+                      const text = event.target.value;
+                      if (text.length <= 150) {
+                        setBio(text);
+                        setCurrentLength(text.length);
+                      }
+                    }}
                   >
+                    {bio}
                   </textarea>
                 </div>
               </div>
