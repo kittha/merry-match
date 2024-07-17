@@ -6,8 +6,7 @@ import PaymentFormPage from "./pages/users/PaymentFormPage";
 const App = () => {
   const auth = useAuth();
 
-  return <AuthenticatedApp />;
+  return auth.isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 };
-
 
 export default App;
