@@ -1,24 +1,38 @@
 import connectionPool from "../configs/db.mjs";
 
 export const createComplaint = async (userId, issue, description) => {
-  await connectionPool.query(
-    `
+  try {
+    await connectionPool.query(
+      `
         INSERT INTO complaints (created_by, issue, description, status)
         VALUES ($1, $2, $3, $4)
-        `,
-    [userId, issue, description, "pending"]
-  );
+      `,
+      [userId, issue, description, "pending"]
+    );
+    return { message: "Complaint created successfully." };
+  } catch (error) {
+    console.error("Error creating complaint:", error);
+    return {
+      message: "An error occurred while creating the complaint.",
+      error: error.message,
+    };
+  }
 };
 
 export const getAllComplaints = async () => {
-  const result = await connectionPool.query(
-    `
-        SELECT *
-        FROM complaints
-        `
-  );
-  const complaints = result.rows;
-  return complaints;
+  try {
+    const result = await connectionPool.query(
+      `
+          SELECT *
+          FROM complaints
+          `
+    );
+    const complaints = result.rows;
+    return complaints;
+  } catch (error) {
+    console.error("Error fetching complaints:", error);
+    return { message: "An error occurred while fetching complaints." };
+  }
 };
 
 export const getComplaintById = async (complaintId) => {
