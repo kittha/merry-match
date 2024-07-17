@@ -5,13 +5,17 @@ import {
   fetchUser,
 } from "../../../controllers/auth.controller.mjs";
 // import {
-// logoutUser,
 //   forgotPassword,
 //   resetPassword,
 // } from "../../../controllers/auth.controller.mjs";
-import { validateSignUp } from "../../../middlewares/signUp.validation.mjs";
-import { validateSignIn } from "../../../middlewares/signIn.validation.mjs";
 import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
+import { validatePicture } from "../../../middlewares/picture.validation.mjs";
+import { validateSignUpInput } from "../../../middlewares/signUpInput.validation.mjs";
+import { ageValidator } from "../../../middlewares/age.validation.mjs";
+import { validateEmailRegex } from "../../../middlewares/emailRegex.validation.mjs";
+import { validateUsernameLength } from "../../../middlewares/usernameLength.validation.mjs";
+import { validatePasswordLength } from "../../../middlewares/passwordLength.validation.mjs";
+import { validateSignInInput } from "../../../middlewares/signInInput.validation.mjs";
 import { checkUserDoesNotExist } from "../../../middlewares/checkUserDoesNotExist.middleware.mjs";
 
 const router = express.Router();
@@ -20,11 +24,23 @@ const router = express.Router();
 // If not, the header "multipart/form-data" will cause error to other function
 router.post(
   "/register",
-  [avatarUpload, validateSignUp, checkUserDoesNotExist],
+  [
+    avatarUpload,
+    validatePicture,
+    validateSignUpInput,
+    ageValidator,
+    validateEmailRegex,
+    validateUsernameLength,
+    validatePasswordLength,
+    checkUserDoesNotExist,
+  ],
   registerUser
 );
-router.post("/login", [avatarUpload, validateSignIn], loginUser);
-// router.post("/logout", logoutUser);
+router.post(
+  "/login",
+  [validateSignInInput, validateEmailRegex, validatePasswordLength],
+  loginUser
+);
 // router.post("/forgot-password", forgotPassword);
 // router.post("/reset-password/:token", resetPassword);
 router.get("/:tokenId", fetchUser);
