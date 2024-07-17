@@ -146,12 +146,12 @@ function UserProfilePage() {
       setMeetingInterest(result.data.meeting_interests);
       setHobbies(result.data.hobbies);
       setAvatars({
-        image1: result.data.avatars[0],
-        image2: result.data.avatars[1],
-        image3: result.data.avatars[2],
-        image4: result.data.avatars[3],
-        image5: result.data.avatars[4],
-      });
+        image1: (result.data.avatars[0]),
+        image2: (result.data.avatars[1]),
+        image3: (result.data.avatars[2]),
+        image4: (result.data.avatars[3]),
+        image5: (result.data.avatars[4]),
+      })
       //setAboutMe(result.data.bio);
     } catch (error) {
       console.error(error);
