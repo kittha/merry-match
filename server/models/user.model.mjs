@@ -23,7 +23,6 @@ export const doesUserExist = async (email) => {
     throw error;
   }
 };
-
 export const createUser = async (data) => {
   const { username, email, role_id } = data;
   const currentDateTime = new Date();

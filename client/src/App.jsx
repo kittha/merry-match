@@ -9,4 +9,5 @@ const App = () => {
   return auth.isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 };
 
+
 export default App;

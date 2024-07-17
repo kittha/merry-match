@@ -77,7 +77,6 @@ export const loginUser = async (req, res) => {
       avatars: avatarsUrl,
       session,
     };
-
     return res.status(200).json(data);
   } catch (error) {
     console.error("Error in loginUser:", error);

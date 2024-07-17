@@ -62,7 +62,6 @@ export const updateUserProfileById = async (req, res) => {
     // delete avatars from cloudinary
     const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
     await cloudinaryDestroy(cloudinaryId);
-
     return res.status(200).json({ message: "Updated Successful" });
   } catch (error) {
     console.error("Error in update profile controller:", error);

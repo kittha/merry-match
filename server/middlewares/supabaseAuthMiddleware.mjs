@@ -1,6 +1,5 @@
 import { getUser } from "../services/supabaseAuth.service.mjs";
 import connectionPool from "../configs/db.mjs";
-
 /**
  * Check Is user is a member?
  *
@@ -47,7 +46,6 @@ const supabaseAuthMiddleware = async (req, res, next) => {
     if (userRole !== 1 || userRole !== 2) {
       return res.status(401).json({ error: "Unauthorized" });
     }
-
     next();
   } catch (error) {
     console.error("Error in Supabase authentication middleware:", error);

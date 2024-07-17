@@ -47,7 +47,6 @@ const supabaseAuthIsAdminMiddleware = async (req, res, next) => {
     if (userRole !== 1) {
       return res.status(401).json({ error: "Unauthorized" });
     }
-
     next();
   } catch (error) {
     console.error("Error in Supabase authentication middleware:", error);

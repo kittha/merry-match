@@ -1,5 +1,4 @@
 import connectionPool from "../configs/db.mjs";
-
 export const createProfile = async (userId, data) => {
   const {
     name,
@@ -14,7 +13,6 @@ export const createProfile = async (userId, data) => {
     bio,
   } = data;
   const currentDateTime = new Date();
-
   try {
     const result = await connectionPool.query(
       `INSERT INTO profiles (
@@ -55,7 +53,6 @@ export const createProfile = async (userId, data) => {
     throw error;
   }
 };
-
 export const getProfile = async (userId) => {
   try {
     const result = await connectionPool.query(
@@ -68,7 +65,6 @@ export const getProfile = async (userId) => {
     throw error;
   }
 };
-
 export const updateProfile = async (userId, data) => {
   const {
     name,

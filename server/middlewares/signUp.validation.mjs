@@ -19,7 +19,6 @@ export const validateSignUp = (req, res, next) => {
   console.log(req.body.date_of_birth);
 
   /**/
-
   const { username, password, email } = req.body;
 
   if (!username || !password || !email) {
