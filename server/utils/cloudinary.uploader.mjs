@@ -1,8 +1,9 @@
 import "dotenv/config";
 import cloudinary from "../configs/cloudinary.config.mjs";
 import fs from "fs/promises";
+import { Console } from "console";
 
-const cloudinaryUpload = async (files) => {
+export const cloudinaryUpload = async (files) => {
   try {
     const fileUrls = [];
     for (let file of files.avatar) {
@@ -23,4 +24,14 @@ const cloudinaryUpload = async (files) => {
   }
 };
 
-export default cloudinaryUpload;
+export const cloudinaryDestroy = async (publicIds) => {
+  try {
+    for (let publicId of publicIds) {
+      const result = await cloudinary.uploader.destroy(publicId);
+      console.log(result);
+    }
+  } catch (error) {
+    console.error("Error deleting from Cloudinary:", error);
+    throw error;
+  }
+};

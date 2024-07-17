@@ -15,13 +15,22 @@ router.get("/", getAllPackages);
 
 router.get("/:packageId", getPackageById);
 
-// TODO: add IsAdmin Middleware
-router.post("/", [validatePackageData], createPackage);
+router.post(
+  "/",
+  [supabaseAuthIsAdminMiddleware, validatePackageData],
+  createPackage
+);
 
-// TODO: add IsAdmin Middleware
-router.put("/:packageId", [validatePackageData], updatePackageById);
+router.put(
+  "/:packageId",
+  [supabaseAuthIsAdminMiddleware, validatePackageData],
+  updatePackageById
+);
 
-// TODO: add IsAdmin Middleware
-router.delete("/:packageId", [], deletePackageById);
+router.delete(
+  "/:packageId",
+  [supabaseAuthIsAdminMiddleware],
+  deletePackageById
+);
 
 export default router;

@@ -1,58 +1,92 @@
+import cloudinary from "../configs/cloudinary.config.mjs";
+import { getProfile, updateProfile } from "../models/profile.model.mjs";
+import { getAvatars, upsertAvatars } from "../models/profilePicture.model.mjs";
+import { deleteUser, getUser, updateUser } from "../models/user.model.mjs";
 import {
-  uploadAvatar as uploadAvatarFromModel,
-  getUserAvatar as getUserAvatarFromModel,
-} from "../models/profile.model.mjs";
+  cloudinaryUpload,
+  cloudinaryDestroy,
+} from "../utils/cloudinary.uploader.mjs";
 
-/**
- *
- * @param {object} req - The request object, contain user id.
- * @param {object} res
- * @returns - The response object, containing the information message with the json file
- * In the json file, It's the Array of Objects, In the Object it contains many key:value pairs of picture_id, profile_id, cloudinary_id, url, created_at, updated_at.
- */
-export const getUserAvatar = async (req, res) => {
+export const getUserProfileById = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const userId = req.params.userId;
+    const { username, email } = await getUser(userId);
+    const {
+      name,
+      date_of_birth,
+      location,
+      city,
+      sexual_identities,
+      sexual_preferences,
+      racial_preferences,
+      meeting_interests,
+      hobbies,
+      bio,
+    } = await getProfile(userId);
+    const resultAvatars = await getAvatars(userId);
+    const avatars = resultAvatars.map((avatar) => avatar.url);
 
-    const getAvatarResult = await getUserAvatarFromModel(userId);
-    console.log(getAvatarResult);
-    return res.status(200).json({
-      message: "200 OK: Successfully retrieved the list of avatars.",
-      data: getAvatarResult,
-    });
+    const data = {
+      username,
+      email,
+      name,
+      date_of_birth,
+      location,
+      city,
+      sexual_identities,
+      sexual_preferences,
+      racial_preferences,
+      meeting_interests,
+      hobbies,
+      bio,
+      avatars,
+    };
+    return res.status(200).json(data);
   } catch (error) {
-    console.error("Error fetching user avatar:", error);
-    return res.status(500).json({
-      message: "Server could not process the request due to database issue.",
+    console.error("Error in get profile controller:", error);
+    res.status(500).json({
+      message: "Internal server error",
     });
   }
 };
 
-/**
- *
- * @param {object} req - The request object, contain user id, files(Object).
- * @param {object} res - The response object, containing the response message.
- * @returns
- */
-export const uploadAvatar = async (req, res) => {
+export const updateUserProfileById = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const userId = req.params.userId;
-
-    const uploadResult = await uploadAvatarFromModel(userId, req.files);
-
-    if (!uploadResult) {
-      return res.status(500).json({
-        message: "Avatar upload failed.",
-      });
-    }
-
-    return res.status(200).json({
-      message: "Avatar uploaded successfully",
-    });
+    await updateUser(userId, req.body);
+    await updateProfile(userId, req.body);
+    //กรณี url เดิมทำยังไง
+    avatarUri = await cloudinaryUpload(req.files);
+    // update profile picture in database
+    const avatarsResult = await upsertAvatars(userId, avatarUri);
+    // delete avatars from cloudinary
+    const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
+    await cloudinaryDestroy(cloudinaryId);
+    return res.status(200).json({ message: "Updated Successful" });
   } catch (error) {
-    console.error("Error uploading avatar:", error);
-    return res.status(500).json({
-      message: "Server could not process the request due to database issue.",
+    console.error("Error in update profile controller:", error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+export const deleteUserById = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    // delete avatars from cloudinary
+    const avatarsResult = getAvatars(userId);
+    const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
+    await cloudinaryDestroy(cloudinaryId);
+    // delete user from supabase auth
+    const { auth_id } = getUser(userId);
+    const { data, error } = await supabase.auth.admin.deleteUser(auth_id);
+    // delete user from database
+    await deleteUser(userId);
+  } catch (error) {
+    console.error("Error in delete profile controller:", error);
+    res.status(500).json({
+      message: "Internal server error",
     });
   }
 };

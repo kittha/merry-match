@@ -23,6 +23,22 @@ export const doesUserExist = async (email) => {
     throw error;
   }
 };
+export const createUser = async (data) => {
+  const { username, email, role_id } = data;
+  const currentDateTime = new Date();
+  try {
+    const result = await connectionPool.query(
+      `INSERT INTO users (username, email, created_at, updated_at)
+      VALUES ($1, $2, $3, $3)
+      RETURNING user_id`,
+      [username, email, currentDateTime]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in user model", error);
+    throw error;
+  }
+};
 
 /**
  * Get user data (from table: users, user_profiles, hobbies, profile_picture) from email from the Merry Match application.
@@ -30,46 +46,45 @@ export const doesUserExist = async (email) => {
  * @param {string} email
  * @returns {object} - The data object, containing the user, profile, hobbies, avatar key:value pairs.
  */
-export const getUser = async (email) => {
+export const getUser = async (id) => {
   try {
-    // get data from users table
-    const userResult = await connectionPool.query(
-      `SELECT * FROM users WHERE email = $1`,
-      [email]
+    const result = await connectionPool.query(
+      `SELECT * FROM users WHERE email = $1 OR user_id::text = $1`,
+      [id]
     );
-    const userId = userResult.rows[0].user_id;
-    // console.log(userId);
 
-    // get data from user_profiles table
-    const profileResult = await connectionPool.query(
-      `SELECT * FROM user_profiles WHERE user_id = $1`,
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in user model: ", error);
+  }
+};
+
+export const updateUser = async (userId, data) => {
+  const { username, role_id } = data;
+  const currentDateTime = new Date();
+  try {
+    const result = await connectionPool.query(
+      `UPDATE users SET username = $2, updated_at = $3 
+      WHERE user_id = $1
+      RETURNING *`,
+      [userId, username, currentDateTime]
+    );
+
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in user model: ", error);
+  }
+};
+
+export const deleteUser = async (userId) => {
+  try {
+    const result = await connectionPool.query(
+      `DELETE FROM users WHERE user_id = $1`,
       [userId]
     );
 
-    const profileId = profileResult.rows[0].profile_id;
-
-    // get data from hobbies table
-    const hobbiesResult = await connectionPool.query(
-      `SELECT * FROM hobbies WHERE profile_id = $1`,
-      [profileId]
-    );
-
-    // get data from profile_pictures table
-    const avatarsResult = await connectionPool.query(
-      `SELECT * FROM profile_pictures WHERE profile_id = $1`,
-      [profileId]
-    );
-
-    const data = {
-      user: userResult.rows[0],
-      profile: profileResult.rows[0],
-      hobbies: hobbiesResult.rows,
-      avatars: avatarsResult.rows,
-    };
-
-    // console.log(data);
-    return data;
+    return result.rows[0];
   } catch (error) {
-    console.error("Error occurred during signIn:", error);
+    console.error("Error in user model: ", error);
   }
 };
