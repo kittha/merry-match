@@ -8,7 +8,7 @@ import fs from "fs/promises";
  * @param {object} files - The files object after parsed with multer.
  * @returns
  */
-const cloudinaryUpload = async (files) => {
+export const cloudinaryUpload = async (files) => {
   try {
     const fileUris = [];
 
