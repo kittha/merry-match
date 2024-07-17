@@ -1,5 +1,5 @@
 export const validatePackageData = (req, res, next) => {
-  const { name, price, merry_limit, details } = req.body;
+  const { name, price, merry_limit, details, packageDetails } = req.body;
 
   if (!name || !price || !merry_limit || !details) {
     console.error(
