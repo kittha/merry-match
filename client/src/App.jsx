@@ -6,7 +6,7 @@ import PaymentFormPage from "./pages/users/PaymentFormPage";
 const App = () => {
   const auth = useAuth();
 
-  return <PaymentFormPage />;
+  return <AuthenticatedApp />;
 };
 
 

@@ -10,6 +10,7 @@ export default {
         register: "2px 2px 12px 0px #40328529",
         RedButton: "2px 2px 12px #40328529",
         PinkButton: "2px 2px 12px #40328514",
+        payment: "2px 2px 12px 0px #40328529",
       },
       backgroundImage: {
         "register-bg":
@@ -21,8 +22,3 @@ export default {
   },
   plugins: ["daistui"],
 };
-        
-      
-      
-
-
