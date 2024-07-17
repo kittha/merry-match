@@ -145,13 +145,30 @@ function UserProfilePage() {
       setRacialPreference(result.data.racial_preferences);
       setMeetingInterest(result.data.meeting_interests);
       setHobbies(result.data.hobbies);
-      setBio(result.data.bio);
-      //setAvatars(result.data.avatars)
+      setAvatars({
+        image1: result.data.avatars[0],
+        image2: result.data.avatars[1],
+        image3: result.data.avatars[2],
+        image4: result.data.avatars[3],
+        image5: result.data.avatars[4],
+      });
       //setAboutMe(result.data.bio);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const checkImage = (image) => {
+    if (image instanceof File) {
+      return URL.createObjectURL(image);
+    } else if (typeof image === "string") {
+      return image;
+    }
+    return ""; // Return an empty string or handle unexpected cases if necessary
+  };
+
+
+
   useEffect(() => {
     getUserProfile();
   }, []);
@@ -522,12 +539,13 @@ function UserProfilePage() {
                     onDragOver={handleDragOver}
                     onDrop={(event) => handleDrop(event, avatarKey)}
                   >
+                    {console.log(avatars[avatarKey])}
                     {avatars[avatarKey] ? (
                       <div className="image-preview-container w-[167px] h-[167px] relative">
                         <img
                           key={avatarKey}
                           className="image-preview w-[167px] h-[167px] rounded-2xl object-cover"
-                          src={URL.createObjectURL(avatars[avatarKey])}
+                          src={checkImage(avatars[avatarKey])}
                           alt={`Preview ${avatarKey}`}
                         />
                         <button
