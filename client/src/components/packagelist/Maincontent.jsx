@@ -22,7 +22,7 @@ function MainContent() {
     try {
       const newPackage = [...Package];
       await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages/${id}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/${id}`
       );
       newPackage.splice(index, 1);
       setpackage(newPackage);

@@ -130,7 +130,7 @@ export const deletePackageById = async (packageId) => {
       `,
       [packageId]
     );
-    console.log(deleteResult);
+    // console.log(deleteResult);
 
     return deleteResult;
   } catch (error) {

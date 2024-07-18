@@ -10,6 +10,7 @@ import errorHandler from "./middlewares/errorHandler.middleware.mjs";
 import apiV1Routes from "./routes/api/v1/index.mjs";
 import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
+import { avatarUpload } from "./middlewares/multer.middleware.mjs";
 
 const app = express();
 

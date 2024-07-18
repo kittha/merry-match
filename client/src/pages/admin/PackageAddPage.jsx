@@ -27,10 +27,10 @@ function PackageAddPage() {
       sentAdminData.append("price", 600);
       sentAdminData.append("merry_limit", merryLimit);
       for (let index = 0; index < packageDetail.length; index++) {
-        sentAdminData.append("packageDetail[]", packageDetail[index]);
+        sentAdminData.append("details[]", packageDetail[index]);
       }
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/packages`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/package`,
         sentAdminData
       );
     } catch (error) {
