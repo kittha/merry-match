@@ -129,7 +129,7 @@ const ProfilePopup = ({ onClose }) => {
             <div>
               <div className="flex font-extrabold">
                 <p className="text-[46px] text-[#2A2E3F]">{name}</p>
-                <p className="text-[46px] text-[#646D89] ml-[16px]">{calculateAge(birthday)}</p>
+                <p className="text-[46px] text-[#646D89] ml-[16px]">{isNaN(calculateAge(birthday)) ? 'Age unknown' : calculateAge(birthday)}</p>
               </div>
 
               <div className="flex">
