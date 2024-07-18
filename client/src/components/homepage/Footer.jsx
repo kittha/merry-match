@@ -1,3 +1,7 @@
+import NameLogo from "/assets/footer-img/logo1.png";
+import FacebookLogo from "/assets/footer-img/logo2.png";
+import InstagramLogo from "/assets/footer-img/logo3.png";
+import XLogo from "/assets/footer-img/logo4.png";
 function Logo(props) {
   return (
     <div className="w-[48px] h-[48px] rounded-[24px] p-[12px] flex gap-[10px] bg-[#A62D82] ">
@@ -18,7 +22,7 @@ function Footer() {
         <div className=" ld:w-[1120px] flex flex-col justify-space-between gab-[48px] relative top-[48px]">
           <div className="lg:w-[1120px] lg:h-[110px] w-[327px] h-[120px] mx-auto">
             <img
-              src="./public/assets/footer-img/logo1.png"
+              src={NameLogo}
               className="w-[238.57px] h-[80px] p-[22.5px 8.7px 20px 7.46px] mx-auto"
               alt="logo1"
             />
@@ -26,22 +30,22 @@ function Footer() {
               New generation of online dating website for everyone
             </p>
           </div>
-          
+
           <div className="lg:w-[1120px] h-[117px] w-[327px] flex flex-col gap-[24px] pt-[24px] mx-auto">
-          <div className="flex flex-col gap-[24px] pt-[2px] border-b-[1px] border-[#E4E6ED]"></div>
+            <div className="flex flex-col gap-[24px] pt-[2px] border-b-[1px] border-[#E4E6ED]"></div>
             <p className="w-auto h-[32px] font-nunito font-medium text-sm leading-[21px] text-[#9AA1B9] text-center mx-auto">
               copyright ©2022 merrymatch.com All rights reserved
             </p>
 
             <div className="w-[176px] h-[48px] flex flex-row gap-[16px] mx-auto">
               <a href="https://www.facebook.com/">
-                <Logo image="./public/assets/footer-img/logo2.png" alt="logo2" />
+                <Logo image={FacebookLogo} alt="facebook-logo" />
               </a>
               <a href="https://www.instagram.com/accounts/login/?hl=en">
-                <Logo image="./public/assets/footer-img/logo3.png" alt="logo3" />
+                <Logo image={InstagramLogo} alt="instagram-logo" />
               </a>
               <a href="https://x.com/">
-                <Logo image="./public/assets/footer-img/logo4.png" alt="logo4" />
+                <Logo image={XLogo} alt="x-logo" />
               </a>
             </div>
           </div>
