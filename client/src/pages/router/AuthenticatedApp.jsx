@@ -6,6 +6,7 @@ import PaymentFormPage from "../users/PaymentFormPage";
 import PaymentSuccessPage from "../users/PaymentSuccessPage";
 import { MembershipPage } from "../users/MembershipPage";
 import MerryPackage from "../users/MerryPackagePage";
+<<<<<<< HEAD
 import { useAuth } from "../../contexts/authentication";
 import PackageEditAndViewPage from "../admin/PackageEditAndViewPage";
 import PackageListPage from "../admin/PackageListPage";
@@ -13,6 +14,9 @@ import PackageAddPage from "../admin/PackageAddPage";
 import MatchingPage from "../users/MatchingPage";
 import MerryListPage from "../users/MerryListPage";
 import ComplaintPage from "../users/ComplaintPage";
+=======
+import Chat from "../../components/matchingpage/chat";
+>>>>>>> 41a717d (feat: add chat UI structure)
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -34,6 +38,7 @@ const AuthenticatedApp = () => {
         <Route path="/payment" element={<PaymentFormPage />} />
         <Route path="/payment/success" element={<PaymentSuccessPage />} />
         <Route path="/package" element={<MerryPackage />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="*" element={<HomePageAuthen />} />
 
         {role === "Admin" && (
