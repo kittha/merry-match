@@ -17,7 +17,7 @@ function Logo(props) {
 }
 function Footer() {
   return (
-    <footer className="bg-[#F6F7FC] w-full h-full">
+    <footer className="bg-[#F6F7FC] w-full h-full font-Nunito">
       <div className="w-[340px] h-[345px] lg:w-[1120px] lg:h-[371px] bg-[#F6F7FC] mx-auto">
         <div className=" ld:w-[1120px] flex flex-col justify-space-between gab-[48px] relative top-[48px]">
           <div className="lg:w-[1120px] lg:h-[110px] w-[327px] h-[120px] mx-auto">
@@ -33,7 +33,7 @@ function Footer() {
 
           <div className="lg:w-[1120px] h-[117px] w-[327px] flex flex-col gap-[24px] pt-[24px] mx-auto">
             <div className="flex flex-col gap-[24px] pt-[2px] border-b-[1px] border-[#E4E6ED]"></div>
-            <p className="w-auto h-[32px] font-nunito font-medium text-sm leading-[21px] text-[#9AA1B9] text-center mx-auto">
+            <p className="lg:w-auto w-[343px] h-[32px] font-nunito font-medium text-sm leading-[21px] text-[#9AA1B9] text-center mx-auto">
               copyright ©2022 merrymatch.com All rights reserved
             </p>
 

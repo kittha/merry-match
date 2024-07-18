@@ -178,7 +178,7 @@ const NavbarAuthen = () => {
             <button ref={profileIconRef} onClick={handleProfileClick}>
               <img
                 src={profile}
-                alt="merry match profile"
+                alt="merry-match-profile"
                 className="h-[48px] w-[48px]"
               />
             </button>
@@ -258,7 +258,9 @@ const NavbarAuthen = () => {
           </div>
           <div className="flex items-center p-[12px]">
             <img src={icon2} alt="icon2" className="mr-2 p-[10px] pl-8" />
-            <button onClick={() => navigate("/")}>Profile</button>
+            <button onClick={() => navigate(`/user-profile/${state.user.id}`)}>
+              Profile
+            </button>
           </div>
           <div className="flex items-center p-[12px]">
             <img src={icon3} alt="icon3" className="mr-2 p-[10px] pl-8" />

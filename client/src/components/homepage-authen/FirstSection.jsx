@@ -13,18 +13,18 @@ function FirstSection() {
             Why Merry Match?
           </h1>
           <br />
-          <p className="text-white font-Nunito text-[20px] lg:pl-10 px-4 2xl:pl-0">
+          <p className="text-white font-Nunito text-[20px] lg:pl-10 lg:px-4 px-2 2xl:pl-0">
             Merry Match is a new generation of online dating website for
             everyone
           </p>
           <br />
-          <p className="text-white font-Nunito text-[16px] lg:pl-10 px-2 2xl:pl-0">
+          <p className="text-white font-Nunito text-[16px] lg:pl-10 lg:px-2 px-2 2xl:pl-0">
             Whether you’re committed to dating, meeting new people, expanding
             your social network, meeting locals while traveling, or even just
             making a small chat with strangers.
           </p>
           <br />
-          <p className="text-white font-Nunito text-[16px] lg:pl-10 px-3 2xl:pl-0">
+          <p className="text-white font-Nunito text-[16px] lg:pl-10 lg:px-3 px-2 2xl:pl-0">
             This site allows you to make your own dating profile, discover new
             people, save favorite profiles, and let them know that you’re
             interested.

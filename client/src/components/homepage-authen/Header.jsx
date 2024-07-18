@@ -24,7 +24,7 @@ const Header = () => {
                 Make the <br />
                 first ‘Merry’
               </h3>
-              <h4 className="text-[20px] font-semibold font-Nunito text-white leading-relaxed lg:mt-4">
+              <h4 className="w-[343px] text-[20px] font-semibold font-Nunito text-white leading-relaxed lg:mt-4">
                 If you feel lonely, let’s start meeting{" "}
                 <br className="hidden lg:block" /> new people in your area!{" "}
                 <br className="hidden lg:block" /> Don’t forget to get Merry
