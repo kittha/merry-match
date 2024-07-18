@@ -86,7 +86,7 @@ function MainContent() {
             <div className="w-[80px] h-[88px] flex items-center">
               <img
                 className="w-[32px] h-[32px] ml-[16px]"
-                src="./src/assets/react.svg"
+                src="./src/assets/delete.svg"
                 alt="dummy"
               />
             </div>
@@ -112,7 +112,7 @@ function MainContent() {
               </button>
               <button
                 onClick={() =>
-                  navigate(`/admin/viewandedit/${items.package_id}`)
+                  navigate(`/admin/package/viewandedit/${items.package_id}`)
                 }
               >
                 <img
