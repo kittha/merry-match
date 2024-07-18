@@ -2,7 +2,19 @@ import merryMatchLogo from "../../assets-backup/footer-image/logo1.png";
 import facebookLogo from "../../assets-backup/footer-image/logo2.png";
 import instagramLogo from "../../assets-backup/footer-image/logo3.png";
 import xLogo from "../../assets-backup/footer-image/logo4.png";
-
+function Logo(props) {
+  return (
+    <div className="w-[48px] h-[48px] rounded-[24px] p-[12px] flex gap-[10px] bg-[#A62D82] ">
+      <div className="w-[24px] h-[24px]">
+        <img
+          src={props.image}
+          className="w-[15.28px] h-[15.19px] relative top-[4.36px] left-[4.36px]"
+          alt={props.alt}
+        />
+      </div>
+    </div>
+  );
+}
 function Footer() {
   return (
     <footer className="bg-[#F6F7FC] w-full h-full">
@@ -42,19 +54,4 @@ function Footer() {
     </footer>
   );
 }
-
-function Logo(props) {
-  return (
-    <div className="w-[48px] h-[48px] rounded-[24px] p-[12px] flex gap-[10px] bg-[#A62D82] ">
-      <div className="w-[24px] h-[24px]">
-        <img
-          src={props.image}
-          className="w-[15.28px] h-[15.19px] relative top-[4.36px] left-[4.36px]"
-          alt={props.alt}
-        />
-      </div>
-    </div>
-  );
-}
-
 export default Footer;

@@ -9,7 +9,7 @@ export function ThirdSection() {
   return (
     <section className="bg-[#160404] w-full h-[564px] font-Nunito">
       <div className="bg-[#160404] lg:h-[570px] h-[564px] lg:w-full flex flex-col m-0 mx-auto">
-        <div className="bg-gradient-to-r from-[#820025] to-[#A95BCD] lg:w-[1120px] min-[320px]:w-full w-[375px] h-[564px] lg:h-[369px] lg:rounded-[32px] relative lg:top-[80px] lg:left-[0px] flex flex-col justify-center mx-auto lg:pt-10">
+        <div className="bg-gradient-to-r from-[#742138] to-[#A878BF] lg:w-[1120px] min-[320px]:w-full w-[375px] h-[564px] lg:h-[369px] lg:rounded-[32px] relative lg:top-[80px] lg:left-[0px] flex flex-col justify-center mx-auto lg:pt-10">
           <h2 className="w-[343px] h-[232px] sm:w-[588px] lg:h-[116px] relative top-[128px] lg:top-[83px] lg:left-[266px] sm:top-[170px] sm:left-[20px] font-Nunito font-extrabold text-[46px] leading-[57.5px] text-center text-[#FFFFFF] lg:mx-0 mx-auto">
             Let’s start finding and matching someone new
           </h2>

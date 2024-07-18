@@ -3,6 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Portal from "./Portal";
 import { useAuth } from "../../contexts/authentication";
+import headerMerryMatchLogo from "../../assets-backup/header-image/header-merrymatch-logo.svg";
+import iconBell from "../../assets-backup/navbar-image/icon_bell.png";
+import iconChat from "../../assets-backup/navbar-image/icon_chat.png";
+import profileMenu1 from "../../assets-backup/navbar-image/profile_menu1.png";
+import profileMenu2 from "../../assets-backup/navbar-image/profile_menu2.png";
+import profileMenu3 from "../../assets-backup/navbar-image/profile_menu3.png";
+import icon1 from "../../assets-backup/navbar-image/icon1.png";
+import icon2 from "../../assets-backup/navbar-image/icon2.png";
+import icon3 from "../../assets-backup/navbar-image/icon3.png";
+import icon4 from "../../assets-backup/navbar-image/icon4.png";
+import icon5 from "../../assets-backup/navbar-image/icon5.png";
+import icon6 from "../../assets-backup/navbar-image/icon6.png";
 
 const NavbarAuthen = () => {
   const navigate = useNavigate();
@@ -52,26 +64,26 @@ const NavbarAuthen = () => {
   }, [profileMenuOpen]);
 
   return (
-    <nav className="Navbar text-[#191C77] text-[1rem] bg-[#FFFFFF] fixed z-20 overflow-auto flex items-center justify-between w-full lg:h-[88px] h-[52px] font-bold shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.12)]">
+    <nav className="Navbar text-[#64001D] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-20 overflow-auto flex items-center justify-between w-full lg:h-[88px] h-[52px] font-bold shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.12)]">
       <div className="flex items-center justify-between w-full lg:w-[1440px] mx-auto px-4 lg:px-0">
         <button onClick={() => navigate("/")}>
           <img
-            src="../public/assets/HomePage/header-merrymatch-logo.svg"
-            alt="merry match logo"
+            src={headerMerryMatchLogo}
+            alt="merry-match-logo"
             className="lg:ml-[170px] h-[44px]"
           />
         </button>
         <div className="flex gap-4 lg:hidden ml-24">
           <button onClick={() => navigate("/")}>
             <img
-              src="../public/assets/Navbar/icon_bell.png"
-              alt="merry match message"
+              src={iconBell}
+              alt="merry-match-message"
               className="h-[26px] w-[26px]"
             />
           </button>
           <button onClick={() => navigate("/")}>
             <img
-              src="../public/assets/Navbar/icon_chat.png"
+              src={iconChat}
               alt="merry match notification"
               className="h-[26px] w-[26px]"
             />
@@ -100,8 +112,8 @@ const NavbarAuthen = () => {
           <div className="relative">
             <button ref={bellIconRef} onClick={handleBellClick}>
               <img
-                src="../public/assets/Navbar/icon_bell.png"
-                alt="merry match bell"
+                src={iconBell}
+                alt="merry-match-bell"
                 className="h-[48px] w-[48px]"
               />
             </button>
@@ -119,7 +131,7 @@ const NavbarAuthen = () => {
                 >
                   <div className="flex items-center h-[66px] p-[8px]">
                     <img
-                      src="../public/assets/Navbar/profile_menu1.png"
+                      src={profileMenu1}
                       alt="icon2"
                       className="ml-1 mr-3 h-[32px] w-[32px]"
                     />
@@ -132,7 +144,7 @@ const NavbarAuthen = () => {
                   </div>
                   <div className="flex items-center h-[66px] p-[8px]">
                     <img
-                      src="../public/assets/Navbar/profile_menu2.png"
+                      src={profileMenu2}
                       alt="icon2"
                       className="ml-1 mr-3 h-[32px] w-[32px]"
                     />
@@ -145,7 +157,7 @@ const NavbarAuthen = () => {
                   </div>
                   <div className="flex items-center h-[66px] p-[8px]">
                     <img
-                      src="../public/assets/Navbar/profile_menu3.png"
+                      src={profileMenu3}
                       alt="icon2"
                       className="ml-1 mr-3 h-[32px] w-[32px]"
                     />
@@ -263,53 +275,29 @@ const NavbarAuthen = () => {
                 setIsOpen(false);
               }}
             >
-              <img
-                src="../public/assets/Navbar/icon1.png"
-                alt="icon1"
-                className="mr-2"
-              />
+              <img src={icon1} alt="icon1" className="mr-2" />
               More limit Merry!
             </button>
           </div>
           <div className="flex items-center p-[12px]">
-            <img
-              src="../public/assets/Navbar/icon2.png"
-              alt="icon2"
-              className="mr-2 p-[10px] pl-8"
-            />
+            <img src={icon2} alt="icon2" className="mr-2 p-[10px] pl-8" />
             <button onClick={() => navigate("/")}>Profile</button>
           </div>
           <div className="flex items-center p-[12px]">
-            <img
-              src="../public/assets/Navbar/icon3.png"
-              alt="icon3"
-              className="mr-2 p-[10px] pl-8"
-            />
+            <img src={icon3} alt="icon3" className="mr-2 p-[10px] pl-8" />
             <button onClick={() => navigate("/")}>Merry list</button>
           </div>
           <div className="flex items-center p-[12px]">
-            <img
-              src="../public/assets/Navbar/icon4.png"
-              alt="icon4"
-              className="mr-2 p-[10px] pl-8"
-            />
+            <img src={icon4} alt="icon4" className="mr-2 p-[10px] pl-8" />
             <button onClick={() => navigate("/")}>Merry Membership</button>
           </div>
           <div className="flex items-center p-[12px]">
-            <img
-              src="../public/assets/Navbar/icon5.png"
-              alt="icon5"
-              className="mr-2 p-[10px] pl-8"
-            />
+            <img src={icon5} alt="icon5" className="mr-2 p-[10px] pl-8" />
             <button onClick={() => navigate("/")}>Compliant</button>
           </div>
           <div className="mx-auto border-t border-gray-300 w-[343px] my-4"></div>
           <div className="flex items-center p-[12px] pt-0">
-            <img
-              src="../public/assets/Navbar/icon6.png"
-              alt="icon6"
-              className="mr-2 p-[10px] pl-8"
-            />
+            <img src={icon6} alt="icon6" className="mr-2 p-[10px] pl-8" />
             <button onClick={handleLogout}>Log out</button>
           </div>
         </div>
