@@ -35,7 +35,7 @@ const AuthenticatedApp = () => {
             <Route path="/admin/package" element={<PackageListPage />} />
             <Route path="/admin/package/add" element={<PackageAddPage />} />
             <Route
-              path="/admin/package/viewandedit/:packageId"
+              path="/admin/package/:packageId"
               element={<PackageEditAndViewPage />}
             />
           </>
