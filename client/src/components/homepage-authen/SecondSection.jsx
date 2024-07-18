@@ -1,7 +1,7 @@
-import icon1 from "../../assets-backup/section2-image/icon1.png";
-import icon2 from "../../assets-backup/section2-image/icon2.png";
-import icon3 from "../../assets-backup/section2-image/icon3.png";
-import icon4 from "../../assets-backup/section2-image/icon4.png";
+import icon1 from "/assets/section2-image/icon1.png";
+import icon2 from "/assets/section2-image/icon2.png";
+import icon3 from "/assets/section2-image/icon3.png";
+import icon4 from "/assets/section2-image/icon4.png";
 
 function SecondSection() {
   return (

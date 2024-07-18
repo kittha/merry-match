@@ -1,7 +1,7 @@
-import merryMatchLogo from "../../assets-backup/footer-image/logo1.png";
-import facebookLogo from "../../assets-backup/footer-image/logo2.png";
-import instagramLogo from "../../assets-backup/footer-image/logo3.png";
-import xLogo from "../../assets-backup/footer-image/logo4.png";
+import merryMatchLogo from "/assets/footer-image/logo1.png";
+import facebookLogo from "/assets/footer-image/logo2.png";
+import instagramLogo from "/assets/footer-image/logo3.png";
+import xLogo from "/assets/footer-image/logo4.png";
 
 function Footer() {
   return (

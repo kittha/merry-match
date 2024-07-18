@@ -1,9 +1,9 @@
 import React from "react";
-import headerimage1 from "../../assets-backup/header-image/header-image1.png";
-import headerimage2 from "../../assets-backup/header-image/header-image2.png";
-import vector1 from "../../assets-backup/header-image/vector1.png";
-import vector3 from "../../assets-backup/header-image/vector3.png";
-import vector4 from "../../assets-backup/header-image/vector4.png";
+import headerimage1 from "/assets/header-image/header-image1.png";
+import headerimage2 from "/assets/header-image/header-image2.png";
+import vector1 from "/assets/header-image/vector1.png";
+import vector3 from "/assets/header-image/vector3.png";
+import vector4 from "/assets/header-image/vector4.png";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {

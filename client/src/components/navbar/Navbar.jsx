@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
-import headerMerryMatchLogo from "../../assets-backup/header-image/header-merrymatch-logo.svg";
-import iconBell from "../../assets-backup/navbar-image/icon_bell.png";
-import iconChat from "../../assets-backup/navbar-image/icon_chat.png";
+import headerMerryMatchLogo from "/assets/header-image/header-merrymatch-logo.svg";
+import iconBell from "/assets/navbar-image/icon_bell.png";
+import iconChat from "/assets/navbar-image/icon_chat.png";
 
 const Navbar = () => {
   const navigate = useNavigate();

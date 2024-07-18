@@ -3,18 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Portal from "./Portal";
 import { useAuth } from "../../contexts/authentication";
-import headerMerryMatchLogo from "../../assets-backup/header-image/header-merrymatch-logo.svg";
-import iconBell from "../../assets-backup/navbar-image/icon_bell.png";
-import iconChat from "../../assets-backup/navbar-image/icon_chat.png";
-import profileMenu1 from "../../assets-backup/navbar-image/profile_menu1.png";
-import profileMenu2 from "../../assets-backup/navbar-image/profile_menu2.png";
-import profileMenu3 from "../../assets-backup/navbar-image/profile_menu3.png";
-import icon1 from "../../assets-backup/navbar-image/icon1.png";
-import icon2 from "../../assets-backup/navbar-image/icon2.png";
-import icon3 from "../../assets-backup/navbar-image/icon3.png";
-import icon4 from "../../assets-backup/navbar-image/icon4.png";
-import icon5 from "../../assets-backup/navbar-image/icon5.png";
-import icon6 from "../../assets-backup/navbar-image/icon6.png";
+import headerMerryMatchLogo from "/assets/header-image/header-merrymatch-logo.svg";
+import iconBell from "/assets/navbar-image/icon_bell.png";
+import iconChat from "/assets/navbar-image/icon_chat.png";
+import profileMenu1 from "/assets/navbar-image/profile_menu1.png";
+import profileMenu2 from "/assets/navbar-image/profile_menu2.png";
+import profileMenu3 from "/assets/navbar-image/profile_menu3.png";
+import profile from "/assets/navbar-image/profile.png";
+import icon1 from "/assets/navbar-image/icon1.png";
+import icon2 from "/assets/navbar-image/icon2.png";
+import icon3 from "/assets/navbar-image/icon3.png";
+import icon4 from "/assets/navbar-image/icon4.png";
+import icon5 from "/assets/navbar-image/icon5.png";
+import icon6 from "/assets/navbar-image/icon6.png";
 
 const NavbarAuthen = () => {
   const navigate = useNavigate();
@@ -176,7 +177,7 @@ const NavbarAuthen = () => {
           <div className="relative">
             <button ref={profileIconRef} onClick={handleProfileClick}>
               <img
-                src="../public/assets/Navbar/profile.png"
+                src={profile}
                 alt="merry match profile"
                 className="h-[48px] w-[48px]"
               />
@@ -202,20 +203,12 @@ const NavbarAuthen = () => {
                         setIsOpen(false);
                       }}
                     >
-                      <img
-                        src="../public/assets/Navbar/icon1.png"
-                        alt="icon1"
-                        className="mr-2 "
-                      />
+                      <img src={icon1} alt="icon1" className="mr-2 " />
                       More limit Merry!
                     </button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px]">
-                    <img
-                      src="../public/assets/Navbar/icon2.png"
-                      alt="icon2"
-                      className="mr-2  pl-4"
-                    />
+                    <img src={icon2} alt="icon2" className="mr-2  pl-4" />
                     <button
                       onClick={() => navigate(`/user-profile/${state.user.id}`)}
                     >
@@ -223,38 +216,22 @@ const NavbarAuthen = () => {
                     </button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px]">
-                    <img
-                      src="../public/assets/Navbar/icon3.png"
-                      alt="icon3"
-                      className="mr-2 pl-4"
-                    />
+                    <img src={icon3} alt="icon3" className="mr-2 pl-4" />
                     <button onClick={() => navigate("/")}>Merry list</button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px]">
-                    <img
-                      src="../public/assets/Navbar/icon4.png"
-                      alt="icon4"
-                      className="mr-2 pl-4"
-                    />
+                    <img src={icon4} alt="icon4" className="mr-2 pl-4" />
                     <button onClick={() => navigate("/")}>
                       Merry Membership
                     </button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px] mb-1">
-                    <img
-                      src="../public/assets/Navbar/icon5.png"
-                      alt="icon5"
-                      className="mr-2 pl-4"
-                    />
+                    <img src={icon5} alt="icon5" className="mr-2 pl-4" />
                     <button onClick={() => navigate("/")}>Compliant</button>
                   </div>
                   <div className="mx-auto border-t border-gray-300 w-full p-[2px]"></div>
                   <div className="flex items-center h-[37px] p-[8px]">
-                    <img
-                      src="../public/assets/Navbar/icon6.png"
-                      alt="icon6"
-                      className="mr-2 pl-4"
-                    />
+                    <img src={icon6} alt="icon6" className="mr-2 pl-4" />
                     <button onClick={handleLogout}>Log out</button>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
-import icon1 from "../../assets-backup/section3-image/icon1.png";
-import icon2 from "../../assets-backup/section3-image/icon2.png";
-import icon3 from "../../assets-backup/section3-image/icon3.png";
+import icon1 from "/assets/section3-image/icon1.png";
+import icon2 from "/assets/section3-image/icon2.png";
+import icon3 from "/assets/section3-image/icon3.png";
 import { useNavigate } from "react-router-dom";
 
 export function ThirdSection() {
@@ -10,8 +10,8 @@ export function ThirdSection() {
     <section className="bg-[#160404] w-full h-[564px] font-Nunito">
       <div className="bg-[#160404] lg:h-[570px] h-[564px] lg:w-full flex flex-col m-0 mx-auto">
         <div className="bg-gradient-to-r from-[#742138] to-[#A878BF] lg:w-[1120px] min-[320px]:w-full w-[375px] h-[564px] lg:h-[369px] lg:rounded-[32px] relative lg:top-[80px] lg:left-[0px] flex flex-col justify-center mx-auto lg:pt-10">
-          <h2 className="w-[343px] h-[232px] sm:w-[588px] lg:h-[116px] relative top-[128px] lg:top-[83px] lg:left-[266px] sm:top-[170px] sm:left-[20px] font-Nunito font-extrabold text-[46px] leading-[57.5px] text-center text-[#FFFFFF] lg:mx-0 mx-auto">
-            Let’s start finding and matching someone new
+          <h2 className="w-[343px] h-[232px] sm:w-[610px] lg:h-[116px] relative top-[128px] lg:top-[83px] lg:left-[266px] sm:top-[170px] sm:left-[20px] font-Nunito font-extrabold text-[46px] leading-[57.5px] text-center text-[#FFFFFF] lg:mx-0 mx-auto">
+            Let’s start finding <br /> and matching someone new
           </h2>
           <button
             className="z-10 w-[163px] h-[48px] rounded-full p-[12px] [24px] bg-[#FFE1EA] text-[#95002B] text-[16px] leading-[24px] text-center font font-bold relative lg:top-[120px] lg:left-[0px] top-[170px] mx-auto sm:top-[180px] sm:left-[20px] lg:hover:scale-105 lg:hover:bg-pink-300 lg:duration-300"
