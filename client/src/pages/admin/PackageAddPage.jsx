@@ -27,7 +27,10 @@ function PackageAddPage() {
       sentAdminData.append("price", 600);
       sentAdminData.append("merry_limit", merryLimit);
       sentAdminData.append("details", packageDetail);
-      await axios.post("http://localhost:4000/api/v1/packages", sentAdminData);
+      await axios.post(
+        "http://localhost:4000/api/v1/admin/package",
+        sentAdminData
+      );
     } catch (error) {
       console.error("Error create data:", error);
     }
