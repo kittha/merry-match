@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-//import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 //import NavbarAuthen from "../../components/navbar/NavbarAuthen";
 
 function ComplaintPage() {
@@ -8,12 +8,12 @@ function ComplaintPage() {
   console.log(issue);
   const [description, setDescription] = useState("");
   console.log(description);
-  //const { userId } = useParams();
+  const { userId } = useParams();
   //console.log(userId);
   const postComplaintPage = async () => {
     try {
       const result = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/complaints/2`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/complaints/${userId}`,
         {
           issue: issue,
           description: description,
@@ -42,7 +42,7 @@ function ComplaintPage() {
             If you have any trouble <br /> Don't be afraid to tell us!
           </h2>
         </header>
-        <div className="w-[548px] h-[428px] flex flex-col gap-[40px] mt-[100px]">
+        <div className="w-[548px] h-[428px] flex flex-col gap-[40px]">
           <form onSubmit={handleSubmit}>
             <div className="w-[548px] h-[76px] flex flex-col gap-[4px]">
               <label
@@ -55,21 +55,32 @@ function ComplaintPage() {
                 id="issue"
                 type="text"
                 placeholder="Place Holder"
-                className=""
+                className="w-[548px] h-[48px] rounded-[8px] border-[1px] border-[#D6D9E4] bg-[#FFFFFF] pt-[12px] pr-[16px] pb-[12px] pl-[12px] flex gap-8"
                 value={issue}
                 onChange={(event) => setIssue(event.target.value)}
               />
             </div>
-            <div>
-              <label htmlFor="description">Description</label>
+            <div className="w-[548px] h-[224px] flex flex-col gap-[4px]">
+              <label
+                htmlFor="description"
+                className="w-[446px] h-[24px] flex flex-col gap-[4px]"
+              >
+                Description
+              </label>
               <textarea
                 id="description"
                 placeholder="Place Holder"
+                className="w-[548px] h-[196px] rounded-[8px] border-[1px] border-[#D6D9E4] bg-[#FFFFFF] pt-[12px] pr-[16px] pb-[12px] pl-[12px] flex gap-[8px]"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
               ></textarea>
             </div>
-            <button type="submit">Submit</button>
+            <button
+              type="submit"
+              className="w-[102px] h-[48px] rounded-full pt-[12px] pr-[24px] pb-[12px] pl-[24px] bg-[#C70039] text-[#FFFFFF] font-bold text-base leading-6 text-center"
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>
