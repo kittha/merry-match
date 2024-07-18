@@ -2,6 +2,7 @@ import { useEffect, useRef, useReducer } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Countrydata from "/src/mock-city/Countrydata.json";
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/authentication';
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
   inputValue: "",
   bio: "",
   isPopupOpen: false,
+  isDeleteConfirmationOpen: false,
   avatars: {
     image1: null,
     image2: null,
@@ -53,6 +55,11 @@ const profileReducer = (state, action) => {
         ...state,
         isPopupOpen: action.payload
       };
+    case 'SET_IS_DELETE_CONFIRMATION_OPEN':
+      return {
+        ...state,
+        isDeleteConfirmationOpen: action.payload
+      };
     default:
       return state;
   }
@@ -64,6 +71,7 @@ export const useProfileData = () => {
   //const { state: userState } = useAuth();
   const datePickerRef = useRef(null);
   const { userId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUserProfile();
@@ -145,6 +153,21 @@ export const useProfileData = () => {
         type: 'SET_AVATARS',
         payload: result.data.avatars
       });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteProfile = async () => {
+    try {
+      const result = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`
+      );
+      dispatch({
+        type: 'SET_PROFILE',
+        payload: initialState
+      });
+      navigate('/login');
     } catch (error) {
       console.error(error);
     }
@@ -265,6 +288,21 @@ export const useProfileData = () => {
     });
   };
 
+  const openDeleteConfirmation = () => {
+    dispatch({
+      type: 'SET_IS_DELETE_CONFIRMATION_OPEN',
+      payload: true
+    });
+  };
+  
+  const closeDeleteConfirmation = () => {
+    dispatch({
+      type: 'SET_IS_DELETE_CONFIRMATION_OPEN',
+      payload: false
+    });
+  };
+  
+
   const handleIconClick = () => {
     if (datePickerRef.current) {
       datePickerRef.current.setOpen(true); // Open the date picker programmatically
@@ -298,5 +336,8 @@ export const useProfileData = () => {
     handleIconClick,
     checkImage,
     datePickerRef,
+    handleDeleteProfile,
+    openDeleteConfirmation,
+    closeDeleteConfirmation,
   };
 };
