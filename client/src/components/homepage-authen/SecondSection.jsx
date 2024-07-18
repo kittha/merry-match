@@ -67,4 +67,5 @@ function CardFeature(props) {
     </div>
   );
 }
+
 export default SecondSection;
