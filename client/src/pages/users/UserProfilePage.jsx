@@ -5,13 +5,17 @@ import ProfilePopup from "../../components/profilepage/ProfilePopup";
 import BasicInformationSection from "../../components/profilepage/BasicInformationSection";
 import IdentitiesSection from "../../components/profilepage/IdentitiesSection";
 import ProfilePicturesSections from "../../components/profilepage/ProfilePicturesSections";
+import ModalPopup from "../../components/editpage/ModalPopup";
 
 function UserProfilePage() {
   const {
     isPopupOpen,
     openPopup,
     closePopup,
-
+    openDeleteConfirmation,
+    closeDeleteConfirmation,
+    handleDeleteProfile,
+    isDeleteConfirmationOpen,
     updateUserProfile,
   } = useProfileData();
 
@@ -53,9 +57,18 @@ function UserProfilePage() {
               <IdentitiesSection />
               <ProfilePicturesSections />
             <div className="w-[128px] h-[32px] rounded-[16px] pt-[4px] pr-[8px] pb-[4px] pl-[8px] lg:mt-[-10px] mt-[60px]">
-              <button className="w-[112px] h-[24px] font-semibold text-[16px] leading-[24px] text-[#646D89]">
+              <button 
+                className="w-[112px] h-[24px] font-semibold text-[16px] leading-[24px] text-[#646D89]"
+                onClick={openDeleteConfirmation}
+              >
                 Delete account
               </button>
+              {isDeleteConfirmationOpen && (
+                <ModalPopup
+                  close={closeDeleteConfirmation}
+                  handleDeleteProfile={handleDeleteProfile}
+                />
+              )}
             </div>
           </div>
           <footer className="lg:w-screen w-auto lg:mt-[150px]">
