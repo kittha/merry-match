@@ -203,6 +203,7 @@ function UserProfilePage() {
                 </div>
               </div>
             </div>
+            
             <div className="flex flex-col w-full lg:pl-0 lg:pr-0 pl-[16px] pr-[16px] lg:w-[930px] lg:mt-[5px] mt-[40px]">
               <h1 className="basicInformation text-[#2A2E3F] font-[700] text-[24px]">
                 Basic Information
@@ -227,7 +228,7 @@ function UserProfilePage() {
                   />
                 </div>
 
-                <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px] relative">
+            <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px] relative">
                   <label
                     htmlFor="birth"
                     className="font-[400] text-[16px] leading-[24px]"
@@ -252,9 +253,9 @@ function UserProfilePage() {
                     onClick={handleIconClick}
                   />
                 </div>
-              </div>
+            </div>
 
-              <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+            <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
                 <div className="flex flex-col lg:mr-[12px]">
                   <label
                     htmlFor="location"
@@ -306,9 +307,9 @@ function UserProfilePage() {
                     ))}
                   </select>
                 </div>
-              </div>
+            </div>
 
-              <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+            <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
                 <div className="flex flex-col lg:mr-[12px]">
                   <label
                     htmlFor="username"
@@ -574,6 +575,7 @@ function UserProfilePage() {
                 ))}
               </div>
             </div>
+
             <div className="w-[128px] h-[32px] rounded-[16px] pt-[4px] pr-[8px] pb-[4px] pl-[8px] lg:mt-[-10px] mt-[60px]">
               <button className="w-[112px] h-[24px] font-semibold text-[16px] leading-[24px] text-[#646D89]">
                 Delete account
