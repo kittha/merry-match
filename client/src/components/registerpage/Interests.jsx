@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { FormContext } from "../../contexts/FormProvider";
-
+import "../../App.css";
 function IdentitiesAndInterests() {
   const { formData, handleChange, addHobby, deleteHobby } =
     useContext(FormContext);
@@ -43,6 +43,7 @@ function IdentitiesAndInterests() {
               onChange={(event) => {
                 handleChange("sexualIdentity", event.target.value);
               }}
+              required
             >
               <option disabled value="">
                 Select Your Sexual Identity
@@ -67,6 +68,7 @@ function IdentitiesAndInterests() {
               onChange={(event) => {
                 handleChange("sexualPreference", event.target.value);
               }}
+              required
             >
               <option disabled value="">
                 Select Your Sexual Preference
@@ -93,6 +95,7 @@ function IdentitiesAndInterests() {
               onChange={(event) => {
                 handleChange("racialPreference", event.target.value);
               }}
+              required
             >
               <option disabled value="">
                 Select Your Racial Preference
@@ -127,6 +130,7 @@ function IdentitiesAndInterests() {
               onChange={(event) => {
                 handleChange("meetingInterest", event.target.value);
               }}
+              required
             >
               <option disabled value="">
                 Select Your Meeting Interests
@@ -147,18 +151,18 @@ function IdentitiesAndInterests() {
             >
               Hobbies / Interests (Maximum 10)
             </label>
-            <div className="flex flex-row flex-wrap border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-full lg:w-[930px] mt-[4px]">
+            <div className="flex flex-row flex-wrap  border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-full lg:w-[930px] mt-[4px]">
               {formData.hobbies.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center px-[8px] py-[4px]  gap-[8px] rounded-[6px] bg-[#F4EBF2] text-[#7D2262]"
+                  className="flex items-center w-[87px] h-[29px] px-[8px] py-[4px]  gap-[8px] rounded-[6px] bg-[#F4EBF2] text-[#7D2262]"
                 >
                   <span>{item}</span>
                   <button onClick={() => deleteHobby(index)}>x</button>
                 </div>
               ))}
               <input
-                className="border-[1px] font-normal border-none rounded-lg py-[12px] px-[12px] focus:outline-none flex-grow min-w-[200px]"
+                className="border-[1px] font-normal border-none rounded-lg py-[12px] px-[12px] focus:outline-none flex-grow w-[87px] h-[29px]"
                 type="text"
                 id="Hobbies"
                 value={inputValue}

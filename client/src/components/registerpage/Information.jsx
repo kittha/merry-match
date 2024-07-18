@@ -1,8 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { FormContext } from "../../contexts/FormProvider";
 import Countrydata from "/src/mock-city/Countrydata.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import CalendarIcon from "../../../public/assets/registerpage/calendar.png";
+import "../../App.css";
 
 function BasicInformation() {
   const { formData, handleChange } = useContext(FormContext);
@@ -36,7 +38,12 @@ function BasicInformation() {
     const city = e.target.value;
     handleChange("city", city);
   };
-
+  const datePickerRef = useRef(null);
+  const handleIconClick = () => {
+    if (datePickerRef.current) {
+      datePickerRef.current.setOpen(true);
+    }
+  };
   return (
     <div className="w-[100%] h-[80%] flex justify-center mb-[35px] lg:mb-[112px] mt-[37px] lg:mt-[80px]">
       <div className="flex flex-col w-screen lg:w-[930px]">
@@ -61,7 +68,7 @@ function BasicInformation() {
             />
           </div>
 
-          <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
+          <div className="relative flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
             <label
               htmlFor="birth"
               className="font-[400] text-[16px] leading-[24px]"
@@ -70,6 +77,7 @@ function BasicInformation() {
             </label>
 
             <DatePicker
+              ref={datePickerRef}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               selected={selectDate}
               placeholderText="Select date"
@@ -78,6 +86,12 @@ function BasicInformation() {
                 setSelectDate(date);
                 handleChange("birthday", date);
               }}
+            />
+            <img
+              src={CalendarIcon}
+              alt="calendar"
+              className="h-[24px] w-[24px] absolute top-[52px] right-4 transform -translate-y-1/2 cursor-pointer"
+              onClick={handleIconClick}
             />
           </div>
         </div>
@@ -95,12 +109,12 @@ function BasicInformation() {
               value={formData.country}
               required
             >
-              <option disabled value="">
+              <option value="" disabled>
                 Select Country
               </option>
               {Countrydata.map((getcountry, index) => (
                 <option
-                  className=""
+                  className="text-black"
                   value={getcountry.country_name}
                   key={index}
                 >
@@ -127,7 +141,11 @@ function BasicInformation() {
                 Select City
               </option>
               {state.map((getStateData, index) => (
-                <option value={getStateData.state_name} key={index}>
+                <option
+                  value={getStateData.state_name}
+                  key={index}
+                  className="text-black"
+                >
                   {getStateData.state_name}
                 </option>
               ))}
