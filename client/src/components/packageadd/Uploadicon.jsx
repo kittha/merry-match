@@ -1,13 +1,8 @@
-import { useState } from "react";
-
-function UploadIcon() {
-  const [icon, setIcon] = useState({});
-
+function UploadIcon({ icon, setIcon }) {
   const handleFileChange = (event) => {
-    const uniqueId = Date.now();
     setIcon({
       ...icon,
-      [uniqueId]: event.target.files[0],
+      image: event.target.files[0],
     });
     event.target.value = null;
   };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddDetail({ packageDetail, setPackageDetail, errors }) {
+function AddDetail({ packageData, packageDetail, setPackageData, errors }) {
   const [detail, setDetail] = useState("");
 
   const handleDetail = (event) => {
@@ -9,7 +9,7 @@ function AddDetail({ packageDetail, setPackageDetail, errors }) {
 
   const addDetail = () => {
     if (detail.trim()) {
-      setPackageDetail([...packageDetail, detail]);
+      setPackageData({ ...packageData, details: [...packageDetail, detail] });
       setDetail("");
     }
   };
@@ -17,13 +17,13 @@ function AddDetail({ packageDetail, setPackageDetail, errors }) {
   const handleDetailChange = (index, event) => {
     const newDetails = [...packageDetail];
     newDetails[index] = event.target.value;
-    setPackageDetail(newDetails);
+    setPackageData({ ...packageData, details: newDetails });
   };
 
   const deleteDetail = (index) => {
     const newDetails = [...packageDetail];
     newDetails.splice(index, 1);
-    setPackageDetail(newDetails);
+    setPackageData({ ...packageData, details: newDetails });
   };
 
   return (

@@ -48,6 +48,7 @@ function PackageEditAndViewPage() {
         }`,
         sentAdminData
       );
+      navigate("/admin/package");
     } catch (error) {
       console.error("Error create data:", error);
     }
@@ -57,7 +58,6 @@ function PackageEditAndViewPage() {
     event.preventDefault();
     if (validateForm()) {
       editPackage();
-      navigate("/admin/package");
     }
   };
 
