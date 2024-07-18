@@ -1,4 +1,3 @@
-import React from "react";
 import MasterCard from "../../../public/assets/paymentpage/MasterCard.png";
 import Visa from "../../../public/assets/paymentpage/Visa.png";
 import "../../App.css";
@@ -6,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import Frame from "../../../public/assets/paymentpage/Frame.png";
 import Bullet from "../../../public/assets/paymentpage/Bullet.png";
 import Footer from "../../components/homepage/Footer";
-const PaymentFormPage = () => {
+
+const PaymentForm = () => {
   const navigate = useNavigate();
+
   return (
     <div className="full">
       <div className=" flex justify-center font-Nunito lg:mb-[269px]">
@@ -148,4 +149,4 @@ const PaymentFormPage = () => {
   );
 };
 
-export default PaymentFormPage;
+export default PaymentForm;

@@ -2,7 +2,7 @@ import HomePageAuthen from "../users/HomePageAuthen";
 import NavbarAuthen from "../../components/navbar/NavbarAuthen";
 import { Routes, Route } from "react-router-dom";
 import UserProfilePage from "../users/UserProfilePage";
-import PaymentFormPage from "../users/PaymentFormPage";
+import PaymentPage from "../users/PaymentPage";
 import PaymentSuccessPage from "../users/PaymentSuccessPage";
 import { MembershipPage } from "../users/MembershipPage";
 import MerryPackage from "../users/MerryPackagePage";
