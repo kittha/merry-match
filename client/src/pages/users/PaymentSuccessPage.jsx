@@ -10,7 +10,7 @@ function PaymentSuccessPage() {
     <div className=" lg:pt-[88px] font-Nunito">
       <div className="flex justify-center">
         <div className="px-[16px] py-[40px] mt-[40px] lg:mt-[88px] mb-[88px] lg:mb-[361px] w-screen lg:w-[1112px] flex flex-col lg:flex-row gap-[40px] lg:gap-[114px]">
-          <div class="left flex flex-col gap-[8px] lg:gap-[40px]">
+          <div className="left flex flex-col gap-[8px] lg:gap-[40px]">
             <img src={success} className="w-[80px] h-[80px]"></img>
             <div className="flex flex-col gap-[8px]">
               <p className="text-[14px] text-[#7B4429] font-[600]">
@@ -23,10 +23,20 @@ function PaymentSuccessPage() {
               </p>
             </div>
             <div className="mt-[40px] flex gap-[24px] max-lg:hidden">
-              <button className="px-[24px] py-[12px] bg-[#FFE1EA] text-[#95002B] font-[700] text-center rounded-full">
+              <button
+                onClick={() => {
+                  navigate("/");
+                }}
+                className="px-[24px] py-[12px] bg-[#FFE1EA] text-[#95002B] font-[700] text-center rounded-full"
+              >
                 Back to home
               </button>
-              <button className="px-[24px] py-[12px] bg-[#C70039] text-white font-[700] text-center rounded-full">
+              <button
+                onClick={() => {
+                  navigate("/membership");
+                }}
+                className="px-[24px] py-[12px] bg-[#C70039] text-white font-[700] text-center rounded-full"
+              >
                 Check Membership
               </button>
             </div>
