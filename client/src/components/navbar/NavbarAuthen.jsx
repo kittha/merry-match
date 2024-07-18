@@ -28,7 +28,6 @@ const NavbarAuthen = () => {
   };
 
   const { logout, state } = useAuth();
-  // console.log(state.user.id);
 
   const handleLogout = () => {
     logout();
@@ -173,6 +172,7 @@ const NavbarAuthen = () => {
             {profileMenuOpen && (
               <Portal>
                 <div
+                  id="portal-root"
                   style={{
                     position: "fixed",
                     top: `${profileMenuPosition.top}px`,

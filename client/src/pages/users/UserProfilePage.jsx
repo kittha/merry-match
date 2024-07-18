@@ -28,11 +28,11 @@ function UserProfilePage() {
   const [bio, setBio] = useState("");
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
+
   const openPopup = () => {
     setIsPopupOpen(true);
   };
-  
+
   const closePopup = () => {
     setIsPopupOpen(false);
   };
@@ -127,7 +127,6 @@ function UserProfilePage() {
 
   // const userId = userState.data.id;
   const { userId } = useParams();
-  console.log(userId);
   const getUserProfile = async () => {
     try {
       const result = await axios.get(
@@ -167,8 +166,6 @@ function UserProfilePage() {
     return ""; // Return an empty string or handle unexpected cases if necessary
   };
 
-
-
   useEffect(() => {
     getUserProfile();
   }, []);
@@ -190,20 +187,20 @@ function UserProfilePage() {
               </header>
               <div className="lg:w-[414px] w-[338px] lg:h-[145px] h-[48px] flex flex-row items-end justify-center lg:mt-0 md:mt-[2300px] mt-[2450px] mx-auto">
                 <div className="flex gap-[16px]">
-                <button 
-                  className="w-[162px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full bg-[#FFE1EA] text-[#95002B] text-center font-bold text-base leading-6"
-                  onClick={openPopup}
-                >
-                  Preview Profile
-                </button>
-                {isPopupOpen && <ProfilePopup onClose={closePopup} />}
+                  <button
+                    className="w-[162px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full bg-[#FFE1EA] text-[#95002B] text-center font-bold text-base leading-6"
+                    onClick={openPopup}
+                  >
+                    Preview Profile
+                  </button>
+                  {isPopupOpen && <ProfilePopup onClose={closePopup} />}
                   <button className="w-[156px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full font-bold text-base leading-6 text-center text-[#FFFFFF] bg-[#C70039]">
                     Update Profile
                   </button>
                 </div>
               </div>
             </div>
-            
+
             <div className="flex flex-col w-full lg:pl-0 lg:pr-0 pl-[16px] pr-[16px] lg:w-[930px] lg:mt-[5px] mt-[40px]">
               <h1 className="basicInformation text-[#2A2E3F] font-[700] text-[24px]">
                 Basic Information
@@ -228,7 +225,7 @@ function UserProfilePage() {
                   />
                 </div>
 
-            <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px] relative">
+                <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px] relative">
                   <label
                     htmlFor="birth"
                     className="font-[400] text-[16px] leading-[24px]"
@@ -253,9 +250,9 @@ function UserProfilePage() {
                     onClick={handleIconClick}
                   />
                 </div>
-            </div>
+              </div>
 
-            <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+              <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
                 <div className="flex flex-col lg:mr-[12px]">
                   <label
                     htmlFor="location"
@@ -307,9 +304,9 @@ function UserProfilePage() {
                     ))}
                   </select>
                 </div>
-            </div>
+              </div>
 
-            <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+              <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
                 <div className="flex flex-col lg:mr-[12px]">
                   <label
                     htmlFor="username"
