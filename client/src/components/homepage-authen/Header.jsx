@@ -34,7 +34,7 @@ const Header = () => {
                 className="bg-[#C70039] shadow-lg rounded-full text-white font-Nunito h-[48px] w-[163px] font-bold lg:mt-8 mt-4 lg:hover:translate-y-[-0.25rem] lg:hover:scale-105 lg:hover:bg-pink-300 lg:duration-300"
                 onClick={() => {
                   navigate("/login");
-                  setIsOpen(false);
+                  //setIsOpen(false);
                 }}
               >
                 Start Matching!

@@ -24,7 +24,7 @@ const Header = () => {
                 Make the <br />
                 first ‘Merry’
               </h3>
-              <h4 className="w-[343px] text-[20px] font-semibold font-Nunito text-white leading-relaxed lg:mt-4">
+              <h4 className="lg:w-auto w-[343px] text-[20px] font-semibold font-Nunito text-white leading-relaxed lg:mt-4">
                 If you feel lonely, let’s start meeting{" "}
                 <br className="hidden lg:block" /> new people in your area!{" "}
                 <br className="hidden lg:block" /> Don’t forget to get Merry
@@ -34,7 +34,7 @@ const Header = () => {
                 className="bg-[#C70039] shadow-lg rounded-full text-white font-Nunito h-[48px] w-[163px] font-bold lg:mt-8 mt-4 lg:hover:translate-y-[-0.25rem] lg:hover:scale-105 lg:hover:bg-pink-300 lg:duration-300"
                 onClick={() => {
                   navigate("/login");
-                  setIsOpen(false);
+                  //setIsOpen(false);
                 }}
               >
                 Start Matching!
