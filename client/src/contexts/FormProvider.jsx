@@ -87,7 +87,7 @@ export const FormProvider = ({ children }) => {
     return age;
   };
 
-  const checkNoNull = () => {
+  const checkNoNullPage1 = () => {
     const {
       name,
       birthday,
@@ -97,12 +97,6 @@ export const FormProvider = ({ children }) => {
       email,
       password,
       confirmPassword,
-      sexualIdentity,
-      sexualPreference,
-      racialPreference,
-      meetingInterest,
-      hobbies,
-      avatars,
     } = formData;
 
     if (
@@ -113,17 +107,9 @@ export const FormProvider = ({ children }) => {
       username === "" ||
       email === "" ||
       password === "" ||
-      confirmPassword === "" ||
-      sexualIdentity === "" ||
-      sexualPreference === "" ||
-      racialPreference === "" ||
-      meetingInterest === "" ||
-      hobbies.length === 0 ||
-      Object.values(avatars).filter((avatar) => avatar !== null).length < 2
+      confirmPassword === ""
     ) {
-      alert(
-        "Please complete all answers and ensure you have at least 2 photos!"
-      );
+      alert("Please complete all required fields on step 1!");
       return false;
     }
 
@@ -132,6 +118,15 @@ export const FormProvider = ({ children }) => {
       return false;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Email must be valid");
+      return false;
+    }
+    if (calculateAge(birthday) < 18) {
+      alert("You must be at least 18 years old");
+      return false;
+    }
     if (password.length < 8) {
       alert("Password must be at least 8 characters");
       return false;
@@ -141,15 +136,26 @@ export const FormProvider = ({ children }) => {
       alert("Password and Confirm Password need to match");
       return false;
     }
+    return true;
+  };
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert("Email must be valid");
-      return false;
-    }
+  const checkNoNullPage2 = () => {
+    const {
+      sexualIdentity,
+      sexualPreference,
+      racialPreference,
+      meetingInterest,
+      hobbies,
+    } = formData;
 
-    if (calculateAge(birthday) < 18) {
-      alert("You must be at least 18 years old");
+    if (
+      sexualIdentity.trim() === "" ||
+      sexualPreference.trim() === "" ||
+      racialPreference.trim() === "" ||
+      hobbies.length === 0 ||
+      meetingInterest.trim() === ""
+    ) {
+      alert("Please complete all required fields on step 2!");
       return false;
     }
 
@@ -159,8 +165,23 @@ export const FormProvider = ({ children }) => {
   const [step, setStep] = useState(1);
 
   const handleNext = (e) => {
-    if (step < 3) {
-      e.preventDefault();
+    e.preventDefault();
+
+    let isValid = false;
+
+    switch (step) {
+      case 1:
+        isValid = checkNoNullPage1();
+        break;
+      case 2:
+        isValid = checkNoNullPage2();
+        break;
+      default:
+        isValid = true;
+        break;
+    }
+
+    if (isValid && step < 3) {
       setStep(step + 1);
     }
   };
@@ -172,11 +193,21 @@ export const FormProvider = ({ children }) => {
     }
   };
 
+  const checkNoNullPage3 = () => {
+    const { avatars } = formData;
+
+    if (Object.values(avatars).filter((avatar) => avatar !== null).length < 2) {
+      alert("Please upload at least 2 profile pictures");
+      return false;
+    }
+
+    return true;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!checkNoNull()) {
-      return setStep(1);
+    if (!checkNoNullPage3()) {
+      return false;
     }
 
     console.log("Form Data Submitted: ", formData);

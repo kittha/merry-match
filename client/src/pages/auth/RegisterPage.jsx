@@ -10,7 +10,7 @@ const RegisterPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="font-Nunito lg:bg-register-bg  flex flex-col items-center justify-center w-screen h-screen bg-no-repeat bg-cover  ">
+      <div className="font-Nunito lg:bg-register-bg  flex flex-col items-center justify-center w-screen h-screen bg-no-repeat bg-cover">
         <div className="h-screen flex  flex-col lg:justify-center lg:items-center lg:flex-col w-screen lg:w-[930px] lg:h-[703px]">
           <div className="lg:mt-[400px] mt-[100px] px-[16px]">
             <header className="w-full flex flex-col  justify-start   lg:flex-row lg:justify-between">
@@ -24,7 +24,7 @@ const RegisterPage = () => {
               </div>
               <div className="flex flex-row justify-center items-end ">
                 {step === 1 && (
-                  <div className="mt-[37px] w-screen lg:w-[430px] lg:h-[80px] flex flex-row lg:justify-end justify-start gap-[8px] ">
+                  <div className="mt-[37px] w-screen lg:w-[430px] lg:h-[80px] flex flex-row lg:justify-end justify-start gap-[8px] lg:gap-[12px] ">
                     {/* Step 1 */}
                     <div className="gap-[8px] p-[8px] lg:w-[246px] lg:h-[80px] border-[1px] border-[#A62D82] lg:rounded-3xl rounded-[16px] flex flex-row items-center justify-evenly">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
@@ -43,7 +43,7 @@ const RegisterPage = () => {
                     </div>
 
                     {/* Step 2 */}
-                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center  lg:ml-[12px]">
+                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center ">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
                         <p className="text-[16px] leading-[24px] lg:text-[24px] text-[#9aa1b9] font-[800] text-center">
                           2
@@ -52,7 +52,7 @@ const RegisterPage = () => {
                     </div>
 
                     {/* Step 3 */}
-                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center lg:ml-[12px]">
+                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
                         <p className="text-[16px] leading-[24px] lg:text-[24px] text-[#9aa1b9] font-[800] text-center">
                           3
@@ -63,7 +63,7 @@ const RegisterPage = () => {
                 )}
 
                 {step === 2 && (
-                  <div className="mt-[37px] w-screen lg:w-[430px] lg:h-[80px] flex flex-row lg:justify-end  gap-[8px] ">
+                  <div className="mt-[37px] w-screen lg:w-[480px] lg:h-[80px] flex flex-row lg:justify-end  gap-[8px] lg:gap-[12px] ">
                     {/* Step 1 */}
                     <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
@@ -74,7 +74,7 @@ const RegisterPage = () => {
                     </div>
 
                     {/* Step 2 */}
-                    <div className=" w-[242px] gap-[8px] p-[8px] lg:w-[246px] lg:h-[80px] border-[1px] border-[#A62D82] lg:rounded-3xl rounded-[16px] flex flex-row items-center justify-evenly lg:ml-[12px]">
+                    <div className=" w-[242px] gap-[8px] p-[8px] lg:w-[288px] lg:h-[80px] border-[1px] border-[#A62D82] lg:rounded-3xl rounded-[16px] flex flex-row items-center justify-evenly ">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
                         <p className="text-[16px] leading-[24px]  lg:text-[24px] text-[#A62D82] font-[800]">
                           2
@@ -91,7 +91,7 @@ const RegisterPage = () => {
                     </div>
 
                     {/* Step 3 */}
-                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center  lg:ml-[12px]">
+                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center  ">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
                         <p className="text-[16px] leading-[24px] lg:text-[24px] text-[#9aa1b9] font-[800] text-center">
                           3
@@ -102,9 +102,9 @@ const RegisterPage = () => {
                 )}
 
                 {step === 3 && (
-                  <div className="mt-[37px] w-screen lg:w-[430px] lg:h-[80px] flex flex-row lg:justify-end justify-start gap-[8px] ">
+                  <div className="mt-[37px] w-screen lg:w-[409px] lg:h-[80px] flex flex-row lg:justify-end justify-start gap-[8px] lg:gap-[12px] ">
                     {/* Step 1 */}
-                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center  lg:ml-[12px]">
+                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center  ">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
                         <p className="text-[16px] leading-[24px] lg:text-[24px] text-[#9aa1b9] font-[800] text-center">
                           1
@@ -113,7 +113,7 @@ const RegisterPage = () => {
                     </div>
 
                     {/* Step 2 */}
-                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center  lg:ml-[12px]">
+                    <div className="w-[56px] h-[56px] lg:w-[80px] lg:h-[80px] border-[1px] border-[#E4E6ED] rounded-[16px] lg:rounded-3xl text-center text-[#C8CCDB] flex flex-col items-center justify-center  ">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
                         <p className="text-[16px] leading-[24px] lg:text-[24px] text-[#9aa1b9] font-[800] text-center">
                           2
@@ -122,7 +122,7 @@ const RegisterPage = () => {
                     </div>
 
                     {/* Step 3 */}
-                    <div className="w-[215px] gap-[8px] p-[8px] lg:w-[246px] lg:h-[80px] border-[1px] border-[#A62D82] lg:rounded-3xl rounded-[16px] flex flex-row items-center justify-evenly lg:ml-[12px]">
+                    <div className="w-[215px] gap-[8px] p-[8px] lg:w-[246px] lg:h-[80px] border-[1px] border-[#A62D82] lg:rounded-3xl rounded-[16px] flex flex-row items-center justify-evenly ">
                       <div className="bg-[#F1F2F6] w-[40px] h-[40px] rounded-[12px] lg:w-[48px] lg:h-[48px] lg:rounded-2xl flex flex-col items-center justify-center">
                         <p className="text-[16px] leading-[24px]  lg:text-[24px] text-[#A62D82] font-[800]">
                           3
@@ -160,7 +160,7 @@ const RegisterPage = () => {
                   <button
                     onClick={handleBack}
                     type="button"
-                    className="text-[#C8CCDB] hover:text-black font-[700]"
+                    className="text-[#C8CCDB] hover:text-[#C70039] font-[700]"
                   >
                     🡐 Back
                   </button>
