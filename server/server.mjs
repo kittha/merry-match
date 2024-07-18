@@ -44,7 +44,7 @@ app.get("/status", (req, res) => {
   return res.status(200).json("Server API is working");
 });
 
-app.use("/api/v1", apiV1Routes);
+app.use("/api/v1", [avatarUpload], apiV1Routes);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
 
