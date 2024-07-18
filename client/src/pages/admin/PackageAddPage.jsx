@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FormPackage from "../../components/packageadd/FormPackage";
 import Sidebar from "../../components/packageadd/Sidebar";
@@ -8,12 +9,15 @@ function PackageAddPage() {
   const [packageName, setPackageName] = useState("");
   const [packageDetail, setPackageDetail] = useState([]);
   const [merryLimit, setMerryLimit] = useState("");
+  const [price, setPrice] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const newErrors = {};
     if (!packageName.trim()) newErrors.packageName = "Package name is required";
     if (!merryLimit.trim()) newErrors.merryLimit = "Merry limit is required";
+    if (!price.trim()) newErrors.price = "price is required";
     if (!packageDetail.length)
       newErrors.packageDetail = "At least one package detail is required";
     setErrors(newErrors);
@@ -24,7 +28,7 @@ function PackageAddPage() {
     try {
       const sentAdminData = new FormData();
       sentAdminData.append("name", packageName);
-      sentAdminData.append("price", 600);
+      sentAdminData.append("price", price);
       sentAdminData.append("merry_limit", merryLimit);
       for (let index = 0; index < packageDetail.length; index++) {
         sentAdminData.append("details[]", packageDetail[index]);
@@ -42,7 +46,7 @@ function PackageAddPage() {
     event.preventDefault();
     if (validateForm()) {
       createPackage();
-      alert("submit");
+      navigate("/admin/package");
     }
   };
   return (
@@ -58,6 +62,8 @@ function PackageAddPage() {
             setPackageDetail={setPackageDetail}
             merryLimit={merryLimit}
             setMerryLimit={setMerryLimit}
+            price={price}
+            setPrice={setPrice}
             errors={errors}
           />
         </form>

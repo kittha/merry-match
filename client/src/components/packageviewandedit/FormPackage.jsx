@@ -5,20 +5,9 @@ import DeletePackage from "./Deletepackage";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-function FormPackage() {
+function FormPackage({ packageData, setPackageData }) {
   const param = useParams();
   const [popup, setPopup] = useState(false);
-  const [packageData, setPackageData] = useState({
-    package_id: "",
-    name: "",
-    price: "",
-    merry_limit: "",
-    details: [],
-    created_at: "",
-    updated_at: "",
-    cloudinary_id: "",
-    url: "",
-  });
 
   useEffect(() => {
     getPackage();
@@ -66,6 +55,11 @@ function FormPackage() {
                   value={packageData.name}
                   onChange={(event) => handleChange("name", event.target.value)}
                 />
+                {packageData.errors.packageName && (
+                  <p className="text-red-500">
+                    {packageData.errors.packageName}
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-[4px]">
@@ -83,7 +77,30 @@ function FormPackage() {
                     handleChange("merry_limit", event.target.value)
                   }
                 />
+                {packageData.errors.merryLimit && (
+                  <p className="text-red-500">
+                    {packageData.errors.merryLimit}
+                  </p>
+                )}
               </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-[4px]">
+            <label htmlFor="package-name">
+              Price <span className="text-[#AF2758]">*</span>
+            </label>
+            <div className="w-[420px] h-[48px]  border-[1px] border-[#D6D9E4] rounded-[8px] flex items-center ">
+              <input
+                type="number"
+                min="0"
+                className="w-[420px] m-[12px] focus:outline-none"
+                id="price"
+                value={packageData.price}
+                onChange={(event) => handleChange("price", event.target.value)}
+              />
+              {packageData.errors.price && (
+                <p className="text-red-500">{packageData.errors.price}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-[8px]">
@@ -96,6 +113,7 @@ function FormPackage() {
           <AddDetail
             details={packageData.details}
             onDetailsChange={handleDetailChange}
+            errors={packageData.errors.packageDetail}
           />
         </div>
       </div>

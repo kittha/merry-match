@@ -12,7 +12,6 @@ function MainContent() {
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages`
       );
       setpackage(result.data.data);
-      console.log(result.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

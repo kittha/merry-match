@@ -8,6 +8,8 @@ function FormPackage({
   setPackageDetail,
   merryLimit,
   setMerryLimit,
+  price,
+  setPrice,
   errors,
 }) {
   return (
@@ -50,6 +52,22 @@ function FormPackage({
                   <p className="text-red-500">{errors.merryLimit}</p>
                 )}
               </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-[4px]">
+            <label htmlFor="package-name">
+              Price <span className="text-[#AF2758]">*</span>
+            </label>
+            <div className="w-[420px] h-[48px]  border-[1px] border-[#D6D9E4] rounded-[8px] flex items-center ">
+              <input
+                type="number"
+                min="0"
+                className="w-[420px] m-[12px] focus:outline-none"
+                id="price"
+                value={price}
+                onChange={(event) => setPrice(event.target.value)}
+              />
+              {errors.price && <p className="text-red-500">{errors.price}</p>}
             </div>
           </div>
           <div className="flex flex-col gap-[8px]">
