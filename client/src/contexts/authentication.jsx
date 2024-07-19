@@ -5,13 +5,16 @@ import { jwtDecode } from "jwt-decode";
 
 const AuthContext = React.createContext();
 
+// this is a hook that consume AuthContext
+const useAuth = () => React.useContext(AuthContext);
+
 function AuthProvider(props) {
   const [state, setState] = useState({
     loading: null,
     error: null,
     user: null,
+    role: "",
   });
-
   const navigate = useNavigate();
 
   // make a login request
@@ -23,7 +26,7 @@ function AuthProvider(props) {
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/login`,
         data
       );
-      //console.log(result);
+
       const token = result.data.session.access_token;
       localStorage.setItem("token", token);
 
@@ -31,10 +34,16 @@ function AuthProvider(props) {
       // console.log(userDataFromToken);
 
       const userDataFromPayload = result.data;
-
-      setState({ ...state, user: userDataFromPayload });
-
-      navigate("/");
+      setState({
+        ...state,
+        user: userDataFromPayload,
+        role: userDataFromPayload.role,
+      });
+      if (userDataFromPayload.role === "Admin") {
+        navigate("/admin/package");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Login error:", error);
 
@@ -96,8 +105,5 @@ function AuthProvider(props) {
     </AuthContext.Provider>
   );
 }
-
-// this is a hook that consume AuthContext
-const useAuth = () => React.useContext(AuthContext);
 
 export { AuthProvider, useAuth };

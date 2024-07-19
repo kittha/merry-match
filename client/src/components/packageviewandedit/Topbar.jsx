@@ -7,7 +7,7 @@ function Topbar() {
   return (
     <div className="w-[1200px] h-[80px] font-Nunito border-b-[1px] border-[#E4E6ED] flex justify-between items-center">
       <div className="ml-16 flex">
-        <button onClick={() => navigate("/")} type="button">
+        <button onClick={() => navigate("/admin/package")} type="button">
           <img src="../src/assets/arrow_back.svg" alt="arrow" />
         </button>
         <p className="text-2xl font-bold ml-[16px]">Edit ‘Premium’</p>

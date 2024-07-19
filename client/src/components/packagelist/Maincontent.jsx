@@ -8,9 +8,10 @@ function MainContent() {
 
   const getPackage = async () => {
     try {
-      const result = await axios.get("http://localhost:4000/api/v1/packages");
+      const result = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages`
+      );
       setpackage(result.data.data);
-      console.log(result.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -19,7 +20,9 @@ function MainContent() {
   const deletePackage = async (id, index) => {
     try {
       const newPackage = [...Package];
-      await axios.delete(`http://localhost:4000/api/v1/packages/${id}`);
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/${id}`
+      );
       newPackage.splice(index, 1);
       setpackage(newPackage);
     } catch (error) {
@@ -86,7 +89,7 @@ function MainContent() {
             <div className="w-[80px] h-[88px] flex items-center">
               <img
                 className="w-[32px] h-[32px] ml-[16px]"
-                src="./src/assets/react.svg"
+                src="./src/assets/delete.svg"
                 alt="dummy"
               />
             </div>
@@ -111,9 +114,7 @@ function MainContent() {
                 />
               </button>
               <button
-                onClick={() =>
-                  navigate(`/admin/viewandedit/${items.package_id}`)
-                }
+                onClick={() => navigate(`/admin/package/${items.package_id}`)}
               >
                 <img
                   className="w-[24px] h-[24px]"

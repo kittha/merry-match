@@ -21,7 +21,11 @@ router.put(
   updateComplaintStatus
 );
 
-router.post("/", [authenticateAdmin, validatePackageData], createPackage);
+router.post(
+  "/package",
+  [authenticateAdmin, validatePackageData],
+  createPackage
+);
 
 router.put(
   "/:packageId",
