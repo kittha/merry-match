@@ -6,7 +6,6 @@ import jwtInterceptor from "./utils/jwtInterceptor.js";
 import { AuthProvider } from "./contexts/authentication.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { FormProvider } from "./contexts/FormProvider.jsx";
-import ComplaintPage from "./pages/users/ComplaintPage.jsx";
 
 if (import.meta.env.VITE_NODE_ENV === "development") {
   console.log("Running in development mode");
