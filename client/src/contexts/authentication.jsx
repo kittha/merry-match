@@ -65,7 +65,7 @@ function AuthProvider(props) {
       let errorMessage = "An unexpected error occurred";
       if (
         error.response &&
-        error.response.da ta &&
+        error.response.data &&
         error.response.data.message
       ) {
         errorMessage = error.response.data.message;
