@@ -27,6 +27,7 @@ export const FormProvider = ({ children }) => {
     },
   });
 
+  const [errors, setErrors] = useState({});
   const { register } = useAuth();
 
   const handleChange = (field, value) => {
@@ -87,7 +88,7 @@ export const FormProvider = ({ children }) => {
     return age;
   };
 
-  const checkNoNullPage1 = () => {
+  const validatePage1 = () => {
     const {
       name,
       birthday,
@@ -98,48 +99,32 @@ export const FormProvider = ({ children }) => {
       password,
       confirmPassword,
     } = formData;
+    const newErrors = {};
 
-    if (
-      name === "" ||
-      birthday === "" ||
-      country === "" ||
-      city === "" ||
-      username === "" ||
-      email === "" ||
-      password === "" ||
-      confirmPassword === ""
-    ) {
-      alert("Please complete all required fields on step 1!");
-      return false;
-    }
-
-    if (username.length <= 5) {
-      alert("Username must be at least 6 characters");
-      return false;
-    }
-
+    if (!name) newErrors.name = "Name is required";
+    if (!birthday) newErrors.birthday = "Birthday is required";
+    if (!country) newErrors.country = "Location is required";
+    if (!city) newErrors.city = "City is required";
+    if (!username) newErrors.username = "Username is required";
+    if (username && username.length <= 5)
+      newErrors.username = "Username must be at least 6 characters";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert("Email must be valid");
-      return false;
-    }
-    if (calculateAge(birthday) < 18) {
-      alert("You must be at least 18 years old");
-      return false;
-    }
-    if (password.length < 8) {
-      alert("Password must be at least 8 characters");
-      return false;
-    }
+    if (!email) newErrors.email = "Email is required";
+    if (email && !emailRegex.test(email))
+      newErrors.email = "Email must be valid";
+    if (!password) newErrors.password = "Password is required";
+    if (password && password.length < 8)
+      newErrors.password = "Password must be at least 8 characters";
+    if (password !== confirmPassword)
+      newErrors.confirmPassword = "Passwords must match";
+    if (calculateAge(birthday) < 18)
+      newErrors.birthday = "You must be at least 18 years old";
 
-    if (password !== confirmPassword) {
-      alert("Password and Confirm Password need to match");
-      return false;
-    }
-    return true;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const checkNoNullPage2 = () => {
+  const validatePage2 = () => {
     const {
       sexualIdentity,
       sexualPreference,
@@ -147,19 +132,33 @@ export const FormProvider = ({ children }) => {
       meetingInterest,
       hobbies,
     } = formData;
+    const newErrors = {};
 
-    if (
-      sexualIdentity.trim() === "" ||
-      sexualPreference.trim() === "" ||
-      racialPreference.trim() === "" ||
-      hobbies.length === 0 ||
-      meetingInterest.trim() === ""
-    ) {
-      alert("Please complete all required fields on step 2!");
-      return false;
+    if (!sexualIdentity)
+      newErrors.sexualIdentity = "Sexual Identity is required";
+    if (!sexualPreference)
+      newErrors.sexualPreference = "Sexual Preference is required";
+    if (!racialPreference)
+      newErrors.racialPreference = "Racial Preference is required";
+    if (!meetingInterest)
+      newErrors.meetingInterest = "Meeting Interest is required";
+    if (hobbies.length === 0)
+      newErrors.hobbies = "At least one hobby is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validatePage3 = () => {
+    const { avatars } = formData;
+    const newErrors = {};
+
+    if (Object.values(avatars).filter((avatar) => avatar !== null).length < 2) {
+      newErrors.avatars = "Please upload at least 2 profile pictures";
     }
 
-    return true;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const [step, setStep] = useState(1);
@@ -171,10 +170,10 @@ export const FormProvider = ({ children }) => {
 
     switch (step) {
       case 1:
-        isValid = checkNoNullPage1();
+        isValid = validatePage1();
         break;
       case 2:
-        isValid = checkNoNullPage2();
+        isValid = validatePage2();
         break;
       default:
         isValid = true;
@@ -193,21 +192,11 @@ export const FormProvider = ({ children }) => {
     }
   };
 
-  const checkNoNullPage3 = () => {
-    const { avatars } = formData;
-
-    if (Object.values(avatars).filter((avatar) => avatar !== null).length < 2) {
-      alert("Please upload at least 2 profile pictures");
-      return false;
-    }
-
-    return true;
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!checkNoNullPage3()) {
-      return false;
+    if (!validatePage3()) {
+      return true;
     }
 
     console.log("Form Data Submitted: ", formData);
@@ -228,7 +217,7 @@ export const FormProvider = ({ children }) => {
       sentFormData.append("racial_preferences", formData.racialPreference);
       sentFormData.append("meeting_interests", formData.meetingInterest);
 
-      for (var i = 0; i < formData.hobbies.length; i++) {
+      for (let i = 0; i < formData.hobbies.length; i++) {
         sentFormData.append("hobbies[]", formData.hobbies[i]);
       }
       for (let avatarKey in formData.avatars) {
@@ -247,6 +236,7 @@ export const FormProvider = ({ children }) => {
     <FormContext.Provider
       value={{
         formData,
+        errors,
         handleChange,
         addHobby,
         deleteHobby,

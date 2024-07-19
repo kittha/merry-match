@@ -7,7 +7,7 @@ import CalendarIcon from "../../../public/assets/registerpage/calendar.png";
 import "../../App.css";
 
 function BasicInformation() {
-  const { formData, handleChange } = useContext(FormContext);
+  const { formData, handleChange, errors } = useContext(FormContext);
   const [state, setState] = useState([]);
   const [selectDate, setSelectDate] = useState(null);
 
@@ -58,6 +58,7 @@ function BasicInformation() {
             >
               Name
             </label>
+
             <input
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               id="name"
@@ -66,6 +67,7 @@ function BasicInformation() {
               required
               onChange={(event) => handleChange("name", event.target.value)}
             />
+            {errors.name && <div className="error">{errors.name}</div>}
           </div>
 
           <div className="relative flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
@@ -93,6 +95,7 @@ function BasicInformation() {
               className="h-[24px] w-[24px] absolute top-[52px] right-4 transform -translate-y-1/2 cursor-pointer"
               onClick={handleIconClick}
             />
+            {errors.birthday && <div className="error">{errors.birthday}</div>}
           </div>
         </div>
         <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col">
@@ -122,6 +125,7 @@ function BasicInformation() {
                 </option>
               ))}
             </select>
+            {errors.country && <div className="error">{errors.country}</div>}
           </div>
 
           <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
@@ -150,6 +154,7 @@ function BasicInformation() {
                 </option>
               ))}
             </select>
+            {errors.city && <div className="error">{errors.city}</div>}
           </div>
         </div>
 
@@ -168,6 +173,7 @@ function BasicInformation() {
               onChange={(e) => handleChange("username", e.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
+            {errors.username && <div className="error">{errors.username}</div>}
           </div>
 
           <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
@@ -185,6 +191,7 @@ function BasicInformation() {
               onChange={(e) => handleChange("email", e.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
+            {errors.email && <div className="error">{errors.email}</div>}
           </div>
         </div>
 
@@ -203,6 +210,7 @@ function BasicInformation() {
               onChange={(e) => handleChange("password", e.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
+            {errors.password && <div className="error">{errors.password}</div>}
           </div>
 
           <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
@@ -220,6 +228,9 @@ function BasicInformation() {
               onChange={(e) => handleChange("confirmPassword", e.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
+            {errors.confirmPassword && (
+              <div className="error">{errors.confirmPassword}</div>
+            )}
           </div>
         </div>
       </div>
