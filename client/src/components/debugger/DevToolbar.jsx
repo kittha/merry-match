@@ -28,6 +28,7 @@ const DevToolbar = () => {
   const toolbarStyle = {
     fontSize: "2.5vw",
     // fontSize: "1.3vw",
+    color: "red",
     maxWidth: "100%",
     flexWrap: "wrap",
   };
