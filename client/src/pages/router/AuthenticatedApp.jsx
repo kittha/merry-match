@@ -34,7 +34,6 @@ const AuthenticatedApp = () => {
         <Route path="/payment" element={<PaymentFormPage />} />
         <Route path="/payment/success" element={<PaymentSuccessPage />} />
         <Route path="/package" element={<MerryPackage />} />
-        <Route path="/compliants/:userId" element={<ComplaintPage />} />
         <Route path="*" element={<HomePageAuthen />} />
 
         {role === "Admin" && (

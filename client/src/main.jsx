@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <AuthProvider>
         <FormProvider>
-          <ComplaintPage />
+          <App />
         </FormProvider>
       </AuthProvider>
     </BrowserRouter>
