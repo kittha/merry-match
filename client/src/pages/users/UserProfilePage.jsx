@@ -5,7 +5,7 @@ import ProfilePopup from "../../components/profilepage/ProfilePopup";
 import BasicInformationSection from "../../components/profilepage/BasicInformationSection";
 import IdentitiesSection from "../../components/profilepage/IdentitiesSection";
 import ProfilePicturesSections from "../../components/profilepage/ProfilePicturesSections";
-import ModalPopup from "../../components/editpage/ModalPopup";
+import ModalPopup from "../../components/profilepage/DeletePopup";
 
 function UserProfilePage() {
   const {
@@ -18,7 +18,6 @@ function UserProfilePage() {
     isDeleteConfirmationOpen,
     updateUserProfile,
   } = useProfileData();
-
 
   return (
     <>
@@ -44,7 +43,7 @@ function UserProfilePage() {
                     Preview Profile
                   </button>
                   {isPopupOpen && <ProfilePopup onClose={closePopup} />}
-                  <button 
+                  <button
                     className="w-[156px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full font-bold text-base leading-6 text-center text-[#FFFFFF] bg-[#C70039]"
                     onClick={updateUserProfile}
                   >
@@ -53,11 +52,11 @@ function UserProfilePage() {
                 </div>
               </div>
             </div>
-              <BasicInformationSection />
-              <IdentitiesSection />
-              <ProfilePicturesSections />
+            <BasicInformationSection />
+            <IdentitiesSection />
+            {/* <ProfilePicturesSections /> */}
             <div className="w-[128px] h-[32px] rounded-[16px] pt-[4px] pr-[8px] pb-[4px] pl-[8px] lg:mt-[-10px] mt-[60px]">
-              <button 
+              <button
                 className="w-[112px] h-[24px] font-semibold text-[16px] leading-[24px] text-[#646D89]"
                 onClick={openDeleteConfirmation}
               >
