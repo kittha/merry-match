@@ -10,6 +10,7 @@ import { useAuth } from "../../contexts/authentication";
 import PackageEditAndViewPage from "../admin/PackageEditAndViewPage";
 import PackageListPage from "../admin/PackageListPage";
 import PackageAddPage from "../admin/PackageAddPage";
+import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -29,6 +30,7 @@ const AuthenticatedApp = () => {
         <Route path="/membership" element={<MembershipPage />} />
         <Route path="/package" element={<MerryPackage />} />
         <Route path="*" element={<HomePageAuthen />} />
+        <Route path="/matchingArea" element={<MatchingArea />} />
 
         {role === "Admin" && (
           <>
