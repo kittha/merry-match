@@ -1,7 +1,70 @@
 import { useState } from "react";
+import { io } from "socket.io-client";
 
 const Chat = () => {
   const arrSend = ["Hello", "World", "Do you like ma dragons?"];
+  const socket = io();
+  const [inputText, setInputText] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+
+  const handleTyping = (event) => {
+    setInputText(event.target.value);
+  };
+
+  console.log(inputText);
+
+  //   useEffect(async () => {
+  //     const response = await axios.post(recieveMessageRoute, {
+  //       from: data._id,
+  //       to: currentChat._id,
+  //     });
+  //     setMessages(response.data);
+  //   }, [currentChat]);
+
+  //   useEffect(() => {
+  //     const getCurrentChat = async () => {
+  //       if (currentChat) {
+  //         await JSON.parse(
+  //           localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+  //         )._id;
+  //       }
+  //     };
+  //     getCurrentChat();
+  //   }, [currentChat]);
+
+  const handleSendMsg = async (event) => {
+    event.preventDefault();
+
+    // socket.current.emit("send-msg", {
+    //   to: currentChat._id,
+    //   from: data._id,
+    //   msg,
+    // });
+
+    // await axios.post(path, {
+    //   from: data._id,
+    //   to: currentChat._id,
+    //   message: msg,
+    // });
+
+    // const msgs = [...messages];
+    // msgs.push({ fromSelf: true, message: msg });
+    // setMessages(msgs);
+  };
+
+  //   useEffect(() => {
+  //     if (socket.current) {
+  //       socket.current.on("msg-recieve", (msg) => {
+  //         setArrivalMessage({ fromSelf: false, message: msg });
+  //       });
+  //     }
+  //   }, []);
+
+  //   useEffect(() => {
+  //     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  //   }, [arrivalMessage]);
+
   return (
     <div className="chat-area bg-[#160404] h-[924px] pt-[88px] flex flex-col justify-end">
       <div className="display-message border flex flex-col gap-4 mx-[60px] my-10">
@@ -29,7 +92,12 @@ const Chat = () => {
           );
         })}
       </div>
-      <footer className="input-message border border-pink-400 h-[100px] px-[60px] py-[26px] flex flex-row gap-6">
+      <form
+        onSubmit={() => {
+          handleSendMsg(event);
+        }}
+        className="input-message border border-pink-400 h-[100px] px-[60px] py-[26px] flex flex-row gap-6"
+      >
         <img
           src="#"
           alt="insert-icon"
@@ -39,13 +107,19 @@ const Chat = () => {
           type="text"
           placeholder="Message here..."
           className="input-msg flex-1"
-        ></input>
-        <img
-          src="#"
-          alt="send-icon"
-          className="send bg-[#C70039] rounded-full w-12 h-12"
+          value={inputText}
+          onChange={(event) => {
+            handleTyping(event);
+          }}
         />
-      </footer>
+        <button type="submit">
+          <img
+            src="#"
+            alt="send-icon"
+            className="send bg-[#C70039] rounded-full w-12 h-12"
+          />
+        </button>
+      </form>
     </div>
   );
 };
