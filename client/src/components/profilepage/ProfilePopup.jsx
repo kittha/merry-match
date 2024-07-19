@@ -5,6 +5,7 @@ import lovebutton from "../../../public/assets/profilepicture/lovebutton.png"
 import arrowL from "../../../public/assets/profilepicture/arrowL.png"
 import arrowR from "../../../public/assets/profilepicture/arrowR.png"
 import location from "../../../public/assets/profilepicture/location.png"
+import arrowB from "../../../public/assets/profilepicture/arrowB.png"
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -78,19 +79,25 @@ const ProfilePopup = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white w-[1064px] h-[740px] mx-auto rounded-[32px] shadow-2xl overflow-hidden">
-        <div className="flex justify-end pr-4">
+      <div className="bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto rounded-[32px] shadow-2xl overflow-hidden">
+        <div className="flex justify-end pr-4 ">
           <button onClick={onClose}>
-            <img src={exit} alt="exit" />
+            <img className="hidden lg:block" src={exit} alt="exit" />
           </button>
         </div>
-        <div className="flex">
-          <div className="Lside w-1/2 flex justify-center relative">
-            <div className="w-[400px] h-[400px] rounded-2xl">
+        <div className="flex justify-start pl-0 pt-0">
+          <button onClick={onClose}>
+            <img className="block lg:hidden absolute z-30 pt-10 pl-8" src={arrowB} alt="exit" />
+          </button>
+        </div>
+        <div className="lg:flex flex-row">
+          <div className="lg:Lside lg:w-1/2 flex justify-center relative">
+            <div className="lg:w-[400px] lg:h-[400px] rounded-2xl">
               {avatars.length > 0 && (
                 <>
-                  <img className="rounded-2xl" src={avatars[currentAvatarIndex]} alt="profile" />
-                  <div className="flex justify-center absolute left-[180px] bottom-32">
+                  <img className="rounded-2xl hidden lg:block" src={avatars[currentAvatarIndex]} alt="profile" />
+                  <img className="rounded-2xl block lg:hidden" src={avatars[currentAvatarIndex]} alt="profile" />
+                  <div className="flex justify-center absolute left-[180px] lg:bottom-32 bottom-5">
                     <div className="flex justify-center rounded-md">
                       <button><img src={crossbutton} alt="cross" /></button>
                     </div>
@@ -98,7 +105,7 @@ const ProfilePopup = ({ onClose }) => {
                       <button><img src={lovebutton} alt="love" /></button>
                     </div>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between px-8 pt-4">
                     <div className="PhotoCount flex mt-2.5">
                       <div>{currentAvatarIndex + 1}</div>
                       <div>/</div>
@@ -118,7 +125,7 @@ const ProfilePopup = ({ onClose }) => {
             </div>
           </div>
 
-          <div className="flex justify-start font-Nunito">
+          <div className="flex justify-start font-Nunito px-8">
             <div>
               <div className="flex font-extrabold">
                 <p className="text-[46px] text-[#2A2E3F]">{name}</p>
@@ -126,7 +133,7 @@ const ProfilePopup = ({ onClose }) => {
               </div>
 
               <div className="flex">
-                <img className="w-[17px] h-[22px]" src={location} alt="" />
+                <img src={location} />
                 <div className="flex ml-[20px] text-[#646D89]">
                   <p>{city}</p>
                   <p>,</p>
