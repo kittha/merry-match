@@ -1,7 +1,8 @@
+import daeny from "/assets/matchingpage/matching-area/daeny.png";
 const MatchingArea = () => {
   return (
-    <div>
-      <h1>CAT</h1>
+    <div className="pt-[52px] lg:pt-[88px] ">
+      <img src={daeny} />
     </div>
   );
 };
