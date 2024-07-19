@@ -237,6 +237,7 @@ export const FormProvider = ({ children }) => {
       value={{
         formData,
         errors,
+        setFormData,
         handleChange,
         addHobby,
         deleteHobby,
