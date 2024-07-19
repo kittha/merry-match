@@ -93,7 +93,7 @@ const Chat = () => {
         })}
       </div>
       <form
-        onSubmit={() => {
+        onSubmit={(event) => {
           handleSendMsg(event);
         }}
         className="input-message border border-pink-400 h-[100px] px-[60px] py-[26px] flex flex-row gap-6"
