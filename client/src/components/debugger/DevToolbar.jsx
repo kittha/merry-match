@@ -13,7 +13,8 @@ const DevToolbar = () => {
     float: "left",
     top: "50px",
     left: "15px",
-    backgroundColor: "lightgray",
+    // backgroundColor: "lightgray",
+    backgroundColor: "transparent",
     padding: "3px",
     zIndex: 100,
   };
