@@ -1,8 +1,9 @@
-import daeny from "/assets/matchingpage/matching-area/daeny.png";
+import CarouselComponent from "./CarouselComponent";
+
 const MatchingArea = () => {
   return (
     <div className="pt-[52px] lg:pt-[88px] ">
-      <img src={daeny} />
+      <CarouselComponent />
     </div>
   );
 };
