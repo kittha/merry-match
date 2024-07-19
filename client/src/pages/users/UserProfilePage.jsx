@@ -6,6 +6,11 @@ import BasicInformationSection from "../../components/profilepage/BasicInformati
 import IdentitiesSection from "../../components/profilepage/IdentitiesSection";
 import ProfilePicturesSections from "../../components/profilepage/ProfilePicturesSections";
 import ModalPopup from "../../components/profilepage/DeletePopup";
+import { getProfileData } from "../../hooks/connectProfile.mjs";
+import { useContext } from "react";
+import { FormContext } from "../../contexts/FormProvider";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function UserProfilePage() {
   const {
@@ -18,6 +23,17 @@ function UserProfilePage() {
     isDeleteConfirmationOpen,
     updateUserProfile,
   } = useProfileData();
+
+  const { formData, setFormData } = useContext(FormContext);
+  const { userId } = useParams();
+  const fetchData = async () => {
+    const data = await getProfileData(userId);
+    setFormData(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -45,7 +61,7 @@ function UserProfilePage() {
                   {isPopupOpen && <ProfilePopup onClose={closePopup} />}
                   <button
                     className="w-[156px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full font-bold text-base leading-6 text-center text-[#FFFFFF] bg-[#C70039]"
-                    onClick={updateUserProfile}
+                    // onClick={updateUserProfile}
                   >
                     Update Profile
                   </button>
@@ -54,7 +70,7 @@ function UserProfilePage() {
             </div>
             <BasicInformationSection />
             <IdentitiesSection />
-            {/* <ProfilePicturesSections /> */}
+            <ProfilePicturesSections />
             <div className="w-[128px] h-[32px] rounded-[16px] pt-[4px] pr-[8px] pb-[4px] pl-[8px] lg:mt-[-10px] mt-[60px]">
               <button
                 className="w-[112px] h-[24px] font-semibold text-[16px] leading-[24px] text-[#646D89]"

@@ -4,24 +4,13 @@ import Countrydata from "/src/mock-city/Countrydata.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CalendarIcon from "../../../public/assets/registerpage/calendar.png";
-import "../../App.css";
-import { getProfileData } from "../../hooks/profile.controller.mjs";
-import { useParams } from "react-router-dom";
 
 function BasicInformationSection() {
-  const { formData, setFormData, handleChange } = useContext(FormContext);
+  const { formData, handleChange } = useContext(FormContext);
   const [cities, setCities] = useState([]);
   const [selectDate, setSelectDate] = useState(null);
-  const { userId } = useParams();
-  const fetchData = async () => {
-    const data = await getProfileData(userId);
-    setFormData(data);
-  };
 
   useEffect(() => {
-    fetchData();
-    console.log(formData);
-
     if (formData.country) {
       const selectedCountry = Countrydata.find(
         (country) => country.country_name === formData.country
@@ -69,7 +58,7 @@ function BasicInformationSection() {
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
               id="name"
               value={formData.name}
-              placeholder="Name"
+              placeholder={formData.name || "Name"}
               required
               onChange={(event) => {
                 handleChange("name", event.target.value);

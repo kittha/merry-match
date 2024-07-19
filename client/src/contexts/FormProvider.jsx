@@ -25,6 +25,7 @@ export const FormProvider = ({ children }) => {
       image4: null,
       image5: null,
     },
+    bio: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -205,17 +206,17 @@ export const FormProvider = ({ children }) => {
       const sentFormData = new FormData();
 
       sentFormData.append("name", formData.name);
-      sentFormData.append("date_of_birth", formData.birthday);
-      sentFormData.append("location", formData.country);
+      sentFormData.append("birthday", formData.birthday);
+      sentFormData.append("country", formData.country);
       sentFormData.append("city", formData.city);
       sentFormData.append("username", formData.username);
       sentFormData.append("email", formData.email);
       sentFormData.append("password", formData.password);
       sentFormData.append("confirmPassword", formData.confirmPassword);
-      sentFormData.append("sexual_identities", formData.sexualIdentity);
-      sentFormData.append("sexual_preferences", formData.sexualPreference);
-      sentFormData.append("racial_preferences", formData.racialPreference);
-      sentFormData.append("meeting_interests", formData.meetingInterest);
+      sentFormData.append("sexualIdentity", formData.sexualIdentity);
+      sentFormData.append("sexualPreference", formData.sexualPreference);
+      sentFormData.append("racialPreference", formData.racialPreference);
+      sentFormData.append("meetingInterest", formData.meetingInterest);
 
       for (let i = 0; i < formData.hobbies.length; i++) {
         sentFormData.append("hobbies[]", formData.hobbies[i]);

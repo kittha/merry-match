@@ -52,7 +52,6 @@ export const getUser = async (id) => {
       `SELECT * FROM users WHERE email = $1 OR user_id::text = $1`,
       [id]
     );
-
     return result.rows[0];
   } catch (error) {
     console.error("Error in user model: ", error);

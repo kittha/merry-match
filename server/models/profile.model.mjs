@@ -2,13 +2,13 @@ import connectionPool from "../configs/db.mjs";
 export const createProfile = async (userId, data) => {
   const {
     name,
-    date_of_birth,
-    location,
+    birthday,
+    country,
     city,
-    sexual_identities,
-    sexual_preferences,
-    racial_preferences,
-    meeting_interests,
+    sexualIdentity,
+    sexualPreference,
+    racialPreference,
+    meetingInterest,
     hobbies,
     bio,
   } = data;
@@ -29,21 +29,20 @@ export const createProfile = async (userId, data) => {
         bio, 
         created_at, 
         updated_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $12)
       RETURNING profile_id`,
       [
         userId,
         name,
-        date_of_birth,
-        location,
+        birthday,
+        country,
         city,
-        sexual_identities,
-        sexual_preferences,
-        racial_preferences,
-        meeting_interests,
+        sexualIdentity,
+        sexualPreference,
+        racialPreference,
+        meetingInterest,
         hobbies,
         bio,
-        currentDateTime,
         currentDateTime,
       ]
     );
@@ -68,13 +67,13 @@ export const getProfile = async (userId) => {
 export const updateProfile = async (userId, data) => {
   const {
     name,
-    date_of_birth,
-    location,
+    birthday,
+    country,
     city,
-    sexual_identities,
-    sexual_preferences,
-    racial_preferences,
-    meeting_interests,
+    sexualIdentity,
+    sexualPreference,
+    racialPreference,
+    meetingInterest,
     hobbies,
     bio,
   } = data;
@@ -98,13 +97,13 @@ export const updateProfile = async (userId, data) => {
       [
         userId,
         name,
-        date_of_birth,
-        location,
+        birthday,
+        country,
         city,
-        sexual_identities,
-        sexual_preferences,
-        racial_preferences,
-        meeting_interests,
+        sexualIdentity,
+        sexualPreference,
+        racialPreference,
+        meetingInterest,
         hobbies,
         bio,
         currentDateTime,
