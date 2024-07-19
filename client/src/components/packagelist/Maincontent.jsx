@@ -11,7 +11,11 @@ function MainContent() {
       const result = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages`
       );
-      setpackage(result.data.data);
+      setpackage(
+        result.data.data.sort((a, b) => {
+          return a.package_id - b.package_id;
+        })
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
     }
