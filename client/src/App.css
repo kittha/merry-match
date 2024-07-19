@@ -9,5 +9,13 @@ select {
 }
 
 select:invalid {
-  color: #999999;
+  color: #9aa1b9;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+option {
+  color: black;
 }

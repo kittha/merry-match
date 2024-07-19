@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import IdentitiesAndInterests from "../../components/registerpage/Interests";
 import ProfilePictures from "../../components/registerpage/ProfilePictures";
 import BasicInformation from "../../components/registerpage/Information";
@@ -10,7 +10,7 @@ const RegisterPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="font-Nunito lg:bg-register-bg  flex flex-col items-center justify-center w-screen h-screen bg-no-repeat bg-cover">
+      <div className="font-Nunito lg:bg-[url('/assets/registerpage/registerpage-bg.svg')]  flex flex-col items-center justify-center w-screen h-screen bg-no-repeat bg-cover">
         <div className="h-screen flex  flex-col lg:justify-center lg:items-center lg:flex-col w-screen lg:w-[930px] lg:h-[703px]">
           <div className="lg:mt-[400px] mt-[100px] px-[16px]">
             <header className="w-full flex flex-col  justify-start   lg:flex-row lg:justify-between">

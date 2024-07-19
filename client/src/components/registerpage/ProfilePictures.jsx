@@ -3,8 +3,13 @@ import plus from "../../../public/assets/profilepicture/plus.png";
 import { FormContext } from "../../contexts/FormProvider";
 
 function ProfilePictures() {
-  const { formData, handleAvatarChange, deleteAvatar, handleAvatarSwap } =
-    useContext(FormContext);
+  const {
+    formData,
+    handleAvatarChange,
+    deleteAvatar,
+    handleAvatarSwap,
+    errors,
+  } = useContext(FormContext);
 
   const handleFileChange = (event, avatarKey) => {
     const selectedFile = event.target.files[0];
@@ -80,6 +85,7 @@ function ProfilePictures() {
               />
             </div>
           ))}
+          {errors.avatars && <div className="error">{errors.avatars}</div>}
         </div>
       </div>
     </div>
