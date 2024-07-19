@@ -6,6 +6,7 @@ import jwtInterceptor from "./utils/jwtInterceptor.js";
 import { AuthProvider } from "./contexts/authentication.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { FormProvider } from "./contexts/FormProvider.jsx";
+import DevToolbar from "./components/debugger/DevToolbar.jsx";
 
 if (import.meta.env.VITE_NODE_ENV === "development") {
   console.log("Running in development mode");
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <AuthProvider>
         <FormProvider>
+          <DevToolbar />
           <App />
         </FormProvider>
       </AuthProvider>
