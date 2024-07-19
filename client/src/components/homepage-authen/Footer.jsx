@@ -24,14 +24,14 @@ function Footer() {
             <img
               src={merryMatchLogo}
               className="w-[238.57px] h-[80px] p-[22.5px 8.7px 20px 7.46px] mx-auto"
-              alt="logo1"
+              alt="merry-match-logo"
             />
             <p className=" lg:h-[30px] w-auto h-[60px] font-nunito font-semibold text-lg leading-7 text-center text-[#646D89]">
               New generation of online dating website for everyone
             </p>
           </div>
 
-          <div className="lg:w-[1120px] h-[117px] w-[327px] flex flex-col gap-[24px] pt-[24px] mx-auto">
+          <div className="lg:w-[1120px] h-[117px] w-[327px] flex flex-col gap-[24px] pt-[24px] mx-auto lg:mt-4 mt-7">
             <div className="flex flex-col gap-[24px] pt-[2px] border-b-[1px] border-[#E4E6ED]"></div>
             <p className="lg:w-auto w-[343px] h-[32px] font-nunito font-medium text-sm leading-[21px] text-[#9AA1B9] text-center mx-auto">
               copyright ©2022 merrymatch.com All rights reserved

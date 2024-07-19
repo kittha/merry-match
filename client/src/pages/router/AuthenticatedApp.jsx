@@ -10,6 +10,9 @@ import { useAuth } from "../../contexts/authentication";
 import PackageEditAndViewPage from "../admin/PackageEditAndViewPage";
 import PackageListPage from "../admin/PackageListPage";
 import PackageAddPage from "../admin/PackageAddPage";
+import MatchingPage from "../users/MatchingPage";
+import MerryListPage from "../users/MerryListPage";
+import ComplaintPage from "../users/ComplaintPage";
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -24,9 +27,12 @@ const AuthenticatedApp = () => {
       <Routes>
         <Route path="/" element={<HomePageAuthen />} />
         <Route path="/user-profile/:userId" element={<UserProfilePage />} />
+        <Route path="/merry-list" element={<MerryListPage />} />
+        <Route path="/membership" element={<MembershipPage />} />
+        <Route path="/complaint" element={<ComplaintPage />} />
+        <Route path="/matching" element={<MatchingPage />} />
         <Route path="/payment" element={<PaymentFormPage />} />
         <Route path="/payment/success" element={<PaymentSuccessPage />} />
-        <Route path="/membership" element={<MembershipPage />} />
         <Route path="/package" element={<MerryPackage />} />
         <Route path="*" element={<HomePageAuthen />} />
 
