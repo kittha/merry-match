@@ -1,6 +1,6 @@
 import React from "react";
-import headerimage1 from "/assets/header-image/header-image1.png";
-import headerimage2 from "/assets/header-image/header-image2.png";
+import headerImage1 from "/assets/header-authen-image/header-image1.png";
+import headerImage2 from "/assets/header-authen-image/header-image2.png";
 import vector1 from "/assets/header-image/vector1.png";
 import vector3 from "/assets/header-image/vector3.png";
 import vector4 from "/assets/header-image/vector4.png";
@@ -15,7 +15,7 @@ const Header = () => {
         <div className="flex flex-col items-center justify-start w-full h-full">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:h-[758px] md:h-auto h-full z-10 relative">
             <img
-              src={headerimage2}
+              src={headerImage2}
               alt="image1"
               className="lg:translate-y-48 lg:translate-x-10 md:translate-y-4 md:translate-x-56 md:w-[275px] translate-y-10 translate-x-28 lg:order-1 order-3 w-2/3 lg:w-auto"
             />
@@ -24,7 +24,7 @@ const Header = () => {
                 Make the <br />
                 first ‘Merry’
               </h3>
-              <h4 className="lg:w-auto w-[343px] text-[20px] font-semibold font-Nunito text-white leading-relaxed lg:mt-4">
+              <h4 className="w-[343px] text-[20px] font-semibold font-Nunito text-white leading-relaxed lg:mt-4">
                 If you feel lonely, let’s start meeting{" "}
                 <br className="hidden lg:block" /> new people in your area!{" "}
                 <br className="hidden lg:block" /> Don’t forget to get Merry
@@ -41,7 +41,7 @@ const Header = () => {
               </button>
             </div>
             <img
-              src={headerimage1}
+              src={headerImage1}
               alt="image2"
               className="lg:-translate-y-48 lg:-translate-x-10 md:translate-y-4 md:-translate-x-64 -translate-y-8 -translate-x-28 lg:order-3 order-1 w-56 lg:w-auto"
             />

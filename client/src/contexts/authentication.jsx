@@ -26,6 +26,7 @@ function AuthProvider(props) {
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/login`,
         data
       );
+
       const token = result.data.session.access_token;
       localStorage.setItem("token", token);
 

@@ -4,3 +4,10 @@
   position: absolute;
   margin-left: 5px;
 }
+select {
+  color: #000000;
+}
+
+select:invalid {
+  color: #999999;
+}
