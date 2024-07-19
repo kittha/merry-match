@@ -103,8 +103,10 @@ const NavbarAuthen = () => {
 
         {/*-------------------------------------------- Desktop Menu -----------------------------------------------*/}
         <div className="hidden lg:flex lg:items-end lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent lg:ml-[432px]">
-          <button onClick={() => navigate("/")}>Start Matching!</button>
-          <button onClick={() => navigate("/")}>Merry Membership</button>
+          <button onClick={() => navigate("/matching")}>Start Matching!</button>
+          <button onClick={() => navigate("/membership")}>
+            Merry Membership
+          </button>
         </div>
 
         {/* ------------------------------------------notification ---------------------------------------------------- */}
@@ -199,7 +201,7 @@ const NavbarAuthen = () => {
                     <button
                       className="flex justify-center items-center bg-gradient-to-r from-[#742138] to-[#A878BF] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[179px] "
                       onClick={() => {
-                        navigate("/");
+                        navigate("/package");
                         setIsOpen(false);
                       }}
                     >
@@ -217,17 +219,21 @@ const NavbarAuthen = () => {
                   </div>
                   <div className="flex items-center h-[37px] p-[8px]">
                     <img src={icon3} alt="icon3" className="mr-2 pl-4" />
-                    <button onClick={() => navigate("/")}>Merry list</button>
+                    <button onClick={() => navigate("/merry-list")}>
+                      Merry list
+                    </button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px]">
                     <img src={icon4} alt="icon4" className="mr-2 pl-4" />
-                    <button onClick={() => navigate("/")}>
+                    <button onClick={() => navigate("/membership")}>
                       Merry Membership
                     </button>
                   </div>
                   <div className="flex items-center h-[37px] p-[8px] mb-1">
                     <img src={icon5} alt="icon5" className="mr-2 pl-4" />
-                    <button onClick={() => navigate("/")}>Compliant</button>
+                    <button onClick={() => navigate("/complaint")}>
+                      Compliant
+                    </button>
                   </div>
                   <div className="mx-auto border-t border-gray-300 w-full p-[2px]"></div>
                   <div className="flex items-center h-[37px] p-[8px]">
@@ -248,7 +254,7 @@ const NavbarAuthen = () => {
             <button
               className="flex justify-center items-center bg-gradient-to-r from-[#742138] to-[#A878BF] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[343px] font-[700]"
               onClick={() => {
-                navigate("/");
+                navigate("/package");
                 setIsOpen(false);
               }}
             >
@@ -264,15 +270,17 @@ const NavbarAuthen = () => {
           </div>
           <div className="flex items-center p-[12px]">
             <img src={icon3} alt="icon3" className="mr-2 p-[10px] pl-8" />
-            <button onClick={() => navigate("/")}>Merry list</button>
+            <button onClick={() => navigate("/merry-list")}>Merry list</button>
           </div>
           <div className="flex items-center p-[12px]">
             <img src={icon4} alt="icon4" className="mr-2 p-[10px] pl-8" />
-            <button onClick={() => navigate("/")}>Merry Membership</button>
+            <button onClick={() => navigate("/membership")}>
+              Merry Membership
+            </button>
           </div>
           <div className="flex items-center p-[12px]">
             <img src={icon5} alt="icon5" className="mr-2 p-[10px] pl-8" />
-            <button onClick={() => navigate("/")}>Compliant</button>
+            <button onClick={() => navigate("/complaint")}>Compliant</button>
           </div>
           <div className="mx-auto border-t border-gray-300 w-[343px] my-4"></div>
           <div className="flex items-center p-[12px] pt-0">
