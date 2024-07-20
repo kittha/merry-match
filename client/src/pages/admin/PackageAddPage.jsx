@@ -24,11 +24,10 @@ function PackageAddPage() {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!packageData.name.trim())
-      newErrors.packageName = "Package name is required";
+    if (!packageData.name.trim()) newErrors.name = "Package name is required";
     if (!String(packageData.merry_limit).trim())
-      newErrors.merryLimit = "Merry limit is required";
-    if (!packageData.price.trim()) newErrors.price = "price is required";
+      newErrors.merry_limit = "Merry limit is required";
+    if (!packageData.price.trim()) newErrors.price = "Price is required";
     if (!packageData.details.length)
       newErrors.packageDetail = "At least one package detail is required";
     setPackageData({ ...packageData, errors: newErrors });

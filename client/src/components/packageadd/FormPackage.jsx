@@ -2,6 +2,14 @@ import UploadIcon from "./Uploadicon";
 import AddDetail from "./Adddetail";
 
 function FormPackage({ packageData, setPackageData, icon, setIcon }) {
+  const handleInputChange = (key, value) => {
+    setPackageData((prevData) => ({
+      ...prevData,
+      [field]: value,
+      errors: { ...prevData.errors, [key]: "" },
+    }));
+  };
+
   return (
     <div className="gray bg-[#F6F7FC] w-full min-h-[1024px] flex justify-center font-Nunito">
       <div className="white w-[1080px] h-full pb-[60px] flex flex-col items-center gap-[40px] bg-[#FFFFFF] rounded-2xl border-1 mt-[40px] border-black ">
@@ -18,15 +26,13 @@ function FormPackage({ packageData, setPackageData, icon, setIcon }) {
                   id="package-name"
                   value={packageData.name}
                   onChange={(event) =>
-                    setPackageData({ ...packageData, name: event.target.value })
+                    handleInputChange("name", event.target.value)
                   }
                 />
-                {packageData.errors.packageName && (
-                  <p className="text-red-500">
-                    {packageData.errors.packageName}
-                  </p>
-                )}
               </div>
+              {packageData.errors.name && (
+                <p className="text-red-500">{packageData.errors.name}</p>
+              )}
             </div>
             <div className="flex flex-col gap-[4px]">
               <label htmlFor="merry-limit">
@@ -41,18 +47,13 @@ function FormPackage({ packageData, setPackageData, icon, setIcon }) {
                   value={packageData.merry_limit}
                   name="merry-limit"
                   onChange={(event) =>
-                    setPackageData({
-                      ...packageData,
-                      merry_limit: event.target.value,
-                    })
+                    handleInputChange("merry_limit", event.target.value)
                   }
                 />
-                {packageData.errors.merryLimit && (
-                  <p className="text-red-500">
-                    {packageData.errors.merryLimit}
-                  </p>
-                )}
               </div>
+              {packageData.errors.merry_limit && (
+                <p className="text-red-500">{packageData.errors.merry_limit}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-[4px]">
@@ -67,13 +68,13 @@ function FormPackage({ packageData, setPackageData, icon, setIcon }) {
                 id="price"
                 value={packageData.price}
                 onChange={(event) =>
-                  setPackageData({ ...packageData, price: event.target.value })
+                  handleInputChange("price", event.target.value)
                 }
               />
-              {packageData.errors.price && (
-                <p className="text-red-500">{packageData.errors.price}</p>
-              )}
             </div>
+            {packageData.errors.price && (
+              <p className="text-red-500">{packageData.errors.price}</p>
+            )}
           </div>
           <div className="flex flex-col gap-[8px]">
             <UploadIcon icon={icon} setIcon={setIcon} />
