@@ -1,3 +1,5 @@
+import MockLeftSidebarComponent from "./MockLeftSidebarComponent";
+import MockRightSidebarComponent from "./MockRightSidebarComponent";
 import CarouselComponent from "./CarouselComponent";
 import MerryLimitToday from "./MerryLimitToday";
 
@@ -25,6 +27,8 @@ const db = [
 const MatchingArea = () => {
   return (
     <div className="navbar-padding pt-[52px] lg:pt-[88px] ">
+      <MockLeftSidebarComponent />
+      <MockRightSidebarComponent />
       <CarouselComponent db={db} />
       <MerryLimitToday />
     </div>

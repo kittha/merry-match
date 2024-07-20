@@ -11,7 +11,7 @@ const CarouselComponent = ({ db }) => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 1.5,
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "15%", // This shows 1/3 of the next and previous images
@@ -27,7 +27,7 @@ const CarouselComponent = ({ db }) => {
             <img
               src={user.url}
               alt={user.name}
-              className="rounded-3xl w-full"
+              className="rounded-3xl w-[620px]"
             />
             <p className="absolute bottom-10 left-10 right-0 text-left text-white font-bold">
               <span>{user.name}</span>&nbsp;&nbsp;<span>{user.age}</span> <br />

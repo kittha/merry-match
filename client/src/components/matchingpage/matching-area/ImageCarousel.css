@@ -18,10 +18,10 @@
 }
 
 .slick-next {
-    right: 5% !important; /* Adjust right arrow*/
+    right: 25% !important; /* Adjust right arrow*/
   }
 
 .slick-prev {
-  left: 85% !important; /* Adjust left arrow*/
+  left: 65% !important; /* Adjust left arrow*/
 }
 
