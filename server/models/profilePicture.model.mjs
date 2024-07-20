@@ -75,17 +75,21 @@ export const upsertAvatars = async (userId, avatarUri) => {
           currentDateTime,
         ]
       );
-
-      const result = await connectionPool.query(
-        `DELETE FROM profile_pictures 
-        WHERE user_id = $1 AND updated_at != $2
-        RETURNING *`,
-        [userId, currentDateTime]
-      );
-      return result.rows;
     } catch (error) {
-      console.error("Error in profile picture model: ", error);
+      console.error("Error in upsert profile picture model: ", error);
       throw error;
     }
+  }
+  try {
+    const result = await connectionPool.query(
+      `DELETE FROM profile_pictures 
+      WHERE user_id = $1 AND updated_at != $2
+      RETURNING *`,
+      [userId, currentDateTime]
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("Error in delete profile picture model: ", error);
+    throw error;
   }
 };

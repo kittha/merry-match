@@ -34,9 +34,7 @@ function ProfilePicturesSections() {
   };
 
   const checkImage = (image) => {
-    console.log(image);
     if (image instanceof File) {
-      console.log(URL.createObjectURL(image));
       return URL.createObjectURL(image);
     } else if (typeof image === "string") {
       return image;
@@ -60,10 +58,10 @@ function ProfilePicturesSections() {
           <div
             key={index}
             className="input-container"
-            // draggable
-            // onDragStart={(event) => handleDragStart(event, avatarKey)}
-            // onDragOver={handleDragOver}
-            // onDrop={(event) => handleDrop(event, avatarKey)}
+            draggable
+            onDragStart={(event) => handleDragStart(event, index)}
+            onDragOver={handleDragOver}
+            onDrop={(event) => handleDrop(event, index)}
           >
             {formData.avatars[index] ? (
               <div className="image-preview-container w-[167px] h-[167px] relative">

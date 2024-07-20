@@ -34,11 +34,13 @@ function AuthProvider(props) {
       // console.log(userDataFromToken);
 
       const userDataFromPayload = result.data;
+      console.log(userDataFromPayload);
       setState({
         ...state,
         user: userDataFromPayload,
         role: userDataFromPayload.role,
       });
+
       if (userDataFromPayload.role === "Admin") {
         navigate("/admin/package");
       } else {

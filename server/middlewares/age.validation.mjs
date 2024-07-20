@@ -1,12 +1,12 @@
 export const ageValidator = (req, res, next) => {
-  const { date_of_birth } = req.body;
+  const { birthday } = req.body;
 
-  if (!date_of_birth) {
+  if (!birthday) {
     return res.status(400).json({ error: "Date of birth is required." });
   }
 
   // Step 1: Parse the ISO string to a Date object
-  const date = new Date(date_of_birth);
+  const date = new Date(birthday);
 
   // Step 2: Validate if the date is valid
   if (isNaN(date.getTime())) {
@@ -28,7 +28,7 @@ export const ageValidator = (req, res, next) => {
   // Step 4: Format the extracted date part back to an ISO string without the time component
   const formattedDate = date.toISOString().split("T")[0];
 
-  // Replace the original date_of_birth with the formatted one
-  req.body.date_of_birth = formattedDate;
+  // Replace the original birthdaywith the formatted one
+  req.body.birthday = formattedDate;
   next();
 };

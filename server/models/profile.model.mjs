@@ -79,7 +79,7 @@ export const updateProfile = async (userId, data) => {
   } = data;
   const currentDateTime = new Date();
   try {
-    await connectionPool.query(
+    const result = await connectionPool.query(
       `UPDATE profiles SET 
           name = $2, 
           date_of_birth = $3, 
@@ -89,7 +89,7 @@ export const updateProfile = async (userId, data) => {
           sexual_preferences = $7, 
           racial_preferences = $8, 
           meeting_interests = $9,
-          hobbies = $10
+          hobbies = $10,
           bio = $11, 
           updated_at = $12
         WHERE user_id = $1

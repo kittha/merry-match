@@ -53,13 +53,34 @@ export const getUserProfileById = async (req, res) => {
 export const updateUserProfileById = async (req, res) => {
   const { userId } = req.params;
   try {
+    console.log(req.body.avatar);
+    const avatarUrl = req.body.avatar.map((avatar) => JSON.parse(avatar));
+
     await updateUser(userId, req.body);
     await updateProfile(userId, req.body);
-    //กรณี url เดิมทำยังไง
-    avatarUri = await cloudinaryUpload(req.files);
+
+    const avatarUri = await cloudinaryUpload(req.files);
+
+    // rearrange avatars
+    let i = 0;
+    let j = 0;
+    let avatars = [];
+    for (let k = 1; k <= 5; k++) {
+      if (avatarUrl[i] && k in avatarUrl[i]) {
+        console.log(avatarUrl[i][k]);
+        avatars.push(avatarUrl[i][k]);
+        i++;
+      } else if (avatarUri[j]) {
+        console.log(avatarUri[j]);
+        avatars.push(avatarUri[j]);
+        j++;
+      }
+    }
+
     // update profile picture in database
-    const avatarsResult = await upsertAvatars(userId, avatarUri);
+    const avatarsResult = await upsertAvatars(userId, avatars);
     // delete avatars from cloudinary
+    // *still can't delete from cloudinary
     const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
     await cloudinaryDestroy(cloudinaryId);
     return res.status(200).json({ message: "Updated Successful" });

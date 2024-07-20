@@ -24,7 +24,7 @@ function UserProfilePage() {
     updateUserProfile,
   } = useProfileData();
 
-  const { formData, setFormData } = useContext(FormContext);
+  const { formData, setFormData, handleSubmit } = useContext(FormContext);
   const { userId } = useParams();
   const fetchData = async () => {
     const data = await getProfileData(userId);
@@ -36,7 +36,7 @@ function UserProfilePage() {
   }, []);
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <div className="lg:w-screen w-auto lg:h-screen bg-[#FCFCFE] flex flex-col gap-[80px] pt-[120px]">
         <div className="lg:w-screen w-auto mx-auto  bg-[#FCFCFE]">
           <div className="lg:w-[931px] lg:h-[1647px] w-auto h-auto flex flex-col items-center lg:items-end gap-[80px] pb-[50px] mx-auto font-Nunito">
@@ -61,7 +61,7 @@ function UserProfilePage() {
                   {isPopupOpen && <ProfilePopup onClose={closePopup} />}
                   <button
                     className="w-[156px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full font-bold text-base leading-6 text-center text-[#FFFFFF] bg-[#C70039]"
-                    // onClick={updateUserProfile}
+                    type="submit"
                   >
                     Update Profile
                   </button>
@@ -91,7 +91,7 @@ function UserProfilePage() {
           </footer>
         </div>
       </div>
-    </>
+    </form>
   );
 }
 export default UserProfilePage;

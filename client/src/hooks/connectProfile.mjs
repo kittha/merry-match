@@ -8,15 +8,19 @@ export const getProfileData = async (userId) => {
     console.log("Get data from Database Success.");
     return data;
   } catch (error) {
-    console.error("Error at getProfileData in profile controller: ", error);
+    console.error("Error at getProfileData in connectProfile: ", error);
   }
 };
 
-export const updateProfileData = async (userId) => {
+export const updateProfile = async (userId, data) => {
   try {
     const result = await axios.put(
-      `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`,
+      data
     );
+    console.log("Send data to Database Success.");
     return { message: "Get data from Database Success." };
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error at putProfileData in connectProfile: ", error);
+  }
 };

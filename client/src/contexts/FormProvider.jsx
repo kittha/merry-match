@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 import { useAuth } from "./authentication";
+import { updateProfile } from "../hooks/connectProfile.mjs";
 
 export const FormContext = createContext();
 
@@ -29,7 +30,7 @@ export const FormProvider = ({ children }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const { register } = useAuth();
+  const { register, state } = useAuth();
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -217,6 +218,7 @@ export const FormProvider = ({ children }) => {
       sentFormData.append("sexualPreference", formData.sexualPreference);
       sentFormData.append("racialPreference", formData.racialPreference);
       sentFormData.append("meetingInterest", formData.meetingInterest);
+      sentFormData.append("bio", formData.bio);
 
       for (let i = 0; i < formData.hobbies.length; i++) {
         sentFormData.append("hobbies[]", formData.hobbies[i]);
@@ -224,9 +226,17 @@ export const FormProvider = ({ children }) => {
       for (let avatarKey in formData.avatars) {
         sentFormData.append("avatar", formData.avatars[avatarKey]);
       }
-      console.log(sentFormData);
 
-      await register(sentFormData);
+      // for (const pair of sentFormData.entries()) {
+      //   console.log(pair);
+      // }
+      console.log(state.user);
+
+      if (state.user) {
+        await updateProfile(state.user.id, sentFormData);
+      } else {
+        await register(sentFormData);
+      }
       console.log("Registration successful");
     } catch (error) {
       console.error("Registration failed:", error);
