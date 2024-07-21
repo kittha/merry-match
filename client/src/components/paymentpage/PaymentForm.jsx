@@ -5,14 +5,16 @@ import { useNavigate } from "react-router-dom";
 import Frame from "../../../public/assets/paymentpage/Frame.png";
 import Bullet from "../../../public/assets/paymentpage/Bullet.png";
 import Footer from "../../components/homepage/Footer";
+import { usePackage } from "../../contexts/PackageProvider";
 
 const PaymentForm = () => {
   const navigate = useNavigate();
+  const { selectedPackage } = usePackage();
 
   return (
     <div className="full">
       <div className=" flex justify-center font-Nunito lg:mb-[269px]">
-        <div className="flex flex-col lg:flex-row pt-[52px] lg:mt-[80px] lg:pt-[88px] gap-[22px] lg:w-[928px]  justify-between">
+        <div className="flex flex-col lg:flex-row pt-[52px] lg:mt-[80px] lg:pt-[88px] gap-[22px] lg:w-[928px] justify-between">
           <div className="left w-screen lg:w-[358px] pt-[32px] pb-[16px] px-[24px] lg:py-[32px] lg:px-[24px] bg-[#F6F7FC] lg:h-[318px] lg:rounded-[24px] border-b lg:border border-[#D6D9E4]">
             <div className="">
               <header className="flex items-center">
@@ -27,25 +29,26 @@ const PaymentForm = () => {
                     Package
                   </p>
                   <p className="text-[#2A2E3F] text-[20px] font-[600]">
-                    Premium
+                    {selectedPackage?.name || "N/A"}
                   </p>
                 </div>
                 <div className="center py-[10px] px-[8px] bg-white rounded-[8px] text-[#424C6B] font-[400] text-[16px] leading-[24px] flex flex-col gap-[8px]">
-                  <div className="flex gap-[10px] items-center pl-[8px]">
-                    <img src={Bullet} className="w-[4px] h-[4px]"></img>
-                    <span>‘Merry’ more than a daily limited</span>
-                  </div>
-                  <div className="flex gap-[10px] items-center pl-[8px]">
-                    <img src={Bullet} className="w-[4px] h-[4px]"></img>
-                    <span>Up to 70 Merry per day</span>
-                  </div>
+                  {selectedPackage?.details.map((detail, index) => (
+                    <div
+                      key={index}
+                      className="flex gap-[10px] items-center pl-[8px]"
+                    >
+                      <img src={Bullet} className="w-[4px] h-[4px]"></img>
+                      <span>{detail}</span>
+                    </div>
+                  ))}
                 </div>
                 <div className="bottom flex justify-between py-[24px]">
                   <p className="text-[#646D89] font-[400] text-[16px]">
                     Price (Monthly)
                   </p>
                   <p className="text-[#200009] font-[600] text-[20px]">
-                    THB 149.00
+                    THB {selectedPackage?.price || "N/A"}
                   </p>
                 </div>
               </div>
@@ -134,7 +137,7 @@ const PaymentForm = () => {
               </button>
               <button
                 onClick={() => {
-                  navigate("/payment/success");
+                  navigate("/payment-success");
                 }}
                 className="bg-[#C70039] text-white rounded-full py-[12px] px-[24px] drop-shadow-lg font-[700]"
               >
