@@ -36,10 +36,9 @@ function ProfilePicturesSections() {
   const checkImage = (image) => {
     if (image instanceof File) {
       return URL.createObjectURL(image);
-    } else if (typeof image === "string") {
-      return image;
+    } else {
+      return image.url;
     }
-    return "No Picture"; // Return an empty string or handle unexpected cases if necessary
   };
 
   return (

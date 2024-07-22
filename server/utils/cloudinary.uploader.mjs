@@ -9,9 +9,12 @@ import fs from "fs/promises";
  * @returns
  */
 export const cloudinaryUpload = async (files) => {
+  // console.log(files.avatar);
+  if (!files.avatar) {
+    return null;
+  }
   try {
     const fileUris = [];
-    // console.log(files);
     for (let file of files.avatar) {
       const result = await cloudinary.uploader.upload(file.path, {
         folder: `${process.env.CLOUDINARY_UPLOAD_FOLDER}`,
