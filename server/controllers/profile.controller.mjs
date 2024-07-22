@@ -107,6 +107,7 @@ export const deleteUserById = async (req, res) => {
   const { userId } = req.params;
   try {
     const { auth_id } = await deleteUser(userId);
+    console.log(auth_id);
     const { data, error } = await supabase.auth.admin.deleteUser(auth_id);
     // delete user from database
     // delete avatars from cloudinary
