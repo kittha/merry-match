@@ -24,7 +24,10 @@ export const getUserProfileById = async (req, res) => {
       bio,
     } = await getProfile(userId);
     const resultAvatars = await getAvatars(userId);
-    const avatars = resultAvatars.map((avatar) => avatar.url);
+    const avatars = resultAvatars.map((avatar) => ({
+      url: avatar.url,
+    }));
+    console.log(avatars);
 
     const data = {
       username,
@@ -53,8 +56,13 @@ export const getUserProfileById = async (req, res) => {
 export const updateUserProfileById = async (req, res) => {
   const { userId } = req.params;
   try {
-    console.log(req.body.avatar);
-    const avatarUrl = req.body.avatar.map((avatar) => JSON.parse(avatar));
+    // console.log(req.body.avatar);
+    let avatarUrl = req.body.avatar;
+    if (Array.isArray(avatarUrl)) {
+      avatarUrl = req.body.avatar.map((avatar) => JSON.parse(avatar));
+    } else {
+      avatarUrl = [avatarUrl];
+    }
 
     await updateUser(userId, req.body);
     await updateProfile(userId, req.body);
@@ -65,24 +73,27 @@ export const updateUserProfileById = async (req, res) => {
     let i = 0;
     let j = 0;
     let avatars = [];
-    for (let k = 1; k <= 5; k++) {
+    for (let k = 0; k < 5; k++) {
       if (avatarUrl[i] && k in avatarUrl[i]) {
         console.log(avatarUrl[i][k]);
         avatars.push(avatarUrl[i][k]);
         i++;
-      } else if (avatarUri[j]) {
+      } else if (avatarUri && avatarUri[j]) {
         console.log(avatarUri[j]);
         avatars.push(avatarUri[j]);
         j++;
       }
     }
+    // console.log(avatars);
 
     // update profile picture in database
     const avatarsResult = await upsertAvatars(userId, avatars);
+
     // delete avatars from cloudinary
     // *still can't delete from cloudinary
-    const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
-    await cloudinaryDestroy(cloudinaryId);
+    // const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
+    // await cloudinaryDestroy(cloudinaryId);
+
     return res.status(200).json({ message: "Updated Successful" });
   } catch (error) {
     console.error("Error in update profile controller:", error);
@@ -95,15 +106,15 @@ export const updateUserProfileById = async (req, res) => {
 export const deleteUserById = async (req, res) => {
   const { userId } = req.params;
   try {
-    // delete avatars from cloudinary
-    const avatarsResult = getAvatars(userId);
-    const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
-    await cloudinaryDestroy(cloudinaryId);
-    // delete user from supabase auth
-    const { auth_id } = getUser(userId);
+    const { auth_id } = await deleteUser(userId);
     const { data, error } = await supabase.auth.admin.deleteUser(auth_id);
     // delete user from database
-    await deleteUser(userId);
+    // delete avatars from cloudinary
+    // *still can't delete from cloudinary
+    // const avatarsResult = getAvatars(userId);
+    // const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
+    // await cloudinaryDestroy(cloudinaryId);
+    // delete user from supabase auth
   } catch (error) {
     console.error("Error in delete profile controller:", error);
     res.status(500).json({

@@ -57,6 +57,8 @@ export const FormProvider = ({ children }) => {
   };
 
   const deleteAvatar = (avatarKey) => {
+    const newAvatar = { ...formData[avatarKey] };
+    delete newAvatar[avatarKey];
     setFormData((prevFormData) => ({
       ...prevFormData,
       avatars: {
@@ -223,12 +225,25 @@ export const FormProvider = ({ children }) => {
       for (let i = 0; i < formData.hobbies.length; i++) {
         sentFormData.append("hobbies[]", formData.hobbies[i]);
       }
+
       for (let avatarKey in formData.avatars) {
-        sentFormData.append("avatar", formData.avatars[avatarKey]);
+        let avatar = formData.avatars[avatarKey];
+        // console.log(avatar);
+        if (avatar instanceof File) {
+          sentFormData.append("avatar", avatar);
+        } else if (avatar) {
+          // console.log({ [avatarKey]: avatar });
+          sentFormData.append(
+            "avatar",
+            JSON.stringify({ [avatarKey]: avatar })
+          );
+        }
       }
 
       // for (const pair of sentFormData.entries()) {
-      //   console.log(pair);
+      //   if (pair[0] === "avatar") {
+      //     console.log(pair[1]);
+      //   }
       // }
       console.log(state.user);
 

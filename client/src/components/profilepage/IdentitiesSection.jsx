@@ -201,7 +201,7 @@ function IdentitiesSection() {
             onChange={(event) => {
               const text = event.target.value;
               if (text.length <= 150) {
-                setBio(text);
+                handleChange("bio", text);
               }
             }}
           >
