@@ -78,7 +78,8 @@ export const updateUser = async (userId, data) => {
 export const deleteUser = async (userId) => {
   try {
     const result = await connectionPool.query(
-      `DELETE FROM users WHERE user_id = $1`,
+      `DELETE FROM users WHERE user_id = $1
+      RETURNING *`,
       [userId]
     );
 
