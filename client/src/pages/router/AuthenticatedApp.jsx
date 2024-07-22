@@ -11,6 +11,7 @@ import PackageEditAndViewPage from "../admin/PackageEditAndViewPage";
 import PackageListPage from "../admin/PackageListPage";
 import PackageAddPage from "../admin/PackageAddPage";
 import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
+import FilterContainer from "../../components/matchingpage/Filter-area/FilterContainer";
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -31,6 +32,7 @@ const AuthenticatedApp = () => {
         <Route path="/package" element={<MerryPackage />} />
         <Route path="*" element={<HomePageAuthen />} />
         <Route path="/matchingArea" element={<MatchingArea />} />
+        <Route path="/filter" element={<FilterContainer />} />
 
         {role === "Admin" && (
           <>
