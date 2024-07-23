@@ -2,6 +2,7 @@ import MockLeftSidebarComponent from "./matching-area-subcomponents/MockLeftSide
 import MockRightSidebarComponent from "./matching-area-subcomponents/MockRightSidebarComponent";
 import CarouselComponent from "./matching-area-subcomponents/CarouselComponent";
 import MerryLimitToday from "./matching-area-subcomponents/MerryLimitToday";
+import MerryOrNotButtonComponent from "./matching-area-subcomponents/MerryOrNotButtonComponent";
 
 const db = [
   {
@@ -33,6 +34,7 @@ const MatchingArea = () => {
       <MockLeftSidebarComponent />
       <MockRightSidebarComponent />
       <CarouselComponent db={db} />
+      <MerryOrNotButtonComponent />
       <MerryLimitToday merryLimit={merryLimit} />
     </div>
   );
