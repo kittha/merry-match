@@ -17,7 +17,10 @@ const PaymentForm = () => {
   const [expCard, setExpCard] = useState("");
   const [cvcCard, setCVCCard] = useState("");
   const [nameCard, setNameCard] = useState("");
-  const [textAlert, setTextAlert] = useState("");
+  const [cardNumberError, setCardNumberError] = useState("");
+  const [expCardError, setExpCardError] = useState("");
+  const [cvcCardError, setCVCError] = useState("");
+  const [nameCardError, setNameCardError] = useState("");
 
   const package_id = selectedPackage?.package_id;
   const package_name = selectedPackage?.name;
@@ -26,11 +29,40 @@ const PaymentForm = () => {
 
   const handleConfirm = async (event) => {
     event.preventDefault();
+    //reset errors
+    setCardNumberError("");
+    setExpCardError("");
+    setCVCError("");
+    setNameCardError("");
 
-    if (!cardNumber || !expCard || !cvcCard || !nameCard) {
-      setTextAlert("All fields are required.");
-      return;
+    let isValid = true;
+
+    if (cardNumber.replace(/\s+/g, "").length !== 16) {
+      setCardNumberError("Card number must be 16 digits.");
+      isValid = false;
     }
+
+    if (!cardNumber) {
+      setCardNumberError("Card number is required.");
+      isValid = false;
+    }
+
+    if (!expCard) {
+      setExpCardError("Expiry date is required.");
+      isValid = false;
+    }
+
+    if (!cvcCard) {
+      setCVCError("CVC is required.");
+      isValid = false;
+    }
+
+    if (!nameCard) {
+      setNameCardError("Card owner is required.");
+      isValid = false;
+    }
+
+    if (!isValid) return;
 
     const stripe = window.Stripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -46,7 +78,6 @@ const PaymentForm = () => {
         id: "pm_card_visa",
       },
     };
-    console.log("Sending data:", paymentData);
 
     try {
       const { data } = await axios.post(
@@ -58,23 +89,40 @@ const PaymentForm = () => {
         throw new Error("Missing client_secret from backend response.");
       }
 
-      const result = await stripe.confirmCardPayment(data.client_secret, {
-        payment_method: {
-          card: {
-            number: cardNumber.replace(/\s+/g, ""),
-            exp_month: expCard.split("/")[0],
-            exp_year: expCard.split("/")[1],
-            cvc: cvcCard,
-          },
-          billing_details: {
-            name: nameCard,
-          },
-        },
-      });
+      // Retrieve PaymentIntent to check its status
+      const paymentIntent = data.paymentIntent;
 
-      if (result.error) {
-        setTextAlert(result.error.message);
-      } else if (result.paymentIntent.status === "succeeded") {
+      if (paymentIntent && paymentIntent.status === "succeeded") {
+        navigate("/payment-success", {
+          state: {
+            packageId: package_id,
+            packageName: package_name,
+          },
+        });
+        return;
+      }
+
+      // Confirm the payment if not already completed
+      const confirmResult = await stripe.confirmCardPayment(
+        data.client_secret,
+        {
+          payment_method: {
+            card: {
+              number: cardNumber.replace(/\s+/g, ""),
+              exp_month: expCard.split("/")[0],
+              exp_year: expCard.split("/")[1],
+              cvc: cvcCard,
+            },
+            billing_details: {
+              name: nameCard,
+            },
+          },
+        }
+      );
+
+      if (confirmResult.error) {
+        setTextAlert(confirmResult.error.message);
+      } else if (confirmResult.paymentIntent.status === "succeeded") {
         navigate("/payment-success", {
           state: {
             packageId: package_id,
@@ -92,6 +140,7 @@ const PaymentForm = () => {
     if (numberInput.length <= 16) {
       setCardNumber(numberInput.replace(/(\d{4})/g, "$1 ").trim());
     }
+    setCardNumberError("");
   };
 
   const handleExpCard = (event) => {
@@ -100,12 +149,13 @@ const PaymentForm = () => {
       const month = input.substring(0, 2);
       const year = input.substring(2, 4);
       if (parseInt(month) > 12) {
-        setTextAlert("Expiry month can only be 12 or less.");
+        setExpCardError("Expiry month can only be 12 or less.");
       } else {
-        setTextAlert("");
+        setExpCardError("");
         setExpCard(`${month}/${year}`);
       }
     }
+    setExpCardError("");
   };
 
   const handleCVCCard = (event) => {
@@ -113,10 +163,12 @@ const PaymentForm = () => {
     if (input.length <= 3) {
       setCVCCard(input);
     }
+    setCVCError("");
   };
 
   const handleNameCard = (event) => {
     setNameCard(event.target.value);
+    setNameCardError("");
   };
 
   return (
@@ -176,7 +228,7 @@ const PaymentForm = () => {
                 <img src={MasterCard} alt="MasterCard" />
               </div>
             </header>
-            <div className="h-[372px] px-[16px] py-[24px] lg:px-[24px] lg:py-[32px] font-[400px]">
+            <div className=" px-[16px] py-[24px] lg:px-[24px] lg:py-[32px] font-[400px]">
               <form
                 onSubmit={handleConfirm}
                 className="flex flex-col gap-[40px]"
@@ -197,6 +249,9 @@ const PaymentForm = () => {
                     value={cardNumber}
                     required
                   />
+                  {cardNumberError && (
+                    <p className="text-red-500">{cardNumberError}</p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -213,6 +268,9 @@ const PaymentForm = () => {
                     onChange={handleNameCard}
                     value={nameCard}
                   />
+                  {nameCardError && (
+                    <p className="text-red-500">{nameCardError}</p>
+                  )}
                 </div>
                 <div className="flex flex-row gap-4">
                   <div className="w-1/2">
@@ -230,6 +288,9 @@ const PaymentForm = () => {
                       onChange={handleExpCard}
                       value={expCard}
                     />
+                    {expCardError && (
+                      <p className="text-red-500">{expCardError}</p>
+                    )}
                   </div>
                   <div className="w-1/2">
                     <label
@@ -246,9 +307,11 @@ const PaymentForm = () => {
                       onChange={handleCVCCard}
                       value={cvcCard}
                     />
+                    {cvcCardError && (
+                      <p className="text-red-500">{cvcCardError}</p>
+                    )}
                   </div>
                 </div>
-                {textAlert && <p className="text-red-500">{textAlert}</p>}
               </form>
             </div>
             <footer className="items-center px-6 pt-6 pb-8 flex justify-between border-t border-[#D6D9E4]">
