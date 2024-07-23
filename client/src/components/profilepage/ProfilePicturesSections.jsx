@@ -1,22 +1,11 @@
 import plus from "/assets/profilepicture/plus.png";
 import { useContext } from "react";
 import { FormContext } from "../../contexts/FormProvider";
+import { useImage } from "../../hooks/useImage.mjs";
 
 function ProfilePicturesSections() {
-  const {
-    formData,
-    handleAvatarChange,
-    deleteAvatar,
-    handleAvatarSwap,
-    errors,
-  } = useContext(FormContext);
-
-  const handleFileChange = (event, avatarKey) => {
-    const selectedFile = event.target.files[0];
-    console.log(selectedFile);
-    handleAvatarChange(avatarKey, selectedFile);
-    event.target.value = null;
-  };
+  const { formData, errors } = useContext(FormContext);
+  const { checkImage, handleAvatarChange, handleAvatarSwap } = useImage();
 
   const handleDragStart = (event, avatarKey) => {
     event.dataTransfer.setData("avatarKey", avatarKey);
@@ -33,14 +22,6 @@ function ProfilePicturesSections() {
     }
   };
 
-  const checkImage = (image) => {
-    if (image instanceof File) {
-      return URL.createObjectURL(image);
-    } else {
-      return image.url;
-    }
-  };
-
   return (
     <div className="flex flex-col w-full lg:pl-0 lg:pr-0 pl-[16px] pr-[16px] lg:w-[930px]">
       <div className="section-header">
@@ -54,14 +35,7 @@ function ProfilePicturesSections() {
       <div className="picture-list lg:w-auto flex lg:flex-row flex-wrap lg:gap-[22px] gap-[22px] mt-[24px] mx-auto lg:mx-0 w-full">
         {/* {Object.keys(formData.avatars).map((avatarKey) => ( */}
         {[...Array(5).keys()].map((index) => (
-          <div
-            key={index}
-            className="input-container"
-            draggable
-            onDragStart={(event) => handleDragStart(event, index)}
-            onDragOver={handleDragOver}
-            onDrop={(event) => handleDrop(event, index)}
-          >
+          <div key={index} className="input-container">
             {formData.avatars[index] ? (
               <div className="image-preview-container w-[167px] h-[167px] relative">
                 <img
@@ -69,10 +43,14 @@ function ProfilePicturesSections() {
                   className="image-preview w-[167px] h-[167px] rounded-2xl object-cover"
                   src={checkImage(formData.avatars[index])}
                   alt={`Preview ${index}`}
+                  draggable
+                  onDragStart={(event) => handleDragStart(event, index)}
+                  onDragOver={handleDragOver}
+                  onDrop={(event) => handleDrop(event, index)}
                 />
                 <button
                   className="deleteButton w-[24px] h-[24px] bg-[#AF2758] rounded-full text-white flex justify-center items-center absolute top-2 right-2"
-                  onClick={() => deleteAvatar(index)}
+                  onClick={() => handleAvatarChange("delete", index)}
                 >
                   x
                 </button>
@@ -89,7 +67,9 @@ function ProfilePicturesSections() {
               id={`upload-${index}`}
               name="avatar"
               type="file"
-              onChange={(event) => handleFileChange(event, index)}
+              onChange={(event) => {
+                handleAvatarChange("add", index, event.target.files[0]);
+              }}
               hidden
             />
           </div>

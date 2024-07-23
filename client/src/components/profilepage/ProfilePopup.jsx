@@ -7,9 +7,10 @@ import arrowR from "../../../public/assets/profilepicture/arrowR.png";
 import location from "../../../public/assets/profilepicture/location.png";
 import arrowB from "../../../public/assets/profilepicture/arrowB.png";
 import { useState } from "react";
+import { useImage } from "../../hooks/useImage.mjs";
 
 const ProfilePopup = ({ profileData, onClose }) => {
-  console.log(profileData);
+  // console.log(profileData);
   const calculateAge = (birthday) => {
     const birthDate = new Date(birthday);
     const currentDate = new Date();
@@ -25,9 +26,8 @@ const ProfilePopup = ({ profileData, onClose }) => {
 
     return age;
   };
-
+  const { checkImage } = useImage();
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
-
   const handleNextAvatar = () => {
     setCurrentAvatarIndex((prevIndex) =>
       prevIndex === profileData.avatars.length - 1 ? 0 : prevIndex + 1
@@ -64,7 +64,7 @@ const ProfilePopup = ({ profileData, onClose }) => {
                 <>
                   <img
                     className="rounded-2xl hidden lg:block"
-                    src={profileData.avatars[currentAvatarIndex].url}
+                    src={checkImage(profileData.avatars[currentAvatarIndex])}
                     alt="profile"
                   />
                   <img
