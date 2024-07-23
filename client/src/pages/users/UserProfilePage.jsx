@@ -1,6 +1,6 @@
 import "react-datepicker/dist/react-datepicker.css";
 import Footer from "../../components/homepage/Footer";
-import { useProfileData } from "../../components/userprofilepage/useProfileData";
+import { usePopup } from "../../hooks/usePopup.mjs";
 import ProfilePopup from "../../components/profilepage/ProfilePopup";
 import BasicInformationSection from "../../components/profilepage/BasicInformationSection";
 import IdentitiesSection from "../../components/profilepage/IdentitiesSection";
@@ -21,7 +21,7 @@ function UserProfilePage() {
     closeDeleteConfirmation,
     handleDeleteProfile,
     isDeleteConfirmationOpen,
-  } = useProfileData();
+  } = usePopup();
 
   const { formData, setFormData, handleSubmit } = useContext(FormContext);
   const { userId } = useParams();
