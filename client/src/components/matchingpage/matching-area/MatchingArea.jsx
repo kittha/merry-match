@@ -30,7 +30,7 @@ const merryLimit = 20;
 const MatchingArea = () => {
   return (
     // set padding space in top direction to allow gap for navbar
-    <div className="navbar-padding pt-[52px] lg:pt-[88px] ">
+    <div className="navbar-padding pt-[52px] lg:pt-[88px] relative">
       <MockLeftSidebarComponent />
       <MockRightSidebarComponent />
       <CarouselComponent db={db} />

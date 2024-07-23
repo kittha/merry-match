@@ -20,14 +20,14 @@ const CarouselComponent = ({ db }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <Slider {...settings} className="relative">
         {db.map((user) => (
           <div key={user.name} className="px-2 relative">
             <img
               src={user.url}
               alt={user.name}
-              className="rounded-3xl w-[620px]"
+              className="rounded-3xl  w-full lg:w-[620px]"
             />
             <p className="absolute bottom-10 left-10 right-0 text-left text-white font-bold">
               <span>{user.name}</span>&nbsp;&nbsp;<span>{user.age}</span> <br />

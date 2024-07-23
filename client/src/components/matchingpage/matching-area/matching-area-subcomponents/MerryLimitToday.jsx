@@ -1,6 +1,6 @@
 const MerryLimitToday = ({ merryLimit }) => {
   return (
-    <div className="fixed bottom-4 right-4">
+    <div className="lg:fixed lg:bottom-4 lg:right-4">
       <p className="">
         Merry limit today <span>{merryLimit}</span>
       </p>
