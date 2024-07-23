@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import CalendarIcon from "../../../public/assets/registerpage/calendar.png";
 
 function BasicInformationSection() {
-  const { formData, handleChange } = useContext(FormContext);
+  const { formData, handleChange, errors } = useContext(FormContext);
   const [cities, setCities] = useState([]);
   const [selectDate, setSelectDate] = useState(null);
 
@@ -64,6 +64,7 @@ function BasicInformationSection() {
                 handleChange("name", event.target.value);
               }}
             />
+            {errors.name && <div className="error">{errors.name}</div>}
           </div>
 
           <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px] relative">
@@ -91,6 +92,7 @@ function BasicInformationSection() {
               className="h-[24px] w-[24px] absolute top-12 right-4 transform -translate-y-1/2 cursor-pointer"
               onClick={handleIconClick}
             />
+            {errors.birthday && <div className="error">{errors.birthday}</div>}
           </div>
         </div>
 
@@ -121,6 +123,7 @@ function BasicInformationSection() {
                 </option>
               ))}
             </select>
+            {errors.country && <div className="error">{errors.country}</div>}
           </div>
 
           <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
@@ -145,6 +148,7 @@ function BasicInformationSection() {
                 </option>
               ))}
             </select>
+            {errors.city && <div className="error">{errors.city}</div>}
           </div>
         </div>
 
@@ -164,6 +168,7 @@ function BasicInformationSection() {
               onChange={(event) => handleChange("username", event.target.value)}
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
             />
+            {errors.username && <div className="error">{errors.username}</div>}
           </div>
 
           <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px]">
