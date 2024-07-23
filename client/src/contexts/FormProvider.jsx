@@ -5,7 +5,7 @@ import { updateProfile } from "../hooks/connectProfile.mjs";
 export const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-  const [formData, setFormData] = useState({
+  const initialData = {
     name: "",
     birthday: "",
     country: "",
@@ -21,11 +21,16 @@ export const FormProvider = ({ children }) => {
     hobbies: [],
     avatars: [],
     bio: "",
-  });
+  };
+  const [formData, setFormData] = useState(initialData);
 
   const token = localStorage.getItem("token");
   const [errors, setErrors] = useState({});
   const { register, state } = useAuth();
+
+  const resetForm = () => {
+    setFormData(initialData);
+  };
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -216,6 +221,8 @@ export const FormProvider = ({ children }) => {
         console.log("Updated Profile successful");
       } else {
         await register(sentFormData);
+        resetForm();
+        setStep(1);
         console.log("Registration successful");
       }
     } catch (error) {
@@ -229,6 +236,7 @@ export const FormProvider = ({ children }) => {
         formData,
         errors,
         setFormData,
+        resetForm,
         handleChange,
         calculateAge,
         addHobby,

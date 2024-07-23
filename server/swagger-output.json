@@ -7,9 +7,7 @@
   },
   "host": "localhost:4000",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "paths": {
     "/status": {
       "get": {
@@ -91,7 +89,7 @@
         }
       }
     },
-    "/api/v1/admin/": {
+    "/api/v1/admin/package": {
       "post": {
         "description": "",
         "parameters": [
@@ -213,6 +211,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "avatar": {
+                  "example": "any"
+                },
                 "username": {
                   "example": "any"
                 },
@@ -222,7 +223,7 @@
                 "email": {
                   "example": "any"
                 },
-                "date_of_birth": {
+                "birthday": {
                   "example": "any"
                 }
               }
@@ -453,8 +454,8 @@
           "200": {
             "description": "OK"
           },
-          "500": {
-            "description": "Internal Server Error"
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -494,7 +495,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "date_of_birth": {
+                "avatar": {
+                  "example": "any"
+                },
+                "birthday": {
                   "example": "any"
                 },
                 "bio": {

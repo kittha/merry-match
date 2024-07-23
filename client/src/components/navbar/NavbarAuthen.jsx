@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Portal from "./Portal";
 import { useAuth } from "../../contexts/authentication";
+import { FormContext } from "../../contexts/FormProvider";
 import headerMerryMatchLogo from "/assets/header-image/header-merrymatch-logo.svg";
 import iconBell from "/assets/navbar-image/icon_bell.png";
 import iconChat from "/assets/navbar-image/icon_chat.png";
@@ -29,6 +30,7 @@ const NavbarAuthen = () => {
     top: 0,
     left: 0,
   });
+  const { resetForm } = useContext(FormContext);
 
   const handleBellClick = () => {
     setBellMenuOpen(!bellMenuOpen);
@@ -43,6 +45,7 @@ const NavbarAuthen = () => {
   const { logout, state } = useAuth();
 
   const handleLogout = () => {
+    resetForm();
     logout();
     navigate("/");
   };
