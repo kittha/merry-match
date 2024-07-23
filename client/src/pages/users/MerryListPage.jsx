@@ -1,10 +1,7 @@
 import React from "react";
 import { useMerryLimit } from "../../contexts/MerryLimitProvider";
-//import { useState } from "react";
+//import { useState, useEffect } from "react";
 //import axios from "axios";
-//import image from "/assets/complaint-image/image.png";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
@@ -14,23 +11,23 @@ import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
 
 function MerryListPage() {
-  const [merryList, setMerryList] = useState([]);
+  //const [merryList, setMerryList] = useState([]);
 
-  const getMerryList = async () => {
-    try {
-      const showMerryList = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list`
-      );
-      console.log("Hello!!", showMerryList.data.data);
-      setMerryList(showMerryList.data.data);
-    } catch (error) {
-      console.error("Error fetching merry list:", error);
-    }
-  };
+  // const getMerryList = async () => {
+  //   try {
+  //     const showMerryList = await axios.get(
+  //       `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list`
+  //     );
+  //     console.log("Hello!!", showMerryList.data.data);
+  //     setMerryList(showMerryList.data.data);
+  //   } catch (error) {
+  //     console.error("Error fetching merry list:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getMerryList();
-  }, []);
+  // useEffect(() => {
+  //   getMerryList();
+  // }, []);
 
   return (
     <main className="font-Nunito lg:w-full lg:h-auto">
@@ -296,5 +293,4 @@ function MerryListPage() {
     </main>
   );
 }
-
 export default MerryListPage;
