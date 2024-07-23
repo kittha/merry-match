@@ -46,6 +46,7 @@ const PaymentForm = () => {
         id: "pm_card_visa",
       },
     };
+    console.log("Sending data:", paymentData);
 
     try {
       const { data } = await axios.post(
@@ -96,7 +97,14 @@ const PaymentForm = () => {
   const handleExpCard = (event) => {
     let input = event.target.value.replace(/\D/g, "");
     if (input.length <= 4) {
-      setExpCard(input.replace(/(\d{2})/, "$1/"));
+      const month = input.substring(0, 2);
+      const year = input.substring(2, 4);
+      if (parseInt(month) > 12) {
+        setTextAlert("Expiry month can only be 12 or less.");
+      } else {
+        setTextAlert("");
+        setExpCard(`${month}/${year}`);
+      }
     }
   };
 
