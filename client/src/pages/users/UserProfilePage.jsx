@@ -61,7 +61,9 @@ function UserProfilePage() {
                 )}
                 <button
                   className="w-[156px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full font-bold text-base leading-6 text-center text-[#FFFFFF] bg-[#C70039]"
-                  onClick={handleSubmit}
+                  onClick={(event) => {
+                    handleSubmit(event, userId);
+                  }}
                 >
                   Update Profile
                 </button>

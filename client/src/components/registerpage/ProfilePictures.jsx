@@ -1,21 +1,11 @@
 import { useContext } from "react";
 import plus from "../../../public/assets/profilepicture/plus.png";
 import { FormContext } from "../../contexts/FormProvider";
+import { useImage } from "../../hooks/useImage.mjs";
 
 function ProfilePictures() {
-  const {
-    formData,
-    handleAvatarChange,
-    deleteAvatar,
-    handleAvatarSwap,
-    errors,
-  } = useContext(FormContext);
-
-  const handleFileChange = (event, avatarKey) => {
-    const selectedFile = event.target.files[0];
-    handleAvatarChange(avatarKey, selectedFile);
-    event.target.value = null;
-  };
+  const { formData, errors } = useContext(FormContext);
+  const { handleAvatarChange, handleAvatarSwap } = useImage();
 
   const handleDragStart = (event, avatarKey) => {
     event.dataTransfer.setData("avatarKey", avatarKey);
@@ -44,7 +34,7 @@ function ProfilePictures() {
           </p>
         </div>
         <div className="picture-list flex  flex-row flex-wrap gap-2  lg:gap-3  mt-[24px]  lg:justify-start">
-          {Object.keys(formData.avatars).map((avatarKey) => (
+          {[...Array(5).keys()].map((avatarKey) => (
             <div
               key={avatarKey}
               className="input-container"
@@ -63,7 +53,7 @@ function ProfilePictures() {
                   />
                   <button
                     className="deleteButton w-[24px] h-[24px] bg-[#AF2758] rounded-full text-white flex justify-center items-center absolute top-2 right-2"
-                    onClick={() => deleteAvatar(avatarKey)}
+                    onClick={() => handleAvatarChange("delete", avatarKey)}
                   >
                     x
                   </button>
@@ -80,7 +70,9 @@ function ProfilePictures() {
                 id={`upload-${avatarKey}`}
                 name="avatar"
                 type="file"
-                onChange={(event) => handleFileChange(event, avatarKey)}
+                onChange={(event) =>
+                  handleAvatarChange("add", avatarKey, event.target.files[0])
+                }
                 hidden
               />
             </div>

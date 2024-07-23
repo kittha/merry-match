@@ -6,28 +6,17 @@ import arrowL from "../../../public/assets/profilepicture/arrowL.png";
 import arrowR from "../../../public/assets/profilepicture/arrowR.png";
 import location from "../../../public/assets/profilepicture/location.png";
 import arrowB from "../../../public/assets/profilepicture/arrowB.png";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useImage } from "../../hooks/useImage.mjs";
+import { FormContext } from "../../contexts/FormProvider";
 
 const ProfilePopup = ({ profileData, onClose }) => {
   // console.log(profileData);
-  const calculateAge = (birthday) => {
-    const birthDate = new Date(birthday);
-    const currentDate = new Date();
-    let age = currentDate.getFullYear() - birthDate.getFullYear();
-    const monthDiff = currentDate.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-
-    return age;
-  };
+  const { calculateAge } = useContext(FormContext);
   const { checkImage } = useImage();
+
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
+
   const handleNextAvatar = () => {
     setCurrentAvatarIndex((prevIndex) =>
       prevIndex === profileData.avatars.length - 1 ? 0 : prevIndex + 1
