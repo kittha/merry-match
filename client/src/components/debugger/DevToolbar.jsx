@@ -41,6 +41,9 @@ const DevToolbar = () => {
     <div style={floatLeftStyle}>
       <ul style={toolbarStyle}>
         <li style={buttonStyle}>
+          <Link style={buttonStyle} to="/matching">
+            MatchingPage |
+          </Link>
           <Link style={buttonStyle} to="/matchingArea">
             MatchingArea |
           </Link>

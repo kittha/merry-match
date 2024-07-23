@@ -32,9 +32,9 @@ const MatchingArea = () => {
   return (
     // set padding space in top direction to allow gap for navbar
     <div className="navbar-padding pt-[52px] lg:pt-[88px] relative">
-      <MockLeftSidebarComponent />
+      {/* <MockLeftSidebarComponent /> */}
       <MockRightSidebarComponent />
-      <BackgroundComponent />
+      <ColorFilterComponent />
       <CarouselComponent db={db} />
       <MerryLimitToday merryLimit={merryLimit} />
       <BackgroundComponent />
