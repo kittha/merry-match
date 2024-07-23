@@ -57,18 +57,31 @@ export const getPackageById = async (packageId) => {
  * @param {array} details - Additional details of the package
  * @returns {object} - The newly create package object contain many key:value pairs
  */
-export const createPackage = async (name, price, merry_limit, details) => {
+export const createPackage = async (
+  name,
+  price,
+  merry_limit,
+  details,
+  avatarUri
+) => {
   try {
     await connectionPool.query("BEGIN");
     console.log("Init insert to db");
 
     const result = await connectionPool.query(
       `
-      INSERT INTO packages (name, price, merry_limit, details)
-      VALUES ($1, $2, $3, $4)
-      RETURNING name, price, merry_limit, details
+      INSERT INTO packages (name, price, merry_limit, details, cloudinary_id, url)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING name, price, merry_limit, details, cloudinary_id, url
         `,
-      [name, price, merry_limit, details]
+      [
+        name,
+        price,
+        merry_limit,
+        details,
+        avatarUri[0].publicId,
+        avatarUri[0].url,
+      ]
     );
     console.log("finished insert to db");
     await connectionPool.query("COMMIT");
@@ -87,18 +100,30 @@ export const createPackage = async (name, price, merry_limit, details) => {
  * @param {object} packageDetails - The Object that contain many key:value pairs of package details
  * @returns - The Object that contain many of updated key:value pairs of package details
  */
-export const updatePackageById = async (packageId, packageDetails) => {
+export const updatePackageById = async (
+  packageId,
+  packageDetails,
+  avatarUri
+) => {
   try {
     const { name, price, merry_limit, details } = packageDetails;
 
     const result = await connectionPool.query(
       `
         UPDATE packages
-        SET name = $1, price = $2, merry_limit = $3, details = $4
+        SET name = $1, price = $2, merry_limit = $3, details = $4, cloudinary_id = $6, url = $7
         WHERE package_id = $5
         RETURNING *
         `,
-      [name, price, merry_limit, details, packageId]
+      [
+        name,
+        price,
+        merry_limit,
+        details,
+        packageId,
+        avatarUri[0].publicId,
+        avatarUri[0].url,
+      ]
     );
 
     if (result.rows.length === 0) {

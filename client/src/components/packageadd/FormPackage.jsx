@@ -5,7 +5,7 @@ function FormPackage({ packageData, setPackageData, icon, setIcon }) {
   const handleInputChange = (key, value) => {
     setPackageData((prevData) => ({
       ...prevData,
-      [field]: value,
+      [key]: value,
       errors: { ...prevData.errors, [key]: "" },
     }));
   };

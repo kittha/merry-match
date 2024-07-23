@@ -10,6 +10,8 @@ import {
   deletePackageById as deletePackageByIdFromModel,
 } from "../models/package.model.mjs";
 
+import { cloudinaryUpload } from "../utils/cloudinary.uploader.mjs";
+
 export const getAllComplaints = async (req, res) => {
   try {
     const complaints = await getAllComplaintsFromModel();
@@ -52,12 +54,13 @@ export const updateComplaintStatus = async (req, res) => {
 export const createPackage = async (req, res) => {
   try {
     const { name, price, merry_limit, details } = req.body;
-
+    const avatarUri = await cloudinaryUpload(req.files);
     const result = await createPackageFromModel(
       name,
       Number(price),
       Number(merry_limit),
-      details
+      details,
+      avatarUri
     );
 
     return res.status(200).json({
@@ -79,14 +82,16 @@ export const createPackage = async (req, res) => {
  * @returns
  */
 export const updatePackageById = async (req, res) => {
+  const packageId = req.params.packageId;
   try {
-    const packageId = req.params.packageId;
-
     const packageDetails = req.body;
+
+    const avatarUri = await cloudinaryUpload(req.files);
 
     const updatedPackage = await updatePackageByIdFromModel(
       packageId,
-      packageDetails
+      packageDetails,
+      avatarUri
     );
 
     return res.status(200).json({

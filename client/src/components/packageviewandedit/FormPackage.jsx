@@ -19,6 +19,7 @@ function FormPackage({ packageData, setPackageData }) {
         `http://localhost:4000/api/v1/packages/${param.packageId}`
       );
       const newPackageData = { ...packageData };
+      console.log(newPackageData);
       for (const key in packageData) {
         if (result.data.hasOwnProperty(key)) {
           newPackageData[key] = result.data[key];
@@ -100,7 +101,7 @@ function FormPackage({ packageData, setPackageData }) {
             )}
           </div>
           <div className="flex flex-col gap-[8px]">
-            <UploadIcon />
+            <UploadIcon icon={packageData} setIcon={setPackageData} />
           </div>
           <div className="w-[880px] h-[1px] bg-[#E4E6ED]"></div>
           <div className="w-[880px] h-[30px] font-semibold text-[20px] text-[#646D89]">

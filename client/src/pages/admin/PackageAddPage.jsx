@@ -7,18 +7,12 @@ import Topbar from "../../components/packageadd/Topbar";
 
 function PackageAddPage() {
   const navigate = useNavigate();
-  const image = "image";
   const [icon, setIcon] = useState({});
   const [packageData, setPackageData] = useState({
-    package_id: "",
     name: "",
     price: "",
     merry_limit: "",
     details: [],
-    created_at: "",
-    updated_at: "",
-    cloudinary_id: "",
-    url: "",
     errors: {},
   });
 
@@ -35,17 +29,18 @@ function PackageAddPage() {
   };
 
   const createPackage = async () => {
-    try {
-      const sentAdminData = new FormData();
-      sentAdminData.append("name", packageData.name);
-      sentAdminData.append("price", packageData.price);
-      sentAdminData.append("merry_limit", packageData.merry_limit);
-      sentAdminData.append("avatar", icon[image]);
-      for (let index = 0; index < packageData.details.length; index++) {
-        sentAdminData.append("details[]", packageData.details[index]);
-      }
+    let result;
+    const sentAdminData = new FormData();
+    sentAdminData.append("name", packageData.name);
+    sentAdminData.append("price", packageData.price);
+    sentAdminData.append("merry_limit", packageData.merry_limit);
+    sentAdminData.append("avatar", icon["image"]);
+    for (let index = 0; index < packageData.details.length; index++) {
+      sentAdminData.append("details[]", packageData.details[index]);
+    }
 
-      await axios.post(
+    try {
+      result = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/package`,
         sentAdminData
       );

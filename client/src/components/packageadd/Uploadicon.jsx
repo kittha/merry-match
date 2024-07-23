@@ -30,7 +30,7 @@ function UploadIcon({ icon, setIcon }) {
               <img
                 className="image-preview w-[100px] h-[100px] rounded-2xl"
                 src={URL.createObjectURL(file)}
-                alt={`Preview ${iconKey}`}
+                alt="icon"
               />
               <button
                 className="rounded-full w-[24px] h-[24px] bg-[#AF2758] relative bottom-[105px] left-20 text-white drop-shadow-RedButton"

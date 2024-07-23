@@ -93,8 +93,8 @@ function MainContent() {
             <div className="w-[80px] h-[88px] flex items-center">
               <img
                 className="w-[32px] h-[32px] ml-[16px]"
-                src="./src/assets/delete.svg"
-                alt="dummy"
+                src={`${items.url}`}
+                alt={`icon ${index}`}
               />
             </div>
             <div className="w-[180px] h-[88px] flex items-center">
