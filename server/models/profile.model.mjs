@@ -10,7 +10,6 @@ export const createProfile = async (userId, data) => {
     racialPreference,
     meetingInterest,
     hobbies,
-    bio,
   } = data;
   const currentDateTime = new Date();
   try {
@@ -26,10 +25,9 @@ export const createProfile = async (userId, data) => {
         racial_preferences, 
         meeting_interests,
         hobbies, 
-        bio, 
         created_at, 
         updated_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $12)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $11)
       RETURNING profile_id`,
       [
         userId,
@@ -42,7 +40,6 @@ export const createProfile = async (userId, data) => {
         racialPreference,
         meetingInterest,
         hobbies,
-        bio,
         currentDateTime,
       ]
     );
