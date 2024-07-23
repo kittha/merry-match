@@ -52,7 +52,6 @@ export const getUser = async (id) => {
       `SELECT * FROM users WHERE email = $1 OR user_id::text = $1`,
       [id]
     );
-
     return result.rows[0];
   } catch (error) {
     console.error("Error in user model: ", error);
@@ -79,7 +78,8 @@ export const updateUser = async (userId, data) => {
 export const deleteUser = async (userId) => {
   try {
     const result = await connectionPool.query(
-      `DELETE FROM users WHERE user_id = $1`,
+      `DELETE FROM users WHERE user_id = $1
+      RETURNING *`,
       [userId]
     );
 

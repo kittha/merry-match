@@ -112,6 +112,9 @@
                 },
                 "details": {
                   "example": "any"
+                },
+                "packageDetails": {
+                  "example": "any"
                 }
               }
             }
@@ -156,6 +159,9 @@
                   "example": "any"
                 },
                 "details": {
+                  "example": "any"
+                },
+                "packageDetails": {
                   "example": "any"
                 }
               }
@@ -297,6 +303,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "userId": {
+                  "example": "any"
+                },
                 "issue": {
                   "example": "any"
                 },
@@ -405,6 +414,48 @@
           "200": {
             "description": "OK"
           },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/payment/checkout": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "packageId": {
+                  "example": "any"
+                },
+                "card": {
+                  "example": "any"
+                }
+              }
+            }
+
+        "description": "",
+        "parameters": [
+          {
+            "name": "packageId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+
           "500": {
             "description": "Internal Server Error"
           }

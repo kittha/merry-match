@@ -2,15 +2,14 @@ import connectionPool from "../configs/db.mjs";
 export const createProfile = async (userId, data) => {
   const {
     name,
-    date_of_birth,
-    location,
+    birthday,
+    country,
     city,
-    sexual_identities,
-    sexual_preferences,
-    racial_preferences,
-    meeting_interests,
+    sexualIdentity,
+    sexualPreference,
+    racialPreference,
+    meetingInterest,
     hobbies,
-    bio,
   } = data;
   const currentDateTime = new Date();
   try {
@@ -26,24 +25,21 @@ export const createProfile = async (userId, data) => {
         racial_preferences, 
         meeting_interests,
         hobbies, 
-        bio, 
         created_at, 
         updated_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $11)
       RETURNING profile_id`,
       [
         userId,
         name,
-        date_of_birth,
-        location,
+        birthday,
+        country,
         city,
-        sexual_identities,
-        sexual_preferences,
-        racial_preferences,
-        meeting_interests,
+        sexualIdentity,
+        sexualPreference,
+        racialPreference,
+        meetingInterest,
         hobbies,
-        bio,
-        currentDateTime,
         currentDateTime,
       ]
     );
@@ -68,19 +64,19 @@ export const getProfile = async (userId) => {
 export const updateProfile = async (userId, data) => {
   const {
     name,
-    date_of_birth,
-    location,
+    birthday,
+    country,
     city,
-    sexual_identities,
-    sexual_preferences,
-    racial_preferences,
-    meeting_interests,
+    sexualIdentity,
+    sexualPreference,
+    racialPreference,
+    meetingInterest,
     hobbies,
     bio,
   } = data;
   const currentDateTime = new Date();
   try {
-    await connectionPool.query(
+    const result = await connectionPool.query(
       `UPDATE profiles SET 
           name = $2, 
           date_of_birth = $3, 
@@ -90,7 +86,7 @@ export const updateProfile = async (userId, data) => {
           sexual_preferences = $7, 
           racial_preferences = $8, 
           meeting_interests = $9,
-          hobbies = $10
+          hobbies = $10,
           bio = $11, 
           updated_at = $12
         WHERE user_id = $1
@@ -98,13 +94,13 @@ export const updateProfile = async (userId, data) => {
       [
         userId,
         name,
-        date_of_birth,
-        location,
+        birthday,
+        country,
         city,
-        sexual_identities,
-        sexual_preferences,
-        racial_preferences,
-        meeting_interests,
+        sexualIdentity,
+        sexualPreference,
+        racialPreference,
+        meetingInterest,
         hobbies,
         bio,
         currentDateTime,

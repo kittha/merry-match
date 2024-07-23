@@ -9,9 +9,12 @@ import fs from "fs/promises";
  * @returns
  */
 export const cloudinaryUpload = async (files) => {
+  // console.log(files.avatar);
+  if (!files.avatar) {
+    return null;
+  }
   try {
     const fileUris = [];
-
     for (let file of files.avatar) {
       const result = await cloudinary.uploader.upload(file.path, {
         folder: `${process.env.CLOUDINARY_UPLOAD_FOLDER}`,
@@ -33,6 +36,7 @@ export const cloudinaryUpload = async (files) => {
 export const cloudinaryDestroy = async (publicIds) => {
   try {
     for (let publicId of publicIds) {
+      console.log(publicId);
       const result = await cloudinary.uploader.destroy(publicId);
       console.log(result);
     }

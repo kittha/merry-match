@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 import { useAuth } from "./authentication";
+import { updateProfile } from "../hooks/connectProfile.mjs";
 
 export const FormContext = createContext();
 
@@ -18,17 +19,13 @@ export const FormProvider = ({ children }) => {
     racialPreference: "",
     meetingInterest: "",
     hobbies: [],
-    avatars: {
-      image1: null,
-      image2: null,
-      image3: null,
-      image4: null,
-      image5: null,
-    },
+    avatars: [],
+    bio: "",
   });
 
+  const token = localStorage.getItem("token");
   const [errors, setErrors] = useState({});
-  const { register } = useAuth();
+  const { register, state } = useAuth();
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -42,34 +39,6 @@ export const FormProvider = ({ children }) => {
     const newHobbies = [...formData.hobbies];
     newHobbies.splice(index, 1);
     setFormData({ ...formData, hobbies: newHobbies });
-  };
-
-  const handleAvatarChange = (avatarKey, file) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      avatars: {
-        ...prevFormData.avatars,
-        [avatarKey]: file,
-      },
-    }));
-  };
-
-  const deleteAvatar = (avatarKey) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      avatars: {
-        ...prevFormData.avatars,
-        [avatarKey]: null,
-      },
-    }));
-  };
-
-  const handleAvatarSwap = (sourceAvatarKey, targetAvatarKey) => {
-    const updatedAvatars = { ...formData.avatars };
-    const temp = updatedAvatars[targetAvatarKey];
-    updatedAvatars[targetAvatarKey] = updatedAvatars[sourceAvatarKey];
-    updatedAvatars[sourceAvatarKey] = temp;
-    setFormData({ ...formData, avatars: updatedAvatars });
   };
 
   const calculateAge = (birthday) => {
@@ -112,11 +81,14 @@ export const FormProvider = ({ children }) => {
     if (!email) newErrors.email = "Email is required";
     if (email && !emailRegex.test(email))
       newErrors.email = "Email must be valid";
-    if (!password) newErrors.password = "Password is required";
-    if (password && password.length < 8)
-      newErrors.password = "Password must be at least 8 characters";
-    if (password !== confirmPassword)
-      newErrors.confirmPassword = "Passwords must match";
+    if (!token) {
+      // console.log(token);
+      if (!password) newErrors.password = "Password is required";
+      if (password && password.length < 8)
+        newErrors.password = "Password must be at least 8 characters";
+      if (password !== confirmPassword)
+        newErrors.confirmPassword = "Passwords must match";
+    }
     if (calculateAge(birthday) < 18)
       newErrors.birthday = "You must be at least 18 years old";
 
@@ -192,41 +164,60 @@ export const FormProvider = ({ children }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, userId) => {
     e.preventDefault();
 
-    if (!validatePage3()) {
+    if (!validatePage1() || !validatePage2() || !validatePage3()) {
       return true;
     }
 
     console.log("Form Data Submitted: ", formData);
 
+    const sentFormData = new FormData();
+
+    sentFormData.append("name", formData.name);
+    sentFormData.append("birthday", formData.birthday);
+    sentFormData.append("country", formData.country);
+    sentFormData.append("city", formData.city);
+    sentFormData.append("username", formData.username);
+    sentFormData.append("email", formData.email);
+    sentFormData.append("password", formData.password);
+    sentFormData.append("confirmPassword", formData.confirmPassword);
+    sentFormData.append("sexualIdentity", formData.sexualIdentity);
+    sentFormData.append("sexualPreference", formData.sexualPreference);
+    sentFormData.append("racialPreference", formData.racialPreference);
+    sentFormData.append("meetingInterest", formData.meetingInterest);
+    sentFormData.append("bio", formData.bio);
+
+    for (let i = 0; i < formData.hobbies.length; i++) {
+      sentFormData.append("hobbies[]", formData.hobbies[i]);
+    }
+
+    for (let avatarKey in formData.avatars) {
+      let avatar = formData.avatars[avatarKey];
+      // console.log(avatar);
+      if (avatar instanceof File) {
+        sentFormData.append("avatar", avatar);
+      } else if (avatar) {
+        // console.log({ [avatarKey]: avatar });
+        sentFormData.append("avatar", JSON.stringify({ [avatarKey]: avatar }));
+      }
+    }
+
+    // for (const pair of sentFormData.entries()) {
+    //   if (pair[0] === "avatar") {
+    //     console.log(pair[1]);
+    //   }
+    // }
+
     try {
-      const sentFormData = new FormData();
-
-      sentFormData.append("name", formData.name);
-      sentFormData.append("date_of_birth", formData.birthday);
-      sentFormData.append("location", formData.country);
-      sentFormData.append("city", formData.city);
-      sentFormData.append("username", formData.username);
-      sentFormData.append("email", formData.email);
-      sentFormData.append("password", formData.password);
-      sentFormData.append("confirmPassword", formData.confirmPassword);
-      sentFormData.append("sexual_identities", formData.sexualIdentity);
-      sentFormData.append("sexual_preferences", formData.sexualPreference);
-      sentFormData.append("racial_preferences", formData.racialPreference);
-      sentFormData.append("meeting_interests", formData.meetingInterest);
-
-      for (let i = 0; i < formData.hobbies.length; i++) {
-        sentFormData.append("hobbies[]", formData.hobbies[i]);
+      if (userId) {
+        await updateProfile(userId, sentFormData);
+        console.log("Updated Profile successful");
+      } else {
+        await register(sentFormData);
+        console.log("Registration successful");
       }
-      for (let avatarKey in formData.avatars) {
-        sentFormData.append("avatar", formData.avatars[avatarKey]);
-      }
-      console.log(sentFormData);
-
-      await register(sentFormData);
-      console.log("Registration successful");
     } catch (error) {
       console.error("Registration failed:", error);
     }
@@ -237,12 +228,11 @@ export const FormProvider = ({ children }) => {
       value={{
         formData,
         errors,
+        setFormData,
         handleChange,
+        calculateAge,
         addHobby,
         deleteHobby,
-        handleAvatarChange,
-        deleteAvatar,
-        handleAvatarSwap,
         handleSubmit,
         handleBack,
         handleNext,
