@@ -19,13 +19,13 @@ export const FormProvider = ({ children }) => {
     racialPreference: "",
     meetingInterest: "",
     hobbies: [],
-    avatars: {
-      image1: null,
-      image2: null,
-      image3: null,
-      image4: null,
-      image5: null,
-    },
+    avatars: [
+      { image1: null },
+      { image2: null },
+      { image3: null },
+      { image4: null },
+      { image5: null },
+    ],
     bio: "",
   });
 
