@@ -20,7 +20,7 @@ const CarouselComponent = ({ db }) => {
   };
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-0">
       <Slider {...settings} className="relative">
         {db.map((user) => (
           <div key={user.name} className="px-2 relative">
