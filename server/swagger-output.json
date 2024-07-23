@@ -7,9 +7,7 @@
   },
   "host": "localhost:4000",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "paths": {
     "/status": {
       "get": {
@@ -91,7 +89,7 @@
         }
       }
     },
-    "/api/v1/admin/": {
+    "/api/v1/admin/package": {
       "post": {
         "description": "",
         "parameters": [
@@ -213,6 +211,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "avatar": {
+                  "example": "any"
+                },
                 "username": {
                   "example": "any"
                 },
@@ -222,7 +223,7 @@
                 "email": {
                   "example": "any"
                 },
-                "date_of_birth": {
+                "birthday": {
                   "example": "any"
                 }
               }
@@ -438,15 +439,6 @@
                 }
               }
             }
-
-        "description": "",
-        "parameters": [
-          {
-            "name": "packageId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-
           }
         ],
         "responses": {
@@ -455,9 +447,6 @@
           },
           "400": {
             "description": "Bad Request"
-
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -497,7 +486,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "date_of_birth": {
+                "avatar": {
+                  "example": "any"
+                },
+                "birthday": {
                   "example": "any"
                 },
                 "bio": {

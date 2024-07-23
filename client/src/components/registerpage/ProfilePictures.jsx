@@ -35,14 +35,7 @@ function ProfilePictures() {
         </div>
         <div className="picture-list flex  flex-row flex-wrap gap-2  lg:gap-3  mt-[24px]  lg:justify-start">
           {[...Array(5).keys()].map((avatarKey) => (
-            <div
-              key={avatarKey}
-              className="input-container"
-              draggable
-              onDragStart={(event) => handleDragStart(event, avatarKey)}
-              onDragOver={handleDragOver}
-              onDrop={(event) => handleDrop(event, avatarKey)}
-            >
+            <div key={avatarKey} className="input-container">
               {formData.avatars[avatarKey] ? (
                 <div className="image-preview-container w-[167px] h-[167px] relative">
                   <img
@@ -50,6 +43,10 @@ function ProfilePictures() {
                     className="image-preview w-[167px] h-[167px] rounded-2xl object-cover"
                     src={URL.createObjectURL(formData.avatars[avatarKey])}
                     alt={`Preview ${avatarKey}`}
+                    draggable
+                    onDragStart={(event) => handleDragStart(event, avatarKey)}
+                    onDragOver={handleDragOver}
+                    onDrop={(event) => handleDrop(event, avatarKey)}
                   />
                   <button
                     className="deleteButton w-[24px] h-[24px] bg-[#AF2758] rounded-full text-white flex justify-center items-center absolute top-2 right-2"
