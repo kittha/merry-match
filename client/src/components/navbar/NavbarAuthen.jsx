@@ -65,7 +65,7 @@ const NavbarAuthen = () => {
   }, [profileMenuOpen]);
 
   return (
-    <nav className="Navbar text-[#64001D] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-20 overflow-auto flex items-center justify-between w-full lg:h-[88px] h-[52px] font-bold shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.12)]">
+    <nav className="Navbar text-[#64001D] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-20 overflow-auto flex items-center justify-between w-full lg:h-[88px] h-[52px] font-bold shadow-md">
       <div className="flex items-center justify-between w-full lg:w-[1440px] mx-auto px-4 lg:px-0">
         <button onClick={() => navigate("/")}>
           <img
