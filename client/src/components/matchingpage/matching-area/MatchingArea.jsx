@@ -2,7 +2,8 @@ import MockLeftSidebarComponent from "./matching-area-subcomponents/MockLeftSide
 import MockRightSidebarComponent from "./matching-area-subcomponents/MockRightSidebarComponent";
 import CarouselComponent from "./matching-area-subcomponents/CarouselComponent";
 import MerryLimitToday from "./matching-area-subcomponents/MerryLimitToday";
-import MerryOrNotButtonComponent from "./matching-area-subcomponents/MerryOrNotButtonComponent";
+import ColorFilterComponent from "./matching-area-subcomponents/ColorFilterComponent.jsx";
+import BackgroundComponent from "./matching-area-subcomponents/BackgroundComponent.jsx";
 
 const db = [
   {
@@ -33,9 +34,10 @@ const MatchingArea = () => {
     <div className="navbar-padding pt-[52px] lg:pt-[88px] relative">
       <MockLeftSidebarComponent />
       <MockRightSidebarComponent />
+      <BackgroundComponent />
       <CarouselComponent db={db} />
-      <MerryOrNotButtonComponent />
       <MerryLimitToday merryLimit={merryLimit} />
+      <BackgroundComponent />
     </div>
   );
 };

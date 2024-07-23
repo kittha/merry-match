@@ -3,9 +3,10 @@ import HeartButton from "/assets/matchingpage/matching-area/icons/action-button-
 
 function MerryOrNotButtonComponent() {
   return (
-    <div className="flex justify-center bg-red-400">
-      <img src={XButton} />
-      <img src={HeartButton} />
+    // set x & heart BUTTON position: -bottom = up/down; left- = left/right
+    <div className="absolute -bottom-10 left-[47%] transform -translate-x-1/2 z-50 flex ">
+      <img src={XButton} alt="X Button" className="w-20 h-20" />
+      <img src={HeartButton} alt="Heart Button" className="w-20 h-20" />
     </div>
   );
 }

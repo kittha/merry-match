@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <AuthProvider>
         <FormProvider>
-          <DevToolbar />
+          {/* <DevToolbar /> */}
           <App />
         </FormProvider>
       </AuthProvider>
