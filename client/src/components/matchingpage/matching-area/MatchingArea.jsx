@@ -1,7 +1,7 @@
-import MockLeftSidebarComponent from "./MockLeftSidebarComponent";
-import MockRightSidebarComponent from "./MockRightSidebarComponent";
-import CarouselComponent from "./CarouselComponent";
-import MerryLimitToday from "./MerryLimitToday";
+import MockLeftSidebarComponent from "./matching-area-subcomponents/MockLeftSidebarComponent";
+import MockRightSidebarComponent from "./matching-area-subcomponents/MockRightSidebarComponent";
+import CarouselComponent from "./matching-area-subcomponents/CarouselComponent";
+import MerryLimitToday from "./matching-area-subcomponents/MerryLimitToday";
 
 const db = [
   {
@@ -24,23 +24,18 @@ const db = [
   },
 ];
 
+const merryLimit = 20;
+
 const MatchingArea = () => {
   return (
+    // set padding space in top direction to allow gap for navbar
     <div className="navbar-padding pt-[52px] lg:pt-[88px] ">
       <MockLeftSidebarComponent />
       <MockRightSidebarComponent />
       <CarouselComponent db={db} />
-      <MerryLimitToday />
+      <MerryLimitToday merryLimit={merryLimit} />
     </div>
   );
 };
 
 export default MatchingArea;
-
-{
-  db.map((item) => (
-    <div key={item.name} className="px-2 relative">
-      <img src={item.url} alt={item.name} className="rounded-3xl w-full" />
-    </div>
-  ));
-}
