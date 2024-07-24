@@ -41,43 +41,46 @@ const DevToolbar = () => {
     <div style={floatLeftStyle}>
       <ul style={toolbarStyle}>
         <li style={buttonStyle}>
+          <Link style={buttonStyle} to="/matching">
+            MatchingPage |
+          </Link>
           <Link style={buttonStyle} to="/matchingArea">
-            MatchingArea
+            MatchingArea |
           </Link>
           <Link style={buttonStyle} to="/">
-            HomePageAuthen
+            HomePageAuthen |
           </Link>
           <Link style={buttonStyle} to={`/user-profile/${userId}`}>
-            UserProfilePage(mem)
+            UserProfilePage(mem) |
           </Link>
 
           <br />
           <Link style={buttonStyle} to="/membership">
-            MembershipPage
+            MembershipPage |
           </Link>
 
           <Link style={buttonStyle} to="/package">
-            MerryPackage
+            MerryPackage |
           </Link>
 
           <br />
 
           <Link style={buttonStyle} to="/payment">
-            PaymentFormPage
+            PaymentFormPage |
           </Link>
           <Link style={buttonStyle} to="/payment/success">
-            PaymentSuccessPage
+            PaymentSuccessPage |
           </Link>
           <br />
           <Link style={buttonStyle} to="*">
-            404 redirect
+            404 redirect |
           </Link>
           <Link style={buttonStyle} to="/login">
-            loginBug
+            loginBug |
           </Link>
           <br />
           <Link style={buttonStyle} to="/register">
-            registerBug
+            registerBug |
           </Link>
           {isAuthenticated ? (
             <p style={{ backgroundColor: "green" }}>isLogin</p>

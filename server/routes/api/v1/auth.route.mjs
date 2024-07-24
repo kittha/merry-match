@@ -25,7 +25,6 @@ const router = express.Router();
 router.post(
   "/register",
   [
-    avatarUpload,
     validatePicture,
     validateSignUpInput,
     ageValidator,

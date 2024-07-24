@@ -7,7 +7,7 @@ export const createComplaint = async (userId, issue, description) => {
         INSERT INTO complaints (created_by, issue, description, status)
         VALUES ($1, $2, $3, $4)
       `,
-      [userId, issue, description, "pending"]
+      [userId, issue, description, "new"]
     );
     return { message: "Complaint created successfully." };
   } catch (error) {

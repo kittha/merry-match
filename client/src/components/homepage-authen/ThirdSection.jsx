@@ -16,7 +16,7 @@ export function ThirdSection() {
           <button
             className="z-10 w-[163px] h-[48px] rounded-full p-[12px] [24px] bg-[#FFE1EA] text-[#95002B] text-[16px] leading-[24px] text-center font font-bold relative lg:top-[120px] lg:left-[0px] top-[170px] mx-auto sm:top-[180px] sm:left-[20px] lg:hover:scale-105 lg:hover:bg-pink-300 lg:duration-300"
             onClick={() => {
-              navigate("/login");
+              navigate("/matching");
               setIsOpen(false);
             }}
           >

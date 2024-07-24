@@ -1,7 +1,10 @@
-import MockLeftSidebarComponent from "./MockLeftSidebarComponent";
-import MockRightSidebarComponent from "./MockRightSidebarComponent";
-import CarouselComponent from "./CarouselComponent";
-import MerryLimitToday from "./MerryLimitToday";
+import MockLeftSidebarComponent from "./matching-area-subcomponents/MockLeftSidebarComponent";
+import MockRightSidebarComponent from "./matching-area-subcomponents/MockRightSidebarComponent";
+import CarouselComponent from "./matching-area-subcomponents/CarouselComponent";
+import MerryLimitToday from "./matching-area-subcomponents/MerryLimitToday";
+import ColorFilterComponent from "./matching-area-subcomponents/ColorFilterComponent.jsx";
+import BackgroundComponent from "./matching-area-subcomponents/BackgroundComponent.jsx";
+
 
 const db = [
   {
@@ -24,23 +27,21 @@ const db = [
   },
 ];
 
+
+const merryLimit = 20;
+
 const MatchingArea = () => {
   return (
-    <div className="navbar-padding pt-[52px] lg:pt-[88px] ">
-      <MockLeftSidebarComponent />
-      <MockRightSidebarComponent />
+    // set padding space in top direction to allow gap for navbar
+    <div className="navbar-padding pt-[52px] lg:pt-[88px] relative w-screen h-screen">
+      {/* <MockLeftSidebarComponent /> */}
+      {/* <ColorFilterComponent /> */}
       <CarouselComponent db={db} />
-      <MerryLimitToday />
+      {/* <MerryLimitToday merryLimit={merryLimit} /> */}
+      <BackgroundComponent />
+
     </div>
   );
 };
 
 export default MatchingArea;
-
-{
-  db.map((item) => (
-    <div key={item.name} className="px-2 relative">
-      <img src={item.url} alt={item.name} className="rounded-3xl w-full" />
-    </div>
-  ));
-}
