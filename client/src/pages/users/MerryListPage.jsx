@@ -1,7 +1,7 @@
 import React from "react";
 import { useMerryLimit } from "../../contexts/MerryLimitProvider";
-//import { useState, useEffect } from "react";
-//import axios from "axios";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
