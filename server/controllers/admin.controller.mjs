@@ -83,11 +83,14 @@ export const createPackage = async (req, res) => {
  */
 export const updatePackageById = async (req, res) => {
   const packageId = req.params.packageId;
+  let avatarUri;
   try {
     const packageDetails = req.body;
-
-    const avatarUri = await cloudinaryUpload(req.files);
-
+    if (!req.body.avatar) {
+      avatarUri = await cloudinaryUpload(req.files);
+    } else {
+      avatarUri = [{ url: req.body.avatar, publicId: req.body.id }];
+    }
     const updatedPackage = await updatePackageByIdFromModel(
       packageId,
       packageDetails,

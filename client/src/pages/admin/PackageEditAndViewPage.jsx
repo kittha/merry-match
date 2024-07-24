@@ -38,6 +38,7 @@ function PackageEditAndViewPage() {
     sentAdminData.append("price", packageData.price);
     sentAdminData.append("merry_limit", packageData.merry_limit);
     sentAdminData.append("avatar", packageData.url);
+    sentAdminData.append("id", packageData.cloudinary_id);
     for (let index = 0; index < packageData.details.length; index++) {
       sentAdminData.append("details[]", packageData.details[index]);
     }

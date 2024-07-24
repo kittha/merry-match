@@ -19,7 +19,7 @@ function FormPackage({ packageData, setPackageData }) {
         `http://localhost:4000/api/v1/packages/${param.packageId}`
       );
       const newPackageData = { ...packageData };
-      console.log(newPackageData);
+
       for (const key in packageData) {
         if (result.data.hasOwnProperty(key)) {
           newPackageData[key] = result.data[key];

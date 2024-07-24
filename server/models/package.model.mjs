@@ -11,7 +11,7 @@ export const getAllPackages = async (req) => {
     const result = await connectionPool.query(
       `
         SELECT *
-        FROM packages
+        FROM packages WHERE is_deleted = FALSE
         `
     );
 
@@ -105,13 +105,14 @@ export const updatePackageById = async (
   packageDetails,
   avatarUri
 ) => {
+  const currentDateTime = new Date();
   try {
     const { name, price, merry_limit, details } = packageDetails;
 
     const result = await connectionPool.query(
       `
         UPDATE packages
-        SET name = $1, price = $2, merry_limit = $3, details = $4, cloudinary_id = $6, url = $7
+        SET name = $1, price = $2, merry_limit = $3, details = $4, cloudinary_id = $6, url = $7, updated_at = $8
         WHERE package_id = $5
         RETURNING *
         `,
@@ -123,6 +124,7 @@ export const updatePackageById = async (
         packageId,
         avatarUri[0].publicId,
         avatarUri[0].url,
+        currentDateTime,
       ]
     );
 
@@ -145,15 +147,15 @@ export const updatePackageById = async (
  * @returns - The response object, the important "key" is rowCount and rows[] ,used to send response back to the client.
  */
 export const deletePackageById = async (packageId) => {
+  const currentDateTime = new Date();
   try {
     const deleteResult = await connectionPool.query(
       `
-      DELETE
-      FROM packages
+      UPDATE packages SET is_deleted = TRUE, updated_at = $2, deleted_at = $2 
       WHERE package_id = $1
       RETURNING *
       `,
-      [packageId]
+      [packageId, currentDateTime]
     );
     // console.log(deleteResult);
 
