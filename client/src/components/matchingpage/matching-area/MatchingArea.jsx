@@ -5,6 +5,7 @@ import MerryLimitToday from "./matching-area-subcomponents/MerryLimitToday";
 import ColorFilterComponent from "./matching-area-subcomponents/ColorFilterComponent.jsx";
 import BackgroundComponent from "./matching-area-subcomponents/BackgroundComponent.jsx";
 
+
 const db = [
   {
     name: "First Item",
@@ -26,6 +27,7 @@ const db = [
   },
 ];
 
+
 const merryLimit = 20;
 
 const MatchingArea = () => {
@@ -37,6 +39,7 @@ const MatchingArea = () => {
       <CarouselComponent db={db} />
       {/* <MerryLimitToday merryLimit={merryLimit} /> */}
       <BackgroundComponent />
+
     </div>
   );
 };
