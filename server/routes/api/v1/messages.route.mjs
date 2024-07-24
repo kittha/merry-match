@@ -14,4 +14,4 @@ router.get("/:matchId", getChatHistory);
 
 // router.delete("/:userId", deleteMessage);
 
-// export default router;
+export default router;
