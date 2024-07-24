@@ -44,30 +44,31 @@ const DevToolbar = () => {
           <Link style={buttonStyle} to="/matching">
             MatchingPage |
           </Link>
+          <br />
           <Link style={buttonStyle} to="/matchingArea">
             MatchingArea |
           </Link>
+          <br />
           <Link style={buttonStyle} to="/">
             HomePageAuthen |
           </Link>
+          <br />
           <Link style={buttonStyle} to={`/user-profile/${userId}`}>
             UserProfilePage(mem) |
           </Link>
-
           <br />
           <Link style={buttonStyle} to="/membership">
             MembershipPage |
           </Link>
-
+          <br />
           <Link style={buttonStyle} to="/package">
             MerryPackage |
           </Link>
-
           <br />
-
           <Link style={buttonStyle} to="/payment">
             PaymentFormPage |
           </Link>
+          <br />
           <Link style={buttonStyle} to="/payment/success">
             PaymentSuccessPage |
           </Link>
@@ -75,6 +76,7 @@ const DevToolbar = () => {
           <Link style={buttonStyle} to="*">
             404 redirect |
           </Link>
+          <br />
           <Link style={buttonStyle} to="/login">
             loginBug |
           </Link>
