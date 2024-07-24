@@ -36,9 +36,9 @@ function AgeRange() {
   };
 
   return (
-    <div className="flex flex-col gap-[13px]">
-      <p>Age Range</p>
-      <div className="flex justify-center">
+    <div className="flex flex-col gap-[13px] lg:w-[188px] lg:h-[122px]">
+      <p className="text-[#2A2E3F] font-bold text-base">Age Range</p>
+      <div className="flex justify-center ">
         <Box sx={{ width: 330, height: 26 }}>
           <AgeSliderStyle
             value={value}
@@ -49,11 +49,12 @@ function AgeRange() {
           />
         </Box>
       </div>
-      <div className="flex h-[48px] justify-center items-center">
+      <div className="flex h-[48px] justify-center items-center ">
         <div className="w-[50%] h-[48px] flex  items-center border-[#CCD0D7] border-[1px] rounded-md">
           <input
             className="h-[24px] w-[100%] ml-[12px] mr-[16px] mt-[12px] mb-[12px] outline-none"
             type="number"
+            max="80"
             min="18"
           />
         </div>
@@ -62,6 +63,7 @@ function AgeRange() {
           <input
             className="h-[24px] w-[100%] ml-[12px] mr-[16px] mt-[12px] mb-[12px] outline-none"
             type="number"
+            min="18"
             max="80"
           />
         </div>
