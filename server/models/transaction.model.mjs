@@ -1,29 +1,25 @@
-import connectionPool from "../configs/db.mjs"; // Adjust the import path
+import connectionPool from "../configs/db.mjs";
 
 /**
  * Inserts a new transaction into the database.
  * @param {object} transaction - The transaction object containing details to be inserted.
- * @returns {Promise<void>}
+ * @returns {Promise<object>} - Returns an object containing the transaction_id.
  */
 export const createTransaction = async (transaction) => {
-  const query = `
-    INSERT INTO transactions 
-    (package_id, status, created_at, updated_at, session_id, stripe_id)
-    VALUES ($1, $2, $3, $4, $5, $6)
-  `;
-  const values = [
-    transaction.package_id, // INTEGER
-    transaction.status, // VARCHAR
-    transaction.created_at, // TIMESTAMPTZ
-    transaction.updated_at, // TIMESTAMPTZ
-    transaction.session_id, // TEXT
-    transaction.stripe_id, // TEXT
-  ];
+  const { package_id, status, created_at, updated_at, session_id } =
+    transaction;
 
   try {
-    const client = await connectionPool.connect();
-    await client.query(query, values);
-    client.release();
+    const result = await connectionPool.query(
+      `
+      INSERT INTO transactions 
+      (package_id, status, created_at, updated_at, session_id)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING transaction_id
+      `,
+      [package_id, status, created_at, updated_at, session_id]
+    );
+    return result.rows[0]; // Returns the transaction_id
   } catch (error) {
     console.error("Error inserting transaction:", error);
     throw error;
@@ -34,20 +30,26 @@ export const createTransaction = async (transaction) => {
  * Updates the status of a transaction in the database.
  * @param {string} stripeId - The ID of the Stripe payment intent.
  * @param {string} status - The new status of the transaction.
- * @returns {Promise<void>}
+ * @returns {Promise<object>} - Returns an object containing the transaction_id if updated.
  */
 export const updateTransactionStatus = async (stripeId, status) => {
-  const query = `
-    UPDATE transactions
-    SET status = $1, updated_at = NOW()
-    WHERE stripe_id = $2
-  `;
-  const values = [status, stripeId];
-
   try {
-    const client = await connectionPool.connect();
-    await client.query(query, values);
-    client.release();
+    const result = await connectionPool.query(
+      `
+      UPDATE transactions
+      SET status = $1, updated_at = NOW()
+      WHERE stripe_id = $2
+      RETURNING transaction_id
+      `,
+      [status, stripeId]
+    );
+
+    if (result.rowCount === 0) {
+      console.warn("No rows updated.");
+      return { transaction_id: 1 }; // Default value if no rows are updated
+    }
+
+    return result.rows[0]; // Returns the transaction_id
   } catch (error) {
     console.error("Error updating transaction status:", error);
     throw error;

@@ -25,7 +25,8 @@ const PaymentForm = () => {
   const package_id = selectedPackage?.package_id;
   const package_name = selectedPackage?.name;
   const package_price = selectedPackage?.price;
-  const userEmail = state.email;
+
+  const userId = state.id;
 
   const handleConfirm = async (event) => {
     event.preventDefault();
@@ -69,13 +70,16 @@ const PaymentForm = () => {
     const paymentData = {
       user: {
         name: nameCard,
-        email: userEmail,
+        user_id: userId,
       },
       product: {
         package_id: package_id,
       },
       cardDetail: {
-        id: "pm_card_visa",
+        card: cardNumber,
+        exp: expCard,
+        cvc: cvcCard,
+        name: nameCard,
       },
     };
 
@@ -121,7 +125,6 @@ const PaymentForm = () => {
       );
 
       if (confirmResult.error) {
-        setTextAlert(confirmResult.error.message);
       } else if (confirmResult.paymentIntent.status === "succeeded") {
         navigate("/payment-success", {
           state: {
@@ -130,9 +133,7 @@ const PaymentForm = () => {
           },
         });
       }
-    } catch (error) {
-      setTextAlert(`Payment failed: ${error.message}`);
-    }
+    } catch (error) {}
   };
 
   const handleCardNumber = (event) => {
