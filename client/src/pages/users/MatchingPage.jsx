@@ -1,14 +1,18 @@
 import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
-import MockRightSidebarComponent from "../../components/matchingpage/matching-area/matching-area-subcomponents/MockRightSidebarComponent";
+import FilterContainer from "../../components/matchingpage/Filter-area/FilterContainer";
 import SwipeCard from "../../components/matchingpage/matching/SwipeCard";
 
 
 function MatchingPage() {
   return (
     <>
+    <div className="flex">
             <ChatContainer />
             <SwipeCard />
-            <MockRightSidebarComponent />
+            <FilterContainer />
+
+    </div>
+            
     </>
   );
 }
