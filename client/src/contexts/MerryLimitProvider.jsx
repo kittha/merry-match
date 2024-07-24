@@ -56,27 +56,27 @@ function MerryLimitProvider(props) {
     fetchData();
   }, [userId]);
 
-  useEffect(() => {
-    const checkAndResetDailyQuota = () => {
-      const now = new Date();
-      const timezoneOffset = now.getTimezoneOffset() * 60000;
-      const utc7 = new Date(now.getTime() + timezoneOffset + 7 * 3600000);
-      const currentDate = utc7.toISOString().split("T")[0]; // format to YYYY-MM-DD
+  // useEffect(() => {
+  //   const checkAndResetDailyQuota = () => {
+  //     const now = new Date();
+  //     const timezoneOffset = now.getTimezoneOffset() * 60000;
+  //     const utc7 = new Date(now.getTime() + timezoneOffset + 7 * 3600000);
+  //     const currentDate = utc7.toISOString().split("T")[0]; // format to YYYY-MM-DD
 
-      const lastResetDate = localStorage.getItem("lastResetDate");
+  //     const lastResetDate = localStorage.getItem("lastResetDate");
 
-      if (lastResetDate !== currentDate) {
-        setAvailableClicksToday(maxDailyQuota); // Reset available clicks
-        localStorage.setItem("lastResetDate", currentDate);
-      }
-    };
+  //     if (lastResetDate !== currentDate) {
+  //       setAvailableClicksToday(maxDailyQuota); // Reset available clicks
+  //       localStorage.setItem("lastResetDate", currentDate);
+  //     }
+  //   };
 
-    checkAndResetDailyQuota();
+  //   checkAndResetDailyQuota();
 
-    const intervalId = setInterval(checkAndResetDailyQuota, 60 * 1000); // Check every minute
+  //   const intervalId = setInterval(checkAndResetDailyQuota, 60 * 1000); // Check every minute
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, [maxDailyQuota]);
+  //   return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  // }, [maxDailyQuota]);
 
   return (
     <MerryLimitContext.Provider

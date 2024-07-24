@@ -1,6 +1,7 @@
 import {
   addMerry as addMerryToModel,
   undoMerry as undoMerryFromModel,
+  getPotentialMatches as getPotentialMatchesFromModel,
 } from "../models/merry.model.mjs";
 
 export const addMerry = async (req, res) => {
@@ -21,5 +22,15 @@ export const undoMerry = async (req, res) => {
     res.status(200).json({ message: "Unmerry user successfully." });
   } catch (error) {
     res.status(500).json({ error: "Failed to unmerry user." });
+  }
+};
+
+export const getMatchListByUserId = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const matches = await getPotentialMatchesFromModel(userId);
+    res.status(200).json(matches);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get match list." });
   }
 };

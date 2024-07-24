@@ -27,6 +27,7 @@ const users = [
   // Add more users as needed
 ];
 
+// import clickQuota, maxDailyQuota from Context API
 const SwipeCard = () => {
   const {
     availableClicksToday,
@@ -56,7 +57,7 @@ const SwipeCard = () => {
           Merry limit today:{" "}
         </p>
         <p className="text-[16px] text-[#FF1659] font-light text-center">
-          0/20
+          {availableClicksToday}/{maxDailyQuota}
         </p>
       </div>
       <div className="relative w-full h-full flex items-center justify-center">
