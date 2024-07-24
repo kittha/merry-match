@@ -39,8 +39,8 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
       `
       SELECT *
       FROM match_status
-      WHERE matched_at::date = $2
-        AND status = 'merry_match'
+      WHERE (matched_at::date = $2 OR created_at::date = $2)
+        AND status IN ('merry', 'merry_match')
         AND user_id_1 = $1;
           `,
       [userId, currentDateTime]
