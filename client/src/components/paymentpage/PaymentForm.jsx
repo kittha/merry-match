@@ -9,6 +9,7 @@ import Bullet from "../../../public/assets/paymentpage/Bullet.png";
 import Footer from "../../components/homepage/Footer";
 import { usePackage } from "../../contexts/PackageProvider";
 import { useAuth } from "../../contexts/authentication";
+
 const PaymentForm = () => {
   const navigate = useNavigate();
   const { selectedPackage } = usePackage();
@@ -21,16 +22,15 @@ const PaymentForm = () => {
   const [expCardError, setExpCardError] = useState("");
   const [cvcCardError, setCVCError] = useState("");
   const [nameCardError, setNameCardError] = useState("");
+  const [loading, setLoading] = useState(false); // State to track loading status
 
   const package_id = selectedPackage?.package_id;
   const package_name = selectedPackage?.name;
-  const package_price = selectedPackage?.price;
-
-  const userId = state.id;
+  const userId = state.user.id;
 
   const handleConfirm = async (event) => {
     event.preventDefault();
-    //reset errors
+    // Reset errors
     setCardNumberError("");
     setExpCardError("");
     setCVCError("");
@@ -65,6 +65,8 @@ const PaymentForm = () => {
 
     if (!isValid) return;
 
+    setLoading(true); // Set loading state to true
+
     const stripe = window.Stripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
     const paymentData = {
@@ -79,7 +81,6 @@ const PaymentForm = () => {
         card: cardNumber,
         exp: expCard,
         cvc: cvcCard,
-        name: nameCard,
       },
     };
 
@@ -125,6 +126,11 @@ const PaymentForm = () => {
       );
 
       if (confirmResult.error) {
+        console.error(
+          "Payment confirmation error:",
+          confirmResult.error.message
+        );
+        setLoading(false); // Reset loading state on error
       } else if (confirmResult.paymentIntent.status === "succeeded") {
         navigate("/payment-success", {
           state: {
@@ -133,7 +139,10 @@ const PaymentForm = () => {
           },
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Payment error:", error);
+      setLoading(false); // Reset loading state on error
+    }
   };
 
   const handleCardNumber = (event) => {
@@ -324,9 +333,12 @@ const PaymentForm = () => {
               </button>
               <button
                 onClick={handleConfirm}
-                className="bg-[#C70039] text-white rounded-full py-[12px] px-[24px] drop-shadow-lg font-[700]"
+                className={`bg-[#C70039] text-white rounded-full py-[12px] px-[24px] drop-shadow-lg font-[700] ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={loading}
               >
-                Payment Confirm
+                {loading ? "Processing..." : "Payment Confirm"}
               </button>
             </footer>
           </div>

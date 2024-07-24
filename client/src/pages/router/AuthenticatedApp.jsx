@@ -31,8 +31,8 @@ const AuthenticatedApp = () => {
         <Route path="/membership" element={<MembershipPage />} />
         <Route path="/complaint" element={<ComplaintPage />} />
         <Route path="/matching" element={<MatchingPage />} />
-        <Route path="/payment" element={<PaymentFormPage />} />
-        <Route path="/payment/success" element={<PaymentSuccessPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/package" element={<MerryPackage />} />
         <Route path="*" element={<HomePageAuthen />} />
 

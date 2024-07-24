@@ -1,8 +1,8 @@
 import Stripe from "stripe";
 import { getPackageById } from "../models/package.model.mjs";
-import { createTransaction } from "../models/transaction.model.mjs"; // Import your insert function
+import { createTransaction } from "../models/transaction.model.mjs";
 import { createPayment } from "../models/payment.model.mjs";
-import { getUser } from "../models/user.model.mjs";
+
 // Initialize Stripe with the secret key from environment variables
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -57,7 +57,8 @@ export const processPayment = async (req, res) => {
     const amountInTHB = parseInt(packageDetails.price, 10) * 100;
 
     // Determine the card type
-    const cardType = getCardType(cardDetail.card.replace(/\s+/g, ""));
+    const cardNumber = cardDetail.card.replace(/\s+/g, ""); // Remove spaces
+    const cardType = getCardType(cardNumber);
     console.log("Card Type:", cardType);
 
     // Map the card type to the predefined card
@@ -84,6 +85,20 @@ export const processPayment = async (req, res) => {
     });
 
     console.log("Payment Intent:", paymentIntent);
+
+    // Extract the last 4 digits of the card number
+    const last4Digits = cardNumber.slice(-4);
+
+    // Save payment details
+    await createPayment({
+      user_id: user.user_id,
+      card_type: cardType,
+      card_number: last4Digits,
+      card_name: user.name,
+      expired_date: cardDetail.exp,
+      created_at: new Date(paymentIntent.created * 1000), // Convert from seconds to milliseconds
+      updated_at: new Date(paymentIntent.created * 1000),
+    });
 
     // Insert transaction into the database
     await createTransaction({
