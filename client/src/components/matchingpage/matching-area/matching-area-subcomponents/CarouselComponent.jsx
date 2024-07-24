@@ -29,7 +29,7 @@ const CarouselComponent = ({ db }) => {
       {
         breakpoint: 768, // For screens smaller than 768px
         settings: {
-          slidesToShow: 1, // Use 1 slide to show
+          slidesToShow: 5, // Use 1 slide to show
           centerPadding: "0%", // Adjust padding if needed
         },
       },

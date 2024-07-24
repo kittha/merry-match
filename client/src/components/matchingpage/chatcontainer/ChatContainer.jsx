@@ -26,6 +26,7 @@ const ChatContainer = () => {
                             <img src={profile} alt="profile" className=" rounded-[24px]"/>
                             <img src={matched} alt="matched" className=" absolute bottom-0.5 right-0.5"/>
                         </button>
+                        
                             
                     </div>
                 </div>
