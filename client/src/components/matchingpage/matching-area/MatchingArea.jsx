@@ -4,6 +4,7 @@ import CarouselComponent from "./matching-area-subcomponents/CarouselComponent";
 import MerryLimitToday from "./matching-area-subcomponents/MerryLimitToday";
 import ColorFilterComponent from "./matching-area-subcomponents/ColorFilterComponent.jsx";
 import BackgroundComponent from "./matching-area-subcomponents/BackgroundComponent.jsx";
+import { useMerryLimit } from "../../../contexts/MerryLimitProvider.jsx";
 
 
 const db = [
@@ -31,15 +32,32 @@ const db = [
 const merryLimit = 20;
 
 const MatchingArea = () => {
+  const {
+    availableClicksToday,
+    setAvailableClicksToday,
+    maxDailyQuota,
+    setmaxDailyQuota,
+  } = useMerryLimit;
   return (
     // set padding space in top direction to allow gap for navbar
     <div className="navbar-padding pt-[52px] lg:pt-[88px] relative w-screen h-screen">
       {/* <MockLeftSidebarComponent /> */}
+<<<<<<< HEAD
       {/* <ColorFilterComponent /> */}
       <CarouselComponent db={db} />
       {/* <MerryLimitToday merryLimit={merryLimit} /> */}
       <BackgroundComponent />
 
+=======
+      <MockRightSidebarComponent />
+      <ColorFilterComponent />
+      {/* <CarouselComponent db={db} /> */}
+      <MerryLimitToday
+        availableClicksToday={availableClicksToday}
+        maxDailyQuota={maxDailyQuota}
+      />
+      {/* <BackgroundComponent /> */}
+>>>>>>> 9bb8018 (wip: implement countAvailableClicksToday module)
     </div>
   );
 };

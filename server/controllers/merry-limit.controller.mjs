@@ -1,6 +1,6 @@
 import {
   getMerryLimit as getMerryLimitFromModel,
-  updateAvailableClicksToday as updateAvailableClicksTodayFromModel,
+  getAvailableClicksTodayByUserId as getAvailableClicksTodayFromModel,
 } from "../models/merry-limit.model.mjs";
 
 export const getMerryLimitByUserId = async (req, res) => {
@@ -20,13 +20,13 @@ export const getMerryLimitByUserId = async (req, res) => {
   }
 };
 
-export const updateAvailableClicksToday = async (req, res) => {
+export const getAvailableClicksTodayByUserId = async (req, res) => {
   const { userId } = req.params;
   if (!userId || isNaN(userId)) {
     return res.status(400).json({ error: "Invalid user ID." });
   }
   try {
-    const availableClicksToday = await updateAvailableClicksTodayFromModel(
+    const availableClicksToday = await getAvailableClicksTodayFromModel(
       Number(userId)
     );
     res.status(200).json({
@@ -38,3 +38,22 @@ export const updateAvailableClicksToday = async (req, res) => {
     res.status(500).json({ error: "Failed to get merry-limit." });
   }
 };
+
+// export const updateAvailableClicksTodayByUserId = async (req, res) => {
+//   const { likingUserId, likedUserId } = req.body;
+//   if (!userId || !likingUserId || isNaN(userId) || isNaN(likedUserId)) {
+//     return res.status(400).json({ error: "Invalid user ID." });
+//   }
+//   try {
+//     const availableClicksToday = await updateAvailableClicksTodayFromModel(
+//       Number(userId)
+//     );
+//     res.status(200).json({
+//       message: "Get todays available click successfully.",
+//       data: availableClicksToday,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching merry-limit:", error);
+//     res.status(500).json({ error: "Failed to get merry-limit." });
+//   }
+// };

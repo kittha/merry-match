@@ -2,13 +2,13 @@ import express from "express";
 import { addMerry, undoMerry } from "../../../controllers/merry.controller.mjs";
 import {
   getMerryLimitByUserId,
-  updateAvailableClicksTodayByUserId,
+  getAvailableClicksTodayByUserId,
 } from "../../../controllers/merry-limit.controller.mjs";
 
 const router = express.Router();
 
 router.get("/merry-limit/:userId", getMerryLimitByUserId);
-router.post("/merry-limit/:userId", updateAvailableClicksTodayByUserId);
+router.get("/available-clicks/:userId", getAvailableClicksTodayByUserId);
 router.post("/addMerry", addMerry);
 router.delete("/undoMerry", undoMerry);
 

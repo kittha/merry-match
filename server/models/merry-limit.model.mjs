@@ -32,8 +32,7 @@ export const getMerryLimit = async (userId) => {
   }
 };
 
-// TODO: update database schema to handle "availableClicksTodayByUserId"
-export const updateAvailableClicksToday = async (userId) => {
+export const getAvailableClicksTodayByUserId = async (userId) => {
   try {
     const result = await connectionPool.query(
       `
@@ -45,7 +44,7 @@ export const updateAvailableClicksToday = async (userId) => {
       throw new Error("No data found for the given userId.");
     }
 
-    const availableClicksToday = result.rows[0].merry_limit;
+    const availableClicksToday = result.rows;
 
     return { availableClicksToday: availableClicksToday };
   } catch (error) {
@@ -53,3 +52,24 @@ export const updateAvailableClicksToday = async (userId) => {
     throw error;
   }
 };
+
+// export const updateAvailableClicksToday = async (userId) => {
+//   try {
+//     const result = await connectionPool.query(
+//       `
+//           `,
+//       [userId]
+//     );
+
+//     if (result.rows.length === 0) {
+//       throw new Error("No data found for the given userId.");
+//     }
+
+//     const availableClicksToday = result.rows[0].merry_limit;
+
+//     return { availableClicksToday: availableClicksToday };
+//   } catch (error) {
+//     console.error("Error fetching packages:", error);
+//     throw error;
+//   }
+// };
