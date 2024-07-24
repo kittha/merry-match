@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -17,6 +17,18 @@ function AuthProvider(props) {
   });
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("data"));
+    // console.log(data);
+    if (data) {
+      setState({
+        ...state,
+        user: data,
+        role: data.role,
+      });
+    }
+  }, []);
+
   // make a login request
   const login = async (data) => {
     try {
@@ -29,12 +41,13 @@ function AuthProvider(props) {
 
       const token = result.data.session.access_token;
       localStorage.setItem("token", token);
+      localStorage.setItem("data", JSON.stringify(result.data));
 
       // const userDataFromToken = jwtDecode(token);
       // console.log(userDataFromToken);
 
       const userDataFromPayload = result.data;
-      console.log(userDataFromPayload);
+      console.log("login", userDataFromPayload);
       setState({
         ...state,
         user: userDataFromPayload,
