@@ -15,8 +15,7 @@ const CarouselComponent = ({ db }) => {
     speed: 500,
     slidesToShow: 1.7, // set images gap
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "15%", // This shows 1/3 of the next and previous images
+    centerPadding: "10%", // This shows 1/3 of the next and previous images
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
@@ -39,8 +38,8 @@ const CarouselComponent = ({ db }) => {
 
   return (
     // set image position: mt = carousel up and down; mx = carousel left and right;
-    <div className="relative w-full h-full mx-36 -my-64 lg:mt-24">
-      <Slider {...settings} className="relative">
+    <div className="relative w-screen mx-0 my-0 lg:mt-24">
+      <Slider {...settings} className=" relative ml-44">
         {/* Carousel Images Swipe Card Module */}
         {db.map((user) => (
           <div key={user.name} className="px-2 relative">
@@ -50,14 +49,14 @@ const CarouselComponent = ({ db }) => {
               alt={user.name}
               // set IMAGE position: left and right
               // className="rounded-3xl w-[620px] sm:mx-[1%] md:mx-[15%] lg:mx-[25%]"
-              className="rounded-3xl w-[90%] h-auto object-cover"
+              className="rounded-3xl w-[620px] h-[620px] object-cover mx-auto"
             />
             {/* eye image; mx = Lt/Rt; my= Up/Down */}
-            <div className="absolute right-5 mx-3 -my-20 sm:mx-[10%] md:mx-[20%] lg:mx-[27%] xl:mx-[35%] 2xl:mx-[40%]">
+            <div className="absolute top-0 right-0 m-5">
               <img src="/assets/matchingpage/matching-area/icons/profile detail button.png" />
             </div>
             {/* set user personal data text position */}
-            <p className="absolute bottom-[5%] left-[5%] sm:right-[70%] md:right-[50%] lg:right-[25%] text-center text-white font-bold">
+            <p className="absolute bottom-10 left-10 text-center text-white font-bold">
               <span>{user.name}</span>&nbsp;&nbsp;<span>{user.age}</span> <br />
               <span>{user.location}</span>
             </p>

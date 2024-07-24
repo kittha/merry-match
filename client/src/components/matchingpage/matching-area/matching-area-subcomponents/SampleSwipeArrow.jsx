@@ -6,19 +6,11 @@ import "./ImageCarousel.css";
 // set ArrowPosition at ./ImageCarousel.css
 
 export function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  
+  const { className, onClick } = props;
   return (
     <div
-      className={`${className} custom-next-arrow`}
-      style={{
-        ...style,
-        display: "block",
-        background: "none",
-        position: "absolute",
-        bottom: "10px",
-        right: "10px",
-        zIndex: 10,
-      }}
+      className={`${className} custom-next-arrow absolute bottom-16 right-[116px]`}
       onClick={onClick}
     >
       <img src={RightArrowIcon} alt="Next" />
@@ -27,19 +19,10 @@ export function SampleNextArrow(props) {
 }
 
 export function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { className, onClick } = props;
   return (
     <div
-      className={`${className} custom-prev-arrow`}
-      style={{
-        ...style,
-        display: "block",
-        background: "none",
-        position: "absolute",
-        bottom: "10px",
-        left: "10px",
-        zIndex: 10,
-      }}
+      className={`${className} custom-prev-arrow absolute bottom-16 right-[156px]`}    
       onClick={onClick}
     >
       <img src={LeftArrowIcon} alt="Prev" />
