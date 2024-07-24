@@ -4,7 +4,8 @@ import {
 } from "../models/merry.model.mjs";
 
 export const addMerry = async (req, res) => {
-  const { likingUserId, likedUserId } = req.body;
+  const likingUserId = req.body.userId;
+  const likedUserId = req.body.merryUserId;
   try {
     await addMerryToModel(likingUserId, likedUserId);
     res.status(200).json({ message: "Merry user successfully." });

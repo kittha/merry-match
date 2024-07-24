@@ -6,7 +6,11 @@ const MerryLimitContext = React.createContext();
 
 function MerryLimitProvider(props) {
   const { state } = useAuth();
-  const userId = state?.id;
+  console.log(state);
+
+  const userId = state?.user;
+  console.log(userId);
+
   const [availableClicksToday, setAvailableClicksToday] = useState(null);
   const [maxDailyQuota, setMaxDailyQuota] = useState(null);
 
@@ -17,14 +21,15 @@ function MerryLimitProvider(props) {
           // const result = await axios.get(
           //   `${
           //     import.meta.env.VITE_BACKEND_URL
-          //   }/api/v1/merry/merry-limit/${userId}`
+          //   }/api/v1/merry/available-clicks/${userId}`
           // );
           const result = await axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/merry-limit/15`
+            `${
+              import.meta.env.VITE_BACKEND_URL
+            }/api/v1/merry/available-clicks/15`
           );
-          const { availableClicksToday, maxDailyQuota } = result.data;
+          const { availableClicksToday } = result.data;
           setAvailableClicksToday(availableClicksToday);
-          setMaxDailyQuota(maxDailyQuota);
         } catch (error) {
           console.error("Error fetching merry-limit data:", error);
         }
@@ -34,24 +39,46 @@ function MerryLimitProvider(props) {
   }, [userId]);
 
   useEffect(() => {
-    const updateAvailableClicksToday = async () => {
-      if (userId !== null && availableClicksToday !== null) {
-        const body = { availableClicksToday };
-
+    const getMaxDailyQuota = async () => {
+      if (userId) {
         try {
-          await axios.post(
-            `${
-              import.meta.env.VITE_BACKEND_URL
-            }/api/v1/merry/merry-limit/${userId}`,
-            body
+          // const result = await axios.get(
+          //   `${
+          //     import.meta.env.VITE_BACKEND_URL
+          //   }/api/v1/merry/merry-limit/${userId}`
+          // );
+          const result = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/merry-limit/15`
           );
+          const { maxDailyQuota } = result.data;
+          getMaxDailyQuota(maxDailyQuota);
         } catch (error) {
-          console.error("Error updating available clicks:", error);
+          console.error("Error fetching merry-limit data:", error);
         }
       }
     };
-    updateAvailableClicksToday();
-  }, [availableClicksToday, userId]);
+    getMaxDailyQuota();
+  }, [userId]);
+
+  // useEffect(() => {
+  //   const updateAvailableClicksToday = async () => {
+  //     if (userId !== null && availableClicksToday !== null) {
+  //       const body = { availableClicksToday };
+
+  //       try {
+  //         await axios.post(
+  //           `${
+  //             import.meta.env.VITE_BACKEND_URL
+  //           }/api/v1/merry/merry-limit/${userId}`,
+  //           body
+  //         );
+  //       } catch (error) {
+  //         console.error("Error updating available clicks:", error);
+  //       }
+  //     }
+  //   };
+  //   updateAvailableClicksToday();
+  // }, [availableClicksToday, userId]);
 
   // 24-hours countdown timer
   useEffect(() => {

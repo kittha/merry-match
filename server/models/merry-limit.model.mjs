@@ -34,17 +34,23 @@ export const getMerryLimit = async (userId) => {
 
 export const getAvailableClicksTodayByUserId = async (userId) => {
   try {
+    const currentDateTime = new Date();
     const result = await connectionPool.query(
       `
+      SELECT *
+      FROM match_status
+      WHERE matched_at::date = $2
+        AND status = 'merry_match'
+        AND user_id_1 = $1;
           `,
-      [userId]
+      [userId, currentDateTime]
     );
 
     if (result.rows.length === 0) {
       throw new Error("No data found for the given userId.");
     }
 
-    const availableClicksToday = result.rows;
+    const availableClicksToday = result.rowCount;
 
     return { availableClicksToday: availableClicksToday };
   } catch (error) {
