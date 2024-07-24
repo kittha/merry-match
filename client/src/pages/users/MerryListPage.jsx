@@ -1,6 +1,6 @@
 import React from "react";
 import { useMerryLimit } from "../../contexts/MerryLimitProvider";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
@@ -9,21 +9,22 @@ import Chaticon from "/assets/merrylist-image/chat.png";
 import Vectoricon from "/assets/merrylist-image/vector.png";
 import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
+import { FormContext } from "../../contexts/FormProvider";
 
 function MerryListPage() {
-  //const [merryList, setMerryList] = useState([]);
-
-  // const getMerryList = async () => {
-  //   try {
-  //     const showMerryList = await axios.get(
-  //       `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list`
-  //     );
-  //     console.log("Hello!!", showMerryList.data.data);
-  //     setMerryList(showMerryList.data.data);
-  //   } catch (error) {
-  //     console.error("Error fetching merry list:", error);
-  //   }
-  // };
+  const [merryList, setMerryList] = useState([]);
+  const { calculateAge } = useContext(FormContext);
+  const getMerryList = async () => {
+    try {
+      const showMerryList = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list`
+      );
+      console.log("Hello!!", showMerryList.data.data);
+      setMerryList(showMerryList.data.data);
+    } catch (error) {
+      console.error("Error fetching merry list:", error);
+    }
+  };
 
   // useEffect(() => {
   //   getMerryList();
@@ -102,7 +103,7 @@ function MerryListPage() {
                 >
                   <article className="w-[674px] h-[107px] flex flex-row gap-[40px] mt-[16px] ml-[16px] mb-[35px]">
                     <img
-                      src="https://pakmud.com/wp-content/uploads/2023/03/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B9%81%E0%B8%A1%E0%B8%A7%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%86-6.jpg"
+                      src={list.url}
                       className="w-[187px] h-[187px] rounded-[24px]"
                       alt="Merry list image"
                     />
@@ -113,7 +114,7 @@ function MerryListPage() {
                             {list.name}
                           </h4>
                           <h4 className="w-[29px] h-[30px] text-[#646D89]">
-                            24
+                            {calculateAge(list.date_of_birth)}
                           </h4>
                         </div>
                         <section className="w-[324px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px]">
@@ -163,16 +164,25 @@ function MerryListPage() {
                       </section>
                     </div>
                     <div className="w-[176px] h-[104px] flex flex-col gap-[24px] items-end">
-                      <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
-                        <img
-                          src={GroupHearticon}
-                          className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
-                          alt="Group heart icon"
-                        />
-                        <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
-                          Merry Match!
-                        </h3>
-                      </section>
+                      {list.status === "Merry Match" ? (
+                        <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
+                          <img
+                            src={GroupHearticon}
+                            className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
+                            alt="Group heart icon"
+                          />
+                          <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
+                            Merry Match!
+                          </h3>
+                        </section>
+                      ) : (
+                        <section className="w-[133px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C8CCDB] pl-[15px] pr-[11px] pt-[4px] pb-[4px]">
+                          <h3 className="w-[101px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
+                            Not Match yet
+                          </h3>
+                        </section>
+                      )}
+
                       <section className="w-[176px] h-[48px] flex flex-row gap-[16px]">
                         <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
                           <img
