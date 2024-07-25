@@ -3,7 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
 
 const DevToolbar = () => {
+
+  const { state } = useAuth();
+
   const { state, isAuthenticated } = useAuth();
+
 
   const userId = state && state.user ? state.user.id : null;
   // console.log("userId= ", userId);
@@ -13,8 +17,12 @@ const DevToolbar = () => {
     float: "left",
     top: "50px",
     left: "15px",
+
+
+
     // backgroundColor: "lightgray",
     backgroundColor: "transparent",
+
     padding: "3px",
     zIndex: 100,
   };
@@ -26,9 +34,11 @@ const DevToolbar = () => {
   };
 
   const toolbarStyle = {
+
     fontSize: "2.5vw",
     // fontSize: "1.3vw",
     color: "red",
+
     maxWidth: "100%",
     flexWrap: "wrap",
   };
@@ -41,6 +51,7 @@ const DevToolbar = () => {
     <div style={floatLeftStyle}>
       <ul style={toolbarStyle}>
         <li style={buttonStyle}>
+
           <Link style={buttonStyle} to="/matching">
             MatchingPage |
           </Link>
@@ -89,6 +100,7 @@ const DevToolbar = () => {
           ) : (
             <p style={{ backgroundColor: "red" }}>notLogin</p>
           )}
+
         </li>
       </ul>
     </div>

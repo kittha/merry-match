@@ -31,29 +31,39 @@ const ChatContainer = () => {
                     </div>
                 </div>
             </div>
+          </div>
         </div>
-        <div className="chatWithMatch flex-1 overflow-auto bg-white px-[15px]">
-            <div className="flex flex-col justify-start w-[343px] lg:w-[282px]">
-                <p className="text-[24px] font-bold text-[#2A2E3F] sticky top-0 z-10 bg-white py-[16px]">Chat with Merry Match</p>
-                <div className="flex flex-col gap-[8px]">
-                    <button 
-                        className=" w-auto h-[92px] rounded-[16px] bg-white border-0 hover:border-[1px] hover:border-[#A62D82] hover:bg-[#F6F7FC] focus:outline-none"
-                        onClick={() => navigate("/")}
-                    >
-                    <div className="flex gap-[12px] mx-[12px] my-[16px]">
-                        <img src={profile} alt="profile" className="h-[60px] w-[60px] rounded-full"/>
-                        <div className="flex flex-col text-left justify-center">
-                            <p className="text-[16px] font-medium text-[#2A2E3F]">Name</p>
-                            <p className="text-[14px] font-medium text-[#646D89] truncate w-[230px] lg:w-[180px]">message It is a long established fact that a reader will be distracted by the readable content</p>
-                        </div>
-                    </div>
-                    </button>
-
+      </div>
+      <div className="chatWithMatch flex-1 overflow-auto bg-white px-[15px]">
+        <div className="flex flex-col justify-start w-[343px] lg:w-[282px]">
+          <p className="text-[24px] font-bold text-[#2A2E3F] sticky top-0 z-10 bg-white py-[16px]">
+            Chat with Merry Match
+          </p>
+          <div className="flex flex-col gap-[8px]">
+            <button
+              className=" w-auto h-[92px] rounded-[16px] bg-white border-0 hover:border-[1px] hover:border-[#A62D82] hover:bg-[#F6F7FC] focus:outline-none"
+              onClick={() => navigate("/")}
+            >
+              <div className="flex gap-[12px] mx-[12px] my-[16px]">
+                <img
+                  src={profile}
+                  alt="profile"
+                  className="h-[60px] w-[60px] rounded-full"
+                />
+                <div className="flex flex-col text-left justify-center">
+                  <p className="text-[16px] font-medium text-[#2A2E3F]">Name</p>
+                  <p className="text-[14px] font-medium text-[#646D89] truncate w-[230px] lg:w-[180px]">
+                    message It is a long established fact that a reader will be
+                    distracted by the readable content
+                  </p>
                 </div>
-            </div>
+              </div>
+            </button>
+          </div>
         </div>
-        </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default ChatContainer
+export default ChatContainer;

@@ -2,7 +2,7 @@ import HomePageAuthen from "../users/HomePageAuthen";
 import NavbarAuthen from "../../components/navbar/NavbarAuthen";
 import { Routes, Route } from "react-router-dom";
 import UserProfilePage from "../users/UserProfilePage";
-import PaymentFormPage from "../users/PaymentFormPage";
+import PaymentPage from "../users/PaymentPage";
 import PaymentSuccessPage from "../users/PaymentSuccessPage";
 import { MembershipPage } from "../users/MembershipPage";
 import MerryPackage from "../users/MerryPackagePage";
@@ -35,8 +35,8 @@ const AuthenticatedApp = () => {
         <Route path="/membership" element={<MembershipPage />} />
         <Route path="/complaint" element={<ComplaintPage />} />
         <Route path="/matching" element={<MatchingPage />} />
-        <Route path="/payment" element={<PaymentFormPage />} />
-        <Route path="/payment/success" element={<PaymentSuccessPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/package" element={<MerryPackage />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="*" element={<HomePageAuthen />} />
