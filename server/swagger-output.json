@@ -5,9 +5,11 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:4000",
+  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/status": {
       "get": {
@@ -294,12 +296,11 @@
         }
       }
     },
-    "/api/v1/profiles/{userId}": {
-      "get": {
+    "/api/v1/complaints/": {
+      "post": {
         "description": "",
         "parameters": [
           {
-"type": "string"
             "name": "body",
             "in": "body",
             "schema": {
@@ -316,6 +317,75 @@
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/merry/available-clicks/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/merry/merry-limit/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/merry/match/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -368,14 +438,35 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userId": {
+                "likingUserId": {
                   "example": "any"
                 },
-                "merryUserId": {
+                "likedUserId": {
                   "example": "any"
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/messages/{matchId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -432,10 +523,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "packageId": {
+                "user": {
                   "example": "any"
                 },
-                "card": {
+                "product": {
+                  "example": "any"
+                },
+                "cardDetail": {
                   "example": "any"
                 }
               }
@@ -448,27 +542,9 @@
           },
           "400": {
             "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/api/v1/packages/{packageId}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
