@@ -36,8 +36,8 @@ export const getAvailableClicksTodayByUserId = async (req, res) => {
       data: availableClicksToday,
     });
   } catch (error) {
-    console.error("Error fetching merry-limit:", error);
-    res.status(500).json({ error: "You doesn't merry any user today yet." });
+    console.error("You doesn't merry any user today yet.", error);
+    res.status(200).json({ message: "You doesn't merry any user today yet." });
   }
 };
 

@@ -10,8 +10,8 @@ function MerryLimitProvider(props) {
   const currentUserJson = localStorage.getItem("data");
   const currentUser = JSON.parse(currentUserJson);
   const userId = currentUser.id;
-  console.log("currentUser: ", currentUser);
-  console.log("userId: ", userId);
+  // console.log("currentUser: ", currentUser);
+  // console.log("userId: ", userId);
 
   const [availableClicksToday, setAvailableClicksToday] = useState(null);
   const [maxDailyQuota, setMaxDailyQuota] = useState(null);
@@ -34,26 +34,21 @@ function MerryLimitProvider(props) {
               ),
             ]);
 
-          console.log(availableClicksResponse.data);
-          console.log(maxDailyQuotaResponse.data);
+          // console.log(availableClicksResponse.data);
+          // console.log(maxDailyQuotaResponse.data);
 
           const availableClicksToday =
             availableClicksResponse.data.data.availableClicksToday;
           const maxDailyQuota = maxDailyQuotaResponse.data.data.merry_limit;
 
-          console.log("Fetched availableClicksToday:", availableClicksToday);
-          console.log("Fetched maxDailyQuota:", maxDailyQuota);
-
-          // localStorage.setItem(
-          //   "availableClicksToday",
-          //   JSON.stringify(availableClicksToday)
-          // );
-          // localStorage.setItem("maxDailyQuota", JSON.stringify(maxDailyQuota));
+          // console.log("Fetched availableClicksToday:", availableClicksToday);
+          // console.log("Fetched maxDailyQuota:", maxDailyQuota);
 
           setAvailableClicksToday(availableClicksToday);
           setMaxDailyQuota(maxDailyQuota);
         } catch (error) {
-          console.error("Error fetching merry-limit data:", error);
+          // console.error("Error fetching merry-limit data:", error);
+          // console.log("User doesn't use any merry quota today");
         }
       }
     };
