@@ -34,7 +34,8 @@ import UserProfilePopup from "./UserProfilePopup";
 
 // import clickQuota, maxDailyQuota from Context API
 const SwipeCard = () => {
-  const { availableClicksToday, maxDailyQuota } = useMerryLimit();
+  const { availableClicksToday, setAvailableClicksToday, maxDailyQuota } =
+    useMerryLimit();
   const currentUserJson = localStorage.getItem("data");
   const currentUser = JSON.parse(currentUserJson);
   const currentUserId = currentUser.id;
@@ -106,10 +107,11 @@ const SwipeCard = () => {
     // console.log("I'm clicked 1");
     // console.log("curUser click addMerry to other userId no: ", userId);
     try {
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/addMerry`,
-        { userId: currentUserId, merryUserId: userId }
-      );
+      // await axios.post(
+      //   `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/addMerry`,
+      //   { userId: currentUserId, merryUserId: userId }
+      // );
+      setAvailableClicksToday(availableClicksToday + 1);
     } catch (error) {
       console.error("Failed to add merry:", error);
     }
@@ -138,8 +140,7 @@ const SwipeCard = () => {
           Merry limit today:{" "}
         </p>
         <p className="text-[16px] text-[#FF1659] font-light text-center">
-          {availableClicksToday ? availableClicksToday : null}/
-          {maxDailyQuota ? maxDailyQuota : null}
+          {availableClicksToday}/{maxDailyQuota}
         </p>
       </div>
       <div className="relative w-full h-full flex items-center justify-center">
