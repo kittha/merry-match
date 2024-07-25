@@ -177,7 +177,7 @@ const SwipeCard = () => {
                       {user.age}
                     </p>
                     <button className="w-[48px]" onClick={() => navigate("/")}>
-                      <img src={ProfileDetail} alt="ProfileDetail" />
+                      <img src={ProfileDetial} alt="ProfileDetial" />
                     </button>
                   </div>
                   <div className="absolute bottom-[46px] right-[24px] z-10">
