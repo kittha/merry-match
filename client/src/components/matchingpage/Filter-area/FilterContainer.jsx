@@ -3,7 +3,7 @@ import CheckBox from "./CheckBox";
 
 function FilterContainer() {
   return (
-    <div className="w-[217px] h-screen right-0 absolute bg-white z-20">
+    <div className="w-[350px] h-screen bg-white z-20 overflow-hidden">
       <div className="w-screen h-[146px] bg-black opacity-50 lg:hidden"></div>
       <div className="w-screen h-[698px] flex flex-col  items-center lg:w-[220px] lg:h-[936px] font-Nunito  lg:pt-[124px] z-20">
         <div className="pt-[12px] relative bottom-[32px] w-full h-[44px] flex rounded-t-[24px] justify-between items-center lg:hidden bg-white">

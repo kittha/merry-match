@@ -124,7 +124,7 @@ const SwipeCard = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center bg-[#160404] w-screen h-screen pl-[98px] pt-[88px] pb-[32px] font-Nunito">
+    <div className="relative flex flex-col items-center justify-center bg-[#160404] w-screen h-screen pt-[88px] font-Nunito overflow-hidden">
       <div className="absolute bottom-[20px] flex gap-2">
         <p className="text-[16px] text-[#646D89] font-light text-center">
           Merry limit today:{" "}
