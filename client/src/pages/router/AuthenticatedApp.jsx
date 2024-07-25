@@ -10,9 +10,13 @@ import { useAuth } from "../../contexts/authentication";
 import PackageEditAndViewPage from "../admin/PackageEditAndViewPage";
 import PackageListPage from "../admin/PackageListPage";
 import PackageAddPage from "../admin/PackageAddPage";
+import FilterContainer from "../../components/matchingpage/Filter-area/FilterContainer";
 import MatchingPage from "../users/MatchingPage";
 import MerryListPage from "../users/MerryListPage";
 import ComplaintPage from "../users/ComplaintPage";
+import Chat from "../../components/matchingpage/chat";
+import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
+
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -34,7 +38,9 @@ const AuthenticatedApp = () => {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/package" element={<MerryPackage />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="*" element={<HomePageAuthen />} />
+        <Route path="/matchingArea" element={<MatchingArea />} />
 
         {role === "Admin" && (
           <>

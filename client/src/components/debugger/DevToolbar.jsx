@@ -3,7 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
 
 const DevToolbar = () => {
+
   const { state } = useAuth();
+
+  const { state, isAuthenticated } = useAuth();
+
 
   const userId = state && state.user ? state.user.id : null;
   // console.log("userId= ", userId);
@@ -13,7 +17,12 @@ const DevToolbar = () => {
     float: "left",
     top: "50px",
     left: "15px",
-    backgroundColor: "lightgray",
+
+
+
+    // backgroundColor: "lightgray",
+    backgroundColor: "transparent",
+
     padding: "3px",
     zIndex: 100,
   };
@@ -25,7 +34,11 @@ const DevToolbar = () => {
   };
 
   const toolbarStyle = {
-    fontSize: "1.3vw",
+
+    fontSize: "2.5vw",
+    // fontSize: "1.3vw",
+    color: "red",
+
     maxWidth: "100%",
     flexWrap: "wrap",
   };
@@ -38,41 +51,56 @@ const DevToolbar = () => {
     <div style={floatLeftStyle}>
       <ul style={toolbarStyle}>
         <li style={buttonStyle}>
-          <Link style={buttonStyle} to="/">
-            HomePageAuthen
-          </Link>
-          <Link style={buttonStyle} to={`/user-profile/${userId}`}>
-            UserProfilePage(mem)
-          </Link>
 
+          <Link style={buttonStyle} to="/matching">
+            MatchingPage |
+          </Link>
+          <br />
+          <Link style={buttonStyle} to="/matchingArea">
+            MatchingArea |
+          </Link>
+          <br />
+          <Link style={buttonStyle} to="/">
+            HomePageAuthen |
+          </Link>
+          <br />
+          <Link style={buttonStyle} to={`/user-profile/${userId}`}>
+            UserProfilePage(mem) |
+          </Link>
           <br />
           <Link style={buttonStyle} to="/membership">
-            MembershipPage
+            MembershipPage |
           </Link>
-
-          <Link style={buttonStyle} to="/package">
-            MerryPackage
-          </Link>
-
           <br />
-
-          <Link style={buttonStyle} to="/payment">
-            PaymentFormPage
+          <Link style={buttonStyle} to="/package">
+            MerryPackage |
           </Link>
+          <br />
+          <Link style={buttonStyle} to="/payment">
+            PaymentFormPage |
+          </Link>
+          <br />
           <Link style={buttonStyle} to="/payment/success">
-            PaymentSuccessPage
+            PaymentSuccessPage |
           </Link>
           <br />
           <Link style={buttonStyle} to="*">
-            404 redirect
+            404 redirect |
           </Link>
+          <br />
           <Link style={buttonStyle} to="/login">
-            loginBug
+            loginBug |
           </Link>
           <br />
           <Link style={buttonStyle} to="/register">
-            registerBug
+            registerBug |
           </Link>
+          {isAuthenticated ? (
+            <p style={{ backgroundColor: "green" }}>isLogin</p>
+          ) : (
+            <p style={{ backgroundColor: "red" }}>notLogin</p>
+          )}
+
         </li>
       </ul>
     </div>
