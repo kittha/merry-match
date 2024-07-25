@@ -29,7 +29,7 @@ export const getMatchListByUserId = async (req, res) => {
   const { userId } = req.params;
   try {
     const matches = await getPotentialMatchesFromModel(userId);
-    res.status(200).json(matches);
+    res.status(200).json({ matches });
   } catch (error) {
     res.status(500).json({ error: "Failed to get match list." });
   }
