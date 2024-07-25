@@ -160,7 +160,7 @@ const SwipeCard = () => {
                 <div
                   className="relative flex justify-between bg-slate-500 w-[620px] h-[620px] px-[210px] pt-[572px] rounded-[32px]"
                   style={{
-                    backgroundImage: `url(${user.image})`,
+                    backgroundImage: `url(${user.avatars.image1})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
@@ -185,7 +185,10 @@ const SwipeCard = () => {
                     <p className="text-[32px] text-[#D6D9E4] font-semibold">
                       {user.age}
                     </p>
-                    <button className="w-[48px]" onClick={() => handleProfileDetailClick(user)}>
+                    <button
+                      className="w-[48px]"
+                      onClick={() => handleProfileDetailClick(user)}
+                    >
                       <img src={ProfileDetial} alt="ProfileDetial" />
                     </button>
                   </div>
@@ -204,7 +207,7 @@ const SwipeCard = () => {
               <div
                 className="left-[700px] top-[248px] transform -translate-y-1/2 w-[500px] h-[500px] rounded-[32px] relative"
                 style={{
-                  backgroundImage: `url(${user.image})`,
+                  backgroundImage: `url(${user.avatars.image1})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -217,7 +220,7 @@ const SwipeCard = () => {
               <div
                 className="right-[700px] top-[248px] transform -translate-y-1/2 w-[500px] h-[500px] rounded-[32px] relative"
                 style={{
-                  backgroundImage: `url(${user.image})`,
+                  backgroundImage: `url(${user.avatars.image1})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
