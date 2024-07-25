@@ -1,12 +1,19 @@
-import React from "react";
 import UnauthenticatedApp from "./pages/router/UnauthenticatedApp";
 import AuthenticatedApp from "./pages/router/AuthenticatedApp";
 import { useAuth } from "./contexts/authentication";
-import PaymentFormPage from "./pages/users/PaymentFormPage";
+
+import { MerryLimitProvider } from "./contexts/MerryLimitProvider";
+
 const App = () => {
   const auth = useAuth();
 
-  return auth.isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
+  return auth.isAuthenticated ? (
+    <MerryLimitProvider>
+      <AuthenticatedApp />
+    </MerryLimitProvider>
+  ) : (
+    <UnauthenticatedApp />
+  );
 };
 
 export default App;
