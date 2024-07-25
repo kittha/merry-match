@@ -13,8 +13,8 @@ function MerryLimitProvider(props) {
   // console.log("currentUser: ", currentUser);
   // console.log("userId: ", userId);
 
-  const [availableClicksToday, setAvailableClicksToday] = useState(20);
-  const [maxDailyQuota, setMaxDailyQuota] = useState(20);
+  const [availableClicksToday, setAvailableClicksToday] = useState(0);
+  const [maxDailyQuota, setMaxDailyQuota] = useState(0);
 
   const fetchData = async () => {
     if (userId) {
