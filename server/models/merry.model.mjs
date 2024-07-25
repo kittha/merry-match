@@ -194,6 +194,7 @@ export const getPotentialMatches = async (userId) => {
           p2.racial_preferences AS matched_racial_preferences,
           p2.meeting_interests AS matched_meeting_interests,
           p2.bio AS matched_bio,
+          pp.url AS profile_picture_url,
           (
               (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
               (CASE WHEN p1.location = p2.location THEN 1 ELSE 0 END) +
@@ -214,6 +215,8 @@ export const getPotentialMatches = async (userId) => {
           FROM unnest(p1.hobbies) AS hobby1
           JOIN unnest(p2.hobbies) AS hobby2 ON hobby1 = hobby2
       ) hobby_matches ON true
+      LEFT JOIN 
+          profile_pictures pp ON p2.user_id = pp.user_id AND pp.sequence = 1
       WHERE 
           p1.user_id = $1
           AND (p1.sexual_preferences ILIKE '%' || p2.sexual_identities || '%'
@@ -246,6 +249,7 @@ export const getPotentialMatches = async (userId) => {
         racial_preferences: row.matched_racial_preferences,
         meeting_interests: row.matched_meeting_interests,
         bio: row.matched_bio,
+        image: row.profile_picture_url, // Include profile picture URL
         match_score: row.match_score,
         index: index, // Assign index
       }))
