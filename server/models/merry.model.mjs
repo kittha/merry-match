@@ -180,13 +180,20 @@ export const undoMerry = async (userId, merryUserId) => {
 
 export const getPotentialMatches = async (userId) => {
   try {
-    // racial_preferences isn't support
     const result = await connectionPool.query(
       `
       SELECT 
           p2.user_id AS matched_user_id, 
           p2.name AS matched_name, 
           p2.hobbies AS matched_hobbies,
+          p2.date_of_birth AS matched_date_of_birth,
+          p2.location AS matched_location,
+          p2.city AS matched_city,
+          p2.sexual_identities AS matched_sexual_identities,
+          p2.sexual_preferences AS matched_sexual_preferences,
+          p2.racial_preferences AS matched_racial_preferences,
+          p2.meeting_interests AS matched_meeting_interests,
+          p2.bio AS matched_bio,
           (
               (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
               (CASE WHEN p1.location = p2.location THEN 1 ELSE 0 END) +
@@ -217,15 +224,37 @@ export const getPotentialMatches = async (userId) => {
       [userId]
     );
 
-    // Aggregate matches into a list
-    const matches = result.rows.map((row) => ({
-      matched_user_id: row.matched_user_id,
-      matched_name: row.matched_name,
-      matched_hobbies: row.matched_hobbies,
-      match_score: row.match_score,
-    }));
+    // Helper function to calculate age from date of birth
+    const calculateAge = (dateOfBirth) => {
+      const dob = new Date(dateOfBirth);
+      const diffMs = Date.now() - dob.getTime();
+      const ageDt = new Date(diffMs);
+      return Math.abs(ageDt.getUTCFullYear() - 1970);
+    };
 
-    return [{ user_id: userId, matches }];
+    // Aggregate matches into a list with age calculation and index assignment
+    const matches = result.rows
+      .map((row, index) => ({
+        user_id: row.matched_user_id,
+        name: row.matched_name,
+        hobbies: row.matched_hobbies,
+        age: calculateAge(row.matched_date_of_birth), // Calculate age
+        location: row.matched_location,
+        city: row.matched_city,
+        sexual_identities: row.matched_sexual_identities,
+        sexual_preferences: row.matched_sexual_preferences,
+        racial_preferences: row.matched_racial_preferences,
+        meeting_interests: row.matched_meeting_interests,
+        bio: row.matched_bio,
+        match_score: row.match_score,
+        index: index, // Assign index
+      }))
+      .sort((a, b) => b.match_score - a.match_score) // Sort by match_score
+      .map((match, index) => ({ ...match, index })); // Re-assign index after sorting
+
+    const payload = { user_id: userId, matches };
+
+    return payload;
   } catch (error) {
     console.error("Error finding matches:", error.message);
     throw error;
