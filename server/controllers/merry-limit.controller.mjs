@@ -5,6 +5,7 @@ import {
 
 export const getMerryLimitByUserId = async (req, res) => {
   const { userId } = req.params;
+
   if (!userId || isNaN(userId)) {
     return res.status(400).json({ error: "Invalid user ID." });
   }
@@ -22,6 +23,7 @@ export const getMerryLimitByUserId = async (req, res) => {
 
 export const getAvailableClicksTodayByUserId = async (req, res) => {
   const { userId } = req.params;
+
   if (!userId || isNaN(userId)) {
     return res.status(400).json({ error: "Invalid user ID." });
   }
@@ -35,7 +37,7 @@ export const getAvailableClicksTodayByUserId = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching merry-limit:", error);
-    res.status(500).json({ error: "Failed to get merry-limit." });
+    res.status(500).json({ error: "You doesn't merry any user today yet." });
   }
 };
 

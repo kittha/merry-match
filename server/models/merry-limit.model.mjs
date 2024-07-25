@@ -35,6 +35,8 @@ export const getMerryLimit = async (userId) => {
 export const getAvailableClicksTodayByUserId = async (userId) => {
   try {
     const currentDateTime = new Date();
+    const currentDate = currentDateTime.toISOString().split("T")[0];
+
     const result = await connectionPool.query(
       `
       SELECT *
@@ -43,11 +45,13 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
         AND status IN ('merry', 'merry_match')
         AND user_id_1 = $1;
           `,
-      [userId, currentDateTime]
+      [userId, currentDate]
     );
 
     if (result.rows.length === 0) {
-      throw new Error("No data found for the given userId.");
+      throw new Error(
+        "No data found for the given userId. User may not user any merry quota yet."
+      );
     }
 
     const availableClicksToday = result.rowCount;
