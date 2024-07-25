@@ -13,11 +13,9 @@ function PackageEditAndViewPage() {
     price: "",
     merry_limit: "",
     details: [],
-    created_at: "",
-    updated_at: "",
+    errors: {},
     cloudinary_id: "",
     url: "",
-    errors: {},
   });
 
   const validateForm = () => {
@@ -26,7 +24,7 @@ function PackageEditAndViewPage() {
       newErrors.packageName = "Package name is required";
     if (!String(packageData.merry_limit).trim())
       newErrors.merryLimit = "Merry limit is required";
-    if (!packageData.price.trim()) newErrors.price = "price is required";
+    if (!packageData.price.trim()) newErrors.price = "Price is required";
     if (!packageData.details.length)
       newErrors.packageDetail = "At least one package detail is required";
     setPackageData({ ...packageData, errors: newErrors });
@@ -34,15 +32,18 @@ function PackageEditAndViewPage() {
   };
 
   const editPackage = async () => {
+    let result;
+    const sentAdminData = new FormData();
+    sentAdminData.append("name", packageData.name);
+    sentAdminData.append("price", packageData.price);
+    sentAdminData.append("merry_limit", packageData.merry_limit);
+    sentAdminData.append("avatar", packageData.url);
+    sentAdminData.append("id", packageData.cloudinary_id);
+    for (let index = 0; index < packageData.details.length; index++) {
+      sentAdminData.append("details[]", packageData.details[index]);
+    }
     try {
-      const sentAdminData = new FormData();
-      sentAdminData.append("name", packageData.name);
-      sentAdminData.append("price", packageData.price);
-      sentAdminData.append("merry_limit", packageData.merry_limit);
-      for (let index = 0; index < packageData.details.length; index++) {
-        sentAdminData.append("details[]", packageData.details[index]);
-      }
-      await axios.put(
+      result = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/${
           packageData.package_id
         }`,

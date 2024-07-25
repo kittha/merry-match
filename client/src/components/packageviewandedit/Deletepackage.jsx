@@ -16,7 +16,7 @@ function DeletePackage(props) {
 
   return props.trigger ? (
     <>
-      <div className="bg-slate-300 w-[100%] h-[100%] fixed flex items-center justify-center bottom-0 left-0 opacity-70 "></div>
+      <div className="bg-black w-[100%] h-[100%] fixed flex items-center justify-center bottom-0 left-0 opacity-50 "></div>
       <div className="w-[528px] h-[200px] font-Nunito fixed z-10 top-1/3 left-1/3 ">
         <div className="w-[528px] h-[56px] bg-white rounded-t-[20px] border-[1px] border-[#E4E6ED] flex justify-between items-center">
           <p className="ml-[24px] font-semibold text-xl">Delete Confirmation</p>

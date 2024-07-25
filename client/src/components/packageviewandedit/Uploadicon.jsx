@@ -1,51 +1,47 @@
 import { useState } from "react";
 
-function UploadIcon() {
-  const [icon, setIcon] = useState({});
-
+function UploadIcon({ icon, setIcon }) {
   const handleFileChange = (event) => {
-    const uniqueId = Date.now();
     setIcon({
       ...icon,
-      [uniqueId]: event.target.files[0],
+      url: event.target.files[0],
     });
     event.target.value = null;
   };
 
-  const handleRemoveImage = (event, iconKey) => {
-    event.preventDefault();
-    const updatedIcons = { ...icon };
-    delete updatedIcons[iconKey];
-    setIcon(updatedIcons);
+  const handleRemoveImage = () => {
+    setIcon((prevData) => ({
+      ...prevData,
+      url: null,
+    }));
   };
 
+  const checkImage = (image) => {
+    if (image instanceof File) {
+      return URL.createObjectURL(image);
+    } else {
+      return image;
+    }
+  };
   return (
     <div className="input-container">
-      {Object.keys(icon).length > 0 ? (
-        Object.keys(icon).map((iconKey) => {
-          const file = icon[iconKey];
-          return (
-            <div
-              key={iconKey}
-              className="image-preview-container w-[100px] h-[132px]"
-            >
-              <p className="text-base font-normal mb-[8px]">
-                Icon <span className="text-[#AF2758]">*</span>
-              </p>
-              <img
-                className="image-preview w-[100px] h-[100px] rounded-2xl"
-                src={URL.createObjectURL(file)}
-                alt={`Preview ${iconKey}`}
-              />
-              <button
-                className="rounded-full w-[24px] h-[24px] bg-[#AF2758] relative bottom-[105px] left-20 text-white drop-shadow-RedButton"
-                onClick={(event) => handleRemoveImage(event, iconKey)}
-              >
-                <p className="relative bottom-[1px]">x</p>
-              </button>
-            </div>
-          );
-        })
+      {icon.url !== null ? (
+        <div className="image-preview-container w-[100px] h-[132px]">
+          <p className="text-base font-normal mb-[8px]">
+            Icon <span className="text-[#AF2758]">*</span>
+          </p>
+          <img
+            className="image-preview w-[100px] h-[100px] rounded-2xl"
+            src={checkImage(icon.url)}
+            alt="icon"
+          />
+          <button
+            className="rounded-full w-[24px] h-[24px] bg-[#AF2758] relative bottom-[105px] left-20 text-white drop-shadow-RedButton"
+            onClick={handleRemoveImage}
+          >
+            <p className="relative bottom-[1px]">x</p>
+          </button>
+        </div>
       ) : (
         <div className="flex flex-col">
           <p className="text-base font-normal mb-[8px]">

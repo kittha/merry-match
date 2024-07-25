@@ -19,6 +19,7 @@ function FormPackage({ packageData, setPackageData }) {
         `http://localhost:4000/api/v1/packages/${param.packageId}`
       );
       const newPackageData = { ...packageData };
+
       for (const key in packageData) {
         if (result.data.hasOwnProperty(key)) {
           newPackageData[key] = result.data[key];
@@ -31,11 +32,11 @@ function FormPackage({ packageData, setPackageData }) {
   };
 
   const handleChange = (key, value) => {
-    setPackageData({ ...packageData, [key]: value });
-  };
-
-  const handleDetailChange = (details) => {
-    setPackageData({ ...packageData, details });
+    setPackageData((prevData) => ({
+      ...prevData,
+      [key]: value,
+      errors: { ...prevData.errors, [key]: "" },
+    }));
   };
 
   return (
@@ -55,12 +56,10 @@ function FormPackage({ packageData, setPackageData }) {
                   value={packageData.name}
                   onChange={(event) => handleChange("name", event.target.value)}
                 />
-                {packageData.errors.packageName && (
-                  <p className="text-red-500">
-                    {packageData.errors.packageName}
-                  </p>
-                )}
               </div>
+              {packageData.errors.packageName && (
+                <p className="text-red-500">{packageData.errors.packageName}</p>
+              )}
             </div>
             <div className="flex flex-col gap-[4px]">
               <label htmlFor="package-name">
@@ -77,12 +76,10 @@ function FormPackage({ packageData, setPackageData }) {
                     handleChange("merry_limit", event.target.value)
                   }
                 />
-                {packageData.errors.merryLimit && (
-                  <p className="text-red-500">
-                    {packageData.errors.merryLimit}
-                  </p>
-                )}
               </div>
+              {packageData.errors.merryLimit && (
+                <p className="text-red-500">{packageData.errors.merryLimit}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-[4px]">
@@ -98,21 +95,22 @@ function FormPackage({ packageData, setPackageData }) {
                 value={packageData.price}
                 onChange={(event) => handleChange("price", event.target.value)}
               />
-              {packageData.errors.price && (
-                <p className="text-red-500">{packageData.errors.price}</p>
-              )}
             </div>
+            {packageData.errors.price && (
+              <p className="text-red-500">{packageData.errors.price}</p>
+            )}
           </div>
           <div className="flex flex-col gap-[8px]">
-            <UploadIcon />
+            <UploadIcon icon={packageData} setIcon={setPackageData} />
           </div>
           <div className="w-[880px] h-[1px] bg-[#E4E6ED]"></div>
           <div className="w-[880px] h-[30px] font-semibold text-[20px] text-[#646D89]">
             Package Detail
           </div>
           <AddDetail
+            packageData={packageData}
+            setPackageData={setPackageData}
             details={packageData.details}
-            onDetailsChange={handleDetailChange}
             errors={packageData.errors.packageDetail}
           />
         </div>
