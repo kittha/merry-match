@@ -10,6 +10,8 @@ function MerryLimitProvider(props) {
   const currentUserJson = localStorage.getItem("data");
   const currentUser = JSON.parse(currentUserJson);
   const userId = currentUser.id;
+  console.log("currentUser: ", currentUser);
+  console.log("userId: ", userId);
 
   const [availableClicksToday, setAvailableClicksToday] = useState(null);
   const [maxDailyQuota, setMaxDailyQuota] = useState(null);
@@ -32,12 +34,15 @@ function MerryLimitProvider(props) {
               ),
             ]);
 
+          console.log(availableClicksResponse.data);
+          console.log(maxDailyQuotaResponse.data);
+
           const availableClicksToday =
             availableClicksResponse.data.data.availableClicksToday;
           const maxDailyQuota = maxDailyQuotaResponse.data.data.merry_limit;
 
-          // console.log("Fetched availableClicksToday:", availableClicksToday);
-          // console.log("Fetched maxDailyQuota:", maxDailyQuota);
+          console.log("Fetched availableClicksToday:", availableClicksToday);
+          console.log("Fetched maxDailyQuota:", maxDailyQuota);
 
           // localStorage.setItem(
           //   "availableClicksToday",

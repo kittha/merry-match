@@ -57,7 +57,8 @@ const SwipeCard = () => {
           Merry limit today:{" "}
         </p>
         <p className="text-[16px] text-[#FF1659] font-light text-center">
-          {availableClicksToday}/{maxDailyQuota}
+          {availableClicksToday ? availableClicksToday : null}/
+          {maxDailyQuota ? maxDailyQuota : null}
         </p>
       </div>
       <div className="relative w-full h-full flex items-center justify-center">
