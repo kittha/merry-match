@@ -8,6 +8,7 @@ import LeftArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-left.p
 import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right.png";
 import { useMerryLimit } from "../../../contexts/MerryLimitProvider";
 import axios from "axios";
+import UserProfilePopup from "./UserProfilePopup";
 
 // const users = [
 //   {
@@ -39,6 +40,8 @@ const SwipeCard = () => {
   const currentUserId = currentUser.id;
   const [userQueue, setUserQueue] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -123,6 +126,11 @@ const SwipeCard = () => {
     });
   };
 
+  const handleProfileDetailClick = (user) => {
+    setSelectedUser(user);
+    setShowModal(true);
+  };
+
   return (
     <div className="relative flex flex-col items-center justify-center bg-[#160404] w-screen h-screen pt-[88px] font-Nunito overflow-hidden">
       <div className="absolute bottom-[20px] flex gap-2">
@@ -176,7 +184,7 @@ const SwipeCard = () => {
                     <p className="text-[32px] text-[#D6D9E4] font-semibold">
                       {user.age}
                     </p>
-                    <button className="w-[48px]" onClick={() => navigate("/")}>
+                    <button className="w-[48px]" onClick={() => handleProfileDetailClick(user)}>
                       <img src={ProfileDetial} alt="ProfileDetial" />
                     </button>
                   </div>
@@ -219,6 +227,12 @@ const SwipeCard = () => {
           </div>
         ))}
       </div>
+      {showModal && (
+        <UserProfilePopup
+          user={selectedUser}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };
