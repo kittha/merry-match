@@ -177,3 +177,57 @@ export const undoMerry = async (userId, merryUserId) => {
     throw error;
   }
 };
+
+export const getPotentialMatches = async (userId) => {
+  try {
+    // racial_preferences isn't support
+    const result = await connectionPool.query(
+      `
+      SELECT 
+          p2.user_id AS matched_user_id, 
+          p2.name AS matched_name, 
+          p2.hobbies AS matched_hobbies,
+          (
+              (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.location = p2.location THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.city = p2.city THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.sexual_identities = p2.sexual_preferences THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.sexual_preferences = p2.sexual_identities THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.racial_preferences = p2.racial_preferences THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.meeting_interests = p2.meeting_interests THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.bio = p2.bio THEN 1 ELSE 0 END) +
+              COALESCE(hobby_match_count, 0)
+          ) AS match_score
+      FROM 
+          profiles p1
+      JOIN 
+          profiles p2 ON p1.user_id != p2.user_id
+      LEFT JOIN LATERAL (
+          SELECT COUNT(*) AS hobby_match_count
+          FROM unnest(p1.hobbies) AS hobby1
+          JOIN unnest(p2.hobbies) AS hobby2 ON hobby1 = hobby2
+      ) hobby_matches ON true
+      WHERE 
+          p1.user_id = $1
+          AND (p1.sexual_preferences ILIKE '%' || p2.sexual_identities || '%'
+              OR p2.sexual_preferences ILIKE '%' || p1.sexual_identities || '%')
+      ORDER BY 
+          match_score DESC;
+      `,
+      [userId]
+    );
+
+    // Aggregate matches into a list
+    const matches = result.rows.map((row) => ({
+      matched_user_id: row.matched_user_id,
+      matched_name: row.matched_name,
+      matched_hobbies: row.matched_hobbies,
+      match_score: row.match_score,
+    }));
+
+    return [{ user_id: userId, matches }];
+  } catch (error) {
+    console.error("Error finding matches:", error.message);
+    throw error;
+  }
+};

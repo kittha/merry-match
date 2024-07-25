@@ -47,7 +47,9 @@ function AuthProvider(props) {
       // console.log(userDataFromToken);
 
       const userDataFromPayload = result.data;
-      console.log("login", userDataFromPayload);
+
+      // console.log("login", userDataFromPayload);
+
       setState({
         ...state,
         user: userDataFromPayload,

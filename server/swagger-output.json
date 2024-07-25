@@ -294,11 +294,12 @@
         }
       }
     },
-    "/api/v1/complaints/": {
-      "post": {
+    "/api/v1/profiles/{userId}": {
+      "get": {
         "description": "",
         "parameters": [
           {
+"type": "string"
             "name": "body",
             "in": "body",
             "schema": {
@@ -318,8 +319,8 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
@@ -439,6 +440,27 @@
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/packages/{packageId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
