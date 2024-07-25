@@ -11,7 +11,7 @@ import { useImage } from "../../../hooks/useImage.mjs";
 import { FormContext } from "../../../contexts/FormProvider";
 
 const ProfileDetailModal = ({ user, onClose }) => {
-   const { calculateAge } = useContext(FormContext);
+  const { calculateAge } = useContext(FormContext);
   const { checkImage } = useImage();
 
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
@@ -120,23 +120,17 @@ const ProfileDetailModal = ({ user, onClose }) => {
 
                 <div className="col2 flex mt-[20px]">
                   <p className="w-[191px]">Sexual preferences</p>
-                  <p className="text-[#646D89]">
-                    {user.sexualPreference}
-                  </p>
+                  <p className="text-[#646D89]">{user.sexualPreference}</p>
                 </div>
 
                 <div className="col3 flex mt-[20px]">
                   <p className="w-[191px]">Racial preferences</p>
-                  <p className="text-[#646D89]">
-                    {user.racialPreference}
-                  </p>
+                  <p className="text-[#646D89]">{user.racialPreference}</p>
                 </div>
 
                 <div className="col4 flex mt-[20px]">
                   <p className="w-[191px]">Meeting interests</p>
-                  <p className="text-[#646D89]">
-                    {user.meetingInterest}
-                  </p>
+                  <p className="text-[#646D89]">{user.meetingInterest}</p>
                 </div>
               </div>
 

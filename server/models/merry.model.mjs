@@ -155,22 +155,22 @@ export const getPotentialMatches = async (userId) => {
           user_id: row.matched_user_id,
           name: row.matched_name,
           hobbies: row.matched_hobbies,
+          birthday: row.matched_date_of_birth,
           age: calculateAge(row.matched_date_of_birth), // Calculate age
-          location: row.matched_location,
+          country: row.matched_location,
           city: row.matched_city,
-          sexual_identities: row.matched_sexual_identities,
-          sexual_preferences: row.matched_sexual_preferences,
-          racial_preferences: row.matched_racial_preferences,
-          meeting_interests: row.matched_meeting_interests,
+          sexualIdentity: row.matched_sexual_identities,
+          sexualPreference: row.matched_sexual_preferences,
+          racialPreference: row.matched_racial_preferences,
+          meetingInterests: row.matched_meeting_interests,
           bio: row.matched_bio,
-          profile_picture_url: {}, // Initialize profile pictures object
+          avatars: {}, // Initialize profile pictures object
           match_score: row.match_score,
         });
       }
       const match = matchesMap.get(row.matched_user_id);
-      if (row.picture_sequence && row.profile_picture_url) {
-        match.profile_picture_url[`image${row.picture_sequence}`] =
-          row.profile_picture_url;
+      if (row.picture_sequence && row.avatars) {
+        match.avatars[`image${row.picture_sequence}`] = row.avatars;
       }
     });
 
