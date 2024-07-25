@@ -169,8 +169,8 @@ export const getPotentialMatches = async (userId) => {
         });
       }
       const match = matchesMap.get(row.matched_user_id);
-      if (row.picture_sequence && row.avatars) {
-        match.avatars[`image${row.picture_sequence}`] = row.avatars;
+      if (row.picture_sequence && row.profile_picture_url) {
+        match.avatars[`image${row.picture_sequence}`] = row.profile_picture_url;
       }
     });
 
