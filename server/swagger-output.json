@@ -299,10 +299,23 @@
         "description": "",
         "parameters": [
           {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
+"type": "string"
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                },
+                "issue": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
