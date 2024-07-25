@@ -34,7 +34,8 @@ import UserProfilePopup from "./UserProfilePopup";
 
 // import clickQuota, maxDailyQuota from Context API
 const SwipeCard = () => {
-  const { availableClicksToday, maxDailyQuota } = useMerryLimit();
+  const { availableClicksToday, setAvailableClicksToday, maxDailyQuota } =
+    useMerryLimit();
   const currentUserJson = localStorage.getItem("data");
   const currentUser = JSON.parse(currentUserJson);
   const currentUserId = currentUser.id;
@@ -106,10 +107,11 @@ const SwipeCard = () => {
     // console.log("I'm clicked 1");
     // console.log("curUser click addMerry to other userId no: ", userId);
     try {
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/addMerry`,
-        { userId: currentUserId, merryUserId: userId }
-      );
+      // await axios.post(
+      //   `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/addMerry`,
+      //   { userId: currentUserId, merryUserId: userId }
+      // );
+      setAvailableClicksToday(availableClicksToday + 1);
     } catch (error) {
       console.error("Failed to add merry:", error);
     }
@@ -138,8 +140,7 @@ const SwipeCard = () => {
           Merry limit today:{" "}
         </p>
         <p className="text-[16px] text-[#FF1659] font-light text-center">
-          {availableClicksToday ? availableClicksToday : null}/
-          {maxDailyQuota ? maxDailyQuota : null}
+          {availableClicksToday}/{maxDailyQuota}
         </p>
       </div>
       <div className="relative w-full h-full flex items-center justify-center">
@@ -159,7 +160,7 @@ const SwipeCard = () => {
                 <div
                   className="relative flex justify-between bg-slate-500 w-[620px] h-[620px] px-[210px] pt-[572px] rounded-[32px]"
                   style={{
-                    backgroundImage: `url(${user.image})`,
+                    backgroundImage: `url(${user.avatars.image1})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
@@ -184,7 +185,10 @@ const SwipeCard = () => {
                     <p className="text-[32px] text-[#D6D9E4] font-semibold">
                       {user.age}
                     </p>
-                    <button className="w-[48px]" onClick={() => handleProfileDetailClick(user)}>
+                    <button
+                      className="w-[48px]"
+                      onClick={() => handleProfileDetailClick(user)}
+                    >
                       <img src={ProfileDetial} alt="ProfileDetial" />
                     </button>
                   </div>
@@ -203,7 +207,7 @@ const SwipeCard = () => {
               <div
                 className="left-[700px] top-[248px] transform -translate-y-1/2 w-[500px] h-[500px] rounded-[32px] relative"
                 style={{
-                  backgroundImage: `url(${user.image})`,
+                  backgroundImage: `url(${user.avatars.image1})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -216,7 +220,7 @@ const SwipeCard = () => {
               <div
                 className="right-[700px] top-[248px] transform -translate-y-1/2 w-[500px] h-[500px] rounded-[32px] relative"
                 style={{
-                  backgroundImage: `url(${user.image})`,
+                  backgroundImage: `url(${user.avatars.image1})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}

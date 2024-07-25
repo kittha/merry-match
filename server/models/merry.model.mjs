@@ -104,6 +104,7 @@ export const getPotentialMatches = async (userId) => {
           p2.racial_preferences AS matched_racial_preferences,
           p2.meeting_interests AS matched_meeting_interests,
           p2.bio AS matched_bio,
+          pp.sequence AS picture_sequence,
           pp.url AS profile_picture_url,
           (
               (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
@@ -126,7 +127,7 @@ export const getPotentialMatches = async (userId) => {
           JOIN unnest(p2.hobbies) AS hobby2 ON hobby1 = hobby2
       ) hobby_matches ON true
       LEFT JOIN 
-          profile_pictures pp ON p2.user_id = pp.user_id AND pp.sequence = 1
+          profile_pictures pp ON p2.user_id = pp.user_id AND pp.sequence BETWEEN 1 AND 5
       WHERE 
           p1.user_id = $1
           AND (p1.sexual_preferences ILIKE '%' || p2.sexual_identities || '%'
@@ -145,25 +146,37 @@ export const getPotentialMatches = async (userId) => {
       return Math.abs(ageDt.getUTCFullYear() - 1970);
     };
 
-    // Aggregate matches into a list with age calculation and index assignment
-    const matches = result.rows
-      .map((row, index) => ({
-        user_id: row.matched_user_id,
-        name: row.matched_name,
-        hobbies: row.matched_hobbies,
-        age: calculateAge(row.matched_date_of_birth), // Calculate age
-        location: row.matched_location,
-        city: row.matched_city,
-        sexual_identities: row.matched_sexual_identities,
-        sexual_preferences: row.matched_sexual_preferences,
-        racial_preferences: row.matched_racial_preferences,
-        meeting_interests: row.matched_meeting_interests,
-        bio: row.matched_bio,
-        image: row.profile_picture_url, // Include profile picture URL
-        match_score: row.match_score,
-        index: index, // Assign index
-      }))
-      .sort((a, b) => b.match_score - a.match_score) // Sort by match_score
+    // Aggregate matches into a list with age calculation, index assignment, and profile pictures formatting
+    const matchesMap = new Map();
+
+    result.rows.forEach((row) => {
+      if (!matchesMap.has(row.matched_user_id)) {
+        matchesMap.set(row.matched_user_id, {
+          user_id: row.matched_user_id,
+          name: row.matched_name,
+          hobbies: row.matched_hobbies,
+          birthday: row.matched_date_of_birth,
+          age: calculateAge(row.matched_date_of_birth), // Calculate age
+          country: row.matched_location,
+          city: row.matched_city,
+          sexualIdentity: row.matched_sexual_identities,
+          sexualPreference: row.matched_sexual_preferences,
+          racialPreference: row.matched_racial_preferences,
+          meetingInterests: row.matched_meeting_interests,
+          bio: row.matched_bio,
+          avatars: {}, // Initialize profile pictures object
+          match_score: row.match_score,
+        });
+      }
+      const match = matchesMap.get(row.matched_user_id);
+      if (row.picture_sequence && row.profile_picture_url) {
+        match.avatars[`image${row.picture_sequence}`] = row.profile_picture_url;
+      }
+    });
+
+    // Convert map to array and sort by match_score
+    const matches = Array.from(matchesMap.values())
+      .sort((a, b) => b.match_score - a.match_score)
       .map((match, index) => ({ ...match, index })); // Re-assign index after sorting
 
     const payload = { user_id: userId, matches };

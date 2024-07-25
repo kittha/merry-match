@@ -55,6 +55,7 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
     }
 
     const availableClicksToday = result.rowCount;
+    console.log(availableClicksToday);
 
     return { availableClicksToday: availableClicksToday };
   } catch (error) {

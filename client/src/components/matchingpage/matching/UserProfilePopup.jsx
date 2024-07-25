@@ -11,20 +11,25 @@ import { useImage } from "../../../hooks/useImage.mjs";
 import { FormContext } from "../../../contexts/FormProvider";
 
 const ProfileDetailModal = ({ user, onClose }) => {
-   const { calculateAge } = useContext(FormContext);
+  const { calculateAge } = useContext(FormContext);
   const { checkImage } = useImage();
+
+  // convert Object user.avatars  to Array of avatar_url value
+  const avatarsArr = Object.values(user.avatars || {});
+  // console.log(avatarsArr);
+  // ['https://upload.wikimedia.org/wikipedia/commons/thu…rfkern_-_Schloss_-_Ansicht_von_Westen_%281%29.jpg', 'https://upload.wikimedia.org/wikipedia/commons/thu…Bread_Mountain.jpg/300px-Sweet_Bread_Mountain.jpg']
 
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
 
   const handleNextAvatar = () => {
     setCurrentAvatarIndex((prevIndex) =>
-      prevIndex === user.image - 1 ? 0 : prevIndex + 1
+      prevIndex === avatarsArr.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const handlePrevAvatar = () => {
     setCurrentAvatarIndex((prevIndex) =>
-      prevIndex === 0 ? user.image.length - 1 : prevIndex - 1
+      prevIndex === 0 ? avatarsArr.length - 1 : prevIndex - 1
     );
   };
 
@@ -48,16 +53,16 @@ const ProfileDetailModal = ({ user, onClose }) => {
         <div className="lg:flex flex-row">
           <div className="lg:Lside lg:w-1/2 flex justify-center relative">
             <div className="lg:w-[400px] lg:h-[400px] rounded-2xl">
-              {/* {user.image.length > 0 && (
+              {avatarsArr.length > 0 && (
                 <>
                   <img
                     className="rounded-2xl hidden lg:block"
-                    src={checkImage(user.avatimagears[currentAvatarIndex])}
+                    src={avatarsArr[currentAvatarIndex]}
                     alt="profile"
                   />
                   <img
                     className="rounded-2xl block lg:hidden"
-                    src={user.image[currentAvatarIndex].url}
+                    src={avatarsArr[currentAvatarIndex].url}
                     alt="profile"
                   />
                   <div className="flex justify-center absolute left-[180px] lg:bottom-32 bottom-5">
@@ -75,7 +80,7 @@ const ProfileDetailModal = ({ user, onClose }) => {
                   <div className="flex justify-between px-8 pt-4">
                     <div className="PhotoCount flex mt-2.5">
                       <p>
-                        {currentAvatarIndex + 1}/{user.image.length}
+                        {currentAvatarIndex + 1}/{avatarsArr.length}
                       </p>
                     </div>
                     <div className="arrowBtn flex">
@@ -88,7 +93,7 @@ const ProfileDetailModal = ({ user, onClose }) => {
                     </div>
                   </div>
                 </>
-              )} */}
+              )}
             </div>
           </div>
 
@@ -120,23 +125,17 @@ const ProfileDetailModal = ({ user, onClose }) => {
 
                 <div className="col2 flex mt-[20px]">
                   <p className="w-[191px]">Sexual preferences</p>
-                  <p className="text-[#646D89]">
-                    {user.sexualPreference}
-                  </p>
+                  <p className="text-[#646D89]">{user.sexualPreference}</p>
                 </div>
 
                 <div className="col3 flex mt-[20px]">
                   <p className="w-[191px]">Racial preferences</p>
-                  <p className="text-[#646D89]">
-                    {user.racialPreference}
-                  </p>
+                  <p className="text-[#646D89]">{user.racialPreference}</p>
                 </div>
 
                 <div className="col4 flex mt-[20px]">
                   <p className="w-[191px]">Meeting interests</p>
-                  <p className="text-[#646D89]">
-                    {user.meetingInterest}
-                  </p>
+                  <p className="text-[#646D89]">{user.meetingInterests}</p>
                 </div>
               </div>
 
