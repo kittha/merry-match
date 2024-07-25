@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TinderCard from "react-tinder-card";
+import { useNavigate } from "react-router-dom";
 import XButton from "/assets/matchingpage/matching-area/icons/action-button-x.png";
 import HeartButton from "/assets/matchingpage/matching-area/icons/action-button-heart.png";
 import ProfileDetial from "/assets/matchingpage/matching-area/icons/profile detail button.png";
@@ -38,6 +39,29 @@ const SwipeCard = () => {
   const currentUserId = currentUser.id;
   const [userQueue, setUserQueue] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getPotentialMatches = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/v1/merry/match/${currentUserId}`
+        );
+        if (Array.isArray(response.data.matches.matches)) {
+          // console.log(response.data.matches.matches);
+          setUserQueue(response.data.matches.matches);
+        } else {
+          // console.log(response.data);
+          console.error("API response is not an array:", response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch potential matches:", error);
+      }
+    };
+    getPotentialMatches();
+  }, [currentUserId]);
 
   const swiped = (direction, userId) => {
     console.log(`Removing: ${userId}, Direction: ${direction}`);
@@ -153,7 +177,7 @@ const SwipeCard = () => {
                       {user.age}
                     </p>
                     <button className="w-[48px]" onClick={() => navigate("/")}>
-                      <img src={ProfileDetial} alt="ProfileDetial" />
+                      <img src={ProfileDetail} alt="ProfileDetail" />
                     </button>
                   </div>
                   <div className="absolute bottom-[46px] right-[24px] z-10">
