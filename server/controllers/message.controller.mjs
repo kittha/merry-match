@@ -1,8 +1,10 @@
 import { createMessage, getMessages } from "../models/message.model.mjs";
+import { Server } from "socket.io";
 
 export const sendMessage = async (req, res) => {
   const { matchId } = req.params;
   try {
+    const { sender, message } = req.body;
     // const result = await createMessage(data);
     return res.status(200).json({});
   } catch (error) {
