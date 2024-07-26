@@ -11,7 +11,7 @@ import { useImage } from "../../../hooks/useImage.mjs";
 import { FormContext } from "../../../contexts/FormProvider";
 
 const ProfileDetailModal = ({ user, onClose }) => {
-  const { calculateAge } = useContext(FormContext);
+   const { calculateAge } = useContext(FormContext);
   const { checkImage } = useImage();
 
   // convert Object user.avatars  to Array of avatar_url value
@@ -56,13 +56,13 @@ const ProfileDetailModal = ({ user, onClose }) => {
               {avatarsArr.length > 0 && (
                 <>
                   <img
-                    className="rounded-2xl hidden lg:block"
+                    className="rounded-2xl bg-cover lg:w-[400px] lg:h-[400px] lg:block"
                     src={avatarsArr[currentAvatarIndex]}
                     alt="profile"
                   />
                   <img
-                    className="rounded-2xl block lg:hidden"
-                    src={avatarsArr[currentAvatarIndex].url}
+                    className="rounded-2xl bg-cover lg:w-[400px] lg:h-[400px] block lg:hidden"
+                    src={avatarsArr[currentAvatarIndex]}
                     alt="profile"
                   />
                   <div className="flex justify-center absolute left-[180px] lg:bottom-32 bottom-5">

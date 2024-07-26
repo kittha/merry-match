@@ -198,7 +198,7 @@ const NavbarAuthen = () => {
                     transform: "translateX(-50%)",
                     marginTop: "32px",
                   }}
-                  className="w-[198px] h-[258px] font-[500] bg-white shadow-lg rounded-[16px] py-2 z-10 font-Nunito text-sm"
+                  className="w-[198px] h-[258px] font-[500] bg-white shadow-lg rounded-[16px] py-2 z-30 font-Nunito text-sm"
                 >
                   <div className="flex justify-center items-center pb-2 pt-0.5 ">
                     <button
