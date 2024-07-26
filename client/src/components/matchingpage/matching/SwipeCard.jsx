@@ -9,63 +9,40 @@ import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right
 import { useMerryLimit } from "../../../contexts/MerryLimitProvider";
 import axios from "axios";
 import UserProfilePopup from "./UserProfilePopup";
+import useMatching from "../../../hooks/useMatching";
 
-// const users = [
-//   {
-//     id: 1,
-//     name: "John Doe",
-//     age: 28,
-//     image: "/assets/matchingpage/matching-area/daeny.png",
-//   },
-//   {
-//     id: 2,
-//     name: "Pto jaigayray",
-//     age: 29,
-//     image: "/assets/matchingpage/matching-area/pto.jpg",
-//   },
-//   {
-//     id: 3,
-//     name: "Plam jaigayray",
-//     age: 34,
-//     image: "/assets/matchingpage/matching-area/plam.jpg",
-//   },
-//   // Add more users as needed
-// ];
-
-// import clickQuota, maxDailyQuota from Context API
 const SwipeCard = () => {
-  const { availableClicksToday, setAvailableClicksToday, maxDailyQuota } =
-    useMerryLimit();
   const currentUserJson = localStorage.getItem("data");
   const currentUser = JSON.parse(currentUserJson);
   const currentUserId = currentUser.id;
-  const [userQueue, setUserQueue] = useState([]);
+  const { setAvailableClicksToday } = useMerryLimit();
+  const {
+    userQueue,
+    setUserQueue,
+    availableClicksToday,
+    maxDailyQuota,
+    addMerry,
+    undoMerry,
+    getPotentialMatches,
+  } = useMatching(currentUserId);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getPotentialMatches = async () => {
-      try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
-          }/api/v1/merry/match/${currentUserId}`
-        );
-        if (Array.isArray(response.data.matches.matches)) {
-          // console.log(response.data.matches.matches);
-          setUserQueue(response.data.matches.matches);
-        } else {
-          // console.log(response.data);
-          console.error("API response is not an array:", response.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch potential matches:", error);
-      }
-    };
     getPotentialMatches();
   }, [currentUserId]);
+
+  const disfavorUser = (userId) => {
+    // console.log("I'm clicking disfavorUser btn");
+    // console.log("curUser click disfavourUser to other userId no: ", userId);
+    undoMerry(userId); // userId mean "unlikedUserId"
+    setUserQueue((prevQueue) => {
+      const newQueue = [...prevQueue.slice(1), prevQueue[0]]; // Move the first user to the end
+      return newQueue;
+    });
+  };
 
   const swiped = (direction, userId) => {
     console.log(`Removing: ${userId}, Direction: ${direction}`);
@@ -100,32 +77,6 @@ const SwipeCard = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === userQueue.length - 1 ? 0 : prevIndex + 1
     );
-  };
-
-  // Heart Button: When clicked, it will deduct from today's merry quota.
-  const addMerry = async (userId) => {
-    // console.log("I'm clicked 1");
-    // console.log("curUser click addMerry to other userId no: ", userId);
-    try {
-      // await axios.post(
-      //   `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/addMerry`,
-      //   { userId: currentUserId, merryUserId: userId }
-      // );
-      setAvailableClicksToday(availableClicksToday + 1);
-    } catch (error) {
-      console.error("Failed to add merry:", error);
-    }
-  };
-
-  // X Button: when click will move the first user to the end of the row
-  const disfavorUser = (userId) => {
-    // console.log("I'm clicked 2");
-    // console.log("curUser click disfavourUser to other userId no: ", userId);
-    console.log(userId);
-    setUserQueue((prevQueue) => {
-      const newQueue = [...prevQueue.slice(1), prevQueue[0]]; // Move the first user to the end
-      return newQueue;
-    });
   };
 
   const handleProfileDetailClick = (user) => {
