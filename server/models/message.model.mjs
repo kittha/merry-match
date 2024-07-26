@@ -1,7 +1,8 @@
 import connectionPool from "../configs/db.mjs";
 
 export const createMessage = async (data) => {
-  const { sender, receiver, matchId, message, media, time } = data;
+  const { sender, receiver, matchId, message, media } = data;
+  const currentDateTime = new Date();
   try {
     const result = await connectionPool.query(
       `INSERT INTO messages (
@@ -14,7 +15,16 @@ export const createMessage = async (data) => {
         updated_at)
       VALUES ($1, $2, $3, $4, $5, $6, $6)
       RETURNING *`,
-      [sender, receiver, sender, receiver, matchId, message, media, time]
+      [
+        sender,
+        receiver,
+        sender,
+        receiver,
+        matchId,
+        message,
+        media,
+        currentDateTime,
+      ]
     );
     return result.rows[0];
   } catch (error) {

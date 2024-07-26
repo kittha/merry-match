@@ -11,6 +11,7 @@ import apiV1Routes from "./routes/api/v1/index.mjs";
 import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
 import { avatarUpload } from "./middlewares/multer.middleware.mjs";
+import { Server } from "socket.io";
 
 const app = express();
 
@@ -63,4 +64,15 @@ process.on("SIGTERM", () => {
   server.close(() => {
     logger.info("Process terminated");
   });
+});
+
+const io = new Server(PORT, {
+  cors: {
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  },
+});
+
+io.on("connection", (socket) => {
+  // ...
 });
