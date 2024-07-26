@@ -1,6 +1,6 @@
 // import React from "react";
 // import { useMerryLimit } from "../../contexts/MerryLimitProvider";
-// import { useState, useEffect, useContext } from "react";
+import { useEffect } from "react";
 // import axios from "axios";
 // import { useState, useEffect, useContext } from "react";
 // import axios from "axios";
@@ -11,11 +11,28 @@ import Chaticon from "/assets/merrylist-image/chat.png";
 import Vectoricon from "/assets/merrylist-image/vector.png";
 import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
+import useMatching from "../../hooks/useMatching";
 
 // import { FormContext } from "../../contexts/FormProvider";
 // import { useParams } from "react-router-dom";
 
 function MerryListPage() {
+  const currentUserJson = localStorage.getItem("data");
+  const currentUser = JSON.parse(currentUserJson);
+  const currentUserId = currentUser.id;
+  const handleProfileDetailClick = (user) => {
+    setSelectedUser(user);
+    setShowModal(true);
+  };
+  const {
+    userQueue,
+    setUserQueue,
+    availableClicksToday,
+    maxDailyQuota,
+    addMerry,
+    undoMerry,
+    getPotentialMatches,
+  } = useMatching(currentUserId);
   // const [merryList, setMerryList] = useState([]);
   // const { calculateAge } = useContext(FormContext);
   // const { userId } = useParams();
@@ -35,6 +52,9 @@ function MerryListPage() {
   // useEffect(() => {
   //   getMerryList();
   // }, []);
+  useEffect(() => {
+    getPotentialMatches();
+  }, [currentUserId]);
 
   return (
     <>
@@ -89,7 +109,7 @@ function MerryListPage() {
                     Merry limit today
                   </p>
                   <p className="w-[34px] h-[24px] font-normal text-[16px] leading-[24px] text-[#FF1659]">
-                    2/20
+                    {availableClicksToday}/{maxDailyQuota}
                   </p>
                 </section>
                 <p className="font-medium text-[12px] leading-[18px] text-right text-[#9AA1B9] mb-[28px] lg:w-[167px] lg:h-[18px]">
@@ -99,354 +119,169 @@ function MerryListPage() {
             </section>
           </section>
 
-          {/* <section className="w-[933px] h-auto flex flex-col gap-[24px]">
-            {merryList.map((list, index) => {
+          <section className="w-[375px] h-auto flex flex-col gap-[24px] mb-[41px] lg:w-[933px] lg:mb-[147px]">
+            {userQueue.map((list, index) => {
               return (
                 <section
-                  className="w-[933px] h-[238px] border-b border-[#E4E6ED]"
+                  className="w-[375px] h-[334px] border-b border-[#E4E6ED] lg:w-[933px] lg:h-[238px]"
                   key={index}
                 >
-                  <article className="w-[674px] h-[107px] flex flex-row gap-[40px] mt-[16px] ml-[16px] mb-[35px]">
+                  <article className="flex flex-col gap-[24px] lg:w-[674px] lg:h-[187px] lg:flex lg:flex-row lg:gap-[40px] mt-[16px] ml-[16px] lg:mb-[35px]">
                     <img
-                      src={list.url}
-                      className="w-[187px] h-[187px] rounded-[24px]"
-                      alt="Merry list image"
+                      src="https://pakmud.com/wp-content/uploads/2023/03/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B9%81%E0%B8%A1%E0%B8%A7%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%86-6.jpg"
+                      className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
+                      alt="merry-list-image"
                     />
-                    <div className="w-[447px] h-[182px] flex flex-col gap-[24px]">
-                      <section className="w-[447px] h-[30px] flex flex-row gap-[16px]">
-                        <div className="flex flex-row gap-[8px] w-auto h-[30px] font-bold text-[24px] leading-[30px]">
-                          <h4 className="w-auto h-[30px] text-[#2A2E3F]">
+                    {/* Mobile Responsive */}
+                    <div className="flex flex-row gap-[71px] lg:hidden">
+                      <img
+                        src="https://pakmud.com/wp-content/uploads/2023/03/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B9%81%E0%B8%A1%E0%B8%A7%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%86-6.jpg"
+                        className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
+                        alt="merry-list-image"
+                      />
+                      <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
+                        {list.status === "match" ? (
+                          <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
+                            <img
+                              src={GroupHearticon}
+                              className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
+                              alt="group-heart-icon"
+                            />
+                            <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
+                              Merry Match!
+                            </h3>
+                          </section>
+                        ) : (
+                          <section className="w-[133px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C8CCDB] pl-[15px] pr-[11px] pt-[4px] pb-[4px]">
+                            <h3 className="w-[101px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
+                              Not Match yet
+                            </h3>
+                          </section>
+                        )}
+                        <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
+                          <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            <img
+                              src={Chaticon}
+                              alt="chat-icon"
+                              className="mt-[15.6px] ml-[14.4px]"
+                            />
+                          </div>
+                          <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            <img
+                              src={Vectoricon}
+                              alt="vector-icon"
+                              className="mt-[15.6px] ml-[12px] mb-[12px]"
+                            />
+                          </div>
+                          <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                            <img
+                              src={WhiteHearticon}
+                              alt="white-heart-icon"
+                              className="mt-[5px] ml-[3px]"
+                            />
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                    {/************************************************************************************************/}
+                    <div className="w-[343px] h-[156px] flex flex-col gap-[8px] lg:w-[447px] lg:h-[182px] lg:gap-[24px]">
+                      <section className="w-[343px] h-[30px] flex flex-row gap-[16px] lg:w-[447px]">
+                        <div className="w-auto h-[30px] flex flex-row gap-[8px] font-bold text-[24px] leading-[30px]">
+                          <h4 className="w-[110px] h-[30px] text-[#2A2E3F]">
                             {list.name}
                           </h4>
                           <h4 className="w-[29px] h-[30px] text-[#646D89]">
-                            {calculateAge(list.date_of_birth)}
+                            {list.age}
                           </h4>
                         </div>
-                        <section className="w-[324px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px]">
+                        <section className="w-[220px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px] lg:w-[324px]">
                           <img
                             src={Locationicon}
                             className="w-[11.2px] h-[13.6px] mt-[4px] ml-[4px]"
-                            alt="Location icon"
+                            alt="location-icon"
                           />
-                          <p className="w-[302px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
-                            {list.city}, {list.location}
+                          <p className="w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
+                            {list.city}, {list.country}
                           </p>
                         </section>
                       </section>
-                      <section className="w-[447px] h-[128px] flex flex-col">
-                        <section className="flex flex-row w-[447px] h-[32px] font-normal text-[16px] leading-[24px]">
+                      <section className="w-[343x] h-[128px] flex flex-col lg:w-[447px]">
+                        <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
                           <label className="w-[167px] h-[24px] text-[#2A2E3F]">
                             Sexual identities
                           </label>
-                          <p className="w-[280px] h-[24px] text-[#646D89]">
-                            {list.sexual_identities}
+                          <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
+                            {list.sexualIdentity}
                           </p>
                         </section>
-                        <section className="flex flex-row w-[447px] h-[32px]">
+                        <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
                           <label className="w-[167px] h-[24px] text-[#2A2E3F]">
                             Sexual preferences
                           </label>
-                          <p className="w-[280px] h-[24px] text-[#646D89]">
-                            {list.sexual_preferences}
+                          <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
+                            {list.sexualPreference}
                           </p>
                         </section>
-                        <section className="flex flex-row w-[447px] h-[32px]">
+                        <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
                           <label className="w-[167px] h-[24px] text-[#2A2E3F]">
                             Racial preferences
                           </label>
-                          <p className="w-[280px] h-[24px] text-[#646D89]">
-                            {list.racial_preferences}
+                          <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
+                            {list.racialPreference}
                           </p>
                         </section>
-                        <section className="flex flex-row w-[447px] h-[32px]">
+                        <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
                           <label className="w-[167px] h-[24px] text-[#2A2E3F]">
                             Meeting interests
                           </label>
-                          <p className="w-[280px] h-[24px] text-[#646D89]">
-                            {list.meeting_interests}
+                          <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
+                            {list.meetingInterests}
                           </p>
                         </section>
                       </section>
                     </div>
-                    <div className="w-[176px] h-[104px] flex flex-col gap-[24px] items-end">
-                      {list.status === "merry_match" ? (
-                        <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
-                          <img
-                            src={GroupHearticon}
-                            className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
-                            alt="Group heart icon"
-                          />
-                          <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
-                            Merry Match!
-                          </h3>
-                        </section>
-                      ) : (
-                        <section className="w-[133px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C8CCDB] pl-[15px] pr-[11px] pt-[4px] pb-[4px]">
-                          <h3 className="w-[101px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
-                            Not Match yet
-                          </h3>
-                        </section>
-                      )}
-
-                      <section className="w-[176px] h-[48px] flex flex-row gap-[16px]">
-                        <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                    {/* Desktop responsive */}
+                    <div className="hidden w-[168px] h-[104px] flex-col gap-[24px] items-end lg:w-[176px] lg:flex">
+                      <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
+                        <img
+                          src={GroupHearticon}
+                          className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
+                          alt="group-heart-icon"
+                        />
+                        <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
+                          Merry Match!
+                        </h3>
+                      </section>
+                      <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
+                        <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
                           <img
                             src={Chaticon}
-                            alt="Chat icon"
-                            className="mt-[15.6px] ml-[14.4px]"
+                            alt="chat-icon"
+                            className="mt-[4px] ml-[14.4px]"
                           />
-                        </div>
-                        <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                        </button>
+                        <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
                           <img
                             src={Vectoricon}
-                            alt="Vector icon"
+                            alt="vector-icon"
                             className="mt-[15.6px] ml-[12px] mb-[12px]"
                           />
-                        </div>
-                        <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                        </button>
+                        <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
                           <img
                             src={WhiteHearticon}
-                            alt="White heart icon"
+                            alt="white-heart-icon"
                             className="mt-[5px] ml-[3px]"
+                            onClick={() => addMerry(list.user_id)}
                           />
-                        </div>
+                        </button>
                       </section>
                     </div>
+                    {/************************************************************************************************/}
                   </article>
                 </section>
               );
             })}
-          </section> */}
-          <section className="w-[375px] h-auto flex flex-col gap-[24px] mb-[41px] lg:w-[933px] lg:mb-[147px]">
-            <section className="w-[375px] h-[334px] border-b border-[#E4E6ED] lg:w-[933px] lg:h-[238px]">
-              <article className="flex flex-col gap-[24px] lg:w-[674px] lg:h-[187px] lg:flex lg:flex-row lg:gap-[40px] mt-[16px] ml-[16px] lg:mb-[35px]">
-                <img
-                  src="https://pakmud.com/wp-content/uploads/2023/03/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B9%81%E0%B8%A1%E0%B8%A7%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%86-6.jpg"
-                  className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
-                  alt="merry-list-image"
-                />
-                {/* Mobile Responsive */}
-                <div className="flex flex-row gap-[71px] lg:hidden">
-                  <img
-                    src="https://pakmud.com/wp-content/uploads/2023/03/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B9%81%E0%B8%A1%E0%B8%A7%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%86-6.jpg"
-                    className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
-                    alt="merry-list-image"
-                  />
-                  <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
-                    <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
-                      <img
-                        src={GroupHearticon}
-                        className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
-                        alt="group-heart-icon"
-                      />
-                      <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
-                        Merry Match!
-                      </h3>
-                    </section>
-                    <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
-                      <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                        <img
-                          src={Chaticon}
-                          alt="chat-icon"
-                          className="mt-[15.6px] ml-[14.4px]"
-                        />
-                      </div>
-                      <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                        <img
-                          src={Vectoricon}
-                          alt="vector-icon"
-                          className="mt-[15.6px] ml-[12px] mb-[12px]"
-                        />
-                      </div>
-                      <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
-                        <img
-                          src={WhiteHearticon}
-                          alt="white-heart-icon"
-                          className="mt-[5px] ml-[3px]"
-                        />
-                      </div>
-                    </section>
-                  </div>
-                </div>
-                {/************************************************************************************************/}
-                <div className="w-[343px] h-[156px] flex flex-col gap-[8px] lg:w-[447px] lg:h-[182px] lg:gap-[24px]">
-                  <section className="w-[343px] h-[30px] flex flex-row gap-[16px] lg:w-[447px]">
-                    <div className="w-[107px] h-[30px] flex flex-row gap-[8px] font-bold text-[24px] leading-[30px]">
-                      <h4 className="w-[70px] h-[30px] text-[#2A2E3F]">
-                        Ygritte
-                      </h4>
-                      <h4 className="w-[29px] h-[30px] text-[#646D89]">32</h4>
-                    </div>
-                    <section className="w-[220px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px] lg:w-[324px]">
-                      <img
-                        src={Locationicon}
-                        className="w-[11.2px] h-[13.6px] mt-[4px] ml-[4px]"
-                        alt="location-icon"
-                      />
-                      <p className="w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
-                        Bangkok, Thailand
-                      </p>
-                    </section>
-                  </section>
-                  <section className="w-[343x] h-[128px] flex flex-col lg:w-[447px]">
-                    <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
-                      <label className="w-[167px] h-[24px] text-[#2A2E3F]">
-                        Sexual identities
-                      </label>
-                      <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                        Female
-                      </p>
-                    </section>
-                    <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
-                      <label className="w-[167px] h-[24px] text-[#2A2E3F]">
-                        Sexual preferences
-                      </label>
-                      <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                        Male
-                      </p>
-                    </section>
-                    <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
-                      <label className="w-[167px] h-[24px] text-[#2A2E3F]">
-                        Racial preferences
-                      </label>
-                      <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                        Indefinite
-                      </p>
-                    </section>
-                    <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
-                      <label className="w-[167px] h-[24px] text-[#2A2E3F]">
-                        Meeting interests
-                      </label>
-                      <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                        Long-term commitment
-                      </p>
-                    </section>
-                  </section>
-                </div>
-                {/* Desktop responsive */}
-                <div className="hidden w-[168px] h-[104px] flex-col gap-[24px] items-end lg:w-[176px] lg:flex">
-                  <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
-                    <img
-                      src={GroupHearticon}
-                      className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
-                      alt="group-heart-icon"
-                    />
-                    <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
-                      Merry Match!
-                    </h3>
-                  </section>
-                  <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
-                    <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                      <img
-                        src={Chaticon}
-                        alt="chat-icon"
-                        className="mt-[15.6px] ml-[14.4px]"
-                      />
-                    </div>
-                    <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                      <img
-                        src={Vectoricon}
-                        alt="vector-icon"
-                        className="mt-[15.6px] ml-[12px] mb-[12px]"
-                      />
-                    </div>
-                    <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
-                      <img
-                        src={WhiteHearticon}
-                        alt="white-heart-icon"
-                        className="mt-[5px] ml-[3px]"
-                      />
-                    </div>
-                  </section>
-                </div>
-                {/************************************************************************************************/}
-              </article>
-            </section>
-
-            {/* <section className="w-[375px] h-[334px] lg:w-[933px] lg:h-[238px] border-b border-[#E4E6ED] mb-[147px]">
-              <article className="w-[674px] h-[107px] flex flex-row gap-[40px] mt-[16px] ml-[16px] mb-[35px] bg-lime-400">
-                <img
-                  src="https://pakmud.com/wp-content/uploads/2023/03/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B9%81%E0%B8%A1%E0%B8%A7%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%86-6.jpg"
-                  className="w-[187px] h-[187px] rounded-[24px]"
-                  alt="Merry list image"
-                />
-                <div className="w-[447px] h-[182px] flex flex-col gap-[24px]">
-                  <section className="w-[447px] h-[30px] flex flex-row gap-[16px]">
-                    <div className="flex flex-row gap-[8px] w-[107px] h-[30px] font-bold text-[24px] leading-[30px]">
-                      <h4 className="w-[70px] h-[30px] text-[#2A2E3F]">
-                        Ygritte
-                      </h4>
-                      <h4 className="w-[29px] h-[30px] text-[#646D89]">32</h4>
-                    </div>
-                    <section className="w-[324px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px]">
-                      <img
-                        src={Locationicon}
-                        className="w-[11.2px] h-[13.6px] mt-[4px] ml-[4px]"
-                        alt="Location icon"
-                      />
-                      <p className="w-[302px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
-                        Bangkok, Thailand
-                      </p>
-                    </section>
-                  </section>
-                  <section className="w-[447px] h-[128px] flex flex-col">
-                    <section className="flex flex-row w-[447px] h-[32px] font-normal text-[16px] leading-[24px]">
-                      <label className="w-[167px] h-[24px] text-[#2A2E3F]">
-                        Sexual identities
-                      </label>
-                      <p className="w-[280px] h-[24px] text-[#646D89]">
-                        Female
-                      </p>
-                    </section>
-                    <section className="flex flex-row w-[447px] h-[32px]">
-                      <label className="w-[167px] h-[24px] text-[#2A2E3F]">
-                        Sexual preferences
-                      </label>
-                      <p className="w-[280px] h-[24px] text-[#646D89]">Male</p>
-                    </section>
-                    <section className="flex flex-row w-[447px] h-[32px]">
-                      <label className="w-[167px] h-[24px] text-[#2A2E3F]">
-                        Racial preferences
-                      </label>
-                      <p className="w-[280px] h-[24px] text-[#646D89]">
-                        Indefinite
-                      </p>
-                    </section>
-                    <section className="flex flex-row w-[447px] h-[32px]">
-                      <label className="w-[167px] h-[24px] text-[#2A2E3F]">
-                        Meeting interests
-                      </label>
-                      <p className="w-[280px] h-[24px] text-[#646D89]">
-                        Long-term commitment
-                      </p>
-                    </section>
-                  </section>
-                </div>
-                <div className="w-[176px] h-[104px] flex flex-col gap-[24px] items-end">
-                  <section className="w-[133px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C8CCDB] pl-[15px] pr-[11px] pt-[4px] pb-[4px]">
-                    <h3 className="w-[101px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
-                      Not Match yet
-                    </h3>
-                  </section>
-                  <section className="w-[176px] h-[48px] flex flex-row gap-[16px] justify-end">
-                    <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                      <img
-                        src={Vectoricon}
-                        alt="Vector icon"
-                        className="mt-[15.6px] ml-[12px] mb-[12px]"
-                      />
-                    </div>
-                    <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
-                      <img
-                        src={WhiteHearticon}
-                        alt="White heart icon"
-                        className="mt-[5px] ml-[3px]"
-                      />
-                    </div>
-                  </section>
-                </div>
-              </article>
-            </section> */}
           </section>
         </article>
         <Footer />
