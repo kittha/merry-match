@@ -1,4 +1,5 @@
 import { getMerryLists as getMerryListsFromModel } from "../models/merrylist.model.mjs";
+
 /**
  * get all merry list data from Merry Match Web Application
  * @param {object} req - The request object, contain nothing.
@@ -7,7 +8,8 @@ import { getMerryLists as getMerryListsFromModel } from "../models/merrylist.mod
  */
 export const getMerryLists = async (req, res) => {
   try {
-    const merryList = await getMerryListsFromModel(req);
+    const userId = req.params.userId;
+    const merryList = await getMerryListsFromModel(userId);
     console.log("I'm here");
     return res.status(200).json({
       message: "Fetch merry list successfully.",
