@@ -149,6 +149,11 @@ export const getPotentialMatches = async (userId) => {
           p2.bio AS matched_bio,
           pp.sequence AS picture_sequence,
           pp.url AS profile_picture_url,
+          ms.match_id AS match_id,
+          ms.created_at AS match_created_at,
+          ms.matched_at AS match_matched_at,
+          ms.status_1 AS match_status_1,
+          ms.status_2 AS match_status_2,
           (
               (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
               (CASE WHEN p1.location = p2.location THEN 1 ELSE 0 END) +
@@ -164,6 +169,8 @@ export const getPotentialMatches = async (userId) => {
           profiles p1
       JOIN 
           profiles p2 ON p1.user_id != p2.user_id
+      LEFT JOIN 
+          match_status ms ON (p1.user_id = ms.user_id_1 AND p2.user_id = ms.user_id_2) OR (p1.user_id = ms.user_id_2 AND p2.user_id = ms.user_id_1)
       LEFT JOIN LATERAL (
           SELECT COUNT(*) AS hobby_match_count
           FROM unnest(p1.hobbies) AS hobby1
@@ -209,6 +216,11 @@ export const getPotentialMatches = async (userId) => {
           bio: row.matched_bio,
           avatars: {}, // Initialize profile pictures object
           match_score: row.match_score,
+          match_id: row.match_id,
+          match_created_at: row.match_created_at,
+          match_matched_at: row.match_matched_at,
+          match_status_1: row.match_status_1,
+          match_status_2: row.match_status_2,
         });
       }
       const match = matchesMap.get(row.matched_user_id);
