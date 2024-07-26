@@ -16,9 +16,9 @@ export const addMerry = async (req, res) => {
 };
 
 export const undoMerry = async (req, res) => {
-  const { likingUserId, likedUserId } = req.body;
+  const { userId, merryUserId } = req.body;
   try {
-    await undoMerryFromModel(likingUserId, likedUserId);
+    await undoMerryFromModel(userId, merryUserId);
     res.status(200).json({ message: "Unmerry user successfully." });
   } catch (error) {
     res.status(500).json({ error: "Failed to unmerry user." });

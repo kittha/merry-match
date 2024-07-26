@@ -8,37 +8,62 @@ import connectionPool from "../configs/db.mjs";
 export const addMerry = async (userId, merryUserId) => {
   // status: "merry", "match", "unmatch"
   const currentDateTime = new Date();
+  let result;
   try {
     await connectionPool.query("BEGIN");
-
-    await connectionPool.query(
-      `DO $$
-        BEGIN
-          UPDATE match_status 
-          SET status_1 = 'match', 
-              status_2 = 'match', 
-              updated_at = $3, 
-              matched_at = $3
-          WHERE user_id_1 = $2 AND user_id_2 = $1;
-        
-        IF NOT FOUND THEN
-          INSERT INTO match_status(
-            user_id_1, 
-            user_id_2, 
-            status_1, 
-            created_at, 
-            updated_at
-          ) 
-          VALUES ($1, $2, 'merry', $3, $3)
-        END IF;
-      END $$;`,
+    const updateResult = await connectionPool.query(
+      `UPDATE match_status 
+        SET status_1 = CASE 
+              WHEN (user_id_1 = $1 AND status_2 = 'merry') THEN 'match'
+              WHEN (user_id_2 = $1 AND status_1 = 'merry') THEN 'match'
+              WHEN user_id_1 = $1 THEN 'merry' 
+            ELSE status_1 END, 
+            status_2 = CASE 
+              WHEN (user_id_2 = $1 AND status_1 = 'merry') THEN 'match'
+              WHEN (user_id_1 = $1 AND status_2 = 'merry') THEN 'match' 
+              WHEN user_id_2 = $1 THEN 'merry'
+            ELSE status_2 END,
+            updated_1_at = CASE 
+              WHEN user_id_1 = $1 THEN $3 
+            ELSE updated_1_at END,
+            updated_2_at = CASE 
+              WHEN user_id_2 = $1 THEN $3 
+            ELSE updated_2_at END,  
+            matched_at = CASE
+              WHEN (user_id_1 = $1 AND status_2 = 'merry')
+                OR (user_id_2 = $1 AND status_1 = 'merry') 
+              THEN $3 
+            ELSE matched_at END
+        WHERE (user_id_1 = $2 AND user_id_2 = $1) 
+          OR (user_id_1 = $1 AND user_id_2 = $2)
+        RETURNING *`,
       [userId, merryUserId, currentDateTime]
     );
+    console.log("UPDATE", updateResult.rows);
+    result = updateResult;
+
+    if (updateResult.rowCount === 0) {
+      const insertResult = await connectionPool.query(
+        `INSERT INTO match_status(
+          user_id_1, 
+          user_id_2, 
+          status_1, 
+          created_at, 
+          updated_1_at ) 
+        VALUES ($1, $2, 'merry', $3, $3)
+        ON CONFLICT (user_id_1, user_id_2) DO NOTHING`,
+        [userId, merryUserId, currentDateTime]
+      );
+      console.log("INSERT", insertResult.rows);
+      result = insertResult;
+    }
 
     await connectionPool.query("COMMIT");
+
+    return result.rows[0];
   } catch (error) {
     await connectionPool.query("ROLLBACK");
-    console.error("Error occurred during adding merry status:", error.message);
+    console.error("Error occurred during adding merry status:", error);
     throw error;
   }
 };
@@ -51,39 +76,57 @@ export const addMerry = async (userId, merryUserId) => {
 export const undoMerry = async (userId, merryUserId) => {
   // status: "merry", "match", "unmatch"
   const currentDateTime = new Date();
+  // console.log(userId, merryUserId);
+  let result;
   try {
     await connectionPool.query("BEGIN");
-
-    await connectionPool.query(
-      `DO $$
-        BEGIN
-          UPDATE match_status 
-          SET status_1 = CASE 
-                WHEN user_id_1 = $1 THEN 'unmatch' ELSE status_1 END,
-              status_2 = CASE
-                WHEN user_id_2 = $1 THEN 'unmatch' ELSE status_2 END,
-              updated_at = $3
-          WHERE (user_id_1 = $2 AND user_id_2 = $1) 
-          OR (user_id_1 = $1 AND user_id_2 = $2);
-
-        IF NOT FOUND THEN
-          INSERT INTO match_status(
-            user_id_1, 
-            user_id_2, 
-            status_1, 
-            created_at, 
-            updated_at
-          ) 
-          VALUES ($1, $2, 'unmatch', $3, $3)
-        END IF;
-      END $$;`,
+    const updateResult = await connectionPool.query(
+      `UPDATE match_status 
+        SET status_1 = CASE 
+              WHEN user_id_1 = $1 THEN 'unmatch' 
+              WHEN status_1 = 'match' THEN 'merry' 
+            ELSE status_1 END,
+            status_2 = CASE 
+              WHEN user_id_2 = $1 THEN 'unmatch' 
+              WHEN status_2 = 'match' THEN 'merry' 
+            ELSE status_2 END,
+            updated_1_at = CASE 
+              WHEN user_id_1 = $1 THEN $3 
+            ELSE updated_1_at END,
+            updated_2_at = CASE 
+              WHEN user_id_2 = $1 THEN $3 
+            ELSE updated_2_at END
+        WHERE (user_id_1 = $2 AND user_id_2 = $1) 
+          OR (user_id_1 = $1 AND user_id_2 = $2)
+        RETURNING *;`,
       [userId, merryUserId, currentDateTime]
     );
+    result = updateResult;
+    console.log("UPDATE", updateResult.rows);
+
+    if (updateResult.rowCount === 0) {
+      const insertResult = await connectionPool.query(
+        `INSERT INTO match_status(
+          user_id_1, 
+          user_id_2, 
+          status_1,
+          created_at, 
+          updated_1_at ) 
+        VALUES ($1, $2, 'unmatch', $3, $3)
+        ON CONFLICT (user_id_1, user_id_2) DO NOTHING
+        RETURNING *`,
+        [userId, merryUserId, currentDateTime]
+      );
+
+      console.log("INSERT", insertResult.rows);
+      result = insertResult;
+    }
 
     await connectionPool.query("COMMIT");
+    return result.rows[0];
   } catch (error) {
     await connectionPool.query("ROLLBACK");
-    console.error("Error occurred during undoing merry status:", error.message);
+    console.error("Error occurred during undoing merry status:", error);
     throw error;
   }
 };
