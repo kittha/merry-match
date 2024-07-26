@@ -1,9 +1,4 @@
-// import React from "react";
-// import { useMerryLimit } from "../../contexts/MerryLimitProvider";
 import { useEffect } from "react";
-// import axios from "axios";
-// import { useState, useEffect, useContext } from "react";
-// import axios from "axios";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
@@ -13,17 +8,10 @@ import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
 import useMatching from "../../hooks/useMatching";
 
-// import { FormContext } from "../../contexts/FormProvider";
-// import { useParams } from "react-router-dom";
-
 function MerryListPage() {
   const currentUserJson = localStorage.getItem("data");
   const currentUser = JSON.parse(currentUserJson);
   const currentUserId = currentUser.id;
-  const handleProfileDetailClick = (user) => {
-    setSelectedUser(user);
-    setShowModal(true);
-  };
   const {
     userQueue,
     setUserQueue,
