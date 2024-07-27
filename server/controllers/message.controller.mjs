@@ -22,9 +22,17 @@ export const sendMessage = async (req, res) => {
 export const getChatHistory = async (req, res) => {
   const { matchId } = req.params;
   try {
+    // console.log(matchId);
     const result = await getMessages(matchId);
-    console.log(result);
-    return res.status(200).json(result);
+    const data = result.map((msg) => ({
+      sender: msg.sender_id,
+      receiver: msg.receiver_id,
+      matchId,
+      message: msg.message,
+      dateTime: msg.sent_at,
+    }));
+    // console.log(data);
+    return res.status(200).json(data);
   } catch (error) {
     console.error("Error in message controller:", error);
     res.status(500).json({

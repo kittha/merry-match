@@ -4,6 +4,7 @@ import { rateLimiter } from "./middlewares/rateLimiter.middleware.mjs";
 import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
+import http from "http";
 import logger from "./utils/logger.mjs";
 import morgan from "morgan";
 import errorHandler from "./middlewares/errorHandler.middleware.mjs";
@@ -11,7 +12,7 @@ import apiV1Routes from "./routes/api/v1/index.mjs";
 import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
 import { avatarUpload } from "./middlewares/multer.middleware.mjs";
-import { Server } from "socket.io";
+import socket from "./utils/socket.mjs";
 
 const app = express();
 
@@ -56,7 +57,11 @@ app.get("*", (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+const httpServer = http.createServer(app);
+// connect soket io
+socket(httpServer);
+
+httpServer.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
 
@@ -64,15 +69,4 @@ process.on("SIGTERM", () => {
   server.close(() => {
     logger.info("Process terminated");
   });
-});
-
-const io = new Server(PORT, {
-  cors: {
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  },
-});
-
-io.on("connection", (socket) => {
-  // ...
 });

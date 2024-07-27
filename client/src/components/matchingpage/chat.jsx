@@ -1,78 +1,85 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import matched from "/assets/matchingpage/merry-match-icon.png";
 import send from "/assets/matchingpage/send-button.png";
 import upload from "/assets/matchingpage/upload-image-button.png";
 import back from "/assets/matchingpage/left-arrow.png";
+import { useAuth } from "../../contexts/authentication";
+import { createMessage, getPrevMessages } from "../../hooks/connectMsg.mjs";
 
-const Chat = () => {
-  const arrSend = [
-    "Hello",
-    "World",
-    "Do you like ma dragons?",
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  ];
-  // const socket = io();
+const Chat = (matchId) => {
+  // matchId will input when use this component and should instead of 84
   const [inputText, setInputText] = useState("");
-  // const [messages, setMessages] = useState([]);
-  // const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const { state } = useAuth();
+  console.log(state);
 
-  const handleTyping = (event) => {
-    setInputText(event.target.value);
+  const userId = state.user?.id;
+  const socket = useRef(null);
+
+  // add online users
+  //this section should be call before click each chat
+  useEffect(() => {
+    // connect socket
+    socket.current = io(import.meta.env.VITE_BACKEND_URL);
+
+    if (userId) {
+      socket.current.emit("add-user", userId);
+      // socket.on("get-user", (res) => {
+      //   setOnlineUsers(res);
+      // });
+    }
+  }, [userId]);
+
+  const fetchData = async () => {
+    const data = await getPrevMessages(84);
+    setMessages(data);
   };
 
-  // console.log(inputText);
+  useEffect(() => {
+    // get chat history from database
+    fetchData();
 
-  //   useEffect(async () => {
-  //     const response = await axios.post(recieveMessageRoute, {
-  //       from: data._id,
-  //       to: currentChat._id,
-  //     });
-  //     setMessages(response.data);
-  //   }, [currentChat]);
+    // listen message from socket
+    socket.current.on("receive-msg", (msg) => {
+      console.log("receive", msg);
+      setArrivalMessage(msg); //{ fromSelf: false, message: msg }
+    });
 
-  //   useEffect(() => {
-  //     const getCurrentChat = async () => {
-  //       if (currentChat) {
-  //         await JSON.parse(
-  //           localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //         )._id;
-  //       }
-  //     };
-  //     getCurrentChat();
-  //   }, [currentChat]);
+    // Clean up on component unmount
+    return () => {
+      socket.current.disconnect();
+    };
+  }, []); //[currentChat]
 
   const handleSendMsg = async (event) => {
     event.preventDefault();
+    if (inputText.trim().length === 0) {
+      return;
+    }
 
-    // socket.current.emit("send-msg", {
-    //   to: currentChat._id,
-    //   from: data._id,
-    //   msg,
-    // });
+    const sendData = {
+      sender: userId,
+      matchId: 84,
+      message: inputText,
+      dateTime: new Date(),
+    };
 
-    // await axios.post(path, {
-    //   from: data._id,
-    //   to: currentChat._id,
-    //   message: msg,
-    // });
+    socket.current.emit("send-msg", sendData);
 
-    // const msgs = [...messages];
-    // msgs.push({ fromSelf: true, message: msg });
-    // setMessages(msgs);
+    await createMessage(84, sendData);
+
+    const newMessages = [...messages];
+    newMessages.push(sendData);
+    setMessages(newMessages);
+
+    setInputText("");
   };
 
-  //   useEffect(() => {
-  //     if (socket.current) {
-  //       socket.current.on("msg-recieve", (msg) => {
-  //         setArrivalMessage({ fromSelf: false, message: msg });
-  //       });
-  //     }
-  //   }, []);
-
-  //   useEffect(() => {
-  //     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  //   }, [arrivalMessage]);
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
 
   return (
     <div className="chat-area bg-[#160404] h-fit w-full pt-[52px] lg:pt-[88px] flex flex-col lg:justify-end">
@@ -94,10 +101,21 @@ const Chat = () => {
             Merry!
           </p>
         </div>
-        {/* other user bubble */}
+
         <div className="display-message w-full flex flex-col gap-2 lg:gap-4">
-          {arrSend.map((msg) => {
-            return (
+          {messages.map((msg, index) => {
+            return msg.sender === userId ? (
+              // owner bubble
+              <div
+                key={index}
+                className="message-line flex flex-row-reverse items-end gap-3"
+              >
+                <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
+                  {msg.message}
+                </div>
+              </div>
+            ) : (
+              // other user bubble
               <div className="message-line flex flex-row items-end gap-3">
                 <img
                   src="#"
@@ -105,19 +123,7 @@ const Chat = () => {
                   className="profile-pic bg-slate-400 w-10 h-10 rounded-full"
                 />
                 <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-bl-none bg-[#EFC4E2] py-3 lg:py-4 px-6">
-                  {msg}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        {/* owner bubble */}
-        <div className="display-message w-full flex flex-col gap-2 lg:gap-4">
-          {arrSend.map((msg) => {
-            return (
-              <div className="message-line flex flex-row-reverse items-end gap-3">
-                <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
-                  {msg}
+                  {msg.message}
                 </div>
               </div>
             );
@@ -141,7 +147,7 @@ const Chat = () => {
           className="input-msg flex-1 placeholder:text-[#9B9EAD] text-[#9B9EAD] bg-transparent focus:outline-none"
           value={inputText}
           onChange={(event) => {
-            handleTyping(event);
+            setInputText(event.target.value);
           }}
         />
         <button type="submit">
