@@ -48,20 +48,15 @@ const ProfilePopup = ({ profileData, onClose }) => {
         </div>
         <div className="lg:flex flex-row">
           <div className="lg:Lside lg:w-1/2 flex justify-center relative">
-            <div className="lg:w-[400px] lg:h-[400px] rounded-2xl">
+            <div className="lg:w-[400px] lg:h-[400px] w-screen h-[356px] rounded-2xl">
               {profileData.avatars.length > 0 && (
                 <>
                   <img
-                    className="rounded-2xl hidden lg:block"
+                    className="rounded-2xl bg-cover lg:w-[400px] lg:h-[400px] w-screen h-[315px]"
                     src={checkImage(profileData.avatars[currentAvatarIndex])}
                     alt="profile"
                   />
-                  <img
-                    className="rounded-2xl block lg:hidden"
-                    src={profileData.avatars[currentAvatarIndex].url}
-                    alt="profile"
-                  />
-                  <div className="flex justify-center absolute left-[180px] lg:bottom-32 bottom-5">
+                  <div className="flex justify-center -translate-y-10">
                     <div className="flex justify-center rounded-md">
                       <button>
                         <img src={crossbutton} alt="cross" />
@@ -73,7 +68,7 @@ const ProfilePopup = ({ profileData, onClose }) => {
                       </button>
                     </div>
                   </div>
-                  <div className="flex justify-between px-8 pt-4">
+                  <div className="flex justify-between px-8 -translate-y-20">
                     <div className="PhotoCount flex mt-2.5">
                       <p>
                         {currentAvatarIndex + 1}/{profileData.avatars.length}

@@ -40,7 +40,7 @@ const ChatContainer = () => {
           </div>
         </div>
       </div>
-      <div className="chatWithMatch flex-1 overflow-auto bg-white px-[15px]">
+      <div className="chatWithMatch flex justify-center overflow-auto bg-white px-[15px]">
         <div className="flex flex-col justify-start w-[343px] lg:w-[282px]">
           <p className="text-[24px] font-bold text-[#2A2E3F] sticky top-0 z-10 bg-white py-[16px]">
             Chat with Merry Match
@@ -65,6 +65,7 @@ const ChatContainer = () => {
                 </div>
               </div>
             </button>
+            
           </div>
         </div>
       </div>
