@@ -1,19 +1,47 @@
 import express from "express";
-import { registerUser } from "../../../controllers/auth.controller.mjs";
+import {
+  registerUser,
+  loginUser,
+  fetchUser,
+} from "../../../controllers/auth.controller.mjs";
 // import {
-//   loginUser,
-//   logoutUser,
 //   forgotPassword,
 //   resetPassword,
 // } from "../../../controllers/auth.controller.mjs";
-import { validateUsernamePassword } from "../../../middlewares/username-password.validation.mjs";
+import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
+import { validatePicture } from "../../../middlewares/picture.validation.mjs";
+import { validateSignUpInput } from "../../../middlewares/signUpInput.validation.mjs";
+import { ageValidator } from "../../../middlewares/age.validation.mjs";
+import { validateEmailRegex } from "../../../middlewares/emailRegex.validation.mjs";
+import { validateUsernameLength } from "../../../middlewares/usernameLength.validation.mjs";
+import { validatePasswordLength } from "../../../middlewares/passwordLength.validation.mjs";
+import { validateSignInInput } from "../../../middlewares/signInInput.validation.mjs";
+import { checkUserDoesNotExist } from "../../../middlewares/checkUserDoesNotExist.middleware.mjs";
 
 const router = express.Router();
 
-router.post("/register", [validateUsernamePassword], registerUser);
-// router.post("/login", loginUser);
-// router.post("/logout", logoutUser);
+// avatarUploadMiddleware must come first!
+// If not, the header "multipart/form-data" will cause error to other function
+router.post(
+  "/register",
+  [
+    validatePicture,
+    validateSignUpInput,
+    ageValidator,
+    validateEmailRegex,
+    validateUsernameLength,
+    validatePasswordLength,
+    checkUserDoesNotExist,
+  ],
+  registerUser
+);
+router.post(
+  "/login",
+  [validateSignInInput, validateEmailRegex, validatePasswordLength],
+  loginUser
+);
 // router.post("/forgot-password", forgotPassword);
 // router.post("/reset-password/:token", resetPassword);
+router.get("/:tokenId", fetchUser);
 
 export default router;

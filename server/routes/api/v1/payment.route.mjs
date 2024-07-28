@@ -1,14 +1,9 @@
-// import express from "express";
-// import {
-//   processPayment,
-//   watchPaymentStatus,
-//   changeSubscriptionState,
-// } from "../../../controllers/payment.controller.mjs";
+import express from "express";
 
-// const router = express.Router();
+import { processPayment } from "../../../controllers/payment.controller.mjs";
 
-// router.post("/checkout", processPayment);
-// router.post("/webhook", watchPaymentStatus);
-// router.post("/unsubscribe", changeSubscriptionState);
+const router = express.Router();
 
-// export default router;
+router.post("/checkout", processPayment);
+
+export default router;

@@ -1,52 +1,90 @@
 import connectionPool from "../configs/db.mjs";
-import bcrypt from "bcrypt";
 
-const saltRounds = 10;
-
-export const createUser = async (username, password, email) => {
-  const roleUser = 2;
+/**
+ * Check if user exist in the registry of Merry Match application.
+ *
+ * @param {string} email
+ * @returns
+ */
+export const doesUserExist = async (email) => {
   try {
-    const hashPassword = await bcrypt.hash(password, saltRounds);
     const result = await connectionPool.query(
       `
-      INSERT INTO users (username, password, email, role_id)
-      VALUES ($1, $2, $3, $4)
-      RETURNING id
-      `,
-      [username, hashPassword, email, roleUser]
+        SELECT *
+        FROM auth.users
+        WHERE email = $1
+        `,
+      [email]
     );
-    const userId = result.rows[0].id;
-    console.log(`User created successfully: ${username} (ID: ${userId})`);
-    return userId;
+
+    return result;
   } catch (error) {
-    console.error(`Error creating user: ${error.message}`);
+    console.error("Error occurred during signUp:", error);
+    throw error;
+  }
+};
+export const createUser = async (data) => {
+  const { username, email, role_id } = data;
+  const currentDateTime = new Date();
+  try {
+    const result = await connectionPool.query(
+      `INSERT INTO users (username, email, created_at, updated_at)
+      VALUES ($1, $2, $3, $3)
+      RETURNING user_id`,
+      [username, email, currentDateTime]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in user model", error);
     throw error;
   }
 };
 
-export const findUserByUsername = async (username) => {
+/**
+ * Get user data (from table: users, user_profiles, hobbies, profile_picture) from email from the Merry Match application.
+ *
+ * @param {string} email
+ * @returns {object} - The data object, containing the user, profile, hobbies, avatar key:value pairs.
+ */
+export const getUser = async (id) => {
   try {
     const result = await connectionPool.query(
-      `
-      SELECT *
-      FROM users
-      WHERE username=$1
-      `,
-      [username]
+      `SELECT * FROM users WHERE email = $1 OR user_id::text = $1`,
+      [id]
     );
-    const user = result.rows[0];
-
-    if (user) {
-      console.log(`User found by username: ${username}`);
-    } else {
-      console.log(`User not found with username: ${username}`);
-    }
-
-    return user || null;
+    return result.rows[0];
   } catch (error) {
-    console.error(
-      `Error finding user by username=${username}: ${error.message}`
+    console.error("Error in user model: ", error);
+  }
+};
+
+export const updateUser = async (userId, data) => {
+  const { username, role_id } = data;
+  const currentDateTime = new Date();
+  try {
+    const result = await connectionPool.query(
+      `UPDATE users SET username = $2, updated_at = $3 
+      WHERE user_id = $1
+      RETURNING *`,
+      [userId, username, currentDateTime]
     );
-    throw error;
+
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in user model: ", error);
+  }
+};
+
+export const deleteUser = async (userId) => {
+  try {
+    const result = await connectionPool.query(
+      `DELETE FROM users WHERE user_id = $1
+      RETURNING *`,
+      [userId]
+    );
+
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in user model: ", error);
   }
 };

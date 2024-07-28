@@ -1,28 +1,35 @@
 import express from "express";
 import {
-  uploadAvatar,
-  getUserAvatar,
+  getUserProfileById,
+  updateUserProfileById,
+  deleteUserById,
 } from "../../../controllers/profile.controller.mjs";
-import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
-// import {
-//   getAllProfiles,
-//   getUserProfileById,
-//   updateUserProfileById,
-//   deleteUserProfile,
-// } from "../../../controllers/profile.controller.mjs";
+import { ageValidator } from "../../../middlewares/age.validation.mjs";
+import { validatePicture } from "../../../middlewares/picture.validation.mjs";
+import { bioCharacterLength } from "../../../middlewares/bio.validation.mjs";
+import { validateHobbiesArrayLength } from "../../../middlewares/hobbyArrayLength.validation.mjs";
+import { blockEmailChange } from "../../../middlewares/blockEmailChange.middleware.mjs";
+import { authorizeUser } from "../../../middlewares/authorization.middleware.mjs";
 
 const router = express.Router();
 
 // router.get("/", getAllProfiles);
 
-// router.get("/:userId", getUserProfileById);
+router.get("/:userId", getUserProfileById);
 
-router.get("/:userId/get-avatar", getUserAvatar);
+router.put(
+  "/:userId",
+  [
+    validatePicture,
+    ageValidator,
+    bioCharacterLength,
+    validateHobbiesArrayLength,
+    blockEmailChange,
+    // authorizeUser,
+  ],
+  updateUserProfileById
+);
 
-router.post("/:userId/upload-avatar", [avatarUpload], uploadAvatar);
-
-// router.put("/:userId", updateUserProfileById);
-
-// router.delete("/:userId", deleteUserProfile);
+router.delete("/:userId", [authorizeUser], deleteUserById);
 
 export default router;

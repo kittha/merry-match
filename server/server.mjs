@@ -10,6 +10,7 @@ import errorHandler from "./middlewares/errorHandler.middleware.mjs";
 import apiV1Routes from "./routes/api/v1/index.mjs";
 import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
+import { avatarUpload } from "./middlewares/multer.middleware.mjs";
 
 const app = express();
 
@@ -26,9 +27,9 @@ const corsOptions = {
 
 app.use(rateLimiter(limiterMax, limiterWindow));
 
-app.use(compression());
+// app.use(compression());
 
-app.use(helmet());
+// app.use(helmet());
 
 app.use(
   morgan("combined", {
@@ -41,12 +42,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/status", (req, res) => {
-  return res.json("Server API is working");
+  return res.status(200).json("Server API is working");
 });
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
+app.use("/api/v1", [avatarUpload], apiV1Routes);
 
-app.use("/api/v1", apiV1Routes);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
 
 app.get("*", (req, res) => {
   return res.status(404).json("Not Found");

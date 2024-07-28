@@ -1,47 +1,125 @@
+import cloudinary from "../configs/cloudinary.config.mjs";
+import { getProfile, updateProfile } from "../models/profile.model.mjs";
+import { getAvatars, upsertAvatars } from "../models/profilePicture.model.mjs";
+import { deleteUser, getUser, updateUser } from "../models/user.model.mjs";
 import {
-  updateAvatar as updateAvatarFromModel,
-  getUserAvatar as getUserAvatarFromModel,
-} from "../models/profile.model.mjs";
+  cloudinaryUpload,
+  cloudinaryDestroy,
+} from "../utils/cloudinary.uploader.mjs";
 
-// GET
-export const getUserAvatar = async (req, res) => {
+export const getUserProfileById = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const userId = req.params.userId;
+    const { username, email } = await getUser(userId);
+    const {
+      name,
+      date_of_birth,
+      location,
+      city,
+      sexual_identities,
+      sexual_preferences,
+      racial_preferences,
+      meeting_interests,
+      hobbies,
+      bio,
+    } = await getProfile(userId);
+    const resultAvatars = await getAvatars(userId);
+    const avatars = resultAvatars.map((avatar) => ({
+      url: avatar.url,
+    }));
+    console.log(avatars);
 
-    const getAvatarResult = await getUserAvatarFromModel(userId);
-    console.log(getAvatarResult);
-    return res.status(200).json({
-      message: "200 OK: Successfully retrieved the list of avatars.",
-      data: getAvatarResult,
-    });
+    const data = {
+      username,
+      email,
+      name,
+      birthday: date_of_birth,
+      country: location,
+      city,
+      sexualIdentity: sexual_identities,
+      sexualPreference: sexual_preferences,
+      racialPreference: racial_preferences,
+      meetingInterest: meeting_interests,
+      hobbies,
+      bio,
+      avatars,
+    };
+    return res.status(200).json(data);
   } catch (error) {
-    console.error("Error fetching user avatar:", error);
-    return res.status(500).json({
-      message: "Server could not process the request due to database issue.",
+    console.error("Error in get profile controller:", error);
+    res.status(500).json({
+      message: "Internal server error",
     });
   }
 };
 
-// POST
-export const uploadAvatar = async (req, res) => {
+export const updateUserProfileById = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const userId = req.params.userId;
-
-    const uploadResult = await updateAvatarFromModel(userId, req.files);
-
-    if (!uploadResult) {
-      return res.status(500).json({
-        message: "Avatar upload failed.",
-      });
+    // console.log(req.body.avatar);
+    let avatarUrl = req.body.avatar;
+    if (Array.isArray(avatarUrl)) {
+      avatarUrl = req.body.avatar.map((avatar) => JSON.parse(avatar));
+    } else {
+      avatarUrl = [avatarUrl];
     }
 
-    return res.status(200).json({
-      message: "Avatar uploaded successfully",
-    });
+    await updateUser(userId, req.body);
+    await updateProfile(userId, req.body);
+
+    const avatarUri = await cloudinaryUpload(req.files);
+
+    // rearrange avatars
+    let i = 0;
+    let j = 0;
+    let avatars = [];
+    for (let k = 0; k < 5; k++) {
+      if (avatarUrl[i] && k in avatarUrl[i]) {
+        console.log(avatarUrl[i][k]);
+        avatars.push(avatarUrl[i][k]);
+        i++;
+      } else if (avatarUri && avatarUri[j]) {
+        console.log(avatarUri[j]);
+        avatars.push(avatarUri[j]);
+        j++;
+      }
+    }
+    // console.log(avatars);
+
+    // update profile picture in database
+    const avatarsResult = await upsertAvatars(userId, avatars);
+
+    // delete avatars from cloudinary
+    // *still can't delete from cloudinary
+    // const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
+    // await cloudinaryDestroy(cloudinaryId);
+
+    return res.status(200).json({ message: "Updated Successful" });
   } catch (error) {
-    console.error("Error uploading avatar:", error);
-    return res.status(500).json({
-      message: "Server could not process the request due to database issue.",
+    console.error("Error in update profile controller:", error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+export const deleteUserById = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const { auth_id } = await deleteUser(userId);
+    console.log(auth_id);
+    const { data, error } = await supabase.auth.admin.deleteUser(auth_id);
+    // delete user from database
+    // delete avatars from cloudinary
+    // *still can't delete from cloudinary
+    // const avatarsResult = getAvatars(userId);
+    // const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
+    // await cloudinaryDestroy(cloudinaryId);
+    // delete user from supabase auth
+  } catch (error) {
+    console.error("Error in delete profile controller:", error);
+    res.status(500).json({
+      message: "Internal server error",
     });
   }
 };

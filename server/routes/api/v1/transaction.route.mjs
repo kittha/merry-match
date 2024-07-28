@@ -1,16 +1,16 @@
-// import express from "express";
-// import {
-//   getAllTransactions,
-//   getUserTransactions,
-//   createTransaction,
-// } from "../../../controllers/transaction.controller.mjs";
+import express from "express";
+import {
+  //   getAllTransactions,
+  //   getUserTransactionsById,
+  createTransaction,
+} from "../../../controllers/transaction.controller.mjs";
 
-// const router = express.Router();
+const router = express.Router();
 
 // router.get("/", getAllTransactions);
 
-// router.get("/:userId", getUserTransactions);
+// router.get("/:userId", getUserTransactionsById);
 
-// router.post("/", createTransaction);
+router.post("/", createTransaction);
 
 // export default router;
