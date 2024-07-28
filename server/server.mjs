@@ -29,7 +29,7 @@ app.use(rateLimiter(limiterMax, limiterWindow));
 
 // app.use(compression());
 
-// app.use(helmet());
+app.use(helmet());
 
 app.use(
   morgan("combined", {
