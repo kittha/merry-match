@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import FormPackage from "../../components/packageviewandedit/FormPackage";
-import Sidebar from "../../components/packageviewandedit/Sidebar";
-import Topbar from "../../components/packageviewandedit/Topbar";
+import FormPackage from "../../components/adminpackage/packageviewandedit/FormPackage";
+import Sidebar from "../../components/adminpackage/packageviewandedit/Sidebar";
+import Topbar from "../../components/adminpackage/packageviewandedit/Topbar";
 
 function PackageEditAndViewPage() {
   const navigate = useNavigate();

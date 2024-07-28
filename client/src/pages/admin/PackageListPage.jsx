@@ -1,6 +1,6 @@
-import Sidebar from "../../components/packagelist/Sidebar";
-import Topbar from "../../components/packagelist/Topbar";
-import MainContent from "../../components/packagelist/Maincontent";
+import Sidebar from "../../components/adminpackage/packagelist/Sidebar";
+import Topbar from "../../components/adminpackage/packagelist/Topbar";
+import MainContent from "../../components/adminpackage/packagelist/Maincontent";
 
 function PackageListPage() {
   return (

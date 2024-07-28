@@ -1,4 +1,4 @@
-import { useAuth } from "../../contexts/authentication";
+import { useAuth } from "../../../contexts/authentication";
 
 function Sidebar() {
   const { logout } = useAuth();

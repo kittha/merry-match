@@ -16,7 +16,7 @@ import MerryListPage from "../users/MerryListPage";
 import ComplaintPage from "../users/ComplaintPage";
 import Chat from "../../components/matchingpage/chat";
 import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
-
+import ComplaintListPage from "../admin/ComplaintListPage";
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -50,6 +50,7 @@ const AuthenticatedApp = () => {
               path="/admin/package/:packageId"
               element={<PackageEditAndViewPage />}
             />
+            <Route path="/admin/complaint" element={<ComplaintListPage />} />
           </>
         )}
       </Routes>
