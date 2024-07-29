@@ -12,12 +12,12 @@ const Chat = (matchId) => {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const socket = useRef(null);
   const { state } = useAuth();
   console.log(state);
 
   const userId = state.user?.id;
-  const socket = useRef(null);
-
+  //---------------------------------------------------------------------
   // add online users
   //this section should be call before click each chat
   useEffect(() => {
@@ -31,10 +31,17 @@ const Chat = (matchId) => {
       // });
     }
   }, [userId]);
-
+  //---------------------------------------------------------------------
   const fetchData = async () => {
     const data = await getPrevMessages(84);
     setMessages(data);
+  };
+
+  const scrollToBottom = () => {
+    const element = document.getElementsByTagName("main")[0];
+    const hight = element.scrollHeight;
+    // console.log("element", element, "hight", hight);
+    element.scrollTo({ top: hight });
   };
 
   useEffect(() => {
@@ -79,15 +86,21 @@ const Chat = (matchId) => {
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+    console.log("arrivalEffect");
   }, [arrivalMessage]);
 
+  useEffect(() => {
+    scrollToBottom();
+    console.log("scrollEffect");
+  }, [messages]);
+
   return (
-    <div className="chat-area bg-[#160404] h-fit w-full pt-[52px] lg:pt-[88px] flex flex-col lg:justify-end">
+    <div className="chat-area bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
       <div className="back-bar lg:hidden h-12 bg-white py-3 px-2 flex flex-row gap-4">
-        <img src={back} alt="arrow-left" className="h-6 w-6" onClick={""} />
+        <img src={back} alt="arrow-left" className="h-6 w-6" onClick={null} />
         <p className="font-medium text-[#2A2E3F] font-Nunito">{"Daeny"}</p>
       </div>
-      <main className="h-full w-full py-6 lg:py-10 px-4 lg:px-[60px] flex flex-col gap-7 lg:gap-12 lg:justify-end items-center overflow-y-auto">
+      <main className="box-border h-fit w-full py-6 lg:py-10 px-4 lg:px-[60px] flex-1 flex flex-col gap-7 lg:gap-12 justify-between items-center overflow-y-auto">
         <div className="headbox max-w-[749px] w-fit lg:h-[90px] bg-[#F4EBF2] border border-[#DF89C6] rounded-2xl py-3 px-4 lg:py-6 lg:px-0 flex flex-row gap-4 lg:gap-6 justify-center items-center">
           <img
             src={matched}
@@ -103,38 +116,42 @@ const Chat = (matchId) => {
         </div>
 
         <div className="display-message w-full flex flex-col gap-2 lg:gap-4">
-          {messages.map((msg, index) => {
-            return msg.sender === userId ? (
-              // owner bubble
-              <div
-                key={index}
-                className="message-line flex flex-row-reverse items-end gap-3"
-              >
-                <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
-                  {msg.message}
+          {messages &&
+            messages.map((msg, index) => {
+              return msg.sender === userId ? (
+                // owner bubble
+                <div
+                  key={index}
+                  className="message-line flex flex-row-reverse items-end gap-3"
+                >
+                  <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
+                    {msg.message}
+                  </div>
                 </div>
-              </div>
-            ) : (
-              // other user bubble
-              <div className="message-line flex flex-row items-end gap-3">
-                <img
-                  src="#"
-                  alt="profile-image"
-                  className="profile-pic bg-slate-400 w-10 h-10 rounded-full"
-                />
-                <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-bl-none bg-[#EFC4E2] py-3 lg:py-4 px-6">
-                  {msg.message}
+              ) : (
+                // other user bubble
+                <div
+                  key={index}
+                  className="message-line flex flex-row items-end gap-3"
+                >
+                  <img
+                    src="#"
+                    alt="profile-image"
+                    className="profile-pic bg-slate-400 w-10 h-10 rounded-full"
+                  />
+                  <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-bl-none bg-[#EFC4E2] py-3 lg:py-4 px-6">
+                    {msg.message}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </main>
       <form
         onSubmit={(event) => {
           handleSendMsg(event);
         }}
-        className="input-message border-t border-[#424C6B] h-[72px] lg:h-[100px] py-3 px-4 lg:py-[26px] lg:px-[60px] flex flex-row gap-4 lg:gap-6"
+        className="input-message w-full border-t border-[#424C6B] h-[72px] lg:h-[100px] py-3 px-4 lg:py-[26px] lg:px-[60px] flex flex-row gap-4 lg:gap-6"
       >
         <img
           src={upload}
