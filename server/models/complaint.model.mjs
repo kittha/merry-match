@@ -23,8 +23,10 @@ export const getAllComplaints = async () => {
   try {
     const result = await connectionPool.query(
       `
-          SELECT *
-          FROM complaints
+          select users.username , complaints.* 
+from complaints 
+inner join users 
+on complaints.created_by = users.user_id
           `
     );
     const complaints = result.rows;
@@ -38,8 +40,10 @@ export const getAllComplaints = async () => {
 export const getComplaintById = async (complaintId) => {
   const result = await connectionPool.query(
     `
-        SELECT *
-        FROM complaints
+        SELECT users.username , complaints.* 
+from complaints 
+inner join users 
+on complaints.created_by = users.user_id
         WHERE complaint_id = $1
         `,
     [complaintId]

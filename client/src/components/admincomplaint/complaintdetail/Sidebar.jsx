@@ -15,14 +15,16 @@ function Sidebar() {
         <p className="text-base text-[#646D89]">Admin Panel Control</p>
       </div>
       <div className="w-[240px] h-[540px]">
-        <button className="w-full h-[72px] text-base font-extrabold text-[#424C6B] flex  items-center bg-[#F1F2F6] ">
+        <button
+          onClick={() => {
+            navigate("/admin/package");
+          }}
+          className="w-full h-[72px] text-base font-extrabold text-[#424C6B] flex  items-center hover:bg-[#F1F2F6] "
+        >
           <img className="ml-6" src="./src/assets/package.svg" alt="package" />
           <p className="ml-4">Merry Package</p>
         </button>
-        <button
-          onClick={() => navigate("/admin/complaint")}
-          className="w-full h-[72px] text-base font-extrabold text-[#424C6B] flex  items-center hover:bg-[#F1F2F6] "
-        >
+        <button className="w-full h-[72px] text-base font-extrabold text-[#424C6B] flex  items-center bg-[#F1F2F6] ">
           <img
             className="ml-6"
             src="./src/assets/complaint.svg"
