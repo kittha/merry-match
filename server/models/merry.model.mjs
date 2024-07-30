@@ -1,4 +1,5 @@
 import connectionPool from "../configs/db.mjs";
+import transformMatchedData from "../utils/transformMatchedData.mjs";
 
 /**
  *
@@ -131,6 +132,13 @@ export const undoMerry = async (userId, merryUserId) => {
   }
 };
 
+/**
+ * Retrieves potential matches for a given user ID.
+ *
+ * @param {string} userId - The ID of the user for whom to retrieve potential matches.
+ * @return {Promise<Object>} An object containing the user ID and an array of matches, sorted by match score.
+ * @throws {Error} If an error occurs while finding matches.
+ */
 export const getPotentialMatches = async (userId) => {
   try {
     const result = await connectionPool.query(
@@ -187,56 +195,8 @@ export const getPotentialMatches = async (userId) => {
       `,
       [userId]
     );
-
-    // Helper function to calculate age from date of birth
-    const calculateAge = (dateOfBirth) => {
-      const dob = new Date(dateOfBirth);
-      const diffMs = Date.now() - dob.getTime();
-      const ageDt = new Date(diffMs);
-      return Math.abs(ageDt.getUTCFullYear() - 1970);
-    };
-
-    // Aggregate matches into a list with age calculation, index assignment, and profile pictures formatting
-    const matchesMap = new Map();
-
-    result.rows.forEach((row) => {
-      if (!matchesMap.has(row.matched_user_id)) {
-        matchesMap.set(row.matched_user_id, {
-          user_id: row.matched_user_id,
-          name: row.matched_name,
-          hobbies: row.matched_hobbies,
-          birthday: row.matched_date_of_birth,
-          age: calculateAge(row.matched_date_of_birth), // Calculate age
-          country: row.matched_location,
-          city: row.matched_city,
-          sexualIdentity: row.matched_sexual_identities,
-          sexualPreference: row.matched_sexual_preferences,
-          racialPreference: row.matched_racial_preferences,
-          meetingInterests: row.matched_meeting_interests,
-          bio: row.matched_bio,
-          avatars: {}, // Initialize profile pictures object
-          match_score: row.match_score,
-          match_id: row.match_id,
-          match_created_at: row.match_created_at,
-          match_matched_at: row.match_matched_at,
-          match_status_1: row.match_status_1,
-          match_status_2: row.match_status_2,
-        });
-      }
-      const match = matchesMap.get(row.matched_user_id);
-      if (row.picture_sequence && row.profile_picture_url) {
-        match.avatars[`image${row.picture_sequence}`] = row.profile_picture_url;
-      }
-    });
-
-    // Convert map to array and sort by match_score
-    const matches = Array.from(matchesMap.values())
-      .sort((a, b) => b.match_score - a.match_score)
-      .map((match, index) => ({ ...match, index })); // Re-assign index after sorting
-
-    const payload = { user_id: userId, matches };
-
-    return payload;
+    const matches = transformMatchedData(result.rows);
+    return { user_id: userId, matches };
   } catch (error) {
     console.error("Error finding matches:", error.message);
     throw error;
