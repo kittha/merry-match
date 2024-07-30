@@ -8,11 +8,11 @@ function MatchingPage() {
   return (
     <>
     <div className="flex flex-col lg:flex-row">
-      <div className="hidden lg:flex lg:w-1/4">
+      <div className="hidden lg:flex ">
         <ChatContainer />
       </div>
         <SwipeCard />
-      <div className="hidden lg:flex lg:w-1/4">
+      <div className="hidden lg:flex">
         <FilterContainer />
       </div>
     </div>
