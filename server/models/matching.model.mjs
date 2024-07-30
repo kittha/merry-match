@@ -1,6 +1,6 @@
 import connectionPool from "../configs/db.mjs";
 
-export const getAllMatch = async (userId) => {
+export const getAllStatus = async (userId) => {
   try {
     await connectionPool.query("BEGIN");
     const result = await connectionPool.query(
@@ -17,7 +17,7 @@ export const getAllMatch = async (userId) => {
   }
 };
 
-export const checkMatch = async (ownId, anotherId) => {
+export const getMatchByUserId = async (ownId, anotherId) => {
   try {
     await connectionPool.query("BEGIN");
     const result = await connectionPool.query(
