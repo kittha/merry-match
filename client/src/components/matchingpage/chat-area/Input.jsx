@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useChat } from "../../../contexts/chat";
 import send from "/assets/matchingpage/send-button.png";
 import upload from "/assets/matchingpage/upload-image-button.png";
 
-const InputSection = () => {
+const InputSection = ({ handleSendMsg }) => {
   const [inputText, setInputText] = useState("");
-  const { handleSendMsg } = useChat();
 
   return (
     <form

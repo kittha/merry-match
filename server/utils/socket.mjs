@@ -26,8 +26,9 @@ const socket = (httpServer) => {
         return user.userId === 10;
         //need to use the receiver_id instead 10
       });
-      console.log("send", msg, "receiver", receiver);
       if (receiver.length) {
+        console.log("send", msg, "receiver", receiver);
+        console.log(receiver[0].socketId);
         socket.to(receiver[0].socketId).emit("receive-msg", msg);
       }
     });
