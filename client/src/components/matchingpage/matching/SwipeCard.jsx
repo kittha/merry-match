@@ -38,10 +38,6 @@ const SwipeCard = () => {
     getPotentialMatches();
   }, []);
 
-  // TODO question to fix contradiction
-  // after execute favourUser; the requirement say we should remove the favourited user from the userQueue
-  // but in the same requirement; it require us to show ❤️❤️Emoji when users state is "MATCH"
-  // this is contradiction in it self.
   const favourUser = (userId) => {
     addMerry(userId);
 
