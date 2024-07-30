@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import TinderCard from "react-tinder-card";
 import { useNavigate } from "react-router-dom";
 import XButton from "/assets/matchingpage/matching-area/icons/action-button-x.png";
@@ -7,7 +7,6 @@ import ProfileDetial from "/assets/matchingpage/matching-area/icons/profile deta
 import LeftArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-left.png";
 import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right.png";
 import { useMerryLimit } from "../../../hooks/userMerryLimit";
-import axios from "axios";
 import UserProfilePopup from "./UserProfilePopup";
 import useMatching from "../../../hooks/useMatching";
 import filter from "/assets/matchingpage/matching-area/filter.png"
@@ -18,7 +17,6 @@ const SwipeCard = () => {
   const currentUserJson = localStorage.getItem("data");
   const currentUser = JSON.parse(currentUserJson);
   const currentUserId = currentUser.id;
-  const { setAvailableClicksToday } = useMerryLimit();
   const {
     userQueue,
     setUserQueue,
