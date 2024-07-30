@@ -17,6 +17,6 @@ router.get("/available-matches/:userId", getAvailableMatchesByUserId);
 router.get("/merry-limit/:userId", getMerryLimitByUserId);
 router.get("/match/:userId", getMatchListByUserId);
 router.post("/addMerry", addMerry);
-router.delete("/undoMerry", undoMerry);
+router.post("/undoMerry", undoMerry);
 
 export default router;

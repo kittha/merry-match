@@ -43,7 +43,7 @@ const useMatching = (currentUserId) => {
   const undoMerry = async (unlikedUserId) => {
     try {
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/undoMerry/`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/undoMerry`,
         { userId: currentUserId, merryUserId: unlikedUserId }
       );
     } catch (error) {
