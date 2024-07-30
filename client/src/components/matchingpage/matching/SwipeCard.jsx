@@ -6,7 +6,7 @@ import HeartButton from "/assets/matchingpage/matching-area/icons/action-button-
 import ProfileDetial from "/assets/matchingpage/matching-area/icons/profile detail button.png";
 import LeftArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-left.png";
 import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right.png";
-import { useMerryLimit } from "../../../contexts/MerryLimitProvider";
+import { useMerryLimit } from "../../../hooks/userMerryLimit";
 import axios from "axios";
 import UserProfilePopup from "./UserProfilePopup";
 import useMatching from "../../../hooks/useMatching";

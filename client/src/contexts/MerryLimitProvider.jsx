@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types'; 
 import { useAuth } from './authentication.jsx';
 import axios from 'axios';
 
-const MerryLimitContext = React.createContext(null);
+export const MerryLimitContext = React.createContext(null);
 
 /**
  * MerryLimitProvider is a React component that provides Merry limit data to its child components.
@@ -11,9 +12,9 @@ const MerryLimitContext = React.createContext(null);
  * @param {ReactNode} props.children - The child components.
  * @return {ReactNode} The MerryLimitContext.Provider component with the Merry limit data.
  */
-function MerryLimitProvider({ children }) {
+export function MerryLimitProvider({ children }) {
     const { state } = useAuth();
-    const [userId, setUserId] = useState(() => {
+    const [userId] = useState(() => {
         return state?.user?.id || JSON.parse(localStorage.getItem('data'))?.id;
     });
     const [availableClicksToday, setAvailableClicksToday] = useState(0);
@@ -47,5 +48,6 @@ function MerryLimitProvider({ children }) {
     );
 }
 
-const useMerryLimit = () => React.useContext(MerryLimitContext);
-export { MerryLimitProvider, useMerryLimit };
+MerryLimitProvider.propTypes = {
+  children: PropTypes.node.isRequired
+};
