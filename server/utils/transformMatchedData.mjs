@@ -1,5 +1,11 @@
 import calculateAge from "./calculateAge.mjs";
 
+/**
+ * Transforms the given rows of matched data into an array of matches with additional properties.
+ *
+ * @param {Array} rows - The rows of matched data to transform.
+ * @return {Array} An array of matches with additional properties sorted by match_score in descending order.
+ */
 export const transformMatchedData = (rows) => {
   const matchesMap = new Map();
   rows.forEach((row) => {
