@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
@@ -6,25 +7,47 @@ import Chaticon from "/assets/merrylist-image/chat.png";
 import Vectoricon from "/assets/merrylist-image/vector.png";
 import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
+import { useAuth } from "../../contexts/authentication";
 import useMatching from "../../hooks/useMatching";
 
 function MerryListPage() {
-  const currentUserJson = localStorage.getItem("data");
-  const currentUser = JSON.parse(currentUserJson);
-  const currentUserId = currentUser.id;
+  const { state } = useAuth();
+  const userId = state && state.user ? state.user.id : null;
+  // Helper function to calculate age from date of birth
+  const calculateAge = (dateOfBirth) => {
+    const dob = new Date(dateOfBirth);
+    const diffMs = Date.now() - dob.getTime();
+    const ageDt = new Date(diffMs);
+    return Math.abs(ageDt.getUTCFullYear() - 1970);
+  };
+  const [merryList, setMerryList] = useState([]);
+  const getMerryLists = async () => {
+    try {
+      const result = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
+      );
+      //setMerryList(result.data);
+      console.log(result.data.data);
+      setMerryList(result.data.data);
+    } catch (error) {
+      console.error("Failed to fetch potential matches:", error);
+    }
+  };
   const {
-    userQueue,
-    setUserQueue,
     availableClicksToday,
     maxDailyQuota,
     addMerry,
     undoMerry,
     getPotentialMatches,
-  } = useMatching(currentUserId);
+  } = useMatching(userId);
+
+  useEffect(() => {
+    getMerryLists();
+  }, [userId]);
 
   useEffect(() => {
     getPotentialMatches();
-  }, [currentUserId]);
+  }, [userId]);
 
   return (
     <>
@@ -90,7 +113,7 @@ function MerryListPage() {
           </section>
 
           <section className="w-[375px] h-auto flex flex-col gap-[24px] mb-[41px] lg:w-[933px] lg:mb-[147px]">
-            {userQueue.map((list, index) => {
+            {merryList.map((list, index) => {
               return (
                 <section
                   className="w-[375px] h-[334px] border-b border-[#E4E6ED] lg:w-[933px] lg:h-[238px]"
@@ -98,19 +121,19 @@ function MerryListPage() {
                 >
                   <article className="flex flex-col gap-[24px] lg:w-[674px] lg:h-[187px] lg:flex lg:flex-row lg:gap-[40px] mt-[16px] ml-[16px] lg:mb-[35px]">
                     <img
-                      src="https://pakmud.com/wp-content/uploads/2023/03/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B9%81%E0%B8%A1%E0%B8%A7%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%86-6.jpg"
+                      src={list.url}
                       className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
                       alt="merry-list-image"
                     />
                     {/* Mobile Responsive */}
                     <div className="flex flex-row gap-[71px] lg:hidden">
                       <img
-                        src="https://pakmud.com/wp-content/uploads/2023/03/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B9%81%E0%B8%A1%E0%B8%A7%E0%B8%99%E0%B9%88%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B9%86-6.jpg"
+                        src={list.url}
                         className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
                         alt="merry-list-image"
                       />
                       <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
-                        {list.status === "merry" ? (
+                        {list.status_1 === "match" ? (
                           <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
                             <img
                               src={GroupHearticon}
@@ -161,7 +184,7 @@ function MerryListPage() {
                             {list.name}
                           </h4>
                           <h4 className="w-[29px] h-[30px] text-[#646D89]">
-                            {list.age}
+                            {calculateAge(list.date_of_birth)}
                           </h4>
                         </div>
                         <section className="w-[220px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px] lg:w-[324px]">
@@ -171,7 +194,7 @@ function MerryListPage() {
                             alt="location-icon"
                           />
                           <p className="w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
-                            {list.city}, {list.country}
+                            {list.city}, {list.location}
                           </p>
                         </section>
                       </section>
@@ -181,7 +204,7 @@ function MerryListPage() {
                             Sexual identities
                           </label>
                           <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                            {list.sexualIdentity}
+                            {list.sexual_identities}
                           </p>
                         </section>
                         <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
@@ -189,7 +212,7 @@ function MerryListPage() {
                             Sexual preferences
                           </label>
                           <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                            {list.sexualPreference}
+                            {list.sexual_preferences}
                           </p>
                         </section>
                         <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
@@ -197,7 +220,7 @@ function MerryListPage() {
                             Racial preferences
                           </label>
                           <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                            {list.racialPreference}
+                            {list.racial_preferences}
                           </p>
                         </section>
                         <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
@@ -205,23 +228,31 @@ function MerryListPage() {
                             Meeting interests
                           </label>
                           <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                            {list.meetingInterests}
+                            {list.meeting_interests}
                           </p>
                         </section>
                       </section>
                     </div>
                     {/* Desktop responsive */}
                     <div className="hidden w-[168px] h-[104px] flex-col gap-[24px] items-end lg:w-[176px] lg:flex">
-                      <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
-                        <img
-                          src={GroupHearticon}
-                          className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
-                          alt="group-heart-icon"
-                        />
-                        <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
-                          Merry Match!
-                        </h3>
-                      </section>
+                      {list.status_1 === "match" ? (
+                        <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
+                          <img
+                            src={GroupHearticon}
+                            className="w-[20.4px] h-[12px] mt-[5px] ml-[-6px]"
+                            alt="group-heart-icon"
+                          />
+                          <h3 className="w-[101px] h-[24px] font-extrabold text-[16px] leading-[24px] text-[#C70039]">
+                            Merry Match!
+                          </h3>
+                        </section>
+                      ) : (
+                        <section className="w-[133px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C8CCDB] pl-[15px] pr-[11px] pt-[4px] pb-[4px]">
+                          <h3 className="w-[101px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
+                            Not Match yet
+                          </h3>
+                        </section>
+                      )}
                       <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
                         <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
                           <img
@@ -237,12 +268,12 @@ function MerryListPage() {
                             className="mt-[15.6px] ml-[12px] mb-[12px]"
                           />
                         </button>
+
                         <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
                           <img
                             src={WhiteHearticon}
                             alt="white-heart-icon"
                             className="mt-[5px] ml-[3px]"
-                            onClick={() => addMerry(list.user_id)}
                           />
                         </button>
                       </section>
