@@ -8,8 +8,6 @@ import headerMerryMatchLogo from "/assets/header-image/header-merrymatch-logo.sv
 import iconBell from "/assets/navbar-image/icon_bell.png";
 import iconChat from "/assets/navbar-image/icon_chat.png";
 import profileMenu1 from "/assets/navbar-image/profile_menu1.png";
-import profileMenu2 from "/assets/navbar-image/profile_menu2.png";
-import profileMenu3 from "/assets/navbar-image/profile_menu3.png";
 import profile from "/assets/navbar-image/profile.png";
 import icon1 from "/assets/navbar-image/icon1.png";
 import icon2 from "/assets/navbar-image/icon2.png";
@@ -17,6 +15,8 @@ import icon3 from "/assets/navbar-image/icon3.png";
 import icon4 from "/assets/navbar-image/icon4.png";
 import icon5 from "/assets/navbar-image/icon5.png";
 import icon6 from "/assets/navbar-image/icon6.png";
+import ChatContainer from "../matchingpage/chatcontainer/ChatContainer";
+import NotificationMenu from "./NotificationMenu";
 
 const NavbarAuthen = () => {
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ const NavbarAuthen = () => {
   const bellIconRef = useRef(null);
   const profileIconRef = useRef(null);
   const [bellMenuPosition, setBellMenuPosition] = useState({ top: 0, left: 0 });
+  const [showChat, setShowChat] = useState(false);
   const [profileMenuPosition, setProfileMenuPosition] = useState({
     top: 0,
     left: 0,
@@ -47,7 +48,7 @@ const NavbarAuthen = () => {
   const handleLogout = () => {
     resetForm();
     logout();
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -78,31 +79,43 @@ const NavbarAuthen = () => {
           />
         </button>
         <div className="flex gap-4 lg:hidden ml-24">
-          <button onClick={() => navigate("/")}>
+          <button onClick={handleBellClick}>
             <img
               src={iconBell}
               alt="merry-match-message"
               className="h-[26px] w-[26px]"
             />
           </button>
-          <button onClick={() => navigate("/")}>
+          <button onClick={() => setShowChat(!showChat)}>
             <img
               src={iconChat}
               alt="merry match notification"
               className="h-[26px] w-[26px]"
             />
           </button>
+          {/*---------------------------------------- Hamburger Menu for Mobile ---------------------------------------------*/}
+          <div className="lg:hidden pt-1">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-[#191C77] text-2xl"
+            >
+              {isOpen ? <FiX /> : <FiMenu />}
+            </button>
+          </div>
         </div>
+        {showChat && (
+          <Portal>
+            <div className="fixed inset-0 z-40">
+              <div className="relative w-full h-full">
+                <div className="absolute inset-0 top-[52px] lg:top-[88px] bg-white z-40">
+                  <ChatContainer />
+                </div>
+              </div>
+            </div>
+          </Portal>
+        )}
 
-        {/*---------------------------------------- Hamburger Menu for Mobile ---------------------------------------------*/}
-        <div className="lg:hidden">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-[#191C77] text-2xl"
-          >
-            {isOpen ? <FiX /> : <FiMenu />}
-          </button>
-        </div>
+        
 
         {/*-------------------------------------------- Desktop Menu -----------------------------------------------*/}
         <div className="hidden lg:flex lg:items-end lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent lg:ml-[432px]">
@@ -125,56 +138,7 @@ const NavbarAuthen = () => {
             </button>
             {bellMenuOpen && (
               <Portal>
-                <div
-                  style={{
-                    position: "fixed",
-                    top: `${bellMenuPosition.top}px`,
-                    left: `${bellMenuPosition.left}px`,
-                    transform: "translateX(-50%)",
-                    marginTop: "32px",
-                  }}
-                  className="w-[250px] h-[215px] font-[500] bg-white shadow-lg rounded-[16px] py-2 z-10 font-Nunito text-sm"
-                >
-                  <div className="flex items-center h-[66px] p-[8px]">
-                    <img
-                      src={profileMenu1}
-                      alt="icon2"
-                      className="ml-1 mr-3 h-[32px] w-[32px]"
-                    />
-                    <button
-                      onClick={() => navigate("/")}
-                      className="text-start"
-                    >
-                      ‘Khal Drogo’ Just Merry you! Click here to see profile
-                    </button>
-                  </div>
-                  <div className="flex items-center h-[66px] p-[8px]">
-                    <img
-                      src={profileMenu2}
-                      alt="icon2"
-                      className="ml-1 mr-3 h-[32px] w-[32px]"
-                    />
-                    <button
-                      onClick={() => navigate("/")}
-                      className="text-start"
-                    >
-                      ‘Daeny’ Merry you back! Let’s start conversation now
-                    </button>
-                  </div>
-                  <div className="flex items-center h-[66px] p-[8px]">
-                    <img
-                      src={profileMenu3}
-                      alt="icon2"
-                      className="ml-1 mr-3 h-[32px] w-[32px]"
-                    />
-                    <button
-                      onClick={() => navigate("/")}
-                      className="text-start"
-                    >
-                      ‘Ygritte’ Merry you back! Let’s start conversation now
-                    </button>
-                  </div>
-                </div>
+                <NotificationMenu />
               </Portal>
             )}
           </div>

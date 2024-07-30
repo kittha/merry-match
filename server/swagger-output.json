@@ -163,6 +163,12 @@
                 },
                 "packageDetails": {
                   "example": "any"
+                },
+                "avatar": {
+                  "example": "any"
+                },
+                "id": {
+                  "example": "any"
                 }
               }
             }
@@ -346,9 +352,6 @@
           },
           "400": {
             "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -458,6 +461,27 @@
         }
       }
     },
+    "/api/v1/messages/{matchId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/v1/packages/": {
       "get": {
         "description": "",
@@ -502,10 +526,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "packageId": {
+                "user": {
                   "example": "any"
                 },
-                "card": {
+                "product": {
+                  "example": "any"
+                },
+                "cardDetail": {
                   "example": "any"
                 }
               }
@@ -518,6 +545,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
