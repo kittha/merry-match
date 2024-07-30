@@ -24,3 +24,15 @@ export const createMessage = async (matchId, data) => {
     console.error("Error at createMessage in connectMsg: ", error);
   }
 };
+
+export const getMatchInfo = async (matchId) => {
+  try {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/match/${matchId}`
+    );
+    console.log("Get data from Database Success.");
+    return data;
+  } catch (error) {
+    console.error("Error at getMatchInfo in connectMsg: ", error);
+  }
+};

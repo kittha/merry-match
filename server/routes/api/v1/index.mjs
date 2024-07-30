@@ -3,6 +3,7 @@ import express from "express";
 import adminRoutes from "./admin.route.mjs";
 import authRoutes from "./auth.route.mjs";
 import fileComplaint from "./complaints.route.mjs";
+import matchRoutes from "./match.route.mjs";
 // import membershipRoutes from "./membership.route.mjs";
 import merryRoutes from "./merry.route.mjs";
 // import merryListRoutes from "./merrylist.route.mjs"
@@ -23,7 +24,7 @@ router.use("/auth", authRoutes);
 router.use("/complaints", [authenticateUser], fileComplaint);
 // router.use("/membership", [authenticateUser], membershipRoutes); // Aggregator Endpoint
 router.use("/merry", [authenticateUser], merryRoutes);
-// router.use("/merry", [authenticateUser], merryRoutes);
+router.use("/match", [authenticateUser], matchRoutes);
 // router.use("/merryList", [authenticateUser], merryListRoutes)
 router.use("/messages", messagesRoutes);
 router.use("/packages", packageRoutes);

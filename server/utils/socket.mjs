@@ -22,9 +22,7 @@ const socket = (httpServer) => {
     socket.on("send-msg", (msg) => {
       console.log(onlineUsers);
       const receiver = onlineUsers.filter((user) => {
-        console.log("inside", user);
-        return user.userId === 10;
-        //need to use the receiver_id instead 10
+        return user.userId === msg.receiver;
       });
       if (receiver.length) {
         console.log("send", msg, "receiver", receiver);

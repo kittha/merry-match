@@ -54,23 +54,16 @@ export const getAllMatch = async (userId) => {
   }
 };
 
-export const getFilteredMatchWithChat = async (userId) => {
+export const getMatchByMatchId = async (matchId) => {
   try {
     await connectionPool.query("BEGIN");
     const result = await connectionPool.query(
-      `SELECT * FROM match_status 
-      JOIN messages
-        ON match_status.match_id = messages.match_id
-      LEFT JOIN media 
-        ON messages.media_id = media.media_id
-      WHERE (match_status.user_id_1 = $1 
-        OR match_status.user_id_2 = $1) 
-      AND (match_status.status_1 = 'match')
-      ORDER BY messages.sent_at DESC
-      LIMIT 1`,
-      [userId]
+      `SELECT * FROM match_status
+        WHERE match_id = $1 
+        AND status_1 = 'match'`,
+      [matchId]
     );
-    console.log(result.rows[0]);
+    // console.log(result.rows[0]);
     return result.rows[0];
   } catch (error) {
     await connectionPool.query("ROLLBACK");
@@ -78,3 +71,28 @@ export const getFilteredMatchWithChat = async (userId) => {
     throw error;
   }
 };
+
+// export const getFilteredMatchWithChat = async (userId) => {
+//   try {
+//     await connectionPool.query("BEGIN");
+//     const result = await connectionPool.query(
+//       `SELECT * FROM match_status
+//       JOIN messages
+//         ON match_status.match_id = messages.match_id
+//       LEFT JOIN media
+//         ON messages.media_id = media.media_id
+//       WHERE (match_status.user_id_1 = $1
+//         OR match_status.user_id_2 = $1)
+//       AND (match_status.status_1 = 'match')
+//       ORDER BY messages.sent_at DESC
+//       LIMIT 1`,
+//       [userId]
+//     );
+//     console.log(result.rows[0]);
+//     return result.rows[0];
+//   } catch (error) {
+//     await connectionPool.query("ROLLBACK");
+//     console.error("Error occurred in matching model:", error);
+//     throw error;
+//   }
+// };
