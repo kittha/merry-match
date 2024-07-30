@@ -1,6 +1,5 @@
 import React from "react";
-import Pto from "../../../public/assets/matchingpage/matching-area/pto.jpg";
-
+import card from "../../../public/assets/membershipPage/card.svg";
 function PaymentMethod() {
   return (
     <div className="flex flex-col gap-[24px]">
@@ -8,7 +7,7 @@ function PaymentMethod() {
       <div className="method-box pt-[32px] pb-[24px] px-[32px] border border-[#D6D9E4] rounded-[32px]">
         <div className="border-b border-[#E4E6ED] pb-[24px] flex gap-[16px]">
           <div className="size-[66px] flex items-center justify-center bg-[#F6F7FC] rounded-[16px]">
-            <img src={Pto} className="size-[32px]"></img>
+            <img src={card} alt="card"></img>
           </div>
           <div className="flex flex-col gap-[8px]">
             <p className="font-[700] text-[24px]">Visa ending *card</p>
