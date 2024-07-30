@@ -79,7 +79,9 @@ const Chat = () => {
 
   return (
     <div className="page flex flex-row">
-      <ChatContainer />
+      <div className="sidebar hidden lg:flex">
+        <ChatContainer />
+      </div>
       <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
         <BackBar />
         <DisplayChat messages={messages} />
