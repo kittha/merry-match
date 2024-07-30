@@ -38,14 +38,18 @@ const SwipeCard = () => {
     getPotentialMatches();
   }, [currentUserId]);
 
+  const favourUser = (userId) => {
+    addMerry(userId);
+
+      // Update userQueue to remove the user who has been favourited
+  setUserQueue(prevQueue => prevQueue.filter(user => user.user_id !== userId));
+  };
+
   const disfavorUser = (userId) => {
-    // console.log("I'm clicking disfavorUser btn");
-    // console.log("curUser click disfavourUser to other userId no: ", userId);
-    undoMerry(userId); // userId mean "unlikedUserId"
-    setUserQueue((prevQueue) => {
-      const newQueue = [...prevQueue.slice(1), prevQueue[0]]; // Move the first user to the end
-      return newQueue;
-    });
+    undoMerry(userId); 
+
+    // Update userQueue to shufft the user who has been disfavourited to the last position
+    setUserQueue((prevQueue) => prevQueue.filter((user, index) => index !== 0));
   };
 
   const swiped = (direction, userId) => {
@@ -144,7 +148,7 @@ const SwipeCard = () => {
                     </button>
                     <button
                       className="text-white w-[100px] h-[100px] rounded-3xl z-10"
-                      onClick={() => addMerry(user.user_id)}
+                      onClick={() => favourUser(user.user_id)}
                     >
                       <img src={HeartButton} alt="Heart Button" />
                     </button>

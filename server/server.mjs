@@ -29,7 +29,7 @@ const corsOptions = {
 
 // app.use(rateLimiter(limiterMax, limiterWindow));
 
-// app.use(compression());
+app.use(compression());
 
 app.use(helmet());
 
