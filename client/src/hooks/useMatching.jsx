@@ -2,13 +2,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useMerryLimit } from "../contexts/MerryLimitProvider";
 
-// Example of Customs Hook usage look at: /merry-match/client/src/components/matchingpage/matching/SwipeCard.jsx
 const useMatching = (currentUserId) => {
   const [userQueue, setUserQueue] = useState([]);
   const { availableClicksToday, setAvailableClicksToday, maxDailyQuota } =
     useMerryLimit();
-  // const [availableClicksToday, setAvailableClicksToday] = useState(0);
 
+    /**
+     * Retrieves potential matches for the current user by sending a GET request to the server.
+     *
+     * @return {Promise<void>} - A Promise that resolves when the potential matches are successfully retrieved.
+     *                          If the API response is not an array, an error message will be logged to the console.
+     *                          If there is an error while fetching the potential matches, an error message will be logged to the console.
+     */
   const getPotentialMatches = async () => {
     try {
       const response = await axios.get(
@@ -16,7 +21,6 @@ const useMatching = (currentUserId) => {
           import.meta.env.VITE_BACKEND_URL
         }/api/v1/merry/available-matches/${currentUserId}`
       );
-      console.log(response.data);
 
       if (Array.isArray(response.data.matches.matches)) {
         setUserQueue(response.data.matches.matches);
@@ -28,6 +32,12 @@ const useMatching = (currentUserId) => {
     }
   };
 
+  /**
+   * Sends a POST request to add a "merry" status for a given user.
+   *
+   * @param {string} likedUserId - The ID of the user being added as a "merry" user.
+   * @return {Promise<void>} - A Promise that resolves when the "merry" status is successfully added.
+   */
   const addMerry = async (likedUserId) => {
     try {
       await axios.post(
@@ -40,6 +50,12 @@ const useMatching = (currentUserId) => {
     }
   };
 
+/**
+ * Undoes a "merry" status (POST "unmatch" status) for a given user.
+ *
+ * @param {string} unlikedUserId - The ID of the user whose "merry" status is being undone.
+ * @return {Promise<void>} - A Promise that resolves when the "merry" status is successfully undone.
+ */
   const undoMerry = async (unlikedUserId) => {
     try {
       await axios.post(
