@@ -1,8 +1,8 @@
-// import express from "express";
-// import getmembershipDataById from "../../../controllers/membership.controller.mjs";
+import express from "express";
+import { getMembershipPackage } from "../../../controllers/membership.controller.mjs";
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get("/:userId", getmembershipDataById);
+router.get("/:userId", getMembershipPackage);
 
-// export default router;
+export default router;

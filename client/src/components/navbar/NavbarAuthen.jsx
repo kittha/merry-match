@@ -32,6 +32,8 @@ const NavbarAuthen = () => {
     left: 0,
   });
   const { resetForm } = useContext(FormContext);
+  const { logout, state } = useAuth();
+  const userId = state.user?.id; // Retrieve userId from state
 
   const handleBellClick = () => {
     setBellMenuOpen(!bellMenuOpen);
@@ -42,8 +44,6 @@ const NavbarAuthen = () => {
     setProfileMenuOpen(!profileMenuOpen);
     setBellMenuOpen(false);
   };
-
-  const { logout, state } = useAuth();
 
   const handleLogout = () => {
     resetForm();
@@ -67,7 +67,7 @@ const NavbarAuthen = () => {
       });
     }
   }, [profileMenuOpen]);
-  // console.log("navbar", state);
+
   return (
     <nav className="Navbar text-[#64001D] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-50 overflow-auto flex items-center justify-between w-full lg:h-[88px] h-[52px] font-bold shadow-md">
       <div className="flex items-center justify-between w-full lg:w-[1440px] mx-auto px-4 lg:px-0">
@@ -120,7 +120,7 @@ const NavbarAuthen = () => {
         {/*-------------------------------------------- Desktop Menu -----------------------------------------------*/}
         <div className="hidden lg:flex lg:items-end lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent lg:ml-[432px]">
           <button onClick={() => navigate("/matching")}>Start Matching!</button>
-          <button onClick={() => navigate("/membership")}>
+          <button onClick={() => navigate(`/membership/${userId}`)}>
             Merry Membership
           </button>
         </div>
@@ -192,7 +192,7 @@ const NavbarAuthen = () => {
                   </div>
                   <div className="flex items-center h-[37px] p-[8px]">
                     <img src={icon4} alt="icon4" className="mr-2 pl-4" />
-                    <button onClick={() => navigate("/membership")}>
+                    <button onClick={() => navigate(`/membership/${userId}`)}>
                       Merry Membership
                     </button>
                   </div>
@@ -241,7 +241,7 @@ const NavbarAuthen = () => {
           </div>
           <div className="flex items-center p-[12px]">
             <img src={icon4} alt="icon4" className="mr-2 p-[10px] pl-8" />
-            <button onClick={() => navigate("/membership")}>
+            <button onClick={() => navigate(`/membership/${userId}`)}>
               Merry Membership
             </button>
           </div>
