@@ -76,8 +76,8 @@ export const getMatchListByUserId = async (req, res) => {
 export const getAvailableMatchesByUserId = async (req, res) => {
   const { userId } = req.params;
   try {
-    const availableUsersForMatches = await getAvailableMatchesFromModel(userId);
-    res.status(200).json({ availableUsersForMatches });
+    const matches = await getAvailableMatchesFromModel(userId);
+    res.status(200).json({ matches });
   } catch (error) {
     res.status(500).json({ error: "Failed to get available matches." });
   }

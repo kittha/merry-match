@@ -36,7 +36,7 @@ const SwipeCard = () => {
 
   useEffect(() => {
     getPotentialMatches();
-  }, [currentUserId]);
+  }, []);
 
   // TODO question to fix contradiction
   // after execute favourUser; the requirement say we should remove the favourited user from the userQueue

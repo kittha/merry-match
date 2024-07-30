@@ -14,7 +14,7 @@ const useMatching = (currentUserId) => {
       const response = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/api/v1/merry/match/${currentUserId}`
+        }/api/v1/merry/available-matches/${currentUserId}`
       );
       console.log(response.data);
 

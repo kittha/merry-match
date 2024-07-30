@@ -260,12 +260,9 @@ export const getAvailableMatches = async (userId) => {
       WHERE 
           p1.user_id = $1
           AND (p1.sexual_preferences ILIKE '%' || p2.sexual_identities || '%'
-              OR p2.sexual_preferences ILIKE '%' || p1.sexual_identities || '%')
-          AND ms.status_1 != 'merry'
-          OR ms.status_1 IS NULL
-          AND ms.status_2 IS NOT NULL
-      ORDER BY 
-          match_score DESC;
+               OR p2.sexual_preferences ILIKE '%' || p1.sexual_identities || '%')
+          AND (ms.status_1 != 'merry' OR ms.status_1 IS NULL OR ms.user_id_1 != $1)
+          AND (ms.status_2 IS NULL OR ms.status_2 = 'match')
       `,
       [userId]
     );
