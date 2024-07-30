@@ -110,7 +110,7 @@ function MerryListPage() {
                         alt="merry-list-image"
                       />
                       <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
-                        {list.status === "match" ? (
+                        {list.status === "merry" ? (
                           <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
                             <img
                               src={GroupHearticon}
