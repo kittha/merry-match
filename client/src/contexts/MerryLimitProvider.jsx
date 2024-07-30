@@ -1,77 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from "./authentication.jsx";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useAuth } from './authentication.jsx';
+import axios from 'axios';
 
-const MerryLimitContext = React.createContext();
+const MerryLimitContext = React.createContext(null);
 
-function MerryLimitProvider(props) {
-  const { state } = useAuth();
-  // const userId = state?.user?.id || JSON.parse(localStorage.getItem("data")).id;
-  const currentUserJson = localStorage.getItem("data");
-  const currentUser = JSON.parse(currentUserJson);
-  const userId = currentUser.id;
-  // console.log("currentUser: ", currentUser);
-  // console.log("userId: ", userId);
+/**
+ * MerryLimitProvider is a React component that provides Merry limit data to its child components.
+ *
+ * @param {Object} props - The props object.
+ * @param {ReactNode} props.children - The child components.
+ * @return {ReactNode} The MerryLimitContext.Provider component with the Merry limit data.
+ */
+function MerryLimitProvider({ children }) {
+    const { state } = useAuth();
+    const [userId, setUserId] = useState(() => {
+        return state?.user?.id || JSON.parse(localStorage.getItem('data'))?.id;
+    });
+    const [availableClicksToday, setAvailableClicksToday] = useState(0);
+    const [maxDailyQuota, setMaxDailyQuota] = useState(20);
 
-  const [availableClicksToday, setAvailableClicksToday] = useState(0);
-  const [maxDailyQuota, setMaxDailyQuota] = useState(20);
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!userId) return;
 
-  const fetchData = async () => {
-    if (userId) {
-      try {
-        const [availableClicksResponse, maxDailyQuotaResponse] =
-          await Promise.all([
-            axios.get(
-              `${
-                import.meta.env.VITE_BACKEND_URL
-              }/api/v1/merry/available-clicks/${userId}`
-            ),
-            axios.get(
-              `${
-                import.meta.env.VITE_BACKEND_URL
-              }/api/v1/merry/merry-limit/${userId}`
-            ),
-          ]);
+            try {
+                const backendUrl = import.meta.env.VITE_BACKEND_URL;
+                const [availableClicksResponse, maxDailyQuotaResponse] = await Promise.all([
+                    axios.get(`${backendUrl}/api/v1/merry/available-clicks/${userId}`),
+                    axios.get(`${backendUrl}/api/v1/merry/merry-limit/${userId}`)
+                ]);
 
-        // console.log(availableClicksResponse.data);
-        // console.log(maxDailyQuotaResponse.data);
+                setAvailableClicksToday(availableClicksResponse.data.data.availableClicksToday);
+                setMaxDailyQuota(maxDailyQuotaResponse.data.data.merry_limit);
+            } catch (error) {
+                console.error('Error fetching Merry limit data:', error);
+            }
+        };
 
-        const availableClicksToday =
-          availableClicksResponse.data.data.availableClicksToday;
-        const maxDailyQuota = maxDailyQuotaResponse.data.data.merry_limit;
+        fetchData();
+    }, [userId]);
 
-        // console.log("Fetched availableClicksToday:", availableClicksToday);
-        // console.log("Fetched maxDailyQuota:", maxDailyQuota);
-
-        setAvailableClicksToday(availableClicksToday);
-        setMaxDailyQuota(maxDailyQuota);
-      } catch (error) {
-        // console.error("Error fetching merry-limit data:", error);
-        // console.log("User doesn't use any merry quota today");
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [userId]);
-
-  useEffect(() => {
-    fetchData();
-  }, [availableClicksToday]);
-
-  return (
-    <MerryLimitContext.Provider
-      value={{
-        availableClicksToday,
-        setAvailableClicksToday,
-        maxDailyQuota,
-        setMaxDailyQuota,
-      }}
-    >
-      {props.children}
-    </MerryLimitContext.Provider>
-  );
+    return (
+        <MerryLimitContext.Provider value={{ availableClicksToday, setAvailableClicksToday, maxDailyQuota, setMaxDailyQuota }}>
+            {children}
+        </MerryLimitContext.Provider>
+    );
 }
 
 const useMerryLimit = () => React.useContext(MerryLimitContext);
