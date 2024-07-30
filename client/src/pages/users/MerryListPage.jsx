@@ -21,25 +21,7 @@ function MerryListPage() {
     undoMerry,
     getPotentialMatches,
   } = useMatching(currentUserId);
-  // const [merryList, setMerryList] = useState([]);
-  // const { calculateAge } = useContext(FormContext);
-  // const { userId } = useParams();
-  // console.log(userId);
-  // const getMerryList = async () => {
-  //   try {
-  //     const showMerryList = await axios.get(
-  //       `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
-  //     );
-  //     console.log("Hello!!", showMerryList.data.data);
-  //     setMerryList(showMerryList.data.data);
-  //   } catch (error) {
-  //     console.error("Error fetching merry list:", error);
-  //   }
-  // };
 
-  // useEffect(() => {
-  //   getMerryList();
-  // }, []);
   useEffect(() => {
     getPotentialMatches();
   }, [currentUserId]);
