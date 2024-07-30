@@ -6,6 +6,7 @@ import { useAuth } from "../../contexts/authentication";
 import { createMessage, getPrevMessages } from "../../hooks/connectMsg.mjs";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
+import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
 
 const Chat = () => {
   const { matchId } = useParams();
@@ -77,10 +78,13 @@ const Chat = () => {
   }, [arrivalMessage]);
 
   return (
-    <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
-      <BackBar />
-      <DisplayChat messages={messages} />
-      <InputSection handleSendMsg={handleSendMsg} />
+    <div className="page flex flex-row">
+      <ChatContainer />
+      <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
+        <BackBar />
+        <DisplayChat messages={messages} />
+        <InputSection handleSendMsg={handleSendMsg} />
+      </div>
     </div>
   );
 };
