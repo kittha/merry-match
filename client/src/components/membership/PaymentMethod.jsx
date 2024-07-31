@@ -1,4 +1,3 @@
-import React from "react";
 import card from "../../../public/assets/membershipPage/card.svg";
 function PaymentMethod() {
   return (
