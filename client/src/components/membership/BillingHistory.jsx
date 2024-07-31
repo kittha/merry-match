@@ -30,7 +30,7 @@ function BillingHistory({ history }) {
 
   return (
     <div className="flex flex-col gap-[8px] lg:gap-[24px]">
-      <h1 className="text-[#2A2E3F] font-[700] text-[24px] pt-[8px] px-[16px]">
+      <h1 className="text-[#2A2E3F] font-[700] text-[24px] max-lg:pt-[8px] max-lg:px-[16px]">
         Billing History
       </h1>
       <div className="billing-box lg:px-[32px] lg:pb-[24px] lg:pt-[32px] lg:border border-[#D6D9E4] lg:rounded-[32px]">

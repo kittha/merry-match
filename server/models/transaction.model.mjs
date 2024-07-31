@@ -8,7 +8,7 @@ import connectionPool from "../configs/db.mjs";
 export const createTransaction = async (transaction) => {
   const {
     user_id,
-    payment_id,
+
     package_id,
     status,
     created_at,
@@ -20,19 +20,11 @@ export const createTransaction = async (transaction) => {
     const result = await connectionPool.query(
       `
       INSERT INTO transactions 
-      (user_id,payment_id,package_id, status, created_at, updated_at, session_id)
-      VALUES ($1, $2, $3, $4, $5,$6,$7)
+      (user_id,package_id, status, created_at, updated_at, session_id)
+      VALUES ($1, $2, $3, $4, $5,$6)
       RETURNING transaction_id
       `,
-      [
-        user_id,
-        payment_id,
-        package_id,
-        status,
-        created_at,
-        updated_at,
-        session_id,
-      ]
+      [user_id, package_id, status, created_at, updated_at, session_id]
     );
     return result.rows[0]; // Returns the transaction_id
   } catch (error) {

@@ -16,18 +16,26 @@ export const getMembershipData = async (req, res) => {
     const billingHistory = await getTransactionByUserId(userId);
 
     // Attach package details to each billing history entry
-    const billingHistoryWithPackageDetails = billingHistory.map((entry) => ({
-      ...entry,
-      package_name: packageDetails.name,
-      package_price: packageDetails.price,
-    }));
+    const billingHistoryWithPackageDetails = await Promise.all(
+      billingHistory.map(async (transaction) => {
+        const packageDetails = await getPackageById(transaction.package_id);
+        if (!packageDetails) {
+          throw new Error(
+            `Package details not found for packageId: ${transaction.package_id}`
+          );
+        }
+        return {
+          ...transaction,
+          package_name: packageDetails.name,
+          package_price: packageDetails.price,
+        };
+      })
+    );
     // Respond with combined data
-    res
-      .status(200)
-      .json({
-        packageDetails,
-        billingHistory: billingHistoryWithPackageDetails,
-      });
+    res.status(200).json({
+      packageDetails,
+      billingHistory: billingHistoryWithPackageDetails,
+    });
   } catch (error) {
     console.error("Error getting membership data:", error);
     res.status(500).json({ message: error.message });

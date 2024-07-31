@@ -94,7 +94,6 @@ const PaymentForm = () => {
         throw new Error("Missing client_secret from backend response.");
       }
 
-      // Retrieve PaymentIntent to check its status
       const paymentIntent = data.paymentIntent;
 
       if (paymentIntent && paymentIntent.status === "succeeded") {
@@ -107,7 +106,6 @@ const PaymentForm = () => {
         return;
       }
 
-      // Confirm the payment if not already completed
       const confirmResult = await stripe.confirmCardPayment(
         data.client_secret,
         {
@@ -140,7 +138,10 @@ const PaymentForm = () => {
         });
       }
     } catch (error) {
-      console.error("Payment error:", error);
+      console.error(
+        "Payment error:",
+        error.response ? error.response.data : error.message
+      );
       setLoading(false); // Reset loading state on error
     }
   };

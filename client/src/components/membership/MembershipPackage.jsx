@@ -71,7 +71,7 @@ function MembershipPackage({ details, history }) {
                 Cancel Package
               </button>
             </div>
-            <div className="flex flex-col justify-end mt-[16px] text-[#EFC4E2] font-[400]">
+            <div className="flex flex-col justify-end mt-[16px] text-[#EFC4E2] font-[400] lg:hidden">
               <div className="flex justify-between">
                 <p>Start Membership</p>
                 <p>
