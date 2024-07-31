@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import { getPackageById } from "../models/package.model.mjs";
 import { createTransaction } from "../models/transaction.model.mjs";
 import { createPayment } from "../models/payment.model.mjs";
+import { updateUserPackage } from "../models/user.model.mjs";
 
 // Initialize Stripe with the secret key from environment variables
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -111,6 +112,8 @@ export const processPayment = async (req, res) => {
       updated_at: new Date(paymentIntent.created * 1000),
       session_id: paymentIntent.id,
     });
+
+    await updateUserPackage(user.user_id, product.package_id);
 
     res.status(200).json({
       success: true,
