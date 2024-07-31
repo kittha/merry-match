@@ -7,6 +7,8 @@ import fileComplaint from "./complaints.route.mjs";
 import merryRoutes from "./merry.route.mjs";
 // import merryListRoutes from "./merrylist.route.mjs"
 import messagesRoutes from "./messages.route.mjs";
+import merryListRoutes from "./merrylist.route.mjs";
+// import messagesRoutes from "./messages.route.mjs";
 import packageRoutes from "./package.route.mjs";
 import paymentRoutes from "./payment.route.mjs";
 import profilesRoutes from "./profiles.route.mjs";
@@ -23,9 +25,10 @@ router.use("/auth", authRoutes);
 router.use("/complaints", [authenticateUser], fileComplaint);
 // router.use("/membership", [authenticateUser], membershipRoutes); // Aggregator Endpoint
 router.use("/merry", [authenticateUser], merryRoutes);
-// router.use("/merry", [authenticateUser], merryRoutes);
-// router.use("/merryList", [authenticateUser], merryListRoutes)
+
 router.use("/messages", messagesRoutes);
+router.use("/merry-list", [authenticateUser], merryListRoutes);
+
 router.use("/packages", packageRoutes);
 router.use("/payment", paymentRoutes);
 router.use("/profiles", [authenticateUser], profilesRoutes);
