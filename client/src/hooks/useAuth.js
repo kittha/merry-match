@@ -3,18 +3,18 @@ import supabase from "../utils/supabaseClient";
 import { AuthContext } from "../contexts/authentication";
 
 const useAuth = () => {
-  const { setAuthState } = useContext(AuthContext);
+  const { setState } = useContext(AuthContext);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (session) {
-          setAuthState({
+          setState({
             user: session.user,
             session,
           });
         } else {
-          setAuthState({
+          setState({
             user: null,
             session: null,
           });
@@ -25,7 +25,7 @@ const useAuth = () => {
     return () => {
       authListener?.subscription.unsubscribe();
     };
-  }, [setAuthState]);
+  }, [setState]);
 
   return null;
 };
