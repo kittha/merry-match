@@ -1,5 +1,9 @@
 // import bcrypt from "bcrypt";
-import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
+import {
+  signUp,
+  signIn,
+  refreshSession,
+} from "../services/supabaseAuth.service.mjs";
 import { getUser, createUser } from "../models/user.model.mjs";
 import { cloudinaryUpload } from "../utils/cloudinary.uploader.mjs";
 import { createProfile } from "../models/profile.model.mjs";
@@ -100,6 +104,22 @@ export const fetchUser = async (req, res) => {
     console.log("Authenticated user:", user);
     return user;
   } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+/**
+ * Refresh User Session for the Merry Match application.
+ */
+export const refreshUserSession = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    const newSession = await refreshSession(refreshToken);
+    return res.status(200).json(newSession);
+  } catch (error) {
+    console.error("Error refreshing session:", error);
     res.status(500).json({
       message: "Internal server error",
     });

@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import TinderCard from "react-tinder-card";
-import { useNavigate } from "react-router-dom";
 import XButton from "/assets/matchingpage/matching-area/icons/action-button-x.png";
 import HeartButton from "/assets/matchingpage/matching-area/icons/action-button-heart.png";
 import ProfileDetial from "/assets/matchingpage/matching-area/icons/profile detail button.png";
 import LeftArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-left.png";
 import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right.png";
-import { useMerryLimit } from "../../../hooks/userMerryLimit";
 import UserProfilePopup from "./UserProfilePopup";
 import useMatching from "../../../hooks/useMatching";
 import filter from "/assets/matchingpage/matching-area/filter.png"
@@ -30,7 +28,6 @@ const SwipeCard = () => {
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
   const [showFilter, setShowFilter] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     getPotentialMatches();
