@@ -1,7 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Cancel(props) {
-  const navigate = useNavigate();
+  const updateStatus = async () => {
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/complaint/${
+          props.id
+        }/status`,
+        { status: "Cancel" }
+      );
+      props.setRefresh();
+      props.setTrigger(false);
+    } catch (error) {
+      console.error("Error update complaint status", error);
+    }
+  };
   return props.trigger ? (
     <>
       <div className="bg-black w-[100%] h-[100%] fixed flex items-center justify-center bottom-0 left-0 opacity-50 "></div>
@@ -21,6 +34,7 @@ function Cancel(props) {
           <div className="flex gap-4 ml-[24px] ">
             <button
               type="button"
+              onClick={updateStatus}
               className="w-[239px] h-[48px] bg-[#FFE1EA] rounded-[99px] text-[#95002B] text-base drop-shadow-PinkButton"
             >
               Yes, cancel this complaint
