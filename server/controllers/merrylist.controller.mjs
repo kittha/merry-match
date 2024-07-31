@@ -10,7 +10,7 @@ export const getMerryLists = async (req, res) => {
   try {
     const userId = req.params.userId;
     const merryList = await getMerryListsFromModel(userId);
-    console.log("I'm here");
+    console.log("Check");
     return res.status(200).json({
       message: "Fetch merry list successfully.",
       data: merryList,
