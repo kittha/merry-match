@@ -35,6 +35,8 @@
     "uuid": "^10.0.0",
     "winston": "^3.13.0",
     "winston-daily-rotate-file": "^5.0.0",
-    "winston-syslog": "^2.7.0"
+    "winston-syslog": "^2.7.0",
+    "@esbuild/linux-x64": "^0.23.0",
+    "@rollup/rollup-linux-x64-gnu": "^4.19.1"
   }
 }
