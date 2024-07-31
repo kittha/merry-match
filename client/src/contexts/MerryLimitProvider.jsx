@@ -16,7 +16,7 @@ export function MerryLimitProvider({ children }) {
     const maxDailyQuotaDefaultValue = 20;
     const { state } = useAuth();
     const [userId] = useState(() => {
-        return state?.id || JSON.parse(localStorage.getItem('data'))?.id;
+        return state?.user?.id || JSON.parse(localStorage.getItem('data'))?.id;
     });
     const [availableClicksToday, setAvailableClicksToday] = useState(0);
     const [maxDailyQuota, setMaxDailyQuota] = useState(maxDailyQuotaDefaultValue);

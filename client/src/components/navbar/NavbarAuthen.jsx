@@ -17,7 +17,6 @@ import icon5 from "/assets/navbar-image/icon5.png";
 import icon6 from "/assets/navbar-image/icon6.png";
 import ChatContainer from "../matchingpage/chatcontainer/ChatContainer";
 import NotificationMenu from "./NotificationMenu";
-import { convertLength } from "@mui/material/styles/cssUtils";
 
 const NavbarAuthen = () => {
   const navigate = useNavigate();
@@ -45,7 +44,6 @@ const NavbarAuthen = () => {
   };
 
   const { logout, state } = useAuth();
-  const userId = state?.id || JSON.parse(localStorage.getItem('data'))?.id;
 
   const handleLogout = () => {
     resetForm();
@@ -181,7 +179,7 @@ const NavbarAuthen = () => {
                   <div className="flex items-center h-[37px] p-[8px]">
                     <img src={icon2} alt="icon2" className="mr-2  pl-4" />
                     <button
-                      onClick={() => navigate(`/user-profile/${userId}`)}
+                      onClick={() => navigate(`/user-profile/${state.user.id}`)}
                     >
                       Profile
                     </button>
@@ -233,7 +231,7 @@ const NavbarAuthen = () => {
           </div>
           <div className="flex items-center p-[12px]">
             <img src={icon2} alt="icon2" className="mr-2 p-[10px] pl-8" />
-            <button onClick={() => navigate(`/user-profile/${userId}`)}>
+            <button onClick={() => navigate(`/user-profile/${state.user.id}`)}>
               Profile
             </button>
           </div>

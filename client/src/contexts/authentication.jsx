@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { getDecodedToken, isTokenExpired } from "../utils/jwtHelper";
+import { jwtDecode } from "jwt-decode";
 
-export const AuthContext = React.createContext();
+const AuthContext = React.createContext();
 
 // this is a hook that consume AuthContext
 const useAuth = () => React.useContext(AuthContext);
@@ -17,49 +17,16 @@ function AuthProvider(props) {
   });
   const navigate = useNavigate();
 
-  const setAuthState = (authState) => {
-    setState((prevState) => ({
-      ...prevState,
-      ...authState,
-    }));
-  };
-
-  
-  const refreshSession = async () => {
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (refreshToken) {
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
-          { refreshToken }
-        );
-        const { access_token, refresh_token } = response.data;
-        localStorage.setItem("token", access_token);
-        localStorage.setItem("refreshToken", refresh_token);
-        return access_token;
-      } catch (error) {
-        console.error("Error refreshing session:", error);
-        throw error;
-      }
-    }
-    return null;
-  };
-
   useEffect(() => {
-    const initializeAuth = async () => {
-      const token = await refreshSession();
-      if (token) {
-        const userData = JSON.parse(localStorage.getItem("data"));
-        if (userData) {
-          setState({
-            ...state,
-            user: userData,
-            role: userData.role,
-          });
-        }
-      }
-    };
-    initializeAuth();
+    const data = JSON.parse(localStorage.getItem("data"));
+    // console.log(data);
+    if (data) {
+      setState({
+        ...state,
+        user: data,
+        role: data.role,
+      });
+    }
   }, []);
 
   // make a login request
@@ -75,7 +42,6 @@ function AuthProvider(props) {
       const token = result.data.session.access_token;
       localStorage.setItem("token", token);
       localStorage.setItem("data", JSON.stringify(result.data));
-      localStorage.setItem("refreshToken", result.data.session.refresh_token);
 
       // const userDataFromToken = jwtDecode(token);
       // console.log(userDataFromToken);
@@ -89,6 +55,7 @@ function AuthProvider(props) {
         user: userDataFromPayload,
         role: userDataFromPayload.role,
       });
+
       if (userDataFromPayload.role === "Admin") {
         navigate("/admin/package");
       } else {
@@ -96,7 +63,7 @@ function AuthProvider(props) {
       }
     } catch (error) {
       console.error("Login error:", error);
-      
+
       let errorMessage = "An unexpected error occurred";
       if (
         error.response &&
@@ -105,7 +72,7 @@ function AuthProvider(props) {
       ) {
         errorMessage = error.response.data.message;
       }
-      
+
       setState({
         ...state,
         error: error.response.data.message,
@@ -139,7 +106,6 @@ function AuthProvider(props) {
   const logout = () => {
     try {
       localStorage.removeItem("token");
-      localStorage.removeItem("data");
       setState({ ...state, user: null, error: false });
     } catch (error) {
       console.error("Logout error:", error);
@@ -150,7 +116,7 @@ function AuthProvider(props) {
 
   return (
     <AuthContext.Provider
-      value={{ state, login, logout, register, isAuthenticated, setAuthState }}
+      value={{ state, login, logout, register, isAuthenticated }}
     >
       {props.children}
     </AuthContext.Provider>

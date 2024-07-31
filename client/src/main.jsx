@@ -4,7 +4,6 @@ import App from "./App.jsx";
 import "./index.css";
 import jwtInterceptor from "./utils/jwtInterceptor.js";
 import { AuthProvider } from "./contexts/authentication.jsx";
-import AuthInitializer from "./utils/AuthInitializer.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { FormProvider } from "./contexts/FormProvider.jsx";
 
@@ -22,14 +21,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-      <AuthInitializer>
+
         <PackageProvider>
           <FormProvider>
             <App />
           </FormProvider>
         </PackageProvider>
-        </AuthInitializer>
+
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
-)
+);

@@ -1,4 +1,5 @@
 import { supabase } from "../utils/supabaseClient.mjs";
+import connectionPool from "../configs/db.mjs";
 
 export const signUp = async (reqBody) => {
   try {
@@ -66,11 +67,3 @@ export const signIn = async (reqBody) => {
 //     throw error;
 //   }
 // };
-
-export const refreshSession = async (refreshToken) => {
-  const { data, error } = await supabase.auth.refreshSession({
-    refresh_token: refreshToken,
-  });
-  if (error) throw error;
-  return data.session;
-};
