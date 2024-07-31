@@ -11,30 +11,34 @@ import { useAuth } from "../../contexts/authentication";
 import useMatching from "../../hooks/useMatching";
 import React from "react";
 import { useMerryLimit } from "../../hooks/userMerryLimit";
-
+import ProfileMatchAndMerry from "../../components/merry-list/ProfileMatchAndMerry";
+import transformMerryListData from "../../../../server/utils/transformMerryListData.mjs";
 function MerryListPage() {
   const { state } = useAuth();
   const userId = state && state.user ? state.user.id : null;
-  // Helper function to calculate age from date of birth
-  const calculateAge = (dateOfBirth) => {
-    const dob = new Date(dateOfBirth);
-    const diffMs = Date.now() - dob.getTime();
-    const ageDt = new Date(diffMs);
-    return Math.abs(ageDt.getUTCFullYear() - 1970);
-  };
   const [merryList, setMerryList] = useState([]);
+
   const getMerryLists = async () => {
     try {
       const result = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
       );
-      //setMerryList(result.data);
-      console.log(result.data.data);
-      setMerryList(result.data.data);
+      const transformMerryList = transformMerryListData(result.data.data);
+      //console.log(transformMerryList);
+      setMerryList(transformMerryList);
     } catch (error) {
       console.error("Failed to fetch potential matches:", error);
     }
   };
+
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
+
+  const handleProfileDetailClick = (user) => {
+    setSelectedUser(user);
+    setShowModal(true);
+  };
+
   const {
     availableClicksToday,
     maxDailyQuota,
@@ -127,6 +131,7 @@ function MerryListPage() {
                       className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
                       alt="merry-list-image"
                     />
+
                     {/* Mobile Responsive */}
                     <div className="flex flex-row gap-[71px] lg:hidden">
                       <img
@@ -148,27 +153,37 @@ function MerryListPage() {
                             </h3>
                           </section>
                           <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
-                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
                               <img
                                 src={Chaticon}
                                 alt="chat-icon"
                                 className="mt-[15.6px] ml-[14.4px]"
                               />
-                            </div>
-                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            </button>
+                            <button
+                              onClick={() => handleProfileDetailClick(list)}
+                              className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
+                            >
                               <img
                                 src={Vectoricon}
                                 alt="vector-icon"
                                 className="mt-[15.6px] ml-[12px] mb-[12px]"
                               />
-                            </div>
-                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                            </button>
+                            {showModal && (
+                              <ProfileMatchAndMerry
+                                user={selectedUser}
+                                onClose={() => setShowModal(false)}
+                              />
+                            )}
+
+                            <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
                               <img
                                 src={WhiteHearticon}
                                 alt="white-heart-icon"
                                 className="mt-[5px] ml-[3px]"
                               />
-                            </div>
+                            </button>
                           </section>
                         </div>
                       ) : (
@@ -179,20 +194,29 @@ function MerryListPage() {
                             </h3>
                           </section>
                           <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
-                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            <button
+                              onClick={() => handleProfileDetailClick(list)}
+                              className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
+                            >
                               <img
                                 src={Vectoricon}
                                 alt="vector-icon"
                                 className="mt-[15.6px] ml-[12px] mb-[12px]"
                               />
-                            </div>
-                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                            </button>
+                            {showModal && (
+                              <ProfileMatchAndMerry
+                                user={selectedUser}
+                                onClose={() => setShowModal(false)}
+                              />
+                            )}
+                            <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
                               <img
                                 src={WhiteHearticon}
                                 alt="white-heart-icon"
                                 className="mt-[5px] ml-[3px]"
                               />
-                            </div>
+                            </button>
                           </section>
                         </div>
                       )}
@@ -206,7 +230,7 @@ function MerryListPage() {
                             {list.name}
                           </h4>
                           <h4 className="w-[29px] h-[30px] text-[#646D89]">
-                            {calculateAge(list.date_of_birth)}
+                            {list.age}
                           </h4>
                         </div>
                         <section className="w-[220px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px] lg:w-[324px]">
@@ -216,7 +240,7 @@ function MerryListPage() {
                             alt="location-icon"
                           />
                           <p className="w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
-                            {list.city}, {list.location}
+                            {list.city}, {list.country}
                           </p>
                         </section>
                       </section>
@@ -226,7 +250,7 @@ function MerryListPage() {
                             Sexual identities
                           </label>
                           <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                            {list.sexual_identities}
+                            {list.sexualIdentity}
                           </p>
                         </section>
                         <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
@@ -234,7 +258,7 @@ function MerryListPage() {
                             Sexual preferences
                           </label>
                           <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                            {list.sexual_preferences}
+                            {list.sexualPreference}
                           </p>
                         </section>
                         <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
@@ -242,7 +266,7 @@ function MerryListPage() {
                             Racial preferences
                           </label>
                           <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                            {list.racial_preferences}
+                            {list.racialPreference}
                           </p>
                         </section>
                         <section className="w-[343px] h-[32px] flex flex-row font-normal text-[16px] leading-[24px] lg:w-[447px]">
@@ -250,7 +274,7 @@ function MerryListPage() {
                             Meeting interests
                           </label>
                           <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
-                            {list.meeting_interests}
+                            {list.meetingInterests}
                           </p>
                         </section>
                       </section>
@@ -277,14 +301,22 @@ function MerryListPage() {
                               className="mt-[4px] ml-[14.4px]"
                             />
                           </button>
-                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                          <button
+                            onClick={() => handleProfileDetailClick(list)}
+                            className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
+                          >
                             <img
                               src={Vectoricon}
                               alt="vector-icon"
                               className="mt-[15.6px] ml-[12px] mb-[12px]"
                             />
                           </button>
-
+                          {showModal && (
+                            <ProfileMatchAndMerry
+                              user={selectedUser}
+                              onClose={() => setShowModal(false)}
+                            />
+                          )}
                           <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
                             <img
                               src={WhiteHearticon}
@@ -302,13 +334,22 @@ function MerryListPage() {
                           </h3>
                         </section>
                         <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
-                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                          <button
+                            onClick={() => handleProfileDetailClick(list)}
+                            className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
+                          >
                             <img
                               src={Vectoricon}
                               alt="vector-icon"
                               className="mt-[15.6px] ml-[12px] mb-[12px]"
                             />
                           </button>
+                          {showModal && (
+                            <ProfileMatchAndMerry
+                              user={selectedUser}
+                              onClose={() => setShowModal(false)}
+                            />
+                          )}
 
                           <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
                             <img

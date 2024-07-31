@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import exit from "/assets/profilepicture/exit.png";
 import crossbutton from "/assets/profilepicture/crossbutton.png";
 import lovebutton from "/assets/profilepicture/lovebutton.png";
@@ -6,19 +6,9 @@ import arrowL from "/assets/profilepicture/arrowL.png";
 import arrowR from "/assets/profilepicture/arrowR.png";
 import location from "/assets/profilepicture/location.png";
 import arrowB from "/assets/profilepicture/arrowB.png";
-import { useState, useContext } from "react";
-import { useImage } from "../../../hooks/useImage.mjs";
-import { FormContext } from "../../../contexts/FormProvider";
 
 const ProfileMatchAndMerry = ({ user, onClose }) => {
-  const { calculateAge } = useContext(FormContext);
-  const { checkImage } = useImage();
-
-  // convert Object user.avatars  to Array of avatar_url value
   const avatarsArr = Object.values(user.avatars || {});
-  // console.log(avatarsArr);
-  // ['https://upload.wikimedia.org/wikipedia/commons/thu…rfkern_-_Schloss_-_Ansicht_von_Westen_%281%29.jpg', 'https://upload.wikimedia.org/wikipedia/commons/thu…Bread_Mountain.jpg/300px-Sweet_Bread_Mountain.jpg']
-
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
 
   const handleNextAvatar = () => {
@@ -31,6 +21,13 @@ const ProfileMatchAndMerry = ({ user, onClose }) => {
     setCurrentAvatarIndex((prevIndex) =>
       prevIndex === 0 ? avatarsArr.length - 1 : prevIndex - 1
     );
+  };
+
+  const calculateAge = (date_of_birth) => {
+    const dob = new Date(date_of_birth);
+    const diffMs = Date.now() - dob.getTime();
+    const ageDt = new Date(diffMs);
+    return Math.abs(ageDt.getUTCFullYear() - 1970);
   };
 
   return (
@@ -51,7 +48,7 @@ const ProfileMatchAndMerry = ({ user, onClose }) => {
           </button>
         </div>
         <div className="lg:flex flex-row">
-          <div className="lg:Lside lg:w-1/2 flex justify-center relative">
+          <div className="lg:w-1/2 flex justify-center relative">
             <div className="lg:w-[400px] lg:h-[400px] w-screen h-[356px] rounded-2xl">
               {avatarsArr.length > 0 && (
                 <>
@@ -107,7 +104,7 @@ const ProfileMatchAndMerry = ({ user, onClose }) => {
                 <img src={location} />
                 <div className="flex ml-[20px] text-[#646D89]">
                   <p>
-                    {user.city}, {user.country}
+                    {user.city}, {user.location}
                   </p>
                 </div>
               </div>
@@ -149,7 +146,7 @@ const ProfileMatchAndMerry = ({ user, onClose }) => {
                     key={index}
                     className="w-[86px] h-[40px] text-[#7D2262] border border-[#DF89C6] rounded-lg mr-2 flex items-center justify-center"
                   >
-                    <p>{hobby}</p>
+                    {hobby}
                   </div>
                 ))}
               </div>
