@@ -3,6 +3,7 @@ import express from "express";
 import adminRoutes from "./admin.route.mjs";
 import authRoutes from "./auth.route.mjs";
 import fileComplaint from "./complaints.route.mjs";
+import matchRoutes from "./match.route.mjs";
 import membershipRoutes from "./membership.route.mjs";
 import merryRoutes from "./merry.route.mjs";
 // import merryListRoutes from "./merrylist.route.mjs"
@@ -26,6 +27,7 @@ router.use("/complaints", [authenticateUser], fileComplaint);
 router.use("/membership", [authenticateUser], membershipRoutes);
 router.use("/merry", [authenticateUser], merryRoutes);
 
+router.use("/match", [authenticateUser], matchRoutes);
 router.use("/messages", messagesRoutes);
 router.use("/merry-list", [authenticateUser], merryListRoutes);
 

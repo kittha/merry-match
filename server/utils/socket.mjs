@@ -7,29 +7,23 @@ const socket = (httpServer) => {
       credentials: true,
     },
   });
-  let onlineUsers = [];
+  let onlineUsers = {};
   io.on("connection", (socket) => {
     // listen to a new connection
     console.log("A user connected:", socket.id);
     socket.on("add-user", (userId) => {
-      if (!onlineUsers.some((user) => user.userId === userId)) {
-        onlineUsers.push({ userId, socketId: socket.id });
-      }
+      onlineUsers[userId] = socket.id;
       console.log("get online users ", onlineUsers);
     });
 
     // listen for message
     socket.on("send-msg", (msg) => {
       console.log(onlineUsers);
-      const receiver = onlineUsers.filter((user) => {
-        console.log("inside", user);
-        return user.userId === 10;
-        //need to use the receiver_id instead 10
-      });
-      if (receiver.length) {
+      const receiver = onlineUsers[msg.receiver];
+      if (receiver) {
         console.log("send", msg, "receiver", receiver);
-        console.log(receiver[0].socketId);
-        socket.to(receiver[0].socketId).emit("receive-msg", msg);
+        console.log(receiver);
+        socket.to(receiver).emit("receive-msg", msg);
       }
     });
 

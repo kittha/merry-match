@@ -2,12 +2,8 @@ import { useEffect } from "react";
 import { useAuth } from "../../../contexts/authentication";
 import matched from "/assets/matchingpage/merry-match-icon.png";
 
-const DisplayChat = ({ messages }) => {
-  const { state } = useAuth();
-  console.log(state);
-  console.log(messages);
-
-  const userId = state.user?.id;
+const DisplayChat = ({ messages, userId }) => {
+  // console.log(messages);
 
   const scrollToBottom = () => {
     const element = document.getElementsByTagName("main")[0];

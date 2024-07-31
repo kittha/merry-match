@@ -16,7 +16,9 @@ const ChatContainer = () => {
     const fetchMatches = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/match/${currentUserId}`
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/v1/merry/match/${currentUserId}`
         );
         setMatches(response.data.matches.matches);
       } catch (error) {
@@ -52,9 +54,13 @@ const ChatContainer = () => {
                 <button
                   key={match.user_id}
                   className="relative usermatch bg-white w-[100px] h-[100px] rounded-[24px]"
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate(`/chat/${match.match_id}`)}
                 >
-                  <img src={match.avatars.image1} alt="profile" className=" rounded-[24px]" />
+                  <img
+                    src={match.avatars.image1}
+                    alt="profile"
+                    className=" rounded-[24px]"
+                  />
                   <img
                     src={matched}
                     alt="matched"
@@ -76,7 +82,7 @@ const ChatContainer = () => {
               <button
                 key={match.user_id}
                 className=" w-auto h-[92px] rounded-[16px] bg-white border-0 hover:border-[1px] hover:border-[#A62D82] hover:bg-[#F6F7FC] focus:outline-none"
-                onClick={() => navigate("/")}
+                onClick={() => navigate(`/chat/${match.match_id}`)}
               >
                 <div className="flex gap-[12px] mx-[12px] my-[16px]">
                   <img
@@ -89,8 +95,8 @@ const ChatContainer = () => {
                       {match.name}
                     </p>
                     <p className="text-[14px] font-medium text-[#646D89] truncate w-[230px] lg:w-[180px]">
-                      message It is a long established fact that a reader will be
-                      distracted by the readable content
+                      message It is a long established fact that a reader will
+                      be distracted by the readable content
                     </p>
                   </div>
                 </div>
