@@ -1,5 +1,9 @@
 // import bcrypt from "bcrypt";
-import { signUp, signIn } from "../services/supabaseAuth.service.mjs";
+import {
+  signUp,
+  signIn,
+  refreshSession,
+} from "../services/supabaseAuth.service.mjs";
 import { getUser, createUser } from "../models/user.model.mjs";
 import { cloudinaryUpload } from "../utils/cloudinary.uploader.mjs";
 import { createProfile } from "../models/profile.model.mjs";
@@ -100,6 +104,48 @@ export const fetchUser = async (req, res) => {
     console.log("Authenticated user:", user);
     return user;
   } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+/**
+ * Refresh User Session for the Merry Match application.
+ */
+export const refreshUserSession = async (req, res) => {
+  try {
+    const oldRefreshTokenObj = req.body;
+
+    if (!oldRefreshTokenObj) {
+      return res.status(400).json({ message: "Invalid session data" });
+    }
+
+    const { session } = await refreshSession(oldRefreshTokenObj);
+    if (!session) {
+      return res.status(401).json({ message: "Session refresh failed" });
+    }
+    console.log("get session from supabase auth (refresh session)");
+
+    //get user data from database
+    const userResult = await getUser(session.user.email);
+    const userId = userResult.user_id;
+    // get role name from database
+    const { name } = await getRole(userId);
+    // get avatars from database
+    const avatars = await getAvatars(userId);
+    const avatarsUrl = avatars.map((avatar) => avatar.url);
+
+    const data = {
+      id: userId,
+      username: userResult.username,
+      role: name,
+      avatars: avatarsUrl,
+      session,
+    };
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error("Error refreshing session:", error);
     res.status(500).json({
       message: "Internal server error",
     });

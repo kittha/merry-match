@@ -67,3 +67,24 @@ export const signIn = async (reqBody) => {
 //     throw error;
 //   }
 // };
+
+export const refreshSession = async (oldRefreshTokenObj) => {
+  try {
+    const { data, error } = await supabase.auth.refreshSession(
+      oldRefreshTokenObj
+    );
+    if (error) {
+      console.error("Error refreshing access token:", error.message);
+      throw new Error("Failed to refresh session");
+    }
+
+    if (!data) {
+      throw new Error("No data returned from refresh access token");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error in refreshSession function:", error.message);
+    throw error;
+  }
+};
