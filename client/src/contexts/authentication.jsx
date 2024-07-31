@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import supabase from "../utils/supabaseClient";
 
 const AuthContext = React.createContext();
 
@@ -22,11 +22,40 @@ function AuthProvider(props) {
     // console.log(data);
     if (data) {
       setState({
-        ...state,
+        loading: false,
+        error: null,
         user: data,
         role: data.role,
       });
     }
+  }, []);
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      const refresh_token = localStorage.getItem("refreshToken");
+      if (refresh_token) {
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
+            { refresh_token : refreshToken }
+          );
+
+          const { session } = response.data;
+          localStorage.setItem("token", session.access_token);
+          localStorage.setItem("refreshToken", session.refresh_token);
+          setState((prevState) => ({
+            ...prevState,
+            user: session.user,
+          }));
+        } catch (error) {
+          console.error("Error refreshing token:", error);
+          logout();
+        }
+      }
+    };
+
+    const interval = setInterval(refreshToken, 15 * 60 * 1000); // Refresh every 15 minutes
+    return () => clearInterval(interval);
   }, []);
 
   // make a login request

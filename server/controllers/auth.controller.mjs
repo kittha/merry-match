@@ -111,7 +111,11 @@ export const fetchUser = async (req, res) => {
 };
 
 /**
- * Refresh User Session for the Merry Match application.
+ * Refreshes the user session.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @return {Promise<Object>} The updated user session data.
  */
 export const refreshUserSession = async (req, res) => {
   try {

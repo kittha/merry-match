@@ -68,6 +68,13 @@ export const signIn = async (reqBody) => {
 //   }
 // };
 
+/**
+ * Refreshes the session using the provided old refresh token object.
+ *
+ * @param {Object} oldRefreshTokenObj - The old refresh token object. The structure of the input is {"refresh_token": "{{jwtRefreshToken}}"}
+ * @return {Promise<Object>} The refreshed session data.
+ * @throws {Error} If there is an error refreshing the access token or if no data is returned.
+ */
 export const refreshSession = async (oldRefreshTokenObj) => {
   try {
     const { data, error } = await supabase.auth.refreshSession(
