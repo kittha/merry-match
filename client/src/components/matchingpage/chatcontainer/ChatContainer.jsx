@@ -20,7 +20,7 @@ const ChatContainer = () => {
             import.meta.env.VITE_BACKEND_URL
           }/api/v1/merry/match/${currentUserId}`
         );
-        setMatches(response.data.matches.matches);
+        setMatches(response.data.matches);
       } catch (error) {
         console.error("Error fetching matches:", error);
       }

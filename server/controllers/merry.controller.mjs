@@ -4,6 +4,7 @@ import {
   getPotentialMatches as getPotentialMatchesFromModel,
   getAvailableMatches as getAvailableMatchesFromModel,
 } from "../models/merry.model.mjs";
+import transformMatchedData from "../utils/transformMatchedData.mjs";
 
 /**
  * Adds a merry user by calling the `addMerryToModel` function with the provided user IDs.
@@ -55,9 +56,9 @@ export const undoMerry = async (req, res) => {
 export const getMatchListByUserId = async (req, res) => {
   const { userId } = req.params;
   try {
-    const matches = await getPotentialMatchesFromModel(userId);
-
-    res.status(200).json({ matches });
+    const result = await getPotentialMatchesFromModel(userId);
+    const matches = transformMatchedData(result);
+    res.status(200).json({ user_id: userId, matches });
   } catch (error) {
     res.status(500).json({ error: "Failed to get match list." });
   }
@@ -76,8 +77,9 @@ export const getMatchListByUserId = async (req, res) => {
 export const getAvailableMatchesByUserId = async (req, res) => {
   const { userId } = req.params;
   try {
-    const matches = await getAvailableMatchesFromModel(userId);
-    res.status(200).json({ matches });
+    const result = await getAvailableMatchesFromModel(userId);
+    const matches = transformMatchedData(result);
+    res.status(200).json({ user_id: userId, matches });
   } catch (error) {
     res.status(500).json({ error: "Failed to get available matches." });
   }

@@ -35,8 +35,8 @@ const useMatching = (currentUserId) => {
         }/api/v1/merry/available-matches/${currentUserId}`
       );
 
-      if (Array.isArray(response.data.matches.matches)) {
-        setUserQueue(response.data.matches.matches);
+      if (Array.isArray(response.data.matches)) {
+        setUserQueue(response.data.matches);
       } else {
         console.error("API response is not an array:", response.data);
       }

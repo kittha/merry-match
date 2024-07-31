@@ -195,8 +195,7 @@ export const getPotentialMatches = async (userId) => {
       `,
       [userId]
     );
-    const matches = transformMatchedData(result.rows);
-    return { user_id: userId, matches };
+    return result.rows;
   } catch (error) {
     console.error("Error finding matches:", error.message);
     throw error;
@@ -266,8 +265,7 @@ export const getAvailableMatches = async (userId) => {
       `,
       [userId]
     );
-    const matches = transformMatchedData(result.rows);
-    return { user_id: userId, matches };
+    return result.rows;
   } catch (error) {
     console.error("Error finding unmatched users:", error.message);
     throw error;

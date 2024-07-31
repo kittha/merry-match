@@ -32,7 +32,7 @@ const NavbarAuthen = () => {
     left: 0,
   });
   const { resetForm } = useContext(FormContext);
-
+  
   const handleBellClick = () => {
     setBellMenuOpen(!bellMenuOpen);
     setProfileMenuOpen(false);
@@ -44,7 +44,8 @@ const NavbarAuthen = () => {
   };
 
   const { logout, state } = useAuth();
-
+  const userId = state.user?.id;
+  
   const handleLogout = () => {
     resetForm();
     logout();
