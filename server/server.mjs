@@ -16,20 +16,22 @@ import socket from "./utils/socket.mjs";
 
 const app = express();
 
+const corsOptions = {
+  origin: `${process.env.FRONTEND_URL}` || "http://localhost:5173",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 const PORT = process.env.PORT || 4000;
 
 const limiterMax = process.env.RATE_LIMITER_MAX || 50;
 
 const limiterWindow = process.env.RATE_LIMITER_WINDOW_MS || 60000;
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  optionsSuccessStatus: 200,
-};
-
 // app.use(rateLimiter(limiterMax, limiterWindow));
 
-// app.use(compression());
+app.use(compression());
 
 app.use(helmet());
 
@@ -38,8 +40,6 @@ app.use(
     stream: { write: (message) => logger.info(message.trim()) },
   })
 );
-
-app.use(cors(corsOptions));
 
 app.use(express.json());
 

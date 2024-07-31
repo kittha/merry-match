@@ -21,11 +21,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
+
         <PackageProvider>
           <FormProvider>
             <App />
           </FormProvider>
         </PackageProvider>
+
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
