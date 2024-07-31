@@ -10,7 +10,7 @@ const useAuth = () => React.useContext(AuthContext);
 
 function AuthProvider(props) {
   const [state, setState] = useState({
-    loading: null,
+    loading: true,
     error: null,
     user: null,
     role: "",
@@ -27,6 +27,8 @@ function AuthProvider(props) {
         user: data,
         role: data.role,
       });
+    }else {
+      setState((prevState) => ({ ...prevState, loading: false }));
     }
   }, []);
 
@@ -35,18 +37,26 @@ function AuthProvider(props) {
       const refresh_token = localStorage.getItem("refreshToken");
       if (refresh_token) {
         try {
-          const response = await axios.post(
+          const result = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
-            { refresh_token : refreshToken }
+            { refresh_token }
           );
 
-          const { session } = response.data;
-          localStorage.setItem("token", session.access_token);
-          localStorage.setItem("refreshToken", session.refresh_token);
-          setState((prevState) => ({
-            ...prevState,
-            user: session.user,
-          }));
+      const token = result.data.session.access_token;
+      const newRefreshToken = result.data.session.refresh_token
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", newRefreshToken);
+      localStorage.setItem("data", JSON.stringify(result.data));
+
+
+      const userDataFromPayload = result.data;
+
+      setState({
+        ...state,
+        user: userDataFromPayload,
+        role: userDataFromPayload.role,
+      });
+
         } catch (error) {
           console.error("Error refreshing token:", error);
           logout();
@@ -54,7 +64,7 @@ function AuthProvider(props) {
       }
     };
 
-    const interval = setInterval(refreshToken, 15 * 60 * 1000); // Refresh every 15 minutes
+    const interval = setInterval(refreshToken, 15 * 60 * 1000); // 15 * 60 * 1000 = Refresh every 15 minutes
     return () => clearInterval(interval);
   }, []);
 
@@ -69,7 +79,9 @@ function AuthProvider(props) {
       );
 
       const token = result.data.session.access_token;
+      const refreshToken = result.data.session.refresh_token
       localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("data", JSON.stringify(result.data));
 
       // const userDataFromToken = jwtDecode(token);
@@ -83,6 +95,7 @@ function AuthProvider(props) {
         ...state,
         user: userDataFromPayload,
         role: userDataFromPayload.role,
+        loading: false,
       });
 
       if (userDataFromPayload.role === "Admin") {
@@ -135,7 +148,9 @@ function AuthProvider(props) {
   const logout = () => {
     try {
       localStorage.removeItem("token");
-      setState({ ...state, user: null, error: false });
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("data");
+      setState({ ...state, user: null, role: "", error: null });
     } catch (error) {
       console.error("Logout error:", error);
     }
