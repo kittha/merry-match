@@ -16,11 +16,13 @@ export const addMerry = async (userId, merryUserId) => {
         SET status_1 = CASE 
               WHEN (user_id_1 = $1 AND status_2 = 'merry') THEN 'match'
               WHEN (user_id_2 = $1 AND status_1 = 'merry') THEN 'match'
+              WHEN (status_1 = 'match' OR status_2 = 'match') THEN 'match'
               WHEN user_id_1 = $1 THEN 'merry' 
             ELSE status_1 END, 
             status_2 = CASE 
               WHEN (user_id_2 = $1 AND status_1 = 'merry') THEN 'match'
-              WHEN (user_id_1 = $1 AND status_2 = 'merry') THEN 'match' 
+              WHEN (user_id_1 = $1 AND status_2 = 'merry') THEN 'match'
+              WHEN (status_1 = 'match' OR status_2 = 'match') THEN 'match'
               WHEN user_id_2 = $1 THEN 'merry'
             ELSE status_2 END,
             updated_1_at = CASE 
