@@ -1,36 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function MainContent() {
-  const [complaint, setComplaint] = useState([]);
+function MainContent({ complaint, updateStatus }) {
   const navigate = useNavigate();
-
-  const getComplaint = async () => {
-    try {
-      const result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/complaints`
-      );
-      setComplaint(result.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const updateStatus = async (exit) => {
-    try {
-      await axios.put(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/v1/admin/complaint/${exit}/status`,
-        { status: "Pending" }
-      );
-      navigate(`/admin/complaint/${exit}`);
-      window.scrollTo(0, 0);
-    } catch (error) {
-      console.error("Error update status", error);
-    }
-  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -47,9 +18,6 @@ function MainContent() {
     return formattedDate;
   };
 
-  useEffect(() => {
-    getComplaint();
-  }, []);
   return (
     <div className="w-[1200px] min-h-[944px] pb-[48px] bg-[#F6F7FC] flex flex-col items-center font-Nunito">
       <div className="w-[1080px] h-[41px] flex bg-[#D6D9E4] mt-[48px] rounded-t-2xl font-medium text-sm text-[#424C6B]">

@@ -37,6 +37,25 @@ export const getAllComplaints = async () => {
   }
 };
 
+export const getComplaintsByParam = async (name) => {
+  try {
+    const result = await connectionPool.query(
+      `
+          select users.username , complaints.* 
+          from complaints 
+          inner join users 
+          on complaints.created_by = users.user_id where username LIKE $1
+          `,
+      [`%${name}%`]
+    );
+    const complaints = result.rows;
+    return complaints;
+  } catch (error) {
+    console.error("Error fetching complaints:", error);
+    return { message: "An error occurred while fetching complaints." };
+  }
+};
+
 export const getComplaintById = async (complaintId) => {
   try {
     const result = await connectionPool.query(
