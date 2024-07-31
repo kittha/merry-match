@@ -100,7 +100,7 @@ const NavbarAuthen = () => {
         {/*-------------------------------------------- For Desktop Menu -----------------------------------------------*/}
         <div className="hidden lg:flex lg:items-end lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent lg:ml-[432px]">
           <button onClick={() => navigate("/matching")}>Start Matching!</button>
-          <button onClick={() => navigate("/membership")}>Merry Membership</button>
+          <button onClick={() => navigate(`/membership/${userId}`)}>Merry Membership</button>
         </div>
 
         {/* ------------------------------------------notification ---------------------------------------------------- */}

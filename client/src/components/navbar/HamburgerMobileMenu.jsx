@@ -48,7 +48,7 @@ const HamburgerMobileMenu = () => {
           </div>
           <div className="flex items-center p-[12px]">
             <img src={icon4} alt="icon4" className="mr-2 p-[10px] pl-8" />
-            <button onClick={() => navigate("/membership")}>
+            <button onClick={() => navigate(`/membership/${userId}`)}>
               Merry Membership
             </button>
           </div>
