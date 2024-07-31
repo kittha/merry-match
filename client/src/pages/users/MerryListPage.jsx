@@ -134,8 +134,9 @@ function MerryListPage() {
                         className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
                         alt="merry-list-image"
                       />
-                      <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
-                        {list.status_1 === "match" ? (
+
+                      {list.status_1 === "match" ? (
+                        <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
                           <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
                             <img
                               src={GroupHearticon}
@@ -146,38 +147,57 @@ function MerryListPage() {
                               Merry Match!
                             </h3>
                           </section>
-                        ) : (
+                          <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
+                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                              <img
+                                src={Chaticon}
+                                alt="chat-icon"
+                                className="mt-[15.6px] ml-[14.4px]"
+                              />
+                            </div>
+                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                              <img
+                                src={Vectoricon}
+                                alt="vector-icon"
+                                className="mt-[15.6px] ml-[12px] mb-[12px]"
+                              />
+                            </div>
+                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                              <img
+                                src={WhiteHearticon}
+                                alt="white-heart-icon"
+                                className="mt-[5px] ml-[3px]"
+                              />
+                            </div>
+                          </section>
+                        </div>
+                      ) : (
+                        <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
                           <section className="w-[133px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C8CCDB] pl-[15px] pr-[11px] pt-[4px] pb-[4px]">
                             <h3 className="w-[101px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
                               Not Match yet
                             </h3>
                           </section>
-                        )}
-                        <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
-                          <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                            <img
-                              src={Chaticon}
-                              alt="chat-icon"
-                              className="mt-[15.6px] ml-[14.4px]"
-                            />
-                          </div>
-                          <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                            <img
-                              src={Vectoricon}
-                              alt="vector-icon"
-                              className="mt-[15.6px] ml-[12px] mb-[12px]"
-                            />
-                          </div>
-                          <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
-                            <img
-                              src={WhiteHearticon}
-                              alt="white-heart-icon"
-                              className="mt-[5px] ml-[3px]"
-                            />
-                          </div>
-                        </section>
-                      </div>
+                          <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
+                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                              <img
+                                src={Vectoricon}
+                                alt="vector-icon"
+                                className="mt-[15.6px] ml-[12px] mb-[12px]"
+                              />
+                            </div>
+                            <div className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                              <img
+                                src={WhiteHearticon}
+                                alt="white-heart-icon"
+                                className="mt-[5px] ml-[3px]"
+                              />
+                            </div>
+                          </section>
+                        </div>
+                      )}
                     </div>
+
                     {/************************************************************************************************/}
                     <div className="w-[343px] h-[156px] flex flex-col gap-[8px] lg:w-[447px] lg:h-[182px] lg:gap-[24px]">
                       <section className="w-[343px] h-[30px] flex flex-row gap-[16px] lg:w-[447px]">
@@ -236,8 +256,9 @@ function MerryListPage() {
                       </section>
                     </div>
                     {/* Desktop responsive */}
-                    <div className="hidden w-[168px] h-[104px] flex-col gap-[24px] items-end lg:w-[176px] lg:flex">
-                      {list.status_1 === "match" ? (
+
+                    {list.status_1 === "match" ? (
+                      <div className="hidden w-[168px] h-[104px] flex-col gap-[24px] items-end lg:w-[176px] lg:flex">
                         <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
                           <img
                             src={GroupHearticon}
@@ -248,38 +269,58 @@ function MerryListPage() {
                             Merry Match!
                           </h3>
                         </section>
-                      ) : (
+                        <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
+                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            <img
+                              src={Chaticon}
+                              alt="chat-icon"
+                              className="mt-[4px] ml-[14.4px]"
+                            />
+                          </button>
+                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            <img
+                              src={Vectoricon}
+                              alt="vector-icon"
+                              className="mt-[15.6px] ml-[12px] mb-[12px]"
+                            />
+                          </button>
+
+                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                            <img
+                              src={WhiteHearticon}
+                              alt="white-heart-icon"
+                              className="mt-[5px] ml-[3px]"
+                            />
+                          </button>
+                        </section>
+                      </div>
+                    ) : (
+                      <div className="hidden w-[168px] h-[104px] flex-col gap-[24px] items-end lg:w-[176px] lg:flex">
                         <section className="w-[133px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C8CCDB] pl-[15px] pr-[11px] pt-[4px] pb-[4px]">
                           <h3 className="w-[101px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
                             Not Match yet
                           </h3>
                         </section>
-                      )}
-                      <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
-                        <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                          <img
-                            src={Chaticon}
-                            alt="chat-icon"
-                            className="mt-[4px] ml-[14.4px]"
-                          />
-                        </button>
-                        <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
-                          <img
-                            src={Vectoricon}
-                            alt="vector-icon"
-                            className="mt-[15.6px] ml-[12px] mb-[12px]"
-                          />
-                        </button>
+                        <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
+                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            <img
+                              src={Vectoricon}
+                              alt="vector-icon"
+                              className="mt-[15.6px] ml-[12px] mb-[12px]"
+                            />
+                          </button>
 
-                        <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
-                          <img
-                            src={WhiteHearticon}
-                            alt="white-heart-icon"
-                            className="mt-[5px] ml-[3px]"
-                          />
-                        </button>
-                      </section>
-                    </div>
+                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                            <img
+                              src={WhiteHearticon}
+                              alt="white-heart-icon"
+                              className="mt-[5px] ml-[3px]"
+                            />
+                          </button>
+                        </section>
+                      </div>
+                    )}
+
                     {/************************************************************************************************/}
                   </article>
                 </section>
