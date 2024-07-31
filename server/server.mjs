@@ -27,7 +27,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-app.use(rateLimiter(limiterMax, limiterWindow));
+// app.use(rateLimiter(limiterMax, limiterWindow));
 
 // app.use(compression());
 

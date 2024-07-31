@@ -16,56 +16,56 @@ const Chat = () => {
   const { state } = useAuth();
   console.log(state);
 
-  const sender = state.user?.id;
+  const userId = state.user?.id;
 
   let { matchId } = useParams();
   matchId = Number(matchId);
-  console.log("matchId: ", matchId);
+  // console.log("matchId: ", matchId);
 
   const [receiver, setReceiver] = useState();
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const socket = useRef(null);
+  const socket = useRef();
+
+  const fetchData = async () => {
+    const response = await getMatchInfo(matchId);
+    console.log("response", response);
+    if (userId) {
+      if (userId === response.user_id_1) {
+        setReceiver(response.user_id_2);
+      } else {
+        setReceiver(response.user_id_1);
+      }
+      const data = await getPrevMessages(matchId);
+      setMessages(data);
+    }
+  };
 
   //---------------------------------------------------------------------
-  // add online users
   //this section should be call before click each chat
   useEffect(() => {
-    if (sender) {
+    if (userId) {
+      // get chat history and match info from database
+      if (matchId) {
+        fetchData();
+      }
+
       // connect socket
       socket.current = io(import.meta.env.VITE_BACKEND_URL);
       console.log("Connected to WebSocket server");
 
-      socket.current.emit("add-user", sender);
+      // add online user
+      socket.current.emit("add-user", userId);
       // socket.on("get-user", (res) => {
       //   setOnlineUsers(res);
       // });
     }
-  }, [sender]);
+  }, [userId]);
   //---------------------------------------------------------------------
-  const fetchData = async () => {
-    const { user_id_1, user_id_2 } = await getMatchInfo(matchId);
-    console.log({ user_id_1, user_id_2 });
-    if (sender === user_id_1) {
-      setReceiver(user_id_2);
-    } else {
-      setReceiver(user_id_1);
-    }
-    const data = await getPrevMessages(matchId);
-    setMessages(data);
-  };
-
-  useEffect(() => {
-    // get chat history and match info from database
-    if (matchId) {
-      fetchData();
-    }
-  }, [matchId]); //[currentChat]
 
   useEffect(() => {
     // listen message from socket
     if (socket.current) {
-      console.log("i'm in");
       socket.current.on("receive-msg", (msg) => {
         console.log("*****receive*******", msg);
         setArrivalMessage(msg);
@@ -79,7 +79,7 @@ const Chat = () => {
       return;
     }
     const sendData = {
-      sender,
+      sender: userId,
       receiver,
       matchId,
       message: inputText,
@@ -108,7 +108,7 @@ const Chat = () => {
       <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
         <BackBar />
         {messages?.length && (
-          <DisplayChat messages={messages} userId={sender} />
+          <DisplayChat messages={messages} userId={userId} />
         )}
         {messages?.length && <InputSection handleSendMsg={handleSendMsg} />}
       </div>

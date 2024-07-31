@@ -26,7 +26,8 @@ export const createMessage = async (data) => {
 export const getMessages = async (matchId) => {
   try {
     const result = await connectionPool.query(
-      `SELECT * FROM messages WHERE match_id = $1::INTEGER`,
+      `SELECT * FROM messages WHERE match_id = $1::INTEGER
+      ORDER BY sent_at`,
       [matchId]
     );
     return result.rows;
