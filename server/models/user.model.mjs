@@ -88,3 +88,33 @@ export const deleteUser = async (userId) => {
     console.error("Error in user model: ", error);
   }
 };
+
+export const getPackageIdByUserId = async (userId) => {
+  try {
+    const result = await connectionPool.query(
+      `SELECT package_id FROM users WHERE user_id = $1`,
+      [userId]
+    );
+    return result.rows[0].package_id;
+  } catch (error) {
+    console.error("Error fetching package ID:", error);
+    throw error;
+  }
+};
+
+export const updateUserPackage = async (userId, packageId) => {
+  const currentDateTime = new Date();
+  try {
+    const result = await connectionPool.query(
+      `UPDATE users SET package_id = $2, updated_at = $3 
+       WHERE user_id = $1
+       RETURNING *`,
+      [userId, packageId, currentDateTime]
+    );
+
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error updating user package: ", error);
+    throw error;
+  }
+};
