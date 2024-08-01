@@ -5,7 +5,7 @@ function useToggle() {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-  return { isOpen, toggle };
+  return { isOpen, toggle, setIsOpen };
 }
 
 export default useToggle;

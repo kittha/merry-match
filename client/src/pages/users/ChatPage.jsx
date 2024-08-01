@@ -57,7 +57,7 @@ const Chat = () => {
       //   setOnlineUsers(res);
       // });
     }
-  }, [userId]);
+  }, [userId, matchId]);
   //---------------------------------------------------------------------
 
   useEffect(() => {
