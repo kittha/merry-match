@@ -18,6 +18,7 @@
     "@rollup/rollup-linux-x64-gnu": "^4.19.1",
     "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^4.1.0",
+    "@supabase/supabase-js": "^2.45.0",
     "axios": "^1.7.2",
     "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",
