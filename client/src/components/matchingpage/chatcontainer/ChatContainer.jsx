@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import discover from "/assets/matchingpage/chatArea/discover-vector.png";
 import matched from "/assets/matchingpage/chatArea/merry-match.png";
-import profile from "/assets/profilepicture/john.png";
+
 
 const ChatContainer = () => {
   const [matches, setMatches] = useState([]);
@@ -16,11 +16,13 @@ const ChatContainer = () => {
     const fetchMatches = async () => {
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_URL
-          }/api/v1/merry/match/${currentUserId}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/match/${currentUserId}`
         );
-        setMatches(response.data.matches);
+        const validMatches = response.data.matches.filter(
+          (match) => match.match_status_1 === "match"
+        );
+        console.log(validMatches);
+        setMatches(validMatches);
       } catch (error) {
         console.error("Error fetching matches:", error);
       }

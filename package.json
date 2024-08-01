@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@react-spring/web": "^9.7.4",
-    "react-tinder-card": "^1.6.4"
-  }
-}
