@@ -3,6 +3,7 @@ import {
   registerUser,
   loginUser,
   fetchUser,
+  refreshUserSession,
 } from "../../../controllers/auth.controller.mjs";
 // import {
 //   forgotPassword,
@@ -43,5 +44,6 @@ router.post(
 // router.post("/forgot-password", forgotPassword);
 // router.post("/reset-password/:token", resetPassword);
 router.get("/:tokenId", fetchUser);
+router.post("/refresh-token", refreshUserSession);
 
 export default router;
