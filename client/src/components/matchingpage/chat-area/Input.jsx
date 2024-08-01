@@ -1,9 +1,19 @@
 import { useState } from "react";
 import send from "/assets/matchingpage/send-button.png";
 import upload from "/assets/matchingpage/upload-image-button.png";
+import EmojiPicker from "emoji-picker-react";
+import useToggle from "../../../hooks/useToggle.mjs";
 
 const InputSection = ({ handleSendMsg }) => {
   const [inputText, setInputText] = useState("");
+  const { isOpen, toggle } = useToggle();
+
+  const handleEmojiClick = (emojiObject) => {
+    console.log(emojiObject);
+    let newInput = inputText;
+    newInput += emojiObject.emoji;
+    setInputText(newInput);
+  };
 
   return (
     <form
@@ -16,11 +26,29 @@ const InputSection = ({ handleSendMsg }) => {
       <label htmlFor="input-file">
         <img
           src={upload}
-          alt="insert-icon"
+          alt="upload-image-icon"
           className="insert-image bg-white rounded-full w-12 h-12 object-none hover:cursor-pointer"
         />
       </label>
       <input id="input-file" type="file" hidden />
+      <div className="emojiPicker">
+        <img
+          src={"#"}
+          alt="emoji-picker-icon"
+          className="insert-image bg-white rounded-full w-12 h-12 object-none hover:cursor-pointer"
+          onClick={toggle}
+        />
+        {isOpen && (
+          <EmojiPicker
+            onEmojiClick={handleEmojiClick}
+            previewConfig={{ showPreview: false }}
+            style={{
+              position: "absolute",
+              bottom: "10%",
+            }}
+          />
+        )}
+      </div>
       <input
         type="text"
         placeholder="Message here..."
