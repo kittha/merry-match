@@ -1,5 +1,9 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../contexts/authentication";
+import { useNavigate } from "react-router-dom";
+import transformMerryListData from "../../../../server/utils/transformMerryListData.mjs";
+import useMatching from "../../hooks/useMatching";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
@@ -7,15 +11,13 @@ import Chaticon from "/assets/merrylist-image/chat.png";
 import Vectoricon from "/assets/merrylist-image/vector.png";
 import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
-import { useAuth } from "../../contexts/authentication";
-import useMatching from "../../hooks/useMatching";
-import React from "react";
-import { useMerryLimit } from "../../hooks/userMerryLimit";
 import ProfileMatchAndMerry from "../../components/merry-list/ProfileMatchAndMerry";
-import transformMerryListData from "../../../../server/utils/transformMerryListData.mjs";
+
 function MerryListPage() {
   const { state } = useAuth();
   const userId = state && state.user ? state.user.id : null;
+
+  const navigate = useNavigate();
   const [merryList, setMerryList] = useState([]);
 
   const getMerryLists = async () => {
@@ -153,7 +155,10 @@ function MerryListPage() {
                             </h3>
                           </section>
                           <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
-                            <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                            <button
+                              onClick={() => navigate(`/chat/${userId}`)}
+                              className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
+                            >
                               <img
                                 src={Chaticon}
                                 alt="chat-icon"
@@ -294,7 +299,10 @@ function MerryListPage() {
                           </h3>
                         </section>
                         <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
-                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg">
+                          <button
+                            onClick={() => navigate(`/chat/${userId}`)}
+                            className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
+                          >
                             <img
                               src={Chaticon}
                               alt="chat-icon"
