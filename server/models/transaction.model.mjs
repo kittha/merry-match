@@ -41,6 +41,17 @@ export const getTransactionByUserId = async (userId) => {
     );
     return result.rows;
   } catch (error) {
-    throw new Error(`Error fetching billing history: ${error.message}`);
+    throw new Error(`Error fetching transaction by user id: ${error.message}`);
+  }
+};
+export const getTransactionsOlderThan = async (date) => {
+  try {
+    const result = await connectionPool.query(
+      "SELECT * FROM transactions WHERE created_at < $1",
+      [date]
+    );
+    return result.rows;
+  } catch {
+    throw new Error(`Error fetching transaction: ${error.message}`);
   }
 };

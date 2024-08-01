@@ -6,10 +6,7 @@ import {
   getPaymentByUserId,
   updatePaymentByUserId,
 } from "../models/payment.model.mjs";
-import {
-  updateUserPackage,
-  getPackageIdByUserId,
-} from "../models/user.model.mjs";
+import { updateUserPackage } from "../models/user.model.mjs";
 
 // Initialize Stripe with the secret key from environment variables
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -61,14 +58,6 @@ export const processPayment = async (req, res) => {
       });
     }
 
-    const hasPurchased = await getPackageIdByUserId(user.user_id);
-
-    if (product.package_id === hasPurchased) {
-      return res.status(400).json({
-        success: false,
-        message: "You have already purchased this package.",
-      });
-    }
     // Convert package price to amount in cents
     const amountInTHB = parseInt(packageDetails.price, 10) * 100;
 

@@ -13,7 +13,7 @@ import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
 import { avatarUpload } from "./middlewares/multer.middleware.mjs";
 import socket from "./utils/socket.mjs";
-
+import "./controllers/transaction.controller.mjs";
 const app = express();
 
 const corsOptions = {
