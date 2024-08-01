@@ -20,7 +20,7 @@ const Chat = () => {
 
   let { matchId } = useParams();
   matchId = Number(matchId);
-  // console.log("matchId: ", matchId);
+  console.log("matchId: ", matchId);
 
   const [receiver, setReceiver] = useState();
   const [messages, setMessages] = useState([]);
@@ -29,16 +29,15 @@ const Chat = () => {
 
   const fetchData = async () => {
     const response = await getMatchInfo(matchId);
+    const data = await getPrevMessages(matchId);
+
     console.log("response", response);
-    if (userId) {
-      if (userId === response.user_id_1) {
-        setReceiver(response.user_id_2);
-      } else {
-        setReceiver(response.user_id_1);
-      }
-      const data = await getPrevMessages(matchId);
-      setMessages(data);
+    if (userId === response.user_id_1) {
+      setReceiver(response.user_id_2);
+    } else {
+      setReceiver(response.user_id_1);
     }
+    setMessages(data);
   };
 
   //---------------------------------------------------------------------
@@ -46,9 +45,7 @@ const Chat = () => {
   useEffect(() => {
     if (userId) {
       // get chat history and match info from database
-      if (matchId) {
-        fetchData();
-      }
+      fetchData();
 
       // connect socket
       socket.current = io(import.meta.env.VITE_BACKEND_URL);
@@ -107,10 +104,8 @@ const Chat = () => {
       </div>
       <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
         <BackBar />
-        {messages?.length && (
-          <DisplayChat messages={messages} userId={userId} />
-        )}
-        {messages?.length && <InputSection handleSendMsg={handleSendMsg} />}
+        {messages && <DisplayChat messages={messages} userId={userId} />}
+        {messages && <InputSection handleSendMsg={handleSendMsg} />}
       </div>
     </div>
   );

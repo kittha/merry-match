@@ -18,7 +18,7 @@ const socket = (httpServer) => {
 
     // listen for message
     socket.on("send-msg", (msg) => {
-      console.log(onlineUsers);
+      console.log("in send msg", onlineUsers);
       const receiver = onlineUsers[msg.receiver];
       if (receiver) {
         console.log("send", msg, "receiver", receiver);
