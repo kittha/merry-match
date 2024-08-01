@@ -9,6 +9,8 @@ import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
 import { useAuth } from "../../contexts/authentication";
 import useMatching from "../../hooks/useMatching";
+import React from "react";
+import { useMerryLimit } from "../../hooks/userMerryLimit";
 
 function MerryListPage() {
   const { state } = useAuth();

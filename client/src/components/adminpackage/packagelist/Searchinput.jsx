@@ -1,4 +1,4 @@
-function SearchInput() {
+function SearchInput({ setSearchText, searchText }) {
   return (
     <div className="w-[320px] h-[48px] flex items-center border-[#CCD0D7] border-[1px] rounded-md">
       <img
@@ -7,6 +7,7 @@ function SearchInput() {
         alt="search"
       />
       <input
+        onChange={(e) => setSearchText(e.target.value)}
         className="ml-[10px] w-[254px] h-[24px] focus:outline-none"
         type="text"
         id="text"

@@ -23,6 +23,28 @@ export const getAllPackages = async (req) => {
 };
 
 /**
+ * Get packages data from search text the Merry Match application.
+ *
+ * @param {*} req - The request object, contain non important things.
+ * @returns - A Array of Objects(packages)
+ */
+export const getPackagesByParam = async (name) => {
+  try {
+    const result = await connectionPool.query(
+      `
+        SELECT * FROM packages where name LIKE $1 and is_deleted = false
+        `,
+      [`%${name}%`]
+    );
+
+    return result.rows;
+  } catch (error) {
+    console.error("Error fetching packages:", error);
+    throw error;
+  }
+};
+
+/**
  * Get packages data by id from the Merry Match application.
  *
  * @param {number} packageId - The Number of package id.
