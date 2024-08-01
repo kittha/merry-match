@@ -1,5 +1,5 @@
 import PDFDocument from "pdfkit";
-import { getBillingHistoryByUserId } from "../models/billingHistory.model.mjs";
+import { getBillingHistoryByUserId } from "../models/billinghistory.model.mjs";
 import { getPackageById } from "../models/package.model.mjs";
 import { format, parseISO, isValid } from "date-fns";
 
