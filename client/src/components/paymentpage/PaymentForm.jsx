@@ -67,7 +67,7 @@ const PaymentForm = () => {
 
     setLoading(true); // Set loading state to true
 
-    const stripe = window.Stripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+    const stripe = window.Stripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
 
     const paymentData = {
       user: {

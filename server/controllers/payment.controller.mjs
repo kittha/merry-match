@@ -9,7 +9,7 @@ import {
 import { updateUserPackage } from "../models/user.model.mjs";
 
 // Initialize Stripe with the secret key from environment variables
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
 // Define the getCardType function
 const getCardType = (cardNumber) => {
