@@ -1,6 +1,10 @@
 import { format, addMonths, parseISO } from "date-fns";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function BillingHistory({ history }) {
+  const { userId } = useParams();
+
   if (!history || !Array.isArray(history)) {
     return <p>No billing history available.</p>;
   }
@@ -10,10 +14,17 @@ function BillingHistory({ history }) {
     return format(parseISO(dateString), "dd/MM/yyyy");
   };
 
+  // Sort history by transaction_id in descending order
+  const sortedHistory = history
+    .slice()
+    .sort((a, b) => b.transaction_id - a.transaction_id);
+
   // Find the last billing date and calculate the next billing date
   const lastBillingDate =
-    history.length > 0
-      ? new Date(Math.max(...history.map((item) => new Date(item.created_at))))
+    sortedHistory.length > 0
+      ? new Date(
+          Math.max(...sortedHistory.map((item) => new Date(item.created_at)))
+        )
       : null;
 
   const nextBillingDate = lastBillingDate
@@ -26,11 +37,32 @@ function BillingHistory({ history }) {
   };
 
   // Get the most recent 5 billing records
-  const recentHistory = history.slice(0, 5);
+  const recentHistory = sortedHistory.slice(0, 5);
+
+  const handleRequestPDF = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}/pdf`,
+        {
+          responseType: "blob",
+        }
+      );
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "billing-history.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert("Failed to generate PDF. Please try again later."); // User feedback
+    }
+  };
 
   return (
     <div className="flex flex-col gap-[8px] lg:gap-[24px]">
-      <h1 className="text-[#2A2E3F] font-[700] text-[24px] pt-[8px] px-[16px]">
+      <h1 className="text-[#2A2E3F] font-[700] text-[24px] max-lg:pt-[8px] max-lg:px-[16px]">
         Billing History
       </h1>
       <div className="billing-box lg:px-[32px] lg:pb-[24px] lg:pt-[32px] lg:border border-[#D6D9E4] lg:rounded-[32px]">
@@ -42,9 +74,11 @@ function BillingHistory({ history }) {
           {recentHistory.length > 0 ? (
             recentHistory.map((item, index) => (
               <div
-                key={index}
-                className="p-[16px] "
-                style={{ backgroundColor: getBackgroundColor(index) }}
+                key={item.id || item.created_at} // Prefer unique key if available
+                className="p-[16px]"
+                style={{
+                  backgroundColor: getBackgroundColor(index),
+                }}
               >
                 <div className="flex flex-col">
                   <div className="flex flex-row justify-between gap-[16px] items-center">
@@ -70,7 +104,10 @@ function BillingHistory({ history }) {
           )}
         </div>
         <div className="flex lg:justify-end border-t border-[#E4E6ED] pt-[16px] max-lg:mb-[58px]">
-          <button className="text-[#C70039] font-[700] px-[8px] py-[4px]">
+          <button
+            className="text-[#C70039] font-[700] px-[8px] py-[4px] hover:drop-shadow-xl"
+            onClick={handleRequestPDF}
+          >
             Request PDF
           </button>
         </div>

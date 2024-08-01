@@ -5,11 +5,13 @@ import checkmark from "../../../public/assets/paymentSuccesspage/checkmark.svg";
 import Footer from "../../components/homepage/Footer";
 import { useNavigate } from "react-router-dom";
 import { usePackage } from "../../contexts/PackageProvider";
+import { useAuth } from "../../contexts/authentication";
 
 function PaymentSuccessPage() {
   const navigate = useNavigate();
   const { selectedPackage } = usePackage();
-
+  const { state } = useAuth();
+  const userId = state.user?.id;
   const today = new Date();
 
   const startDate = today.toLocaleDateString("th-TH");
@@ -45,7 +47,7 @@ function PaymentSuccessPage() {
               </button>
               <button
                 onClick={() => {
-                  navigate("/membership");
+                  navigate(`/membership/${userId}`);
                 }}
                 className="px-[24px] py-[12px] bg-[#C70039] text-white font-[700] text-center rounded-full"
               >
@@ -101,7 +103,7 @@ function PaymentSuccessPage() {
             </button>
             <button
               onClick={() => {
-                navigate("/membership");
+                navigate(`/membership/${userId}`);
               }}
               className="w-[177px] h-[48px] px-[15px] py-[12px] bg-[#C70039] text-white font-[700] rounded-full"
             >
