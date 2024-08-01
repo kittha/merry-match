@@ -32,7 +32,7 @@ const ProfileMatchAndMerry = ({ user, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto rounded-[32px] shadow-2xl overflow-hidden">
+      <div className="bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto lg:rounded-[32px] shadow-2xl overflow-hidden">
         <div className="flex justify-end pr-4 ">
           <button onClick={onClose}>
             <img className="hidden lg:block" src={exit} alt="exit" />
@@ -41,7 +41,7 @@ const ProfileMatchAndMerry = ({ user, onClose }) => {
         <div className="flex justify-start pl-0 pt-0">
           <button onClick={onClose}>
             <img
-              className="block lg:hidden absolute z-30 pt-10 pl-8"
+              className="block lg:hidden absolute z-30 pt-10 pl-8 filter drop-shadow-[5px_6px_5px_gray]"
               src={arrowB}
               alt="exit"
             />

@@ -20,10 +20,10 @@ export const transformMerryListData = (rows) => {
         user_id: row.user_id,
         sequence: row.profile_picture_sequence,
         url: row.profile_picture,
-        avatars: {}, // Initialize profile pictures object
+        avatars: {},
         name: row.name,
         birthday: row.birthday,
-        age: calculateAge(row.birthday), // Calculate age
+        age: calculateAge(row.birthday),
         country: row.location,
         city: row.city,
         sexualIdentity: row.sexual_identities,
@@ -48,11 +48,7 @@ export const transformMerryListData = (rows) => {
     }
   });
 
-  // Convert the map to an array and sort by `status_1` if needed
   return Array.from(merryListsMap.values()).sort((a, b) => {
-    // Example sorting by `status_1`, adjust as necessary
-    return a.status_1.localeCompare(b.status_1);
+    return new Date(b.created_at) - new Date(a.created_at);
   });
 };
-
-export default transformMerryListData;

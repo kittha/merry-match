@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
-import transformMerryListData from "../../../../server/utils/transformMerryListData.mjs";
+import { transformMerryListData } from "../../../../server/utils/transformMerryListData.mjs";
 import useMatching from "../../hooks/useMatching";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
@@ -10,24 +10,36 @@ import Locationicon from "/assets/merrylist-image/location.png";
 import Chaticon from "/assets/merrylist-image/chat.png";
 import Vectoricon from "/assets/merrylist-image/vector.png";
 import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
+import Testericon from "/assets/merrylist-image/tester.png";
 import Footer from "../../components/homepage/Footer";
 import ProfileMatchAndMerry from "../../components/merry-list/ProfileMatchAndMerry";
 
 function MerryListPage() {
   const { state } = useAuth();
   const userId = state && state.user ? state.user.id : null;
-
+  console.log(userId);
   const navigate = useNavigate();
   const [merryList, setMerryList] = useState([]);
+  const [merryCounts, setMerryCounts] = useState([]);
+  const [matchCounts, setMatchCounts] = useState([]);
 
   const getMerryLists = async () => {
     try {
       const result = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
       );
-      const transformMerryList = transformMerryListData(result.data.data);
-      //console.log(transformMerryList);
-      setMerryList(transformMerryList);
+      //console.log("Merrylist", result.data.message);
+      const merryList = result.data.data.merryList;
+      const merryCounts = result.data.data.merryCounts.total_merry;
+      const matchCounts = result.data.data.merryCounts.total_match;
+      console.log("merryCounts", merryCounts);
+      console.log("matchCounts", matchCounts);
+      const merryListFormatted = transformMerryListData(merryList);
+      console.log(merryListFormatted);
+      //console.log(result);
+      setMerryList(merryListFormatted);
+      setMerryCounts(merryCounts);
+      setMatchCounts(matchCounts);
     } catch (error) {
       console.error("Failed to fetch potential matches:", error);
     }
@@ -72,10 +84,10 @@ function MerryListPage() {
             </header>
             <section className="w-[343px] h-[156px] flex flex-col gap-[16px]  lg:w-[933px] lg:h-[98px] lg:flex-row lg:gap-[350px]">
               <article className="w-[343px] h-[98px] flex flex-row gap-[16px] lg:w-[416px] lg:h-[98px]">
-                <div className="w-[163.5px] h-[98px] rounded-2xl border border-[#F1F2F6] pt-[20px] pr-[24px] pb-[20px] pl-[24px] flex flex-col gap-[4px] bg-[#FFFFFF] lg:w-[200px] lg:h-[98px]">
+                <div className="w-[163.5px] h-[98px] rounded-2xl border border-[#F1F2F6] pt-[20px] pr-[24px] pb-[20px] pl-[24px] flex flex-col gap-[4px] lg:w-[200px] lg:h-[98px]">
                   <section className="w-[57px] h-[30px] flex flex-row gap-[4px]">
                     <h4 className="w-[29px] h-[30px] font-bold text-[24px] leading-[30px] text-[#C70039]">
-                      16
+                      {merryCounts}
                     </h4>
                     <img
                       src={RedHearticon}
@@ -90,7 +102,7 @@ function MerryListPage() {
                 <div className="w-[163.5px] h-[98px] rounded-2xl border border-[#F1F2F6] pt-[20px] pr-[24px] pb-[20px] pl-[24px] flex flex-col gap-[4px] bg-[#FFFFFF] lg:w-[200px] lg:h-[98px]">
                   <section className="w-[57px] h-[30px] flex flex-row gap-[4px]">
                     <h4 className="w-[29px] h-[30px] font-bold text-[24px] leading-[30px] text-[#C70039]">
-                      3
+                      {matchCounts}
                     </h4>
                     <img
                       src={GroupHearticon}
@@ -104,7 +116,7 @@ function MerryListPage() {
                 </div>
               </article>
 
-              <article className="w-[343px] h-[58px] lg:w-[517px] lg:h-[98px] bg-white">
+              <article className="w-[343px] h-[58px] lg:w-[517px] lg:h-[98px]">
                 <section className="flex justify-end gap-[10px] mt-[16px] lg:w-[167px] lg:h-[24px] lg:flex-row lg:mt-[28px]">
                   <p className="w-[123px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89]">
                     Merry limit today
@@ -128,20 +140,35 @@ function MerryListPage() {
                   key={index}
                 >
                   <article className="flex flex-col gap-[24px] lg:w-[674px] lg:h-[187px] lg:flex lg:flex-row lg:gap-[40px] mt-[16px] ml-[16px] lg:mb-[35px]">
-                    <img
-                      src={list.url}
-                      className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
-                      alt="merry-list-image"
-                    />
+                    {list.url ? (
+                      <img
+                        src={list.url}
+                        className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
+                        alt="merry-list-image"
+                      />
+                    ) : (
+                      <img
+                        src={Testericon}
+                        className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
+                        alt="tester-image"
+                      />
+                    )}
 
                     {/* Mobile Responsive */}
                     <div className="flex flex-row gap-[71px] lg:hidden">
-                      <img
-                        src={list.url}
-                        className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
-                        alt="merry-list-image"
-                      />
-
+                      {list.url ? (
+                        <img
+                          src={list.url}
+                          className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
+                          alt="merry-list-image"
+                        />
+                      ) : (
+                        <img
+                          src={Testericon}
+                          className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
+                          alt="tester-image"
+                        />
+                      )}
                       {list.status_1 === "match" &&
                       list.status_2 === "match" ? (
                         <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
@@ -163,7 +190,7 @@ function MerryListPage() {
                               <img
                                 src={Chaticon}
                                 alt="chat-icon"
-                                className="mt-[15.6px] ml-[14.4px]"
+                                className="mt-[5px] ml-[14.4px]"
                               />
                             </button>
                             <button
@@ -230,16 +257,16 @@ function MerryListPage() {
 
                     {/************************************************************************************************/}
                     <div className="w-[343px] h-[156px] flex flex-col gap-[8px] lg:w-[447px] lg:h-[182px] lg:gap-[24px]">
-                      <section className="w-[343px] h-[30px] flex flex-row gap-[16px] lg:w-[447px]">
+                      <section className="w-[343px] h-[30px] flex flex-row gap-[16px] lg:w-[490px]">
                         <div className="w-auto h-[30px] flex flex-row gap-[8px] font-bold text-[24px] leading-[30px]">
-                          <h4 className="w-[110px] h-[30px] text-[#2A2E3F]">
+                          <h4 className="w-auto h-[30px] text-[#2A2E3F]">
                             {list.name}
                           </h4>
                           <h4 className="w-[29px] h-[30px] text-[#646D89]">
                             {list.age}
                           </h4>
                         </div>
-                        <section className="w-[220px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px] lg:w-[324px]">
+                        <section className="w-[200px] h-[24px] flex flex-row gap-[6px] mt-[5px] mb-[5px] lg:w-[324px]">
                           <img
                             src={Locationicon}
                             className="w-[11.2px] h-[13.6px] mt-[4px] ml-[4px]"

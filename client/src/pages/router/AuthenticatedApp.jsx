@@ -19,7 +19,6 @@ import MatchingArea from "../../components/matchingpage/matching-area/MatchingAr
 import ComplaintListPage from "../admin/ComplaintListPage";
 import ComplaintDetailPage from "../admin/ComplaintDetailPage";
 
-
 const AuthenticatedApp = () => {
   const { state } = useAuth();
   const role = state.role;
