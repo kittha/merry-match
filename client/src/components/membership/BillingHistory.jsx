@@ -105,7 +105,7 @@ function BillingHistory({ history }) {
         </div>
         <div className="flex lg:justify-end border-t border-[#E4E6ED] pt-[16px] max-lg:mb-[58px]">
           <button
-            className="text-[#C70039] font-[700] px-[8px] py-[4px]"
+            className="text-[#C70039] font-[700] px-[8px] py-[4px] hover:drop-shadow-xl"
             onClick={handleRequestPDF}
           >
             Request PDF
