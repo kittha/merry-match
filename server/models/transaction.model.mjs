@@ -36,22 +36,45 @@ export const createTransaction = async (transaction) => {
 export const getTransactionByUserId = async (userId) => {
   try {
     const result = await connectionPool.query(
-      "SELECT * FROM transactions WHERE user_id = $1 ORDER BY created_at DESC",
+      `SELECT * FROM transactions WHERE user_id = $1 ORDER BY created_at DESC`,
       [userId]
     );
     return result.rows;
   } catch (error) {
-    throw new Error(`Error fetching transaction by user id: ${error.message}`);
+    console.error("Error fetching transaction by user id:", error);
+    throw error;
   }
 };
 export const getTransactionsOlderThan = async (date) => {
   try {
     const result = await connectionPool.query(
-      "SELECT * FROM transactions WHERE created_at < $1",
+      `SELECT * FROM transactions WHERE created_at < $1`,
       [date]
     );
     return result.rows;
-  } catch {
-    throw new Error(`Error fetching transaction: ${error.message}`);
+  } catch (error) {
+    console.error("Error fetching transaction:", error);
+    throw error;
+  }
+};
+
+export const getTransactionWithPackageDetails = async (userId) => {
+  try {
+    const result = await connectionPool.query(
+      `
+    SELECT
+      transactions.*,
+      packages.name AS package_name,
+      packages.price AS package_price
+    FROM transactions
+    LEFT JOIN packages ON transactions.package_id = packages.package_id
+    WHERE transactions.user_id = $1
+  `,
+      [userId]
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("Error inserting transaction:", error);
+    throw error;
   }
 };

@@ -3,13 +3,14 @@ import { addMonths, format } from "date-fns";
 
 function MembershipPackage({ details, history }) {
   const lastBillingDate =
-    history.length > 0
+    history && history.length > 0
       ? new Date(Math.max(...history.map((item) => new Date(item.created_at))))
       : null;
 
   const nextBillingDate = lastBillingDate
     ? addMonths(lastBillingDate, 1)
     : null;
+
   return (
     <div className="flex flex-col gap-[24px] max-lg:px-[16px]">
       <h1 className="text-[#2A2E3F] font-[700] text-[24px]">
