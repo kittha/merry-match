@@ -36,11 +36,13 @@ const NavbarAuthen = () => {
   const handleBellClick = () => {
     setBellMenuOpen(!bellMenuOpen);
     setProfileMenuOpen(false);
+    setShowChat(false);
   };
 
   const handleProfileClick = () => {
     setProfileMenuOpen(!profileMenuOpen);
     setBellMenuOpen(false);
+    setShowChat(false);
   };
 
   const { logout, state } = useAuth();
@@ -73,6 +75,7 @@ const NavbarAuthen = () => {
     setIsOpen(false);
     setBellMenuOpen(false);
     setProfileMenuOpen(false);
+    setShowChat(false);
   }, [location.pathname]);
 
   return (
