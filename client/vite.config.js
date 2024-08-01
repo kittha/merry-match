@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": "/src",
+      "@supabase/supabase-js": "node_modules/@supabase/supabase-js/dist/main",
     },
   },
 });
