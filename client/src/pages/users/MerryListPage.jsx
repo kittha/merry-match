@@ -142,7 +142,8 @@ function MerryListPage() {
                         alt="merry-list-image"
                       />
 
-                      {list.status_1 === "match" ? (
+                      {list.status_1 === "match" &&
+                      list.status_2 === "match" ? (
                         <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
                           <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
                             <img
@@ -286,7 +287,7 @@ function MerryListPage() {
                     </div>
                     {/* Desktop responsive */}
 
-                    {list.status_1 === "match" ? (
+                    {list.status_1 === "match" && list.status_2 === "match" ? (
                       <div className="hidden w-[168px] h-[104px] flex-col gap-[24px] items-end lg:w-[176px] lg:flex">
                         <section className="w-[157.4px] h-[32px] rounded-full border flex flex-row gap-[4px] border-[#C70039] pl-[21px] pr-[11px] pt-[4px] pb-[4px]">
                           <img

@@ -15,8 +15,8 @@ export const transformMerryListData = (rows) => {
   const merryListsMap = new Map();
 
   rows.forEach((row) => {
-    if (!merryListsMap.has(row.profile_id)) {
-      merryListsMap.set(row.profile_id, {
+    if (!merryListsMap.has(row.user_id)) {
+      merryListsMap.set(row.user_id, {
         user_id: row.user_id,
         sequence: row.profile_picture_sequence,
         url: row.profile_picture,
@@ -33,13 +33,14 @@ export const transformMerryListData = (rows) => {
         bio: row.bio,
         hobbies: row.hobbies,
         status_1: row.status_1,
+        status_2: row.status_2,
         user_id_1: row.user_id_1,
         user_id_2: row.user_id_2,
         created_at: row.created_at,
         updated_1_at: row.updated_1_at,
       });
     }
-    const merryList = merryListsMap.get(row.profile_id);
+    const merryList = merryListsMap.get(row.user_id);
 
     if (row.profile_picture_sequence && row.profile_picture) {
       merryList.avatars[`image${row.profile_picture_sequence}`] =
