@@ -2,7 +2,7 @@ import express from "express";
 import {
   getChatHistory,
   sendMessage,
-} from "../../../controllers/message.controller.mjs";
+} from "../../../controllers/chat.controller.mjs";
 
 const router = express.Router();
 

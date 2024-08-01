@@ -1,7 +1,7 @@
 import connectionPool from "../configs/db.mjs";
 
 export const createMessage = async (data) => {
-  const { sender, receiver, matchId, message, media, dateTime } = data;
+  const { sender, receiver, matchId, message, mediaId, dateTime } = data;
   try {
     const result = await connectionPool.query(
       `INSERT INTO messages (
@@ -14,7 +14,7 @@ export const createMessage = async (data) => {
         updated_at)
       VALUES ($1, $2, $3, $4, $5, $6, $6)
       RETURNING *`,
-      [sender, receiver, matchId, message, media, dateTime]
+      [sender, receiver, matchId, message, mediaId, dateTime]
     );
     return result.rows[0];
   } catch (error) {
@@ -31,6 +31,25 @@ export const getMessages = async (matchId) => {
       [matchId]
     );
     return result.rows;
+  } catch (error) {
+    console.error("Error in message model", error);
+    throw error;
+  }
+};
+
+export const createMedia = async (imageUri) => {
+  const { url, publicId, fileType } = imageUri;
+  try {
+    const result = await connectionPool.query(
+      `INSERT INTO media (
+        cloudinary_id, 
+        url, 
+        type)
+      VALUES ($1, $2, $3)
+      RETURNING *`,
+      [url, publicId, fileType]
+    );
+    return result.rows[0];
   } catch (error) {
     console.error("Error in message model", error);
     throw error;
