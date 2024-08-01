@@ -14,9 +14,17 @@ function Topbar({ complaintData, refresh, setRefresh }) {
         <button onClick={() => navigate("/admin/complaint")} type="button">
           <img src="../src/assets/arrow_back.svg" alt="arrow" />
         </button>
-        <div className="text-2xl font-bold w-[257px] h-[30px] flex items-center ">
-          <p className="w-[200px] h-[30px] truncate">{complaintData.issue}</p>
-        </div>
+        {typeof complaintData.issue === "string" &&
+        complaintData.issue.length < 20 ? (
+          <div className="text-2xl font-bold w-fit h-[30px] flex items-center ">
+            <p className="w-fit h-[30px] truncate">{complaintData.issue}</p>
+          </div>
+        ) : (
+          <div className="text-2xl font-bold w-[257px] h-[30px] flex items-center ">
+            <p className="w-[210px] h-[30px] truncate">{complaintData.issue}</p>
+          </div>
+        )}
+
         <div>
           {complaintData.status === "Pending" ? (
             <div className="w-[65px] h-[26px] px-2.5 py-1 bg-[#FFF6D4] flex justify-center items-center rounded-[8px]">

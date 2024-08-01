@@ -7,11 +7,16 @@ function MainContent({ complaintData }) {
     const year = date.getFullYear();
 
     let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const isPM = hours >= 12;
     hours = hours % 12 || 12; // Convert to 12-hour format
 
-    const formattedDate = `${month}/${day}/${year} `;
+    const time = `${hours}:${minutes}${isPM ? "PM" : "AM"}`;
 
-    return formattedDate;
+    const formattedDateWithTime = `${month}/${day}/${year} ${time}`;
+    const formattedDateWithNoTime = `${month}/${day}/${year}`;
+
+    return { formattedDateWithTime, formattedDateWithNoTime };
   };
   return (
     <div className="w-[1200px] min-h-[944px] bg-[#F6F7FC] flex justify-center font-Nunito">
@@ -38,7 +43,7 @@ function MainContent({ complaintData }) {
         </div>
         <div className="w-[880px] h-fit flex flex-col gap-2">
           <p className="text-[#646D89] text-xl font-semibold">Date Submitted</p>
-          <p>{formatDate(complaintData.created_at)}</p>
+          <p>{formatDate(complaintData.created_at).formattedDateWithNoTime}</p>
         </div>
         {complaintData.status === "Resolved" ? (
           <>
@@ -47,7 +52,9 @@ function MainContent({ complaintData }) {
               <p className="text-[#646D89] text-xl font-semibold">
                 Resolved date
               </p>
-              <p>{formatDate(complaintData.updated_at)}</p>
+              <p>
+                {formatDate(complaintData.updated_at).formattedDateWithTime}
+              </p>
             </div>
           </>
         ) : null}
@@ -58,7 +65,9 @@ function MainContent({ complaintData }) {
               <p className="text-[#646D89] text-xl font-semibold">
                 Canceled date
               </p>
-              <p>{formatDate(complaintData.updated_at)}</p>
+              <p>
+                {formatDate(complaintData.updated_at).formattedDateWithTime}
+              </p>
             </div>
           </>
         ) : null}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 
 const AgeSliderStyle = styled(Slider)({
@@ -29,11 +29,38 @@ const AgeSliderStyle = styled(Slider)({
 });
 
 function AgeRange() {
+  const minDistance = 1;
   const [value, setValue] = useState([20, 37]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleChange = (event, newValue, activeThumb) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (activeThumb === 0) {
+      setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+    } else {
+      setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+    }
   };
+
+  const valueChange18 = () => {
+    if (value[0] < 18) {
+      setValue([18, value[1]]);
+    } else if (value[0] > value[1]) {
+      setValue([value[1] - 1, value[1]]);
+    } else if (value[0] > 80) setValue([79, 80]);
+  };
+
+  const valueChange80 = () => {
+    if (value[1] > 80) {
+      setValue([value[0], 80]);
+    } else if (value[1] < value[0]) {
+      setValue([value[0], value[0] + 1]);
+    } else if (value[1] < 18) setValue([18, 19]);
+  };
+
+  console.log(value);
 
   return (
     <div className="flex flex-col gap-[13px] lg:w-[188px] lg:h-[122px]">
@@ -53,18 +80,24 @@ function AgeRange() {
         <div className="w-[50%] h-[48px] flex  items-center border-[#CCD0D7] border-[1px] rounded-md">
           <input
             className="h-[24px] w-[100%] ml-[12px] mr-[16px] mt-[12px] mb-[12px] outline-none"
+            onChange={(e) => setValue([Number(e.target.value), value[1]])}
+            onBlur={valueChange18}
             type="number"
             max="80"
             min="18"
+            value={value[0]}
           />
         </div>
         <p className="mx-[5px]">-</p>
         <div className="w-[50%] h-[48px] flex items-center border-[#CCD0D7] border-[1px] rounded-md">
           <input
             className="h-[24px] w-[100%] ml-[12px] mr-[16px] mt-[12px] mb-[12px] outline-none"
+            onChange={(e) => setValue([value[0], Number(e.target.value)])}
+            onBlur={valueChange80}
             type="number"
             min="18"
             max="80"
+            value={value[1]}
           />
         </div>
       </div>
