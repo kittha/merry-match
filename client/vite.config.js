@@ -4,8 +4,6 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      "@supabase/supabase-js": "node_modules/@supabase/supabase-js/dist/main",
-    },
+    alias: {},
   },
 });
