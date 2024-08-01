@@ -4,7 +4,7 @@ import CarouselComponent from "./matching-area-subcomponents/CarouselComponent";
 import MerryLimitToday from "./matching-area-subcomponents/MerryLimitToday";
 import ColorFilterComponent from "./matching-area-subcomponents/ColorFilterComponent.jsx";
 import BackgroundComponent from "./matching-area-subcomponents/BackgroundComponent.jsx";
-import { useMerryLimit } from "../../../contexts/MerryLimitProvider.jsx";
+import { useMerryLimit } from "../../../hooks/userMerryLimit.js";
 
 const db = [
   {

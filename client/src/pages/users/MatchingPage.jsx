@@ -3,14 +3,17 @@ import FilterContainer from "../../components/matchingpage/Filter-area/FilterCon
 import SwipeCard from "../../components/matchingpage/matching/SwipeCard";
 
 
-function MatchingPage() {
+function MatchingPage() {  
   return (
     <>
-    <div className="flex">
-            <ChatContainer />
-            <SwipeCard />
-            <FilterContainer />
-
+    <div className="flex flex-col lg:flex-row">
+      <div className="hidden lg:flex ">
+        <ChatContainer />
+      </div>
+        <SwipeCard />
+      <div className="hidden lg:flex">
+        <FilterContainer />
+      </div>
     </div>
             
     </>

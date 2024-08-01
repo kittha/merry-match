@@ -1,13 +1,13 @@
 import AgeRange from "./AgeRange";
 import CheckBox from "./CheckBox";
 
-function FilterContainer() {
+function FilterContainer({ onClose }) {
   return (
-    <div className="w-[350px] h-screen bg-white z-20 overflow-hidden">
-      <div className="w-screen h-[146px] bg-black opacity-50 lg:hidden"></div>
+    <div className="lg:w-[220px] w-screen lg:h-screen h-[80vh] bg-white z-30 lg:overflow-hidden overflow-auto rounded-[24px]">
       <div className="w-screen h-[698px] flex flex-col  items-center lg:w-[220px] lg:h-[936px] font-Nunito  lg:pt-[124px] z-20">
-        <div className="pt-[12px] relative bottom-[32px] w-full h-[44px] flex rounded-t-[24px] justify-between items-center lg:hidden bg-white">
-          <button className="ml-[16px]">
+        <div className="pt-[64px] relative bottom-[32px] w-full h-[44px] flex rounded-t-[24px] justify-between items-center lg:hidden bg-white">
+          <button className="ml-[16px]"
+            onClick={onClose}>
             <img
               className="w-[13px] h-[13px]"
               src="./src/assets-backup/filter-area/Vector.svg"

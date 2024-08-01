@@ -1,48 +1,35 @@
-// import getUserPackageById from "./transaction.controller.mjs";
-// import getUserTransactionsById from "./transaction.controller.mjs";
+import { getPackageIdByUserId } from "../models/user.model.mjs";
+import { getPackageById } from "../models/package.model.mjs";
+import { getTransactionByUserId } from "../models/transaction.model.mjs"; // Assuming you have this function
 
-// export const getmembershipDataById = async (req, res) => {
-//   const userId = req.user.user_id;
-//   try {
-//     const mockReq = { userId }; // send req by using userId as argument
+export const getMembershipData = async (req, res) => {
+  const { userId } = req.params;
 
-//     let userPackage, userTransaction;
-//     let userPackageStatusCode, userTransactionStatusCode;
+  try {
+    // Fetch package ID associated with the user
+    const packageId = await getPackageIdByUserId(userId);
 
-//     const userPackageResponse = {
-//       status: (statusCode) => {
-//         userPackageStatusCode = statusCode;
-//         return {
-//           json: (data) => {
-//             userPackage = data;
-//           },
-//         };
-//       },
-//     };
+    // Fetch package details using the package ID
+    const packageDetails = await getPackageById(packageId);
 
-//     const userTransactionResponse = {
-//       status: (statusCode) => {
-//         userTransactionStatusCode = statusCode;
-//         return {
-//           json: (data) => {
-//             userTransaction = data;
-//           },
-//         };
-//       },
-//     };
+    // Fetch billing history using the user ID
+    const billingHistory = await getTransactionByUserId(userId);
 
-//     await getUserPackageById(mockReq, userPackageResponse); // reuse api
-//     await getUserTransactionsById(mockReq, userTransactionResponse); // reuse api
-
-//     const membershipData = { userPackage, userTransaction };
-
-//     if (userPackageStatusCode !== 200 || userTransactionStatusCode !== 200) {
-//       return res.status(500).json({ error: "Failed to fetch membership data" });
-//     }
-
-//     res.status(200).json(membershipData);
-//   } catch (error) {
-//     console.error("Error fetching membership data:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
+    // Attach package details to each billing history entry
+    const billingHistoryWithPackageDetails = billingHistory.map((entry) => ({
+      ...entry,
+      package_name: packageDetails.name,
+      package_price: packageDetails.price,
+    }));
+    // Respond with combined data
+    res
+      .status(200)
+      .json({
+        packageDetails,
+        billingHistory: billingHistoryWithPackageDetails,
+      });
+  } catch (error) {
+    console.error("Error getting membership data:", error);
+    res.status(500).json({ message: error.message });
+  }
+};

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import supabase from "../utils/supabaseClient";
 
 const AuthContext = React.createContext();
 
@@ -10,7 +10,7 @@ const useAuth = () => React.useContext(AuthContext);
 
 function AuthProvider(props) {
   const [state, setState] = useState({
-    loading: null,
+    loading: true,
     error: null,
     user: null,
     role: "",
@@ -22,11 +22,50 @@ function AuthProvider(props) {
     // console.log(data);
     if (data) {
       setState({
-        ...state,
+        loading: false,
+        error: null,
         user: data,
         role: data.role,
       });
+    }else {
+      setState((prevState) => ({ ...prevState, loading: false }));
     }
+  }, []);
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      const refresh_token = localStorage.getItem("refreshToken");
+      if (refresh_token) {
+        try {
+          const result = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
+            { refresh_token }
+          );
+
+      const token = result.data.session.access_token;
+      const newRefreshToken = result.data.session.refresh_token
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", newRefreshToken);
+      localStorage.setItem("data", JSON.stringify(result.data));
+
+
+      const userDataFromPayload = result.data;
+
+      setState({
+        ...state,
+        user: userDataFromPayload,
+        role: userDataFromPayload.role,
+      });
+
+        } catch (error) {
+          console.error("Error refreshing token:", error);
+          logout();
+        }
+      }
+    };
+
+    const interval = setInterval(refreshToken, 15 * 60 * 1000); // 15 * 60 * 1000 = Refresh every 15 minutes
+    return () => clearInterval(interval);
   }, []);
 
   // make a login request
@@ -40,7 +79,9 @@ function AuthProvider(props) {
       );
 
       const token = result.data.session.access_token;
+      const refreshToken = result.data.session.refresh_token
       localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("data", JSON.stringify(result.data));
 
       // const userDataFromToken = jwtDecode(token);
@@ -54,6 +95,7 @@ function AuthProvider(props) {
         ...state,
         user: userDataFromPayload,
         role: userDataFromPayload.role,
+        loading: false,
       });
 
       if (userDataFromPayload.role === "Admin") {
@@ -106,7 +148,9 @@ function AuthProvider(props) {
   const logout = () => {
     try {
       localStorage.removeItem("token");
-      setState({ ...state, user: null, error: false });
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("data");
+      setState({ ...state, user: null, role: "", error: null });
     } catch (error) {
       console.error("Logout error:", error);
     }

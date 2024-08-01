@@ -7,7 +7,6 @@ import { AuthProvider } from "./contexts/authentication.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { FormProvider } from "./contexts/FormProvider.jsx";
 
-
 import { PackageProvider } from "./contexts/PackageProvider.jsx";
 
 if (import.meta.env.VITE_NODE_ENV === "development") {

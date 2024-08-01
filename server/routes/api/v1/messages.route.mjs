@@ -7,10 +7,9 @@ import {
 const router = express.Router();
 
 router.get("/:matchId", getChatHistory);
+router.post("/:matchId", sendMessage);
 
 // router.get("/:userId", getUserMessages);
-
-// router.post("/:userId", sendMessages);
 
 // router.delete("/:userId", deleteMessage);
 

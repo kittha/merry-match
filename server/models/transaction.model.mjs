@@ -40,3 +40,15 @@ export const createTransaction = async (transaction) => {
     throw error;
   }
 };
+
+export const getTransactionByUserId = async (userId) => {
+  try {
+    const result = await connectionPool.query(
+      "SELECT * FROM transactions WHERE user_id = $1 ORDER BY created_at DESC",
+      [userId]
+    );
+    return result.rows;
+  } catch (error) {
+    throw new Error(`Error fetching billing history: ${error.message}`);
+  }
+};
