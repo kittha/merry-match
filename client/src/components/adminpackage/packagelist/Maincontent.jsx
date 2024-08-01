@@ -1,42 +1,7 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-function MainContent() {
-  const [Package, setpackage] = useState([]);
+function MainContent({ Package, deletePackage }) {
   const navigate = useNavigate();
-
-  const getPackage = async () => {
-    try {
-      const result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages`
-      );
-      setpackage(
-        result.data.data.sort((a, b) => {
-          return a.package_id - b.package_id;
-        })
-      );
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const deletePackage = async (id, index) => {
-    try {
-      const newPackage = [...Package];
-      await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/${id}`
-      );
-      newPackage.splice(index, 1);
-      setpackage(newPackage);
-    } catch (error) {
-      console.error("Error delete data:", error);
-    }
-  };
-
-  useEffect(() => {
-    getPackage();
-  }, []);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
