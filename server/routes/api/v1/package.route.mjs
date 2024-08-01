@@ -6,8 +6,9 @@ import {
 } from "../../../controllers/package.controller.mjs";
 
 const router = express.Router();
+router.get("/", getAllPackages);
 
-router.get("/", getPackagesByParam);
+router.get("/param", getPackagesByParam);
 
 router.get("/:packageId", getPackageById);
 

@@ -1,5 +1,3 @@
-// controllers/billingHistory.controller.mjs
-
 import PDFDocument from "pdfkit";
 import { getBillingHistoryByUserId } from "../models/billingHistory.model.mjs";
 import { getPackageById } from "../models/package.model.mjs";

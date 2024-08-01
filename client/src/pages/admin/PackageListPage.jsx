@@ -23,7 +23,7 @@ function PackageListPage() {
   const getPackage = async (text) => {
     try {
       const result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages?name=${text}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages/param?name=${text}`
       );
       setpackage(
         result.data.data.sort((a, b) => {

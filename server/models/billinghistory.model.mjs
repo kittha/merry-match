@@ -1,5 +1,3 @@
-// models/billingHistory.model.mjs
-
 import { getTransactionByUserId } from "./transaction.model.mjs"; // Adjust the import if necessary
 
 export const getBillingHistoryByUserId = async (userId) => {
