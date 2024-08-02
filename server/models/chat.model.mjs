@@ -26,7 +26,9 @@ export const createMessage = async (data) => {
 export const getMessages = async (matchId) => {
   try {
     const result = await connectionPool.query(
-      `SELECT * FROM messages WHERE match_id = $1::INTEGER
+      `SELECT * FROM messages 
+      LEFT JOIN media ON messages.media_id = media.media_id
+      WHERE match_id = $1::INTEGER
       ORDER BY sent_at`,
       [matchId]
     );
@@ -42,8 +44,8 @@ export const createMedia = async (imageUri) => {
   try {
     const result = await connectionPool.query(
       `INSERT INTO media (
-        cloudinary_id, 
         url, 
+        cloudinary_id, 
         type)
       VALUES ($1, $2, $3)
       RETURNING *`,

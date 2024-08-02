@@ -84,14 +84,15 @@ const Chat = () => {
     };
     console.log("sendData: ", sendData);
 
-    const response = await createMessage(sendData);
+    const msgResponse = await createMessage(sendData);
+    console.log("fromCreateMessage", msgResponse);
 
-    if (!inputText) {
-      socket.current.emit("send-msg", sendData);
-      const newMessages = [...messages];
-      newMessages.push(sendData);
-      setMessages(newMessages);
-    }
+    const newMessages = [...messages];
+    newMessages.push(msgResponse);
+    setMessages(newMessages);
+
+    //socket send message and photo
+    socket.current.emit("send-msg", msgResponse);
   };
 
   useEffect(() => {

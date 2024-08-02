@@ -44,6 +44,13 @@ const DisplayChat = ({ messages, userId }) => {
               >
                 <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
                   {msg.message}
+                  {msg.media && (
+                    <img
+                      src={msg.media}
+                      alt={`picture-message-${index}`}
+                      className="image"
+                    />
+                  )}
                 </div>
               </div>
             ) : (

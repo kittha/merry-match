@@ -12,23 +12,25 @@ export const getPrevMessages = async (matchId) => {
   }
 };
 
-export const createMessage = async (data) => {
-  console.log("creatMessage", data);
+export const createMessage = async (sendData) => {
+  console.log("creatMessage", sendData);
   const sentFormData = new FormData();
-  for (let key in data) {
-    if (data[key] instanceof File) {
-      sentFormData.append("avatar", data[key]);
-    } else {
-      sentFormData.append(key, data[key]);
+  for (let key in sendData) {
+    if (sendData[key] instanceof File) {
+      sentFormData.append("avatar", sendData[key]);
+    } else if (sendData[key] instanceof Date) {
+      sentFormData.append(key, sendData[key].toISOString());
+    } else if (sendData[key]) {
+      sentFormData.append(key, sendData[key]);
     }
   }
 
   try {
-    const result = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/v1/messages/${data.matchId}`,
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/messages/${sendData.matchId}`,
       sentFormData
     );
-    console.log("Post data to Database Success.", result);
+    console.log("Post data to Database Success.", data);
     return data;
   } catch (error) {
     console.error("Error at createMessage in connectMsg: ", error);
