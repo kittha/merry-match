@@ -66,6 +66,22 @@ const InputSection = ({ handleSendMsg }) => {
         onChange={(event) => handleFileChange(event)}
         hidden
       />
+      {inputFile && (
+        <div className="image-preview-container bg-white rounded-2xl absolute bottom-20 lg:bottom-28">
+          <img
+            className="image-preview w-[167px] h-[167px] rounded-2xl object-cover"
+            src={URL.createObjectURL(inputFile)}
+            alt="preview-file"
+          />
+          <button
+            className="delete-button w-[24px] h-[24px] bg-[#AF2758] rounded-full text-white absolute top-1 right-1"
+            onClick={() => setInputFile(null)}
+          >
+            x
+          </button>
+        </div>
+      )}
+
       <div className="emojiPicker" ref={emojiRef}>
         <img
           src={emoji}
@@ -86,35 +102,17 @@ const InputSection = ({ handleSendMsg }) => {
           />
         )}
       </div>
-      {inputFile ? (
-        <div className="image-preview-container flex-1 relative">
-          <img
-            className="image-preview w-[167px] h-[167px] rounded-2xl object-cover"
-            src={URL.createObjectURL(inputFile)}
-            alt="preview-file"
-            // draggable
-            // onDragStart={(event) => handleDragStart(event, index)}
-            // onDragOver={handleDragOver}
-            // onDrop={(event) => handleDrop(event, index)}
-          />
-          <button
-            className="delete-button w-[24px] h-[24px] bg-[#AF2758] rounded-full text-white absolute top-1 left-[140px]"
-            onClick={() => setInputFile(null)}
-          >
-            x
-          </button>
-        </div>
-      ) : (
-        <input
-          type="text"
-          placeholder="Message here..."
-          className="input-msg flex-1 placeholder:text-[#9B9EAD] text-[#9B9EAD] bg-transparent focus:outline-none"
-          value={inputText}
-          onChange={(event) => {
-            setInputText(event.target.value);
-          }}
-        />
-      )}
+
+      <input
+        type="text"
+        placeholder="Message here..."
+        className="input-msg flex-1 placeholder:text-[#9B9EAD] text-[#9B9EAD] bg-transparent focus:outline-none"
+        value={inputText}
+        onChange={(event) => {
+          setInputText(event.target.value);
+        }}
+      />
+
       <button type="submit">
         <img
           src={send}
