@@ -29,7 +29,11 @@ function ComplaintListPage() {
           import.meta.env.VITE_BACKEND_URL
         }/api/v1/admin/complaints?name=${text}`
       );
-      setComplaint(result.data);
+      setComplaint(
+        result.data.sort((a, b) => {
+          return a.complaint_id - b.complaint_id;
+        })
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -60,7 +64,12 @@ function ComplaintListPage() {
     <div className="flex ">
       <Sidebar />
       <div className="flex flex-col">
-        <Topbar searchText={searchText} setSearchText={setSearchText} />
+        <Topbar
+          complaint={complaint}
+          setComplaint={setComplaint}
+          searchText={searchText}
+          setSearchText={setSearchText}
+        />
         <MainContent complaint={complaint} updateStatus={updateStatus} />
       </div>
     </div>
