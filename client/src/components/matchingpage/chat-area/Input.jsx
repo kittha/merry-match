@@ -4,7 +4,6 @@ import upload from "/assets/matchingpage/upload-image-button.png";
 import emoji from "/assets/matchingpage/icons8-smiling-face-with-heart-48-yellow.png";
 import EmojiPicker from "emoji-picker-react";
 import useToggle from "../../../hooks/useToggle.mjs";
-import { useImage } from "../../../hooks/useImage.mjs";
 
 const InputSection = ({ handleSendMsg }) => {
   const [inputText, setInputText] = useState("");
@@ -13,20 +12,40 @@ const InputSection = ({ handleSendMsg }) => {
   const emojiRef = useRef();
 
   useEffect(() => {
-    const handleMousedown = (event) => {
+    const inputTextElement = document.getElementsByClassName("input-msg")[0];
+    const formElement = document.getElementsByTagName("form")[0];
+
+    const handleKeyDown = (event) => {
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey &&
+        !event.ctrlKey &&
+        !event.altKey
+      ) {
+        event.preventDefault();
+        formElement.requestSubmit();
+      }
+    };
+
+    inputTextElement.addEventListener("keydown", handleKeyDown);
+
+    const handleMouseDown = (event) => {
       if (emojiRef && !emojiRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleMousedown);
+
+    document.addEventListener("mousedown", handleMouseDown);
+
     return () => {
-      document.removeEventListener("mousedown", handleMousedown);
+      inputTextElement.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleMouseDown);
     };
   }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files;
-    console.log(file[0]?.type);
+    console.log(file[0]);
     if (file[0]?.type.includes("image")) {
       setInputFile(event.target.files[0]);
     }
@@ -63,8 +82,9 @@ const InputSection = ({ handleSendMsg }) => {
       <input
         id="input-file"
         type="file"
+        accept="image/*"
+        className="input-file-button absolute -z-10 rounded-full w-1 opacity-0"
         onChange={(event) => handleFileChange(event)}
-        hidden
       />
       {inputFile && (
         <div className="image-preview-container bg-white rounded-2xl absolute bottom-20 lg:bottom-28">

@@ -1,20 +1,18 @@
 import { useEffect } from "react";
-import { useAuth } from "../../../contexts/authentication";
 import matched from "/assets/matchingpage/merry-match-icon.png";
 
 const DisplayChat = ({ messages, userId }) => {
   // console.log(messages);
 
-  const scrollToBottom = () => {
-    const element = document.getElementsByTagName("main")[0];
-    const hight = element.scrollHeight;
-    // console.log("element", element, "hight", hight);
-    element.scrollTo({ top: hight });
-  };
-
   useEffect(() => {
+    const scrollToBottom = () => {
+      const element = document.getElementsByTagName("main")[0];
+      const hight = element.scrollHeight;
+      console.log("element", element, "hight", hight);
+      element.scrollTo({ top: hight });
+    };
     scrollToBottom();
-    // console.log("scrollEffect");
+    console.log("scrollEffect");
   }, [messages]);
 
   return (
@@ -42,13 +40,13 @@ const DisplayChat = ({ messages, userId }) => {
                 key={index}
                 className="message-line flex flex-row-reverse items-end gap-3"
               >
-                <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
+                <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit break-words rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
                   {msg.message}
                   {msg.media && (
                     <img
                       src={msg.media}
                       alt={`picture-message-${index}`}
-                      className="image"
+                      className="image w-52 my-2"
                     />
                   )}
                 </div>
@@ -64,8 +62,15 @@ const DisplayChat = ({ messages, userId }) => {
                   alt="profile-image"
                   className="profile-pic bg-slate-400 w-10 h-10 rounded-full"
                 />
-                <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit rounded-3xl rounded-bl-none bg-[#EFC4E2] py-3 lg:py-4 px-6">
+                <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit break-words rounded-3xl rounded-bl-none bg-[#EFC4E2] py-3 lg:py-4 px-6">
                   {msg.message}
+                  {msg.media && (
+                    <img
+                      src={msg.media}
+                      alt={`picture-message-${index}`}
+                      className="image w-52 my-2"
+                    />
+                  )}
                 </div>
               </div>
             );

@@ -11,9 +11,9 @@ export const sendMessage = async (req, res) => {
     // console.log("req", req.body);
     // console.log("files", req.files);
     //add photo to database
-    if (req.files) {
-      const Uri = await cloudinaryUpload(req.files);
-      // console.log("Uri", Uri);
+    const Uri = await cloudinaryUpload(req.files);
+    // console.log("Uri", Uri);
+    if (Uri) {
       mediaResult = await createMedia(Uri[0]);
       // console.log("mediadata", mediaResult);
     }
@@ -35,7 +35,7 @@ export const sendMessage = async (req, res) => {
 
     return res.status(200).json(data);
   } catch (error) {
-    console.error("Error in message controller:", error);
+    console.error("Error in chat controller:", error);
     res.status(500).json({
       message: "Internal server error",
     });
@@ -58,7 +58,7 @@ export const getChatHistory = async (req, res) => {
     // console.log(data);
     return res.status(200).json(data);
   } catch (error) {
-    console.error("Error in message controller:", error);
+    console.error("Error in chat controller:", error);
     res.status(500).json({
       message: "Internal server error",
     });
