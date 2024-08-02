@@ -1,4 +1,5 @@
 import { useState } from "react";
+import drag1 from "../../../../public/assets/adminpackage/drag1.svg";
 
 function AddDetail({ packageDetail, setPackageData, errors }) {
   const [detail, setDetail] = useState("");
@@ -43,11 +44,7 @@ function AddDetail({ packageDetail, setPackageData, errors }) {
           key={index}
           className="flex gap-[24px] w-[880px] h-[76px] items-center"
         >
-          <img
-            className="w-[26px] h-[76px]"
-            src="./src/assets/drag1.svg"
-            alt="drag"
-          />
+          <img className="w-[26px] h-[76px]" src={drag1} alt="drag" />
           <div className="flex flex-col gap-[4px]">
             <label htmlFor={`package-detail-${index}`}>
               Detail <span className="text-[#AF2758]">*</span>
@@ -76,11 +73,7 @@ function AddDetail({ packageDetail, setPackageData, errors }) {
       {packageDetail.length < 2 && (
         <>
           <div className="flex gap-[24px] w-[880px] h-[76px] items-center">
-            <img
-              className="w-[26px] h-[76px]"
-              src="../src/assets/drag1.svg"
-              alt="drag"
-            />
+            <img className="w-[26px] h-[76px]" src={drag1} alt="drag" />
             <div className="flex flex-col gap-[4px]">
               <label htmlFor="package-detail">
                 Detail <span className="text-[#AF2758]">*</span>

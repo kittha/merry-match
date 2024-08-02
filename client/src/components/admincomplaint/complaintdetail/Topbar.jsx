@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Resolved from "./Resolved";
 import Cancel from "./Cancel";
 import { useState } from "react";
+import arrow from "../../../../public/assets/admincomplaint/arrow_back.svg";
 
 function Topbar({ complaintData, refresh, setRefresh }) {
   const [cancel, setCancel] = useState(false);
@@ -9,10 +10,10 @@ function Topbar({ complaintData, refresh, setRefresh }) {
   const navigate = useNavigate();
   console.log(typeof typeof complaintData.issue);
   return (
-    <div className="w-[1200px] h-[80px] font-Nunito border-b-[1px] border-[#E4E6ED] flex justify-between items-center">
+    <div className="w-full h-[80px] py-4 px-9 font-Nunito border-b-[1px] border-[#E4E6ED] flex justify-between items-center">
       <div className="w-[338px] h-[30px] ml-[60px] flex items-center gap-[16px]">
         <button onClick={() => navigate("/admin/complaint")} type="button">
-          <img src="../src/assets/arrow_back.svg" alt="arrow" />
+          <img src={arrow} alt="arrow" />
         </button>
         {typeof complaintData.issue === "string" &&
         complaintData.issue.length < 20 ? (

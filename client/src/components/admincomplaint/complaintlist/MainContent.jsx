@@ -19,7 +19,7 @@ function MainContent({ complaint, updateStatus }) {
   };
 
   return (
-    <div className="w-[1200px] min-h-[944px] pb-[48px] bg-[#F6F7FC] flex flex-col items-center font-Nunito">
+    <div className="w-full min-h-[944px] pb-[48px] bg-[#F6F7FC] flex flex-col items-center font-Nunito">
       <div className="w-[1080px] h-[41px] flex bg-[#D6D9E4] mt-[48px] rounded-t-2xl font-medium text-sm text-[#424C6B]">
         <div className="w-[164px] h-[41px] flex items-center justify-center ">
           <p className="w-[84px] h-[21px]">User</p>

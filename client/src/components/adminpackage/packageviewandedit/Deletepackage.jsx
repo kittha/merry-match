@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import cross from "../../../../public/assets/adminpackage/Vector.svg";
 
 function DeletePackage(props) {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function DeletePackage(props) {
           <p className="ml-[24px] font-semibold text-xl">Delete Confirmation</p>
           <div className="w-[41px] h-[40px] flex ">
             <button type="button" onClick={() => props.setTrigger(false)}>
-              <img src="./src/assets/Vector.svg" alt="cross" />
+              <img src={cross} alt="cross" />
             </button>
           </div>
         </div>

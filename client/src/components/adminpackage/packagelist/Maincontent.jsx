@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import drag from "../../../../public/assets/adminpackage/drag.svg";
+import Delete from "../../../../public/assets/adminpackage/delete.svg";
+import edit from "../../../../public/assets/adminpackage/edit.svg";
 
 function MainContent({ Package, deletePackage }) {
   const navigate = useNavigate();
@@ -22,7 +25,7 @@ function MainContent({ Package, deletePackage }) {
     return formattedDate;
   };
   return (
-    <div className="w-[1200px] h-[944px] bg-[#F6F7FC] flex flex-col items-center font-Nunito">
+    <div className="w-full min-h-[1024px] bg-[#F6F7FC] flex flex-col items-center font-Nunito">
       <div className="w-[1080px] h-[41px] flex bg-[#D6D9E4] mt-[48px] rounded-t-2xl font-medium text-sm text-[#424C6B]">
         <div className="w-[80px] h-[41px] flex items-center ml-[104px]">
           <p className="ml-[16px]">Icon</p>
@@ -50,7 +53,7 @@ function MainContent({ Package, deletePackage }) {
             key={index}
           >
             <div className="w-[56px] h-[88px]">
-              <img src="./src/assets/drag.svg" alt="drag" />
+              <img src={drag} alt="drag" />
             </div>
             <div className="w-[48px] h-[88px] flex justify-center items-center">
               {index + 1}
@@ -76,20 +79,12 @@ function MainContent({ Package, deletePackage }) {
             </div>
             <div className="w-[120px] h-[88px] flex justify-center items-center gap-[17px]">
               <button onClick={() => deletePackage(items.package_id, index)}>
-                <img
-                  className="w-[24px] h-[24px]"
-                  src="./src/assets/delete.svg"
-                  alt="delete"
-                />
+                <img className="w-[24px] h-[24px]" src={Delete} alt="delete" />
               </button>
               <button
                 onClick={() => navigate(`/admin/package/${items.package_id}`)}
               >
-                <img
-                  className="w-[24px] h-[24px]"
-                  src="./src/assets/edit.svg"
-                  alt="edit"
-                />
+                <img className="w-[24px] h-[24px]" src={edit} alt="edit" />
               </button>
             </div>
           </div>

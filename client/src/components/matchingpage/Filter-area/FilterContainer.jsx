@@ -1,18 +1,15 @@
 import AgeRange from "./AgeRange";
 import CheckBox from "./CheckBox";
+import cross from "../../../../public/assets/filter-area/Vector.svg";
+import search from "../../../../public/assets/filter-area/search.svg";
 
 function FilterContainer({ onClose }) {
   return (
     <div className="lg:w-[220px] w-screen lg:h-screen h-[80vh] bg-white z-30 lg:overflow-hidden overflow-auto rounded-[24px]">
       <div className="w-screen h-[698px] flex flex-col  items-center lg:w-[220px] lg:h-[936px] font-Nunito  lg:pt-[124px] z-20">
         <div className="pt-[64px] relative bottom-[32px] w-full h-[44px] flex rounded-t-[24px] justify-between items-center lg:hidden bg-white">
-          <button className="ml-[16px]"
-            onClick={onClose}>
-            <img
-              className="w-[13px] h-[13px]"
-              src="./src/assets-backup/filter-area/Vector.svg"
-              alt="cross"
-            />
+          <button className="ml-[16px]" onClick={onClose}>
+            <img className="w-[13px] h-[13px]" src={cross} alt="cross" />
           </button>
           <p className="text-[#191C77] font-bold text-xl">Filter</p>
           <button className="mr-[16px] text-[#C70039] font-bold text-base">
@@ -27,7 +24,7 @@ function FilterContainer({ onClose }) {
             <div className="w-full h-[48px] lg:w-[188px] lg:h-[48px] flex items-center border-[#CCD0D7] border-[1px] rounded-md">
               <img
                 className="w-[24px] h-[24px] ml-[16px]"
-                src="./src/assets/search.svg"
+                src={search}
                 alt="search"
               />
               <input
