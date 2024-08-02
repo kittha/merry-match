@@ -3,9 +3,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import HeaderMembership from "../../components/membership/HeaderMembership";
 import MembershipPackage from "../../components/membership/MembershipPackage";
-// import PaymentMethod from "../../components/membership/PaymentMethod";
 import BillingHistory from "../../components/membership/BillingHistory";
 import Footer from "../../components/homepage-authen/Footer";
+
 export const MembershipPage = () => {
   const { userId } = useParams();
   const [data, setData] = useState({
@@ -15,26 +15,39 @@ export const MembershipPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}`
-        );
-        setData(response.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}`
+      );
+      setData(response.data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [userId]);
 
+  const handleCancelPackage = async () => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}/cancel`
+      );
+      alert(response.data.message);
+      // Refresh the data after cancellation
+      setLoading(true);
+      fetchData();
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-
   return (
     <div>
       <div className="flex justify-center w-full pt-[100px] lg:pt-[168px] lg:mb-[112px]">
@@ -44,8 +57,8 @@ export const MembershipPage = () => {
             <MembershipPackage
               details={data.packageDetails}
               history={data.billingHistory}
+              onCancel={handleCancelPackage}
             />
-            {/* <PaymentMethod /> */}
             <BillingHistory
               key="billing-history"
               history={data.billingHistory}

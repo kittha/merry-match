@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Portal from "./Portal";
 import { useAuth } from "../../contexts/authentication";
@@ -16,10 +16,10 @@ import icon4 from "/assets/navbar-image/icon4.png";
 import icon5 from "/assets/navbar-image/icon5.png";
 import icon6 from "/assets/navbar-image/icon6.png";
 import ChatContainer from "../matchingpage/chatcontainer/ChatContainer";
-import NotificationMenu from "./NotificationMenu";
 
 const NavbarAuthen = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [bellMenuOpen, setBellMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -36,11 +36,13 @@ const NavbarAuthen = () => {
   const handleBellClick = () => {
     setBellMenuOpen(!bellMenuOpen);
     setProfileMenuOpen(false);
+    setShowChat(false);
   };
 
   const handleProfileClick = () => {
     setProfileMenuOpen(!profileMenuOpen);
     setBellMenuOpen(false);
+    setShowChat(false);
   };
 
   const { logout, state } = useAuth();
@@ -68,6 +70,13 @@ const NavbarAuthen = () => {
       });
     }
   }, [profileMenuOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+    setBellMenuOpen(false);
+    setProfileMenuOpen(false);
+    setShowChat(false);
+  }, [location.pathname]);
 
   return (
     <nav className="Navbar text-[#64001D] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-50 overflow-auto flex items-center justify-between w-full lg:h-[88px] h-[52px] font-bold shadow-md">
@@ -139,7 +148,36 @@ const NavbarAuthen = () => {
             </button>
             {bellMenuOpen && (
               <Portal>
-                <NotificationMenu />
+                <div
+                  style={{
+                    position: "fixed",
+                    top: window.innerWidth <= 640 ? "0" : `${bellMenuPosition.top}px`,
+                    left: window.innerWidth <= 640 ? "0" : `${bellMenuPosition.left}px`,
+                    transform: window.innerWidth <= 640 ? "none" : "translateX(-50%)",
+                    marginTop: window.innerWidth <= 640 ? "0" : "32px",
+                    width: window.innerWidth <= 640 ? "100%" : "250px",
+                    height: window.innerWidth <= 640 ? "100%" : "215px",
+                    fontWeight: 500,
+                    backgroundColor: "white",
+                    boxShadow: window.innerWidth <= 640 ? "none" : "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                    borderRadius: window.innerWidth <= 640 ? "0" : "16px",
+                    padding: "55px 10px",
+                    zIndex: 30,
+                    fontFamily: "Nunito, sans-serif",
+                    fontSize: "14px",
+                  }}
+                >
+                  <div className="flex items-center h-[66px] p-[8px]">
+                    <img
+                      src={profileMenu1}
+                      alt="icon2"
+                      className="ml-1 mr-3 h-[32px] w-[32px]"
+                    />
+                    <button onClick={() => navigate("/")} className="text-start">
+                      ‘Khal Drogo’ Just Merry you! Click here to see profile
+                    </button>
+                  </div>
+                </div>
               </Portal>
             )}
           </div>

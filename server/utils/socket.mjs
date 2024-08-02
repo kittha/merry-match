@@ -22,7 +22,6 @@ const socket = (httpServer) => {
       const receiver = onlineUsers[msg.receiver];
       if (receiver) {
         console.log("send", msg, "receiver", receiver);
-        console.log(receiver);
         socket.to(receiver).emit("receive-msg", msg);
       }
     });

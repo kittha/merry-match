@@ -57,7 +57,7 @@ const Chat = () => {
       //   setOnlineUsers(res);
       // });
     }
-  }, [userId]);
+  }, [userId, matchId]);
   //---------------------------------------------------------------------
 
   useEffect(() => {
@@ -70,26 +70,29 @@ const Chat = () => {
     }
   }, [socket.current]);
 
-  const handleSendMsg = async (event, inputText) => {
-    event.preventDefault();
-    if (inputText.trim().length === 0) {
+  const handleSendMsg = async (inputText, inputFile) => {
+    if (inputText.trim().length === 0 && !inputFile) {
       return;
     }
     const sendData = {
       sender: userId,
       receiver,
       matchId,
-      message: inputText,
+      message: inputText ? inputText : null,
+      file: inputFile,
       dateTime: new Date(),
     };
     console.log("sendData: ", sendData);
-    socket.current.emit("send-msg", sendData);
 
-    await createMessage(matchId, sendData);
+    const msgResponse = await createMessage(sendData);
+    console.log("fromCreateMessage", msgResponse);
 
     const newMessages = [...messages];
-    newMessages.push(sendData);
+    newMessages.push(msgResponse);
     setMessages(newMessages);
+
+    //socket send message and photo
+    socket.current.emit("send-msg", msgResponse);
   };
 
   useEffect(() => {

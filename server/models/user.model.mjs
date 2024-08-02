@@ -118,3 +118,25 @@ export const updateUserPackage = async (userId, packageId) => {
     throw error;
   }
 };
+export const removeUserPackage = async (userId, packageId) => {
+  try {
+    console.log(
+      `Attempting to remove package for userId: ${userId}, packageId: ${packageId}`
+    );
+    const result = await connectionPool.query(
+      "UPDATE users SET package_id = NULL WHERE user_id = $1 AND package_id = $2",
+      [userId, packageId]
+    );
+
+    console.log(`Query executed. Rows affected: ${result.rowCount}`);
+
+    if (result.rowCount === 0) {
+      throw new Error("No package found for the specified user.");
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Error removing user package: ", error);
+    throw error;
+  }
+};

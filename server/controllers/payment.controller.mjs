@@ -1,11 +1,15 @@
 import Stripe from "stripe";
 import { getPackageById } from "../models/package.model.mjs";
 import { createTransaction } from "../models/transaction.model.mjs";
-import { createPayment } from "../models/payment.model.mjs";
+import {
+  createPayment,
+  getPaymentByUserId,
+  updatePaymentByUserId,
+} from "../models/payment.model.mjs";
 import { updateUserPackage } from "../models/user.model.mjs";
 
 // Initialize Stripe with the secret key from environment variables
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
 // Define the getCardType function
 const getCardType = (cardNumber) => {
@@ -90,16 +94,29 @@ export const processPayment = async (req, res) => {
     // Extract the last 4 digits of the card number
     const last4Digits = cardNumber.slice(-4);
 
-    // Save payment details
-    await createPayment({
-      user_id: user.user_id,
-      card_type: cardType,
-      card_number: last4Digits,
-      card_name: user.name,
-      expired_date: cardDetail.exp,
-      created_at: new Date(paymentIntent.created * 1000), // Convert from seconds to milliseconds
-      updated_at: new Date(paymentIntent.created * 1000),
-    });
+    const existingPayment = await getPaymentByUserId(user.user_id);
+
+    if (existingPayment) {
+      // Update existing payment details
+      await updatePaymentByUserId(user.user_id, {
+        card_type: cardType,
+        card_number: last4Digits,
+        card_name: user.name,
+        expired_date: cardDetail.exp,
+        updated_at: new Date(paymentIntent.created * 1000), // Convert from seconds to milliseconds
+      });
+    } else {
+      // Create new payment details
+      await createPayment({
+        user_id: user.user_id,
+        card_type: cardType,
+        card_number: last4Digits,
+        card_name: user.name,
+        expired_date: cardDetail.exp,
+        created_at: new Date(paymentIntent.created * 1000), // Convert from seconds to milliseconds
+        updated_at: new Date(paymentIntent.created * 1000),
+      });
+    }
 
     // Insert transaction into the database
     await createTransaction({

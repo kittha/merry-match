@@ -7,6 +7,7 @@ import {
   updatePackageById,
   deletePackageById,
   getComplaintsByParam,
+  getComplaintsByStatus,
 } from "../../../controllers/admin.controller.mjs";
 import { validateComplaintStatus } from "../../../middlewares/complaintStatus.validation.mjs";
 import authenticateAdmin from "../../../middlewares/authenticateAdmin.middleware.mjs";
@@ -14,7 +15,9 @@ import { validatePackageData } from "../../../middlewares/packageData.validation
 
 const router = express.Router();
 
-router.get("/complaints", getComplaintsByParam);
+router.get("/complaints", getAllComplaints);
+router.get("/complaints/param", getComplaintsByParam);
+router.get("/complaints/list", getComplaintsByStatus);
 router.get("/complaint/:complaintId", getComplaintById);
 router.put(
   "/complaint/:complaintId/status",

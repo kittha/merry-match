@@ -19,7 +19,7 @@ function MainContent({ complaint, updateStatus }) {
   };
 
   return (
-    <div className="w-[1200px] min-h-[944px] pb-[48px] bg-[#F6F7FC] flex flex-col items-center font-Nunito">
+    <div className="w-full min-h-[944px] pb-[48px] bg-[#F6F7FC] flex flex-col items-center font-Nunito">
       <div className="w-[1080px] h-[41px] flex bg-[#D6D9E4] mt-[48px] rounded-t-2xl font-medium text-sm text-[#424C6B]">
         <div className="w-[164px] h-[41px] flex items-center justify-center ">
           <p className="w-[84px] h-[21px]">User</p>
@@ -58,22 +58,17 @@ function MainContent({ complaint, updateStatus }) {
               key={index}
             >
               <div className="w-[140px] h-[90px] flex items-center ml-6">
-                <p className="w-[101px] h-[24px] flex items-center px-4 py-8 truncate ">
+                <p className="w-fit h-[24px] px-4  truncate ">
                   {items.username}
                 </p>
-                {items.username.length > 10 ? <p>...</p> : null}
               </div>
               <div className="w-[200px] h-[90px] flex items-center">
-                <p className="w-[167px] h-[24px] flex items-center px-4 py-8 truncate">
-                  {items.issue}
-                </p>
-                {items.issue.length > 19 ? <p>...</p> : null}
+                <p className="w-fit h-[24px] px-4  truncate">{items.issue}</p>
               </div>
               <div className="w-[420px] h-[90px] flex items-center">
-                <p className="w-[388px] h-[24px] flex items-center px-4 py-8 truncate">
+                <p className="w-fit h-[24px] px-4 truncate">
                   {items.description}
                 </p>
-                {items.description.length > 50 ? <p>...</p> : null}
               </div>
               <div className="w-[164px] h-[90px] flex items-center">
                 <p className="w-[86px] h-[24px] flex items-center px-4 py-8">

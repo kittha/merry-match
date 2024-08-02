@@ -20,9 +20,11 @@ export const cloudinaryUpload = async (files) => {
         folder: `${process.env.CLOUDINARY_UPLOAD_FOLDER}`,
         type: "private",
       });
+      // console.log(result);
       fileUris.push({
         url: result.secure_url,
         publicId: result.public_id,
+        fileType: file.mimetype,
       });
       await fs.unlink(file.path);
     }

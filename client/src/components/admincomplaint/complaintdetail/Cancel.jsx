@@ -1,4 +1,5 @@
 import axios from "axios";
+import cross from "../../../../public/assets/admincomplaint/Vector.svg";
 
 function Cancel(props) {
   const updateStatus = async () => {
@@ -23,7 +24,7 @@ function Cancel(props) {
           <p className="ml-[24px] font-semibold text-xl">Cancel Complaint</p>
           <div className="w-[41px] h-[40px] flex ">
             <button type="button" onClick={() => props.setTrigger(false)}>
-              <img src="./src/assets/Vector.svg" alt="cross" />
+              <img src={cross} alt="cross" />
             </button>
           </div>
         </div>
