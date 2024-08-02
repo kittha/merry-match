@@ -55,9 +55,11 @@ function PackageListPage() {
   }, [searchText, debouncedGetPackage]);
 
   return (
-    <div className="flex ">
-      <Sidebar />
-      <div className="flex flex-col">
+    <div className="flex">
+      <div>
+        <Sidebar />
+      </div>
+      <div className="w-screen h-screen  ">
         <Topbar setSearchText={setSearchText} searchText={searchText} />
         <MainContent Package={Package} deletePackage={deletePackage} />
       </div>

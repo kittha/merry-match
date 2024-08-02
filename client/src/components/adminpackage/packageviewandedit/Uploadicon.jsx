@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Frame from "../../../../public/assets/adminpackage/Frame.svg";
 
 function UploadIcon({ icon, setIcon }) {
   const handleFileChange = (event) => {
@@ -49,11 +50,7 @@ function UploadIcon({ icon, setIcon }) {
           </p>
           <label className="w-[10px] h-[100px]" htmlFor="upload-icon">
             <div className="placeholder-content w-[100px] h-[100px] bg-[#F6F7FC] rounded-2xl flex flex-col gap-[8px] justify-center items-center cursor-pointer text-[#7D2262] ">
-              <img
-                className="w-[24px] h-[24px]"
-                src="../src/assets/Frame.svg"
-                alt="Frame"
-              />
+              <img className="w-[24px] h-[24px]" src={Frame} alt="Frame" />
               <p className="text-[14px]">Upload icon</p>
             </div>
           </label>

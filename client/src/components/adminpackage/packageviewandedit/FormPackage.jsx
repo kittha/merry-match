@@ -16,7 +16,7 @@ function FormPackage({ packageData, setPackageData }) {
   const getPackage = async () => {
     try {
       const result = await axios.get(
-        `http://localhost:4000/api/v1/packages/${param.packageId}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages/${param.packageId}`
       );
       const newPackageData = { ...packageData };
 

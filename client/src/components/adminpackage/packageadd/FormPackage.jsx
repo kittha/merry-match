@@ -11,8 +11,8 @@ function FormPackage({ packageData, setPackageData, icon, setIcon }) {
   };
 
   return (
-    <div className="gray bg-[#F6F7FC] w-full min-h-[1024px] flex justify-center font-Nunito">
-      <div className="white w-[1080px] h-full pb-[60px] flex flex-col items-center gap-[40px] bg-[#FFFFFF] rounded-2xl border-1 mt-[40px] border-black ">
+    <div className="bg-[#F6F7FC] w-full min-h-[1024px] flex justify-center font-Nunito">
+      <div className="w-[1080px] h-full pb-[60px] flex flex-col items-center gap-[40px] bg-[#FFFFFF] rounded-2xl border-1 mt-[40px] border-black ">
         <div className="flex flex-col gap-[40px] mt-[40px]">
           <div className="flex gap-[40px]">
             <div className="flex flex-col gap-[4px]">

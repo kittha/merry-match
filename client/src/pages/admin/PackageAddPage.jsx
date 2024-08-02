@@ -59,7 +59,7 @@ function PackageAddPage() {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col">
+      <div className="w-screen h-screen">
         <form onSubmit={handleSubmit}>
           <Topbar />
           <FormPackage

@@ -27,7 +27,7 @@ function ComplaintListPage() {
       const result = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/api/v1/admin/complaints?name=${text}`
+        }/api/v1/admin/complaints/param?name=${text}`
       );
       setComplaint(
         result.data.sort((a, b) => {
@@ -63,7 +63,7 @@ function ComplaintListPage() {
   return (
     <div className="flex ">
       <Sidebar />
-      <div className="flex flex-col">
+      <div className="w-screen h-screen">
         <Topbar
           complaint={complaint}
           setComplaint={setComplaint}
