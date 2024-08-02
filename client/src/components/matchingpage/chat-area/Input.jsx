@@ -7,20 +7,49 @@ import useToggle from "../../../hooks/useToggle.mjs";
 
 const InputSection = ({ handleSendMsg }) => {
   const [inputText, setInputText] = useState("");
+  const [inputFile, setInputFile] = useState(null);
   const { isOpen, toggle, setIsOpen } = useToggle();
   const emojiRef = useRef();
 
   useEffect(() => {
-    const handleMousedown = (event) => {
+    const inputTextElement = document.getElementsByClassName("input-msg")[0];
+    const formElement = document.getElementsByTagName("form")[0];
+
+    const handleKeyDown = (event) => {
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey &&
+        !event.ctrlKey &&
+        !event.altKey
+      ) {
+        event.preventDefault();
+        formElement.requestSubmit();
+      }
+    };
+
+    inputTextElement.addEventListener("keydown", handleKeyDown);
+
+    const handleMouseDown = (event) => {
       if (emojiRef && !emojiRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleMousedown);
+
+    document.addEventListener("mousedown", handleMouseDown);
+
     return () => {
-      document.removeEventListener("mousedown", handleMousedown);
+      inputTextElement.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleMouseDown);
     };
   }, []);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files;
+    console.log(file[0]);
+    if (file[0]?.type.includes("image")) {
+      setInputFile(event.target.files[0]);
+    }
+  };
 
   const handleEmojiClick = (emojiObject) => {
     console.log(emojiObject);
@@ -29,11 +58,17 @@ const InputSection = ({ handleSendMsg }) => {
     setInputText(newInput);
   };
 
+  const handleSubmit = () => {
+    handleSendMsg(inputText, inputFile);
+    setInputText("");
+    setInputFile(null);
+  };
+
   return (
     <form
       onSubmit={(event) => {
-        handleSendMsg(event, inputText);
-        setInputText("");
+        event.preventDefault();
+        handleSubmit();
       }}
       className="input-section w-full border-t border-[#424C6B] h-[72px] lg:h-[100px] py-3 px-4 lg:py-[26px] lg:px-[60px] flex flex-row items-center gap-2 lg:gap-6"
     >
@@ -44,7 +79,29 @@ const InputSection = ({ handleSendMsg }) => {
           className="insert-image bg-[#f6f7fc] rounded-full w-12 h-12 object-none hover:cursor-pointer"
         />
       </label>
-      <input id="input-file" type="file" hidden />
+      <input
+        id="input-file"
+        type="file"
+        accept="image/*"
+        className="input-file-button absolute -z-10 rounded-full w-1 opacity-0"
+        onChange={(event) => handleFileChange(event)}
+      />
+      {inputFile && (
+        <div className="image-preview-container bg-white rounded-2xl absolute bottom-20 lg:bottom-28">
+          <img
+            className="image-preview w-[167px] h-[167px] rounded-2xl object-cover"
+            src={URL.createObjectURL(inputFile)}
+            alt="preview-file"
+          />
+          <button
+            className="delete-button w-[24px] h-[24px] bg-[#AF2758] rounded-full text-white absolute top-1 right-1"
+            onClick={() => setInputFile(null)}
+          >
+            x
+          </button>
+        </div>
+      )}
+
       <div className="emojiPicker" ref={emojiRef}>
         <img
           src={emoji}
@@ -65,6 +122,7 @@ const InputSection = ({ handleSendMsg }) => {
           />
         )}
       </div>
+
       <input
         type="text"
         placeholder="Message here..."
@@ -74,6 +132,7 @@ const InputSection = ({ handleSendMsg }) => {
           setInputText(event.target.value);
         }}
       />
+
       <button type="submit">
         <img
           src={send}
