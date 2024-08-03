@@ -15,7 +15,7 @@ import MatchingPage from "../users/MatchingPage";
 import MerryListPage from "../users/MerryListPage";
 import ComplaintPage from "../users/ComplaintPage";
 import Chat from "../users/ChatPage";
-import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
+// import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
 import ComplaintListPage from "../admin/ComplaintListPage";
 import ComplaintDetailPage from "../admin/ComplaintDetailPage";
 
@@ -41,7 +41,7 @@ const AuthenticatedApp = () => {
         <Route path="/package" element={<MerryPackage />} />
         <Route path="/chat/:matchId" element={<Chat />} />
         <Route path="*" element={<HomePageAuthen />} />
-        <Route path="/matchingArea" element={<MatchingArea />} />
+        {/* <Route path="/matchingArea" element={<MatchingArea />} /> */}
 
         {role === "Admin" && (
           <>
