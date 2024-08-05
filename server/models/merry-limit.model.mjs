@@ -6,7 +6,7 @@ import connectionPool from "../configs/db.mjs";
  * @param {number} userId - The Number of user id.
  * @returns {object} - The Object that contain key:value pair of merry-limit of that user.
  */
-// 25
+
 export const getMerryLimit = async (userId) => {
   try {
     const result = await connectionPool.query(
@@ -27,7 +27,6 @@ export const getMerryLimit = async (userId) => {
     throw error;
   }
 };
-// 2
 export const getAvailableClicksTodayByUserId = async (userId) => {
   try {
     const currentDateTime = new Date();
@@ -39,7 +38,6 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
       WHERE (matched_at::date = $2 OR created_at::date = $2)
         AND status_1 IN ('merry', 'match')
         AND user_id_1 = $1;
-        AND package_id = $3?
           `,
       [userId, currentDate]
     );
