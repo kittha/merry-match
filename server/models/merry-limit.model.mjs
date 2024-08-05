@@ -12,8 +12,7 @@ export const getMerryLimit = async (userId) => {
       `
           SELECT packages.merry_limit
           FROM users
-          JOIN roles ON users.role_id = roles.role_id
-          JOIN packages ON roles.package_id = packages.package_id
+          JOIN packages ON users.package_id = packages.package_id
           WHERE users.user_id = $1
           `,
       [userId]
