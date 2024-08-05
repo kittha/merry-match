@@ -2,7 +2,6 @@ import {
   addMerry as addMerryToModel,
   undoMerry as undoMerryFromModel,
   getPotentialMatches as getPotentialMatchesFromModel,
-  getAvailableMatches as getAvailableMatchesFromModel,
 } from "../models/merry.model.mjs";
 import transformMatchedData from "../utils/transformMatchedData.mjs";
 
@@ -18,8 +17,9 @@ export const addMerry = async (req, res) => {
   const likingUserId = req.body.userId;
   const likedUserId = req.body.merryUserId;
   try {
-    await addMerryToModel(likingUserId, likedUserId);
-    res.status(200).json({ message: "Merry user successfully." });
+    const result = await addMerryToModel(likingUserId, likedUserId);
+    console.log(result);
+    res.status(200).json({ message: "Merry user successfully.", ...result });
   } catch (error) {
     res.status(500).json({ error: "Failed to add merry user." });
   }
@@ -74,13 +74,14 @@ export const getMatchListByUserId = async (req, res) => {
  *                            If successful, it returns a list of available matches with a 200 status code.
  *                            On failure, it returns an error message with a 500 status code.
  */
-export const getAvailableMatchesByUserId = async (req, res) => {
-  const { userId } = req.params;
-  try {
-    const result = await getAvailableMatchesFromModel(userId);
-    const matches = transformMatchedData(result);
-    res.status(200).json({ user_id: userId, matches });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to get available matches." });
-  }
-};
+// TODO
+// export const getAvailableMatchesByUserId = async (req, res) => {
+//   const { userId } = req.params;
+//   try {
+//     const result = await getAvailableMatchesFromModel(userId);
+//     const matches = transformMatchedData(result);
+//     res.status(200).json({ user_id: userId, matches });
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to get available matches." });
+//   }
+// };
