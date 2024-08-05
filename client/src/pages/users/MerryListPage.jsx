@@ -23,8 +23,9 @@ function MerryListPage() {
   console.log(userId);
   const navigate = useNavigate();
   const [merryList, setMerryList] = useState([]);
-  const [merryCounts, setMerryCounts] = useState([]);
-  const [matchCounts, setMatchCounts] = useState([]);
+  const [merryCount, setMerryCount] = useState([]);
+  const [matchCount, setMatchCount] = useState([]);
+
   const getMerryLists = async () => {
     try {
       const result = await axios.get(
@@ -53,8 +54,6 @@ function MerryListPage() {
     setSelectedUser(user);
     setShowModalProfile(true);
   };
-
-  const { availableClicksToday, maxDailyQuota } = useMatch();
 
   // Function to handle button click
   const handleUnmatch = () => {

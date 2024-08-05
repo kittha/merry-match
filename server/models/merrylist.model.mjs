@@ -54,3 +54,21 @@ GROUP BY
     throw error;
   }
 };
+
+export const updateStatus = async (userId, status_1) => {
+  const { status_1 } = data;
+
+  try {
+    const result = await connectionPool.query(
+      `UPDATE match_status
+    SET status_1 = $2
+    WHERE user_id_1 = $1
+    RETURNING *`,
+      [userId, status_1]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error fetching merry list:", error);
+    throw error;
+  }
+};
