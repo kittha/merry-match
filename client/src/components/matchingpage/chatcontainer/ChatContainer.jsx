@@ -4,32 +4,17 @@ import axios from "axios";
 import discover from "/assets/matchingpage/chatArea/discover-vector.png";
 import matched from "/assets/matchingpage/chatArea/merry-match.png";
 
-
-const ChatContainer = () => {
+const ChatContainer = ({ allUser }) => {
   const [matches, setMatches] = useState([]);
   const navigate = useNavigate();
-  const currentUserJson = localStorage.getItem("data");
-  const currentUser = JSON.parse(currentUserJson);
-  const currentUserId = currentUser.id;
 
   useEffect(() => {
-    const fetchMatches = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/match/${currentUserId}`
-        );
-        const validMatches = response.data.matches.filter(
-          (match) => match.match_status_1 === "match"
-        );
-        console.log(validMatches);
-        setMatches(validMatches);
-      } catch (error) {
-        console.error("Error fetching matches:", error);
-      }
-    };
-
-    fetchMatches();
-  }, [currentUserId]);
+    const validMatches = allUser.filter(
+      (match) => match.match_status_1 === "match"
+    );
+    console.log(validMatches);
+    setMatches(validMatches);
+  }, [allUser]);
 
   return (
     <div className="w-screen lg:w-[314px] h-screen bg-white shadow-2xl flex flex-col lg:pt-[88px] pt-[52px] font-Nunito z-20">

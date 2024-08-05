@@ -26,10 +26,12 @@ export const transformMatchedData = (rows) => {
         avatars: {}, // Initialize profile pictures object
         match_score: row.match_score,
         match_id: row.match_id,
-        match_created_at: row.match_created_at,
-        match_matched_at: row.match_matched_at,
-        match_status_1: row.match_status_1,
-        match_status_2: row.match_status_2,
+        match_created_at: row.created_at,
+        match_matched_at: row.matched_at,
+        match_user_id_1: row.user_id_1,
+        match_user_id_2: row.user_id_2,
+        match_status_1: row.status_1,
+        match_status_2: row.status_2,
       });
     }
     const match = matchesMap.get(row.matched_user_id);

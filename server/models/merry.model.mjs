@@ -54,7 +54,8 @@ export const addMerry = async (userId, merryUserId) => {
           created_at, 
           updated_1_at ) 
         VALUES ($1, $2, 'merry', $3, $3)
-        ON CONFLICT (user_id_1, user_id_2) DO NOTHING`,
+        ON CONFLICT (user_id_1, user_id_2) DO NOTHING
+        RETURNING *`,
         [userId, merryUserId, currentDateTime]
       );
       console.log("INSERT", insertResult.rows);
@@ -159,11 +160,13 @@ export const getPotentialMatches = async (userId) => {
           p2.bio AS matched_bio,
           pp.sequence AS picture_sequence,
           pp.url AS profile_picture_url,
-          ms.match_id AS match_id,
-          ms.created_at AS match_created_at,
-          ms.matched_at AS match_matched_at,
-          ms.status_1 AS match_status_1,
-          ms.status_2 AS match_status_2,
+          ms.match_id,
+          ms.created_at,
+          ms.matched_at,
+          ms.user_id_1,
+          ms.user_id_2,
+          ms.status_1,
+          ms.status_2,
           (
               (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
               (CASE WHEN p1.location = p2.location THEN 1 ELSE 0 END) +
@@ -190,8 +193,6 @@ export const getPotentialMatches = async (userId) => {
           profile_pictures pp ON p2.user_id = pp.user_id AND pp.sequence BETWEEN 1 AND 5
       WHERE 
           p1.user_id = $1
-          AND (p1.sexual_preferences ILIKE '%' || p2.sexual_identities || '%'
-              OR p2.sexual_preferences ILIKE '%' || p1.sexual_identities || '%')
       ORDER BY 
           match_score DESC;
       `,
@@ -211,65 +212,66 @@ export const getPotentialMatches = async (userId) => {
  * @return {Promise<Object>} An object containing the user ID and a list of matches.
  * @throws {Error} If there is an error retrieving the matches.
  */
-export const getAvailableMatches = async (userId) => {
-  try {
-    const result = await connectionPool.query(
-      `
-      SELECT 
-          p2.user_id AS matched_user_id, 
-          p2.name AS matched_name, 
-          p2.hobbies AS matched_hobbies,
-          p2.date_of_birth AS matched_date_of_birth,
-          p2.location AS matched_location,
-          p2.city AS matched_city,
-          p2.sexual_identities AS matched_sexual_identities,
-          p2.sexual_preferences AS matched_sexual_preferences,
-          p2.racial_preferences AS matched_racial_preferences,
-          p2.meeting_interests AS matched_meeting_interests,
-          p2.bio AS matched_bio,
-          pp.sequence AS picture_sequence,
-          pp.url AS profile_picture_url,
-          ms.match_id AS match_id,
-          ms.created_at AS match_created_at,
-          ms.matched_at AS match_matched_at,
-          ms.status_1 AS match_status_1,
-          ms.status_2 AS match_status_2,
-          (
-              (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
-              (CASE WHEN p1.location = p2.location THEN 1 ELSE 0 END) +
-              (CASE WHEN p1.city = p2.city THEN 1 ELSE 0 END) +
-              (CASE WHEN p1.sexual_identities = p2.sexual_preferences THEN 1 ELSE 0 END) +
-              (CASE WHEN p1.sexual_preferences = p2.sexual_identities THEN 1 ELSE 0 END) +
-              (CASE WHEN p1.racial_preferences = p2.racial_preferences THEN 1 ELSE 0 END) +
-              (CASE WHEN p1.meeting_interests = p2.meeting_interests THEN 1 ELSE 0 END) +
-              (CASE WHEN p1.bio = p2.bio THEN 1 ELSE 0 END) +
-              COALESCE(hobby_match_count, 0)
-          ) AS match_score
-      FROM 
-          profiles p1
-      JOIN 
-          profiles p2 ON p1.user_id != p2.user_id
-      LEFT JOIN 
-          match_status ms ON (p1.user_id = ms.user_id_1 AND p2.user_id = ms.user_id_2) OR (p1.user_id = ms.user_id_2 AND p2.user_id = ms.user_id_1)
-      LEFT JOIN LATERAL (
-          SELECT COUNT(*) AS hobby_match_count
-          FROM unnest(p1.hobbies) AS hobby1
-          JOIN unnest(p2.hobbies) AS hobby2 ON hobby1 = hobby2
-      ) hobby_matches ON true
-      LEFT JOIN 
-          profile_pictures pp ON p2.user_id = pp.user_id AND pp.sequence BETWEEN 1 AND 5
-      WHERE 
-          p1.user_id = $1
-          AND (p1.sexual_preferences ILIKE '%' || p2.sexual_identities || '%'
-               OR p2.sexual_preferences ILIKE '%' || p1.sexual_identities || '%')
-          AND (ms.status_1 != 'merry' OR ms.status_1 IS NULL OR ms.user_id_1 != $1)
-          AND (ms.status_2 IS NULL OR ms.status_2 = 'match')
-      `,
-      [userId]
-    );
-    return result.rows;
-  } catch (error) {
-    console.error("Error finding unmatched users:", error.message);
-    throw error;
-  }
-};
+// TODO
+// export const getAvailableMatches = async (userId) => {
+//   try {
+//     const result = await connectionPool.query(
+//       `
+//       SELECT
+//           p2.user_id AS matched_user_id,
+//           p2.name AS matched_name,
+//           p2.hobbies AS matched_hobbies,
+//           p2.date_of_birth AS matched_date_of_birth,
+//           p2.location AS matched_location,
+//           p2.city AS matched_city,
+//           p2.sexual_identities AS matched_sexual_identities,
+//           p2.sexual_preferences AS matched_sexual_preferences,
+//           p2.racial_preferences AS matched_racial_preferences,
+//           p2.meeting_interests AS matched_meeting_interests,
+//           p2.bio AS matched_bio,
+//           pp.sequence AS picture_sequence,
+//           pp.url AS profile_picture_url,
+//           ms.match_id AS match_id,
+//           ms.created_at AS match_created_at,
+//           ms.matched_at AS match_matched_at,
+//           ms.status_1 AS match_status_1,
+//           ms.status_2 AS match_status_2,
+//           (
+//               (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
+//               (CASE WHEN p1.location = p2.location THEN 1 ELSE 0 END) +
+//               (CASE WHEN p1.city = p2.city THEN 1 ELSE 0 END) +
+//               (CASE WHEN p1.sexual_identities = p2.sexual_preferences THEN 1 ELSE 0 END) +
+//               (CASE WHEN p1.sexual_preferences = p2.sexual_identities THEN 1 ELSE 0 END) +
+//               (CASE WHEN p1.racial_preferences = p2.racial_preferences THEN 1 ELSE 0 END) +
+//               (CASE WHEN p1.meeting_interests = p2.meeting_interests THEN 1 ELSE 0 END) +
+//               (CASE WHEN p1.bio = p2.bio THEN 1 ELSE 0 END) +
+//               COALESCE(hobby_match_count, 0)
+//           ) AS match_score
+//       FROM
+//           profiles p1
+//       JOIN
+//           profiles p2 ON p1.user_id != p2.user_id
+//       LEFT JOIN
+//           match_status ms ON (p1.user_id = ms.user_id_1 AND p2.user_id = ms.user_id_2) OR (p1.user_id = ms.user_id_2 AND p2.user_id = ms.user_id_1)
+//       LEFT JOIN LATERAL (
+//           SELECT COUNT(*) AS hobby_match_count
+//           FROM unnest(p1.hobbies) AS hobby1
+//           JOIN unnest(p2.hobbies) AS hobby2 ON hobby1 = hobby2
+//       ) hobby_matches ON true
+//       LEFT JOIN
+//           profile_pictures pp ON p2.user_id = pp.user_id AND pp.sequence BETWEEN 1 AND 5
+//       WHERE
+//           p1.user_id = $1
+//           AND (p1.sexual_preferences ILIKE '%' || p2.sexual_identities || '%'
+//                OR p2.sexual_preferences ILIKE '%' || p1.sexual_identities || '%')
+//           AND (ms.status_1 != 'merry' OR ms.status_1 IS NULL OR ms.user_id_1 != $1)
+//           AND (ms.status_2 IS NULL OR ms.status_2 = 'match')
+//       `,
+//       [userId]
+//     );
+//     return result.rows;
+//   } catch (error) {
+//     console.error("Error finding unmatched users:", error.message);
+//     throw error;
+//   }
+// };

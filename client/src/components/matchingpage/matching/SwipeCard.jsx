@@ -9,23 +9,18 @@ import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right
 import { useMerryLimit } from "../../../hooks/userMerryLimit";
 import UserProfilePopup from "./UserProfilePopup";
 import useMatching from "../../../hooks/useMatching";
-import filter from "/assets/matchingpage/matching-area/filter.png"
+import filter from "/assets/matchingpage/matching-area/filter.png";
 import ChatContainer from "../chatcontainer/ChatContainer";
 import FilterContainer from "../Filter-area/FilterContainer";
 
-const SwipeCard = () => {
-  const currentUserJson = localStorage.getItem("data");
-  const currentUser = JSON.parse(currentUserJson);
-  const currentUserId = currentUser.id;
-  const {
-    userQueue,
-    setUserQueue,
-    availableClicksToday,
-    maxDailyQuota,
-    addMerry,
-    undoMerry,
-    getPotentialMatches,
-  } = useMatching(currentUserId);
+const SwipeCard = ({
+  allUser,
+  availableClicksToday,
+  maxDailyQuota,
+  addMerry,
+  undoMerry,
+}) => {
+  const [userQueue, setUserQueue] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
@@ -33,18 +28,32 @@ const SwipeCard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getPotentialMatches();
-  }, []);
+    const validMatches = allUser.filter((user) => {
+      if (user.user_id !== user.match_user_id_1) {
+        return (
+          user.match_status_1 !== "merry" && user.match_status_1 !== "match"
+        );
+      } else if (user.user_id !== user.match_user_id_2) {
+        return (
+          user.match_status_2 !== "merry" && user.match_status_2 !== "match"
+        );
+      }
+    });
+    console.log(validMatches);
+    setUserQueue(validMatches);
+  }, [allUser]);
 
   const favourUser = (userId) => {
     addMerry(userId);
 
-      // Update userQueue to remove the user who has been favourited
-  setUserQueue(prevQueue => prevQueue.filter(user => user.user_id !== userId));
+    // Update userQueue to remove the user who has been favourited
+    setUserQueue((prevQueue) =>
+      prevQueue.filter((user) => user.user_id !== userId)
+    );
   };
 
   const disfavorUser = (userId) => {
-    undoMerry(userId); 
+    undoMerry(userId);
 
     // Update userQueue to shufft the user who has been disfavourited to the last position
     setUserQueue((prevQueue) => prevQueue.filter((user, index) => index !== 0));
@@ -94,16 +103,20 @@ const SwipeCard = () => {
     setSelectedUser(user);
     setShowModal(true);
   };
-  
 
   return (
     <div className="relative flex flex-col items-center justify-center bg-[#160404] w-screen h-screen lg:pt-[88px] pt-[32px] font-Nunito overflow-hidden">
       <div className="absolute bottom-[20px] flex gap-2">
         <div className="flex flex-col justify-center lg:w-0 w-48">
-        <button onClick={() => setShowFilter(true)} className="lg:hidden flex gap-2 w-auto z-30">
-          <img src={filter} alt="filter" />
-          <p className="lg:hidden text-[14px] text-[#646D89] font-light text-center">Filter</p>
-        </button>
+          <button
+            onClick={() => setShowFilter(true)}
+            className="lg:hidden flex gap-2 w-auto z-30"
+          >
+            <img src={filter} alt="filter" />
+            <p className="lg:hidden text-[14px] text-[#646D89] font-light text-center">
+              Filter
+            </p>
+          </button>
         </div>
         <div className="flex float-col gap-2">
           <p className="lg:text-[16px] text-[14px] text-[#646D89] font-light text-center ">
@@ -151,7 +164,7 @@ const SwipeCard = () => {
                       <img src={HeartButton} alt="Heart Button" />
                     </button>
                   </div>
-                  
+
                   <div className="absolute lg:bottom-[48px] lg:left-[48px] bottom-[96px] left-[24px] text-center flex gap-2 z-10">
                     <p className="text-[32px] text-white font-semibold">
                       {user.name}
@@ -212,13 +225,10 @@ const SwipeCard = () => {
         />
       )}
       <div className="flex justify-center lg:hidden">
-      {showFilter && (
-        <FilterContainer
-          onClose={() => setShowFilter(setShowFilter)}
-        />
-      )}
+        {showFilter && (
+          <FilterContainer onClose={() => setShowFilter(setShowFilter)} />
+        )}
       </div>
-      
     </div>
   );
 };

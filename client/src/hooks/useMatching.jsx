@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useMerryLimit } from "./userMerryLimit";
 
@@ -16,9 +16,13 @@ import { useMerryLimit } from "./userMerryLimit";
  *   - undoMerry: A function that undoes a "merry" status (POST "unmatch" status) for a given user.
  */
 const useMatching = (currentUserId) => {
-  const [userQueue, setUserQueue] = useState([]);
+  const [allUser, setAllUser] = useState([]);
   const { availableClicksToday, setAvailableClicksToday, maxDailyQuota } =
     useMerryLimit();
+
+  useEffect(() => {
+    getPotentialMatches();
+  }, []);
 
   /**
    * Retrieves potential matches for the current user by sending a GET request to the server.
@@ -32,11 +36,11 @@ const useMatching = (currentUserId) => {
       const response = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/api/v1/merry/available-matches/${currentUserId}`
+        }/api/v1/merry/match/${currentUserId}`
       );
-
+      // console.log(response.data.matches);
       if (Array.isArray(response.data.matches)) {
-        setUserQueue(response.data.matches);
+        setAllUser(response.data.matches);
       } else {
         console.error("API response is not an array:", response.data);
       }
@@ -53,11 +57,36 @@ const useMatching = (currentUserId) => {
    */
   const addMerry = async (likedUserId) => {
     try {
-      await axios.post(
+      const { data } = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/addMerry`,
         { userId: currentUserId, merryUserId: likedUserId }
       );
       setAvailableClicksToday((prev) => prev + 1);
+      let newUser = [...allUser];
+      console.log("data", data);
+      newUser = newUser.map((user) => {
+        if (
+          user.user_id === data.user_id_1 ||
+          user.user_id === data.user_id_2
+        ) {
+          const update = {
+            ...user,
+            match_id: data.match_id,
+            match_created_at: data.created_at,
+            match_matched_at: data.matched_at,
+            match_user_id_1: data.user_id_1,
+            match_user_id_2: data.user_id_2,
+            match_status_1: data.status_1,
+            match_status_2: data.status_2,
+          };
+          return update;
+        }
+        return user;
+      });
+
+      console.log("new", newUser);
+      setAllUser(newUser);
+      return data;
     } catch (error) {
       console.error("Failed to add merry:", error);
     }
@@ -81,9 +110,7 @@ const useMatching = (currentUserId) => {
   };
 
   return {
-    getPotentialMatches,
-    userQueue,
-    setUserQueue,
+    allUser,
     availableClicksToday,
     maxDailyQuota,
     addMerry,
