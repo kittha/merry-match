@@ -5,7 +5,7 @@ import BasicInformation from "../../components/registerpage/Information";
 import { FormContext } from "../../contexts/FormProvider";
 
 const RegisterPage = () => {
-  const { handleSubmit, handleNext, handleBack, step } =
+  const { handleSubmit, handleNext, handleBack, step, loading } =
     useContext(FormContext);
 
   return (
@@ -177,9 +177,10 @@ const RegisterPage = () => {
                     <button
                       type="submit"
                       onClick={handleSubmit}
-                      className="drop-shadow-register text-[16px] leading-[24px] text-white bg-[#C70039] hover:bg-red-800 font-[700] rounded-[99px] px-[24px] py-[12px] text-center ml-[24px]"
+                      className="drop-shadow-lg text-[16px] leading-[24px] text-white bg-[#C70039] hover:bg-red-800 font-[700] rounded-[99px] px-[24px] py-[12px] text-center ml-[24px]"
+                      disabled={loading}
                     >
-                      Confirm
+                      {loading ? "Confirming..." : "Confirm"}
                     </button>
                   )}
                 </div>
