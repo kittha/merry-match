@@ -13,7 +13,7 @@ import { authorizeUser } from "../../../middlewares/authorization.middleware.mjs
 
 const router = express.Router();
 
-// router.get("/", getAllProfiles);
+// router.get("/", getAllProfiles); // TODO : prepare to delete
 
 router.get("/:userId", getUserProfileById);
 
