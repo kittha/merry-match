@@ -2,20 +2,20 @@ import ChatContainer from "../../components/matchingpage/chatcontainer/ChatConta
 import FilterContainer from "../../components/matchingpage/Filter-area/FilterContainer";
 import SwipeCard from "../../components/matchingpage/matching/SwipeCard";
 
-
-function MatchingPage() {  
+function MatchingPage() {
   return (
     <>
-    <div className="flex flex-col lg:flex-row">
-      <div className="hidden lg:flex ">
-        <ChatContainer />
-      </div>
+      <div className="flex flex-col lg:flex-row">
+        <div className="hidden lg:flex ">
+          <ChatContainer />
+        </div>
         <SwipeCard />
-      <div className="hidden lg:flex">
-        <FilterContainer />
+        <div className="hidden lg:flex">
+          <form>
+            <FilterContainer />
+          </form>
+        </div>
       </div>
-    </div>
-            
     </>
   );
 }
