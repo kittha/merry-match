@@ -27,20 +27,17 @@ export const getAvailableClicksTodayByUserId = async (req, res) => {
   if (!userId || isNaN(userId)) {
     return res.status(400).json({ error: "Invalid user ID." });
   }
-  try {
-    const availableClicksToday = await getAvailableClicksTodayFromModel(
-      Number(userId)
-    );
-    res.status(200).json({
-      message: "Get todays available click successfully.",
-      data: availableClicksToday,
-    });
-  } catch (error) {
-    console.error("You doesn't merry any user today yet.", error);
-    res.status(200).json({ message: "You doesn't merry any user today yet." });
-  }
+
+  const availableClicksToday = await getAvailableClicksTodayFromModel(
+    Number(userId)
+  );
+  res.status(200).json({
+    message: "Get todays available click successfully.",
+    data: availableClicksToday,
+  });
 };
 
+// TODO : remove this function
 // export const updateAvailableClicksTodayByUserId = async (req, res) => {
 //   const { likingUserId, likedUserId } = req.body;
 //   if (!userId || !likingUserId || isNaN(userId) || isNaN(likedUserId)) {

@@ -66,6 +66,7 @@ function CheckBox() {
         >
           Non-bunary people
         </label>
+        {/* // FIXME : typo : change from "bunary" : to "binary" */}
         <svg
           className="mb-1 ml-[1px] absolute w-[20px] h-[20px] mt-1 hidden peer-checked:block pointer-events-none"
           xmlns="http://www.w3.org/2000/svg"

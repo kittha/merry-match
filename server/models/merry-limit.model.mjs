@@ -19,10 +19,6 @@ export const getMerryLimit = async (userId) => {
       [userId]
     );
 
-    if (result.rows.length === 0) {
-      throw new Error("No data found for the given userId.");
-    }
-
     const userMerryLimit = result.rows[0].merry_limit;
 
     return { merry_limit: userMerryLimit };
@@ -46,12 +42,6 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
           `,
       [userId, currentDate]
     );
-
-    if (result.rows.length === 0) {
-      throw new Error(
-        "No data found for the given userId. User may not user any merry quota yet."
-      );
-    }
 
     const availableClicksToday = result.rowCount;
 
