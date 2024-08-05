@@ -36,7 +36,6 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
   try {
     const currentDateTime = new Date();
     const currentDate = currentDateTime.toISOString().split("T")[0];
-
     const result = await connectionPool.query(
       `
       SELECT *
@@ -55,7 +54,6 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
     }
 
     const availableClicksToday = result.rowCount;
-    console.log(availableClicksToday);
 
     return { availableClicksToday: availableClicksToday };
   } catch (error) {
@@ -64,6 +62,7 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
   }
 };
 
+// TODO Prepare do delete this
 // export const updateAvailableClicksToday = async (userId) => {
 //   try {
 //     const result = await connectionPool.query(
