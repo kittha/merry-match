@@ -44,12 +44,14 @@ const SwipeCard = ({
   }, [allUser]);
 
   const favourUser = (userId) => {
-    addMerry(userId);
-
-    // Update userQueue to remove the user who has been favourited
-    setUserQueue((prevQueue) =>
-      prevQueue.filter((user) => user.user_id !== userId)
-    );
+    if (availableClicksToday < maxDailyQuota){
+      addMerry(userId);
+      setUserQueue((prevQueue) =>
+        prevQueue.filter((user) => user.user_id !== userId)
+      );
+    } else {
+      alert("You don't have any more clicks today");
+    }
   };
 
   const disfavorUser = (userId) => {
