@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import { createContext, useState } from "react";
 import { useAuth } from "./authentication";
 import { updateProfile } from "../hooks/connectProfile.mjs";
 
@@ -27,7 +27,7 @@ export const FormProvider = ({ children }) => {
   const token = localStorage.getItem("token");
   const [errors, setErrors] = useState({});
   const { register, state } = useAuth();
-
+  const [loading, setLoading] = useState(false);
   const resetForm = () => {
     setFormData(initialData);
   };
@@ -37,6 +37,10 @@ export const FormProvider = ({ children }) => {
   };
 
   const addHobby = (hobby) => {
+    if (formData.hobbies.includes(hobby)) {
+      alert("This hobby is already added.");
+      return;
+    }
     setFormData({ ...formData, hobbies: [...formData.hobbies, hobby] });
   };
 
@@ -178,6 +182,8 @@ export const FormProvider = ({ children }) => {
 
     console.log("Form Data Submitted: ", formData);
 
+    setLoading(true);
+
     const sentFormData = new FormData();
 
     sentFormData.append("name", formData.name);
@@ -227,6 +233,8 @@ export const FormProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Registration failed:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -245,6 +253,7 @@ export const FormProvider = ({ children }) => {
         handleBack,
         handleNext,
         step,
+        loading,
       }}
     >
       {children}
