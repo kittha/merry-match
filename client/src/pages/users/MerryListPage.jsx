@@ -14,6 +14,7 @@ import Testericon from "/assets/merrylist-image/tester.png";
 import Footer from "../../components/homepage/Footer";
 import ProfileMatchAndMerry from "../../components/merry-list/ProfileMatchAndMerry";
 import CountdownTimer from "../../components/merry-list/CountdownTimer";
+import ModalPopup from "../../components/merry-list/UnmatchPopup";
 
 function MerryListPage() {
   const { availableClicksToday, maxDailyQuota } = useMatch();
@@ -30,17 +31,30 @@ function MerryListPage() {
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
       );
       //console.log("Merrylist", result.data.message);
-      const merryList = result.data.data.merryList;
-      const merryCounts = result.data.data.merryCounts.total_merry;
-      const matchCounts = result.data.data.merryCounts.total_match;
-      console.log("merryCounts", merryCounts);
-      console.log("matchCounts", matchCounts);
-      const merryListFormatted = transformMerryListData(merryList);
+      const merryListData = result.data.data.merryList;
+      const merryCountData = result.data.data.merryCounts.total_merry;
+      const matchCountsData = result.data.data.merryCounts.total_match;
+      console.log("merryCounts", merryCount);
+      console.log("matchCounts", matchCount);
+      const merryListFormatted = transformMerryListData(merryListData);
       console.log(merryListFormatted);
       //console.log(result);
       setMerryList(merryListFormatted);
-      setMerryCounts(merryCounts);
-      setMatchCounts(matchCounts);
+      setMerryCount(merryCountData);
+      setMatchCount(matchCountsData);
+    } catch (error) {
+      console.error("Failed to fetch potential matches:", error);
+    }
+  };
+
+  const updateStatus = async () => {
+    try {
+      const result = await axios.patch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
+      );
+      //console.log("Merrylist", result.data.message);
+      const merryListStatusData = result.data.data.merryListStatus;
+      console.log("merryListData", merryListStatusData);
     } catch (error) {
       console.error("Failed to fetch potential matches:", error);
     }
@@ -54,13 +68,15 @@ function MerryListPage() {
     setShowModal(true);
   };
 
-  // const {
-  //   availableClicksToday,
-  //   maxDailyQuota,
-  //   addMerry,
-  //   undoMerry,
-  //   getPotentialMatches,
-  // } = useMatching(userId);
+  const { availableClicksToday, maxDailyQuota } = useMatching(userId);
+
+  // Function to handle button click
+  const handleDeleteAccount = (userId) => {
+    // Set selected user (you might fetch or define it here)
+    console.log(userId);
+    setSelectedUser(userId); // Example user data
+    setShowModal(true);
+  };
 
   useEffect(() => {
     getMerryLists();
@@ -69,6 +85,10 @@ function MerryListPage() {
   // useEffect(() => {
   //   getPotentialMatches();
   // }, [userId]);
+
+  useEffect(() => {
+    updateStatus();
+  }, [userId]);
 
   return (
     <>
@@ -88,7 +108,7 @@ function MerryListPage() {
                 <div className="w-[163.5px] h-[98px] rounded-2xl border border-[#F1F2F6] pt-[20px] pr-[24px] pb-[20px] pl-[24px] flex flex-col gap-[4px] lg:w-[200px] lg:h-[98px]">
                   <section className="w-[57px] h-[30px] flex flex-row gap-[4px]">
                     <h4 className="w-[29px] h-[30px] font-bold text-[24px] leading-[30px] text-[#C70039]">
-                      {merryCounts}
+                      {merryCount}
                     </h4>
                     <img
                       src={RedHearticon}
@@ -103,7 +123,7 @@ function MerryListPage() {
                 <div className="w-[163.5px] h-[98px] rounded-2xl border border-[#F1F2F6] pt-[20px] pr-[24px] pb-[20px] pl-[24px] flex flex-col gap-[4px] bg-[#FFFFFF] lg:w-[200px] lg:h-[98px]">
                   <section className="w-[57px] h-[30px] flex flex-row gap-[4px]">
                     <h4 className="w-[29px] h-[30px] font-bold text-[24px] leading-[30px] text-[#C70039]">
-                      {matchCounts}
+                      {matchCount}
                     </h4>
                     <img
                       src={GroupHearticon}
@@ -134,11 +154,11 @@ function MerryListPage() {
           </section>
 
           <section className="w-[375px] h-auto flex flex-col gap-[24px] mb-[41px] lg:w-[933px] lg:mb-[147px]">
-            {merryList.map((list, index) => {
+            {merryList.map((list) => {
               return (
                 <section
                   className="w-[375px] h-[334px] border-b border-[#E4E6ED] lg:w-[933px] lg:h-[238px]"
-                  key={index}
+                  key={list.id}
                 >
                   <article className="flex flex-col gap-[24px] lg:w-[674px] lg:h-[187px] lg:flex lg:flex-row lg:gap-[40px] mt-[16px] ml-[16px] lg:mb-[35px]">
                     {list.url ? (
@@ -244,13 +264,6 @@ function MerryListPage() {
                                 onClose={() => setShowModal(false)}
                               />
                             )}
-                            <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
-                              <img
-                                src={WhiteHearticon}
-                                alt="white-heart-icon"
-                                className="mt-[5px] ml-[3px]"
-                              />
-                            </button>
                           </section>
                         </div>
                       )}
@@ -354,13 +367,23 @@ function MerryListPage() {
                               onClose={() => setShowModal(false)}
                             />
                           )}
-                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                          <button
+                            onClick={() => handleDeleteAccount(list)} // Pass item ID here
+                            className="w-[48px] h-[48px] rounded-2xl shadow-lg bg-[#C70039]"
+                          >
                             <img
                               src={WhiteHearticon}
                               alt="white-heart-icon"
                               className="mt-[5px] ml-[3px]"
                             />
                           </button>
+
+                          {showModal && (
+                            <ModalPopup
+                              user={selectedUser}
+                              onClose={() => setShowModal(false)}
+                            />
+                          )}
                         </section>
                       </div>
                     ) : (
@@ -387,14 +410,6 @@ function MerryListPage() {
                               onClose={() => setShowModal(false)}
                             />
                           )}
-
-                          <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
-                            <img
-                              src={WhiteHearticon}
-                              alt="white-heart-icon"
-                              className="mt-[5px] ml-[3px]"
-                            />
-                          </button>
                         </section>
                       </div>
                     )}

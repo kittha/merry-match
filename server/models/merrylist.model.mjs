@@ -36,10 +36,10 @@ export const getMerryAndMatchCounts = async (userId) => {
     const result = await connectionPool.query(
       `SELECT 
     p.user_id AS user_id,
-    COUNT(CASE WHEN ms.status_1 = 'merry' THEN 1 END) AS total_merry,
+    COUNT(CASE WHEN ms.user_id_2 = $1 AND ms.status_1 = 'merry' THEN 1 END) AS total_merry,
     COUNT(CASE WHEN (ms.user_id_1 = $1 OR ms.user_id_2 = $1) AND ms.status_1 = 'match' THEN 1 END) AS total_match
 FROM 
-    profiles p
+    profiles p  
 LEFT JOIN 
     match_status ms ON p.user_id = ms.user_id_1 OR p.user_id = ms.user_id_2
 WHERE 
@@ -47,6 +47,24 @@ WHERE
 GROUP BY 
     p.user_id, p.name;`,
       [userId]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error fetching merry list:", error);
+    throw error;
+  }
+};
+
+export const updateStatus = async (userId, status_1) => {
+  const { status_1 } = data;
+
+  try {
+    const result = await connectionPool.query(
+      `UPDATE match_status
+    SET status_1 = $2
+    WHERE user_id_1 = $1
+    RETURNING *`,
+      [userId, status_1]
     );
     return result.rows[0];
   } catch (error) {
