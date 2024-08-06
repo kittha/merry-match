@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
-import { transformMerryListData } from "../../../../server/utils/transformMerryListData.mjs";
+import { transformMerryListData } from "../../../../server/utils/transformMerryListData.mjs"; // TODO refactor this
 import { useMatch } from "../../contexts/matchProvider";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
@@ -20,7 +20,7 @@ function MerryListPage() {
   const { availableClicksToday, maxDailyQuota } = useMatch();
   const { state } = useAuth();
   const userId = state && state.user ? state.user.id : null;
-  console.log(userId);
+  // console.log(userId);
   const navigate = useNavigate();
   const [merryList, setMerryList] = useState([]);
   const [merryCount, setMerryCount] = useState([]);
@@ -28,20 +28,23 @@ function MerryListPage() {
 
   const getMerryLists = async () => {
     try {
-      const result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
-      );
-      //console.log("Merrylist", result.data.message);
-      const merryListData = result.data.data.merryList;
-      const merryCountData = result.data.data.merryCounts.total_merry;
-      const matchCountsData = result.data.data.merryCounts.total_match;
-      console.log("merryCounts", merryCount);
-      console.log("matchCounts", matchCount);
-      const merryListFormatted = transformMerryListData(merryListData);
-      console.log(merryListFormatted);
-      setMerryList(merryListFormatted);
-      setMerryCount(merryCountData);
-      setMatchCount(matchCountsData);
+      // BUG userId is missing after refresh
+      if (userId){
+        const result = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
+        );
+        // console.log("Merrylist", result.data);
+        const merryListData = result.data.data.merryList;
+        const merryCountData = result.data.data.merryCounts.total_merry;
+        const matchCountsData = result.data.data.merryCounts.total_match;
+        // console.log("merryCounts", merryCount);
+        // console.log("matchCounts", matchCount);
+        const merryListFormatted = transformMerryListData(merryListData);
+        // console.log(merryListFormatted);
+        setMerryList(merryListFormatted);
+        setMerryCount(merryCountData);
+        setMatchCount(matchCountsData);
+      }
     } catch (error) {
       console.error("Failed to fetch potential matches:", error);
     }
@@ -50,16 +53,16 @@ function MerryListPage() {
   const [showModalProfile, setShowModalProfile] = useState(false); // Modal visibility state
   const [showModalUnmatch, setShowModalUnmatch] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
-  const handleProfileDetail = (user) => {
-    setSelectedUser(user);
+  const handleProfileDetail = (userObj) => {
+    setSelectedUser(userObj);
     setShowModalProfile(true);
   };
 
   const { availableClicksToday, maxDailyQuota } = useMatching(userId);
 
   // Function to handle button click
-  const handleUnmatch = () => {
-    //setSelectedUser(userId);
+  const handleUnmatch = (userObj) => { // handleUnmatch -> handlePopup
+    setSelectedUser(userObj);
     setShowModalUnmatch(true);
   };
 
@@ -135,7 +138,7 @@ function MerryListPage() {
               return (
                 <section
                   className="w-[375px] h-[334px] border-b border-[#E4E6ED] lg:w-[933px] lg:h-[238px]"
-                  key={list.id}
+                  key={list.user_id}
                 >
                   <article className="flex flex-col gap-[24px] lg:w-[674px] lg:h-[187px] lg:flex lg:flex-row lg:gap-[40px] mt-[16px] ml-[16px] lg:mb-[35px]">
                     {list.url ? (
@@ -209,7 +212,7 @@ function MerryListPage() {
                             )}
 
                             <button
-                              onClick={() => handleUnmatch(list)}
+                              onClick={() => handleUnmatch(list)} // list meaning userObj
                               className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg"
                             >
                               <img
@@ -220,7 +223,7 @@ function MerryListPage() {
                             </button>
                             {showModalUnmatch && (
                               <ModalPopup
-                                //userId={selectedUser}
+                                user={selectedUser}
                                 onClose={() => setShowModalUnmatch(false)}
                               />
                             )}
@@ -363,12 +366,12 @@ function MerryListPage() {
                               className="mt-[5px] ml-[3px]"
                             />
                           </button>
-                          {showModalUnmatch && (
+                          {showModalUnmatch && selectedUser ? (
                             <ModalPopup
-                              //userId={selectedUser}
+                              user={selectedUser}
                               onClose={() => setShowModalUnmatch(false)}
                             />
-                          )}
+                          ) : null}
                         </section>
                       </div>
                     ) : (

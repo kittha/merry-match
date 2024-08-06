@@ -3,14 +3,19 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useMatch } from "../../contexts/matchProvider";
 
-const ModalPopup = ({ onClose }) => {
+const ModalPopup = ( {user, onClose }) => {
   const navigate = useNavigate();
   const { undoMerry } = useMatch();
+    
+  const unlikedUserId = user?.user_id_2;
+
   // ฟังก์ชันสำหรับปุ่ม "Yes"
-  const handleUnmatch = () => {
-    undoMerry();
-    navigate("/merry-list");
-    onClose(false); // ปิด modal หลังจาก unmatch เสร็จ
+  const handleUnmatch = async () => {
+    if (user){
+      await undoMerry(unlikedUserId);
+      navigate("/merry-list");
+      onClose(false); // ปิด modal หลังจาก unmatch เสร็จ
+    }
   };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
