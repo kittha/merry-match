@@ -38,7 +38,6 @@ function MerryListPage() {
       console.log("matchCounts", matchCount);
       const merryListFormatted = transformMerryListData(merryListData);
       console.log(merryListFormatted);
-      //console.log(result);
       setMerryList(merryListFormatted);
       setMerryCount(merryCountData);
       setMatchCount(matchCountsData);
@@ -47,47 +46,24 @@ function MerryListPage() {
     }
   };
 
-  const updateStatus = async () => {
-    try {
-      const result = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
-      );
-      //console.log("Merrylist", result.data.message);
-      const merryListStatusData = result.data.data.merryListStatus;
-      console.log("merryListData", merryListStatusData);
-    } catch (error) {
-      console.error("Failed to fetch potential matches:", error);
-    }
-  };
-
-  const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [showModalProfile, setShowModalProfile] = useState(false); // Modal visibility state
+  const [showModalUnmatch, setShowModalUnmatch] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
-
-  const handleProfileDetailClick = (user) => {
+  const handleProfileDetail = (user) => {
     setSelectedUser(user);
-    setShowModal(true);
+    setShowModalProfile(true);
   };
 
   const { availableClicksToday, maxDailyQuota } = useMatching(userId);
 
   // Function to handle button click
-  const handleDeleteAccount = (userId) => {
-    // Set selected user (you might fetch or define it here)
-    console.log(userId);
-    setSelectedUser(userId); // Example user data
-    setShowModal(true);
+  const handleUnmatch = (userId) => {
+    setSelectedUser(userId);
+    setShowModalUnmatch(true);
   };
 
   useEffect(() => {
     getMerryLists();
-  }, [userId]);
-
-  // useEffect(() => {
-  //   getPotentialMatches();
-  // }, [userId]);
-
-  useEffect(() => {
-    updateStatus();
   }, [userId]);
 
   return (
@@ -215,7 +191,7 @@ function MerryListPage() {
                               />
                             </button>
                             <button
-                              onClick={() => handleProfileDetailClick(list)}
+                              onClick={() => handleProfileDetail(list)}
                               className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
                             >
                               <img
@@ -224,20 +200,24 @@ function MerryListPage() {
                                 className="mt-[15.6px] ml-[12px] mb-[12px]"
                               />
                             </button>
-                            {showModal && (
+                            {showModalProfile && (
                               <ProfileMatchAndMerry
                                 user={selectedUser}
-                                onClose={() => setShowModal(false)}
+                                onClose={() => setShowModalProfile(false)}
                               />
                             )}
 
-                            <button className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg">
+                            <button
+                              onClick={() => handleUnmatch(list)}
+                              className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg"
+                            >
                               <img
                                 src={WhiteHearticon}
                                 alt="white-heart-icon"
                                 className="mt-[5px] ml-[3px]"
                               />
                             </button>
+                            {showModalUnmatch && <ModalPopup />}
                           </section>
                         </div>
                       ) : (
@@ -249,7 +229,7 @@ function MerryListPage() {
                           </section>
                           <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
                             <button
-                              onClick={() => handleProfileDetailClick(list)}
+                              onClick={() => handleProfileDetail(list)}
                               className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
                             >
                               <img
@@ -258,10 +238,10 @@ function MerryListPage() {
                                 className="mt-[15.6px] ml-[12px] mb-[12px]"
                               />
                             </button>
-                            {showModal && (
+                            {showModalProfile && (
                               <ProfileMatchAndMerry
                                 user={selectedUser}
-                                onClose={() => setShowModal(false)}
+                                onClose={() => setShowModalProfile(false)}
                               />
                             )}
                           </section>
@@ -352,7 +332,7 @@ function MerryListPage() {
                             />
                           </button>
                           <button
-                            onClick={() => handleProfileDetailClick(list)}
+                            onClick={() => handleProfileDetail(list)}
                             className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
                           >
                             <img
@@ -361,14 +341,14 @@ function MerryListPage() {
                               className="mt-[15.6px] ml-[12px] mb-[12px]"
                             />
                           </button>
-                          {showModal && (
+                          {showModalProfile && (
                             <ProfileMatchAndMerry
                               user={selectedUser}
-                              onClose={() => setShowModal(false)}
+                              onClose={() => setShowModalProfile(false)}
                             />
                           )}
                           <button
-                            onClick={() => handleDeleteAccount(list)} // Pass item ID here
+                            onClick={() => handleUnmatch(list)}
                             className="w-[48px] h-[48px] rounded-2xl shadow-lg bg-[#C70039]"
                           >
                             <img
@@ -377,11 +357,10 @@ function MerryListPage() {
                               className="mt-[5px] ml-[3px]"
                             />
                           </button>
-
-                          {showModal && (
+                          {showModalUnmatch && (
                             <ModalPopup
-                              user={selectedUser}
-                              onClose={() => setShowModal(false)}
+                              userId={selectedUser}
+                              onClose={() => setShowModalUnmatch(false)}
                             />
                           )}
                         </section>
@@ -395,7 +374,7 @@ function MerryListPage() {
                         </section>
                         <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
                           <button
-                            onClick={() => handleProfileDetailClick(list)}
+                            onClick={() => handleProfileDetail(list)}
                             className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
                           >
                             <img
@@ -404,10 +383,10 @@ function MerryListPage() {
                               className="mt-[15.6px] ml-[12px] mb-[12px]"
                             />
                           </button>
-                          {showModal && (
+                          {showModalProfile && (
                             <ProfileMatchAndMerry
                               user={selectedUser}
-                              onClose={() => setShowModal(false)}
+                              onClose={() => setShowModalProfile(false)}
                             />
                           )}
                         </section>

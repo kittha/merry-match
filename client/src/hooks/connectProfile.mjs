@@ -37,14 +37,3 @@ export const deleteAccount = async (userId) => {
     console.error("Error at deleteAccount in connectProfile: ", error);
   }
 };
-
-export const updateUserStatus = async (userId, newStatus) => {
-  const response = await axios.post(
-    `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`,
-    {
-      userId,
-      status_1: newStatus,
-    }
-  );
-  return response.data;
-};
