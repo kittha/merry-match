@@ -8,24 +8,21 @@ import LeftArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-left.p
 import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right.png";
 import { useMerryLimit } from "../../../hooks/userMerryLimit";
 import UserProfilePopup from "./UserProfilePopup";
-import useMatching from "../../../hooks/useMatching";
 import filter from "/assets/matchingpage/matching-area/filter.png";
 import ChatContainer from "../chatcontainer/ChatContainer";
 import FilterContainer from "../Filter-area/FilterContainer";
+import { useMatch } from "../../../contexts/matchProvider";
 
-const SwipeCard = ({
-  allUser,
-  availableClicksToday,
-  maxDailyQuota,
-  addMerry,
-  undoMerry,
-}) => {
+const SwipeCard = () => {
   const [userQueue, setUserQueue] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
   const [showFilter, setShowFilter] = useState(false);
   const navigate = useNavigate();
+
+  const { allUser, availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
+    useMatch();
 
   useEffect(() => {
     const validMatches = allUser.filter((user) => {
@@ -44,7 +41,7 @@ const SwipeCard = ({
   }, [allUser]);
 
   const favourUser = (userId) => {
-    if (availableClicksToday < maxDailyQuota){
+    if (availableClicksToday < maxDailyQuota) {
       addMerry(userId);
       setUserQueue((prevQueue) =>
         prevQueue.filter((user) => user.user_id !== userId)

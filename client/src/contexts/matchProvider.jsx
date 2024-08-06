@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useMerryLimit } from "./userMerryLimit";
+import { useMerryLimit } from "../hooks/userMerryLimit";
+import { useAuth } from "./authentication";
 
 /**
  * Custom React hook that manages the matching functionality for a given user.
@@ -15,14 +16,27 @@ import { useMerryLimit } from "./userMerryLimit";
  *   - addMerry: A function that sends a POST request to add a "merry" status for a given user.
  *   - undoMerry: A function that undoes a "merry" status (POST "unmatch" status) for a given user.
  */
-const useMatching = (currentUserId) => {
+const MatchContext = React.createContext();
+
+// this is a hook that consume MatchContext
+const useMatch = () => React.useContext(MatchContext);
+
+function MatchProvider(props) {
+  // const currentUserJson = localStorage.getItem("data");
+  // const currentUser = JSON.parse(currentUserJson);
+  // const currentUserId = currentUser.id;
+  const { state } = useAuth();
+  const currentUserId = state.user?.id;
+
   const [allUser, setAllUser] = useState([]);
   const { availableClicksToday, setAvailableClicksToday, maxDailyQuota } =
     useMerryLimit();
 
   useEffect(() => {
-    getPotentialMatches();
-  }, []);
+    if (currentUserId) {
+      getPotentialMatches();
+    }
+  }, [currentUserId]);
 
   /**
    * Retrieves potential matches for the current user by sending a GET request to the server.
@@ -48,7 +62,6 @@ const useMatching = (currentUserId) => {
       console.error("Failed to fetch potential matches:", error);
     }
   };
-
   /**
    * Sends a POST request to add a "merry" status for a given user.
    *
@@ -109,13 +122,19 @@ const useMatching = (currentUserId) => {
     }
   };
 
-  return {
-    allUser,
-    availableClicksToday,
-    maxDailyQuota,
-    addMerry,
-    undoMerry,
-  };
-};
+  return (
+    <MatchContext.Provider
+      value={{
+        allUser,
+        availableClicksToday,
+        maxDailyQuota,
+        addMerry,
+        undoMerry,
+      }}
+    >
+      {props.children}
+    </MatchContext.Provider>
+  );
+}
 
-export default useMatching;
+export { MatchProvider, useMatch };
