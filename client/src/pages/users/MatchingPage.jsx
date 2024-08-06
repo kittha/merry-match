@@ -4,12 +4,6 @@ import SwipeCard from "../../components/matchingpage/matching/SwipeCard";
 import useMatching from "../../hooks/useMatching";
 
 function MatchingPage() {
-  const currentUserJson = localStorage.getItem("data");
-  const currentUser = JSON.parse(currentUserJson);
-  const currentUserId = currentUser.id;
-  const { allUser, availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
-    useMatching(currentUserId);
-
   return (
     <>
       <div className="flex flex-col lg:flex-row">
