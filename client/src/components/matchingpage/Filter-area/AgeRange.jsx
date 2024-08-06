@@ -28,7 +28,7 @@ const AgeSliderStyle = styled(Slider)({
   },
 });
 
-function AgeRange() {
+function AgeRange({ filterData, setfilterData }) {
   const minDistance = 1;
   const [value, setValue] = useState([20, 37]);
 
@@ -60,7 +60,15 @@ function AgeRange() {
     } else if (value[1] < 18) setValue([18, 19]);
   };
 
-  console.log(value);
+  const handleValueChangeRight = (key, name) => {
+    setValue([value[0], Number(name)]);
+    setfilterData((prevData) => ({ ...prevData, [key]: name }));
+  };
+
+  const handleValueChangeLeft = (key, name) => {
+    setValue([Number(name), value[1]]);
+    setfilterData((prevData) => ({ ...prevData, [key]: name }));
+  };
 
   return (
     <div className="flex flex-col gap-[13px] lg:w-[188px] lg:h-[122px]">
@@ -80,7 +88,9 @@ function AgeRange() {
         <div className="w-[50%] h-[48px] flex  items-center border-[#CCD0D7] border-[1px] rounded-md">
           <input
             className="h-[24px] w-[100%] ml-[12px] mr-[16px] mt-[12px] mb-[12px] outline-none"
-            onChange={(e) => setValue([Number(e.target.value), value[1]])}
+            onChange={(e) =>
+              handleValueChangeLeft("searchAgeRangeNumberLeft", e.target.value)
+            }
             onBlur={valueChange18}
             type="number"
             max="80"
@@ -92,7 +102,12 @@ function AgeRange() {
         <div className="w-[50%] h-[48px] flex items-center border-[#CCD0D7] border-[1px] rounded-md">
           <input
             className="h-[24px] w-[100%] ml-[12px] mr-[16px] mt-[12px] mb-[12px] outline-none"
-            onChange={(e) => setValue([value[0], Number(e.target.value)])}
+            onChange={(e) =>
+              handleValueChangeRight(
+                "searchAgeRangeNumberRight",
+                e.target.value
+              )
+            }
             onBlur={valueChange80}
             type="number"
             min="18"

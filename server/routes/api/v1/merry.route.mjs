@@ -3,6 +3,8 @@ import {
   addMerry,
   undoMerry,
   getMatchListByUserId,
+  // getAvailableMatchesByUserId,
+  getMatchListByUserIdFilter,
 } from "../../../controllers/merry.controller.mjs";
 import {
   getMerryLimitByUserId,
@@ -15,6 +17,7 @@ router.get("/available-clicks/:userId", getAvailableClicksTodayByUserId);
 // router.get("/available-matches/:userId", getAvailableMatchesByUserId);
 router.get("/merry-limit/:userId", getMerryLimitByUserId);
 router.get("/match/:userId", getMatchListByUserId);
+router.get("/match/filter/:userId", getMatchListByUserIdFilter);
 router.post("/addMerry", addMerry);
 router.post("/undoMerry", undoMerry);
 

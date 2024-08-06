@@ -2,6 +2,12 @@ import {
   addMerry as addMerryToModel,
   undoMerry as undoMerryFromModel,
   getPotentialMatches as getPotentialMatchesFromModel,
+  getPotentialMatchesFilter as getPotentialMatchesFilterFromModel,
+<<<<<<< HEAD
+  // getAvailableMatches as getAvailableMatchesFromModel,
+=======
+  getAvailableMatches as getAvailableMatchesFromModel,
+>>>>>>> a0721e9cb77edd3f677ef96035fb6b1326fc406e
 } from "../models/merry.model.mjs";
 import {
   getAvailableClicksTodayByUserId,
@@ -94,6 +100,23 @@ export const getMatchListByUserId = async (req, res) => {
   const { userId } = req.params;
   try {
     const result = await getPotentialMatchesFromModel(userId);
+    const matches = transformMatchedData(result);
+    res.status(200).json({ user_id: userId, matches });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get match list." });
+  }
+};
+
+export const getMatchListByUserIdFilter = async (req, res) => {
+  const filter = req.query;
+  const { userId } = req.params;
+
+  try {
+    const result = await getPotentialMatchesFilterFromModel(userId, filter);
+<<<<<<< HEAD
+    console.log(result);
+=======
+>>>>>>> a0721e9cb77edd3f677ef96035fb6b1326fc406e
     const matches = transformMatchedData(result);
     res.status(200).json({ user_id: userId, matches });
   } catch (error) {
