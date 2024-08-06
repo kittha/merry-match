@@ -3,7 +3,7 @@ import {
   undoMerry as undoMerryFromModel,
   getPotentialMatches as getPotentialMatchesFromModel,
   getPotentialMatchesFilter as getPotentialMatchesFilterFromModel,
-  getAvailableMatches as getAvailableMatchesFromModel,
+  // getAvailableMatches as getAvailableMatchesFromModel,
 } from "../models/merry.model.mjs";
 import {
   getAvailableClicksTodayByUserId,
@@ -109,6 +109,7 @@ export const getMatchListByUserIdFilter = async (req, res) => {
 
   try {
     const result = await getPotentialMatchesFilterFromModel(userId, filter);
+    console.log(result);
     const matches = transformMatchedData(result);
     res.status(200).json({ user_id: userId, matches });
   } catch (error) {

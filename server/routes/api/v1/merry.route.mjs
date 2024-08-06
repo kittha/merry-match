@@ -3,7 +3,7 @@ import {
   addMerry,
   undoMerry,
   getMatchListByUserId,
-  getAvailableMatchesByUserId,
+  // getAvailableMatchesByUserId,
   getMatchListByUserIdFilter,
 } from "../../../controllers/merry.controller.mjs";
 import {
