@@ -11,9 +11,14 @@ const ChatContainer = () => {
   const { allUser } = useMatch();
 
   useEffect(() => {
-    const validMatches = allUser.filter(
-      (match) => match.match_status_1 === "match"
-    );
+    const validMatches = allUser
+      .filter((match) => match.match_status_1 === "match")
+      .sort((a, b) => {
+        a.match_matched_at = new Date(a.match_matched_at);
+        b.match_matched_at = new Date(b.match_matched_at);
+        console.log("a", a, "b", b);
+        return b.match_matched_at - a.match_matched_at;
+      });
     console.log(validMatches);
     setMatches(validMatches);
   }, [allUser]);
@@ -34,7 +39,7 @@ const ChatContainer = () => {
           </p>
         </button>
       </div>
-      <div className="merryMatch flex justify-center bg-white px-[15px] py-[16px] lg:py-[24px]">
+      <div className="merry-match flex justify-center bg-white px-[15px] py-[16px] lg:py-[24px]">
         <div className="flex flex-col justify-start gap-[16px] w-[343px] lg:w-[282px]">
           <p className="text-[24px] font-bold text-[#2A2E3F]">Merry Match!</p>
           <div className="flex flex-row overflow-x-auto">
@@ -48,7 +53,7 @@ const ChatContainer = () => {
                   <img
                     src={match.avatars.image1}
                     alt="profile"
-                    className=" rounded-[24px]"
+                    className="w-full h-full aspect-square object-cover rounded-[24px]"
                   />
                   <img
                     src={matched}
@@ -61,7 +66,7 @@ const ChatContainer = () => {
           </div>
         </div>
       </div>
-      <div className="chatWithMatch flex justify-center overflow-auto bg-white px-[15px]">
+      <div className="chat-with-match flex justify-center overflow-auto bg-white px-[15px]">
         <div className="flex flex-col justify-start w-[343px] lg:w-[282px]">
           <p className="text-[24px] font-bold text-[#2A2E3F] sticky top-0 z-10 bg-white py-[16px]">
             Chat with Merry Match
@@ -77,7 +82,7 @@ const ChatContainer = () => {
                   <img
                     src={match.avatars.image1}
                     alt="profile"
-                    className="h-[60px] w-[60px] rounded-full"
+                    className="h-[60px] w-[60px] aspect-square object-cover rounded-full"
                   />
                   <div className="flex flex-col text-left justify-center">
                     <p className="text-[16px] font-medium text-[#2A2E3F]">
