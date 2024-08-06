@@ -40,16 +40,32 @@ const SwipeCard = () => {
     setUserQueue(validMatches);
   }, [allUser]);
 
-  const favourUser = (userId) => {
+  const favourUser = async (userId) => {
     if (availableClicksToday < maxDailyQuota) {
-      addMerry(userId);
-      setUserQueue((prevQueue) =>
-        prevQueue.filter((user) => user.user_id !== userId)
+      const data = await addMerry(userId);
+      
+      // Log a message if the match is successful
+      if (data && data.match_id) {
+        const matchedUser = allUser.find(user => 
+          (user.user_id === data.user_id_1 || user.user_id === data.user_id_2) &&
+          user.match_id === data.match_id
+        );
+        if (matchedUser) {
+          console.log(`Users matched: ${data.user_id_1} and ${data.user_id_2}`);
+        }
+      }
+
+      setUserQueue((prevQueue) => {
+        const newQueue = [...prevQueue.slice(1)];
+        return newQueue;
+      }
       );
     } else {
       alert("You don't have any more clicks today");
     }
   };
+
+  
 
   const disfavorUser = (userId) => {
     undoMerry(userId);
