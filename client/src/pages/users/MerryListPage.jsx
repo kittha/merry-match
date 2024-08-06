@@ -55,9 +55,11 @@ function MerryListPage() {
     setShowModalProfile(true);
   };
 
+  const { availableClicksToday, maxDailyQuota } = useMatching(userId);
+
   // Function to handle button click
-  const handleUnmatch = (userId) => {
-    setSelectedUser(userId);
+  const handleUnmatch = () => {
+    //setSelectedUser(userId);
     setShowModalUnmatch(true);
   };
 
@@ -363,7 +365,7 @@ function MerryListPage() {
                           </button>
                           {showModalUnmatch && (
                             <ModalPopup
-                              userId={selectedUser}
+                              //userId={selectedUser}
                               onClose={() => setShowModalUnmatch(false)}
                             />
                           )}
