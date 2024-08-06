@@ -23,11 +23,11 @@ function IdentitiesSection() {
   };
 
   return (
-    <div className="flex flex-col w-full lg:pl-0 lg:pr-0 pl-[16px] pr-[16px] lg:w-[930px] lg:gap-0 gap-[-30px]">
+    <div className="flex flex-col w-full lg:w-[930px] lg:gap-0 gap-[-30px]">
       <h1 className="IdentitiesAndInterestes text-[#2A2E3F] font-[700] text-[24px] leading-[30px]">
         Identities and Interests
       </h1>
-      <div className="column1 flex mt-[24px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+      <div className="column1 flex lg:mt-[24px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
         <div className="flex flex-col lg:mr-[12px] mb-[12px] lg:mb-0">
           <label
             htmlFor="SexualIdentities"
@@ -85,7 +85,7 @@ function IdentitiesSection() {
         </div>
       </div>
 
-      <div className="column2 flex mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+      <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
         <div className="flex flex-col lg:mr-[12px] mb-[12px] lg:mb-0">
           <label
             htmlFor="RacialPreferences"
@@ -124,7 +124,7 @@ function IdentitiesSection() {
           )}
         </div>
 
-        <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] mt-[24px] ">
+        <div className="flex flex-col lg:ml-[12px] lg:mt-[0px] ">
           <label
             htmlFor="MeetingInterests"
             className="font-[400] text-[16px] leading-[24px]"
@@ -154,7 +154,7 @@ function IdentitiesSection() {
         </div>
       </div>
 
-      <div className="column3 flex flex-col mt-[40px]">
+      <div className="column3 flex flex-col mt-[24px] lg:mt-[40px]">
         <div className="flex flex-col">
           <label
             htmlFor="Hobbies"
@@ -162,18 +162,18 @@ function IdentitiesSection() {
           >
             Hobbies / Interests (Maximum 10)
           </label>
-          <div className="flex flex-row flex-wrap border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-full lg:w-[930px] mt-[4px]">
+          <div className="flex flex-row flex-wrap  border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-full lg:w-[930px] mt-[4px]">
             {formData.hobbies.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center px-[8px] py-[4px]  gap-[8px] rounded-[6px] bg-[#F4EBF2] text-[#7D2262]"
+                className="flex items-center  h-[29px] px-[8px] py-[4px]  gap-[8px] rounded-[6px] bg-[#F4EBF2] text-[#7D2262]"
               >
                 <span>{item}</span>
                 <button onClick={() => deleteHobby(index)}>x</button>
               </div>
             ))}
             <input
-              className="border-[1px] font-normal border-none rounded-lg py-[12px] px-[12px] focus:outline-none flex-grow min-w-[200px]"
+              className="border-[1px] font-normal border-none rounded-lg py-[12px] px-[12px] focus:outline-none flex-grow h-[29px]"
               type="text"
               id="Hobbies"
               value={inputValue}
@@ -185,7 +185,7 @@ function IdentitiesSection() {
         </div>
       </div>
 
-      <div className="column3 flex flex-col mt-[40px]">
+      <div className="column3 flex flex-col mt-[24px] lg:mt-[40px]">
         <div className="flex flex-col">
           <label
             htmlFor="Hobbies"
