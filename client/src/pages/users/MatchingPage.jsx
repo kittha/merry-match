@@ -8,17 +8,13 @@ function MatchingPage() {
     <>
       <div className="flex flex-col lg:flex-row">
         <div className="hidden lg:flex ">
-          <ChatContainer allUser={allUser} />
+          <ChatContainer />
         </div>
-        <SwipeCard
-          allUser={allUser}
-          availableClicksToday={availableClicksToday}
-          maxDailyQuota={maxDailyQuota}
-          addMerry={addMerry}
-          undoMerry={undoMerry}
-        />
+        <SwipeCard />
         <div className="hidden lg:flex">
-          <FilterContainer />
+          <form>
+            <FilterContainer />
+          </form>
         </div>
       </div>
     </>
