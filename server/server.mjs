@@ -29,7 +29,7 @@ const limiterMax = process.env.RATE_LIMITER_MAX || 50;
 
 const limiterWindow = process.env.RATE_LIMITER_WINDOW_MS || 60000;
 
-// app.use(rateLimiter(limiterMax, limiterWindow));
+// app.use(rateLimiter(limiterMax, limiterWindow));  // TODO plan to enable in production
 
 app.use(compression());
 
@@ -47,7 +47,7 @@ app.get("/status", (req, res) => {
   return res.status(200).json("Server API is working");
 });
 
-app.use("/api/v1", [avatarUpload], apiV1Routes);
+app.use("/api/v1", [avatarUpload], apiV1Routes); // FIXME plan to relocate multer(avatarUpload), follow PoLA principle
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
 

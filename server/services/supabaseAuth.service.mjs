@@ -54,6 +54,7 @@ export const signIn = async (reqBody) => {
   }
 };
 
+// TODO : prepare to delete
 // export const getUser = async (jwtToken) => {
 //   try {
 //     const { user, error } = supabase.auth.user(jwtToken);

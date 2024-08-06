@@ -8,7 +8,7 @@ import {
 // import {
 //   forgotPassword,
 //   resetPassword,
-// } from "../../../controllers/auth.controller.mjs";
+// } from "../../../controllers/auth.controller.mjs"; // TODO : prepare to delete
 import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 import { validatePicture } from "../../../middlewares/picture.validation.mjs";
 import { validateSignUpInput } from "../../../middlewares/signUpInput.validation.mjs";
@@ -41,8 +41,8 @@ router.post(
   [validateSignInInput, validateEmailRegex, validatePasswordLength],
   loginUser
 );
-// router.post("/forgot-password", forgotPassword);
-// router.post("/reset-password/:token", resetPassword);
+// router.post("/forgot-password", forgotPassword); // TODO : prepare to delete
+// router.post("/reset-password/:token", resetPassword); // TODO : prepare to delete
 router.get("/:tokenId", fetchUser);
 router.post("/refresh-token", refreshUserSession);
 

@@ -14,7 +14,7 @@ import authenticateAdmin from "../../../middlewares/authenticateAdmin.middleware
 import { validatePackageData } from "../../../middlewares/packageData.validation.mjs";
 
 const router = express.Router();
-
+// TODO add middleware to chk Authentication & Authorization; chk input validation
 router.get("/complaints", getAllComplaints);
 router.get("/complaints/param", getComplaintsByParam);
 router.get("/complaints/list", getComplaintsByStatus);

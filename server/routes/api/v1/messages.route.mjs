@@ -9,8 +9,8 @@ const router = express.Router();
 router.get("/:matchId", getChatHistory);
 router.post("/:matchId", sendMessage);
 
-// router.get("/:userId", getUserMessages);
+// router.get("/:userId", getUserMessages); // TODO : prepare to delete
 
-// router.delete("/:userId", deleteMessage);
+// router.delete("/:userId", deleteMessage); // TODO : prepare to delete
 
 export default router;
