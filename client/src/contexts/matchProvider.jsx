@@ -29,8 +29,12 @@ function MatchProvider(props) {
   const currentUserId = state.user?.id;
 
   const [allUser, setAllUser] = useState([]);
-  const { availableClicksToday, setAvailableClicksToday, maxDailyQuota } =
-    useMerryLimit();
+  const {
+    availableClicksToday,
+    setAvailableClicksToday,
+    maxDailyQuota,
+    setMaxDailyQuota,
+  } = useMerryLimit();
 
   useEffect(() => {
     if (currentUserId) {

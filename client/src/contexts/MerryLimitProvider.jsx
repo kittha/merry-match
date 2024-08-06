@@ -13,18 +13,17 @@ export const MerryLimitContext = React.createContext(null);
  * @return {ReactNode} The MerryLimitContext.Provider component with the Merry limit data.
  */
 export function MerryLimitProvider({ children }) {
-    const maxDailyQuotaDefaultValue = 20;
+    // const maxDailyQuotaDefaultValue = 20;
     const { state } = useAuth();
     const [userId] = useState(() => {
         return state?.user?.id || JSON.parse(localStorage.getItem('data'))?.id;
     });
     const [availableClicksToday, setAvailableClicksToday] = useState(0);
-    const [maxDailyQuota, setMaxDailyQuota] = useState(maxDailyQuotaDefaultValue);
+    const [maxDailyQuota, setMaxDailyQuota] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             if (!userId) return;
-
             try {
                 const backendUrl = import.meta.env.VITE_BACKEND_URL;
                 const [availableClicksResponse, maxDailyQuotaResponse] = await Promise.all([
@@ -33,7 +32,7 @@ export function MerryLimitProvider({ children }) {
                 ]);
 
                 setAvailableClicksToday(availableClicksResponse?.data?.data?.availableClicksToday ?? 0);
-                setMaxDailyQuota(maxDailyQuotaResponse?.data?.data?.merry_limit ?? maxDailyQuotaDefaultValue);
+                setMaxDailyQuota(maxDailyQuotaResponse?.data?.data?.merry_limit ?? null);
             } catch (error) {
                 console.error('Error fetching Merry limit data:', error);
             }

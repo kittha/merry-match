@@ -5,6 +5,8 @@ import HeaderMembership from "../../components/membership/HeaderMembership";
 import MembershipPackage from "../../components/membership/MembershipPackage";
 import BillingHistory from "../../components/membership/BillingHistory";
 import Footer from "../../components/homepage-authen/Footer";
+import useMatching from "../../hooks/useMatching";
+import { convertLength } from "@mui/material/styles/cssUtils";
 
 export const MembershipPage = () => {
   const { userId } = useParams();
@@ -14,6 +16,7 @@ export const MembershipPage = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const {setMaxDailyQuota} = useMatching(userId);
 
   const fetchData = async () => {
     try {
@@ -21,6 +24,11 @@ export const MembershipPage = () => {
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}`
       );
       setData(response.data);
+      // TODO need to refactor this
+      const response2 = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry/merry-limit/${userId}`
+      );
+      setMaxDailyQuota(response2.data.data.merry_limit);
     } catch (err) {
       setError(err.message);
     } finally {
