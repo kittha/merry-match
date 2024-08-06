@@ -56,8 +56,8 @@ function MerryListPage() {
   };
 
   // Function to handle button click
-  const handleUnmatch = () => {
-    //setSelectedUser(userId);
+  const handleUnmatch = (userId) => {
+    setSelectedUser(userId);
     setShowModalUnmatch(true);
   };
 
@@ -363,7 +363,7 @@ function MerryListPage() {
                           </button>
                           {showModalUnmatch && (
                             <ModalPopup
-                              //userId={selectedUser}
+                              userId={selectedUser}
                               onClose={() => setShowModalUnmatch(false)}
                             />
                           )}
