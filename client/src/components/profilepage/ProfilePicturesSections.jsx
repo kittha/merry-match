@@ -23,7 +23,7 @@ function ProfilePicturesSections() {
   };
 
   return (
-    <div className="flex flex-col w-full lg:pl-0 lg:pr-0 pl-[16px] pr-[16px] lg:w-[930px]">
+    <div className="flex flex-col w-full lg:w-[930px]">
       <div className="section-header">
         <h2 className=" text-[#A62D82] text-[24px] font-[700] leading-[30px] lg:text-left">
           Profile pictures
@@ -32,7 +32,7 @@ function ProfilePicturesSections() {
           Upload at least 2 photos
         </p>
       </div>
-      <div className="picture-list lg:w-auto flex lg:flex-row flex-wrap lg:gap-[22px] gap-[22px] mt-[24px] mx-auto lg:mx-0 w-full">
+      <div className="picture-list lg:w-auto flex lg:flex-row flex-wrap lg:gap-[22px] gap-[8px] mt-[24px] mx-auto lg:mx-0 w-full">
         {/* {Object.keys(formData.avatars).map((avatarKey) => ( */}
         {[...Array(5).keys()].map((index) => (
           <div key={index} className="input-container">

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
 import { transformMerryListData } from "../../../../server/utils/transformMerryListData.mjs";
-// import useMatching from "../../hooks/useMatching";
+import { useMatch } from "../../contexts/matchProvider";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
@@ -13,8 +13,10 @@ import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Testericon from "/assets/merrylist-image/tester.png";
 import Footer from "../../components/homepage/Footer";
 import ProfileMatchAndMerry from "../../components/merry-list/ProfileMatchAndMerry";
+import CountdownTimer from "../../components/merry-list/CountdownTimer";
 
 function MerryListPage() {
+  const { availableClicksToday, maxDailyQuota } = useMatch();
   const { state } = useAuth();
   const userId = state && state.user ? state.user.id : null;
   console.log(userId);
@@ -22,7 +24,6 @@ function MerryListPage() {
   const [merryList, setMerryList] = useState([]);
   const [merryCounts, setMerryCounts] = useState([]);
   const [matchCounts, setMatchCounts] = useState([]);
-
   const getMerryLists = async () => {
     try {
       const result = await axios.get(
@@ -126,7 +127,7 @@ function MerryListPage() {
                   </p>
                 </section>
                 <p className="font-medium text-[12px] leading-[18px] text-right text-[#9AA1B9] mb-[28px] lg:w-[167px] lg:h-[18px]">
-                  Reset in 12h...
+                  <CountdownTimer />
                 </p>
               </article>
             </section>

@@ -1,9 +1,12 @@
 import { format, addMonths, parseISO } from "date-fns";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 function BillingHistory({ history }) {
   const { userId } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   if (!history || !Array.isArray(history)) {
     return <p>No billing history available.</p>;
@@ -31,13 +34,15 @@ function BillingHistory({ history }) {
     ? addMonths(lastBillingDate, 1)
     : null;
 
+  // Calculate paginated data
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentHistory = sortedHistory.slice(indexOfFirstItem, indexOfLastItem);
+
   // Function to determine the background color based on the index
   const getBackgroundColor = (index) => {
     return index % 2 === 1 ? "#F6F7FC" : "#FFFFFF"; // Alternates every item
   };
-
-  // Get the most recent 5 billing records
-  const recentHistory = sortedHistory.slice(0, 5);
 
   const handleRequestPDF = async () => {
     try {
@@ -60,6 +65,18 @@ function BillingHistory({ history }) {
     }
   };
 
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (indexOfLastItem < sortedHistory.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-[8px] lg:gap-[24px]">
       <h1 className="text-[#2A2E3F] font-[700] text-[24px] max-lg:pt-[8px] max-lg:px-[16px]">
@@ -71,8 +88,8 @@ function BillingHistory({ history }) {
           {nextBillingDate ? format(nextBillingDate, "dd/MM/yyyy") : "N/A"}
         </h2>
         <div className="pb-[24px]">
-          {recentHistory.length > 0 ? (
-            recentHistory.map((item, index) => (
+          {currentHistory.length > 0 ? (
+            currentHistory.map((item, index) => (
               <div
                 key={item.id || item.created_at} // Prefer unique key if available
                 className="p-[16px]"
@@ -102,10 +119,27 @@ function BillingHistory({ history }) {
           ) : (
             <p>No billing records found.</p>
           )}
+
+          <div className="flex justify-between px-[16px]">
+            <button
+              className="text-[#C70039] font-[700] hover:text-red-500"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <button
+              className="text-[#C70039] font-[700] hover:text-red-500"
+              onClick={handleNextPage}
+              disabled={indexOfLastItem >= sortedHistory.length}
+            >
+              Next
+            </button>
+          </div>
         </div>
         <div className="flex lg:justify-end border-t border-[#E4E6ED] pt-[16px] max-lg:mb-[58px]">
           <button
-            className="text-[#C70039] font-[700] px-[8px] py-[4px] hover:drop-shadow-xl"
+            className="text-[#C70039] font-[700] px-[8px] py-[4px] hover:text-red-500"
             onClick={handleRequestPDF}
           >
             Request PDF
