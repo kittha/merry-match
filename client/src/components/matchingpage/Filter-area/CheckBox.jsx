@@ -1,6 +1,17 @@
+import { useState } from "react";
+
 function CheckBox({ filterData, setfilterData }) {
-  const handleChange = (key, value) => {
-    setfilterData((prevData) => ({ ...prevData, [key]: value }));
+  const [isCheckedMale, setIsCheckMale] = useState(false);
+  const [isCheckedFemale, setIsCheckFemale] = useState(false);
+  const [isCheckedBinary, setIsCheckBinary] = useState(false);
+  const handleChange = (key, value, event, check) => {
+    event;
+    console.log(isCheckedMale);
+    if (check === true) {
+      setfilterData((prevData) => ({ ...prevData, [key]: "" }));
+    } else {
+      setfilterData((prevData) => ({ ...prevData, [key]: value }));
+    }
   };
 
   return (
@@ -10,8 +21,15 @@ function CheckBox({ filterData, setfilterData }) {
           type="checkbox"
           id="checkbox1"
           name="sex"
-          checked={filterData.checkMale}
-          onChange={() => handleChange("checkMale", "Male")}
+          checked={isCheckedMale}
+          onChange={(event) =>
+            handleChange(
+              "checkMale",
+              "Male",
+              setIsCheckMale(event.target.checked),
+              isCheckedMale
+            )
+          }
           className="relative peer shrink-0 appearance-none w-[24px] h-[24px] border-[1px] border-[#D6D9E4] rounded-[8px] bg-white  checked:bg-[#A62D82] checked:border-[1px] checked:border-[#DF89C6] "
         />
         <label
@@ -38,8 +56,15 @@ function CheckBox({ filterData, setfilterData }) {
           type="checkbox"
           id="checkbox2"
           name="sex"
-          checked={filterData.checkFemale}
-          onChange={() => handleChange("checkFemale", "Female")}
+          checked={isCheckedFemale}
+          onChange={(event) =>
+            handleChange(
+              "checkFemale",
+              "Female",
+              setIsCheckFemale(event.target.checked),
+              isCheckedFemale
+            )
+          }
           className="relative peer shrink-0 appearance-none w-[24px] h-[24px] border-[1px] border-[#D6D9E4] rounded-[8px] bg-white  checked:bg-[#A62D82] checked:border-[1px] checked:border-[#DF89C6] "
         />
         <label
@@ -66,15 +91,22 @@ function CheckBox({ filterData, setfilterData }) {
           type="checkbox"
           id="checkbox3"
           name="sex"
-          checked={filterData.checkBinaryPeople}
-          onChange={() => handleChange("checkOther", "Other")}
+          checked={isCheckedBinary}
+          onChange={(event) =>
+            handleChange(
+              "checkOther",
+              "Other",
+              setIsCheckBinary(event.target.checked),
+              isCheckedBinary
+            )
+          }
           className="relative peer shrink-0 appearance-none w-[24px] h-[24px] border-[1px] border-[#D6D9E4] rounded-[8px] bg-white  checked:bg-[#A62D82] checked:border-[1px] checked:border-[#DF89C6] "
         />
         <label
           className="ml-[12px] peer-checked:text-[#2A2E3F]"
           htmlFor="checkbox3"
         >
-          Other
+          Non-binary people
         </label>
         {/* // FIXME : typo : change from "bunary" : to "binary" */}
         <svg

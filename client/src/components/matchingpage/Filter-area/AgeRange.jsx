@@ -30,7 +30,8 @@ const AgeSliderStyle = styled(Slider)({
 
 function AgeRange({ filterData, setfilterData }) {
   const minDistance = 1;
-  const [value, setValue] = useState([20, 37]);
+  const [value, setValue] = useState([18, 80]);
+  const [ageSlider, setAgeSlider] = useState([]);
 
   const handleChange = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
@@ -39,8 +40,19 @@ function AgeRange({ filterData, setfilterData }) {
 
     if (activeThumb === 0) {
       setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+      setfilterData((prevData) => ({
+        ...prevData,
+        searchAgeRangeNumberLeft: Math.min(newValue[0], value[1] - minDistance),
+      }));
     } else {
       setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+      setfilterData((prevData) => ({
+        ...prevData,
+        searchAgeRangeNumberRight: Math.max(
+          newValue[1],
+          value[0] + minDistance
+        ),
+      }));
     }
   };
 
@@ -62,12 +74,12 @@ function AgeRange({ filterData, setfilterData }) {
 
   const handleValueChangeRight = (key, name) => {
     setValue([value[0], Number(name)]);
-    setfilterData((prevData) => ({ ...prevData, [key]: name }));
+    setfilterData((prevData) => ({ ...prevData, [key]: Number(name) }));
   };
 
   const handleValueChangeLeft = (key, name) => {
     setValue([Number(name), value[1]]);
-    setfilterData((prevData) => ({ ...prevData, [key]: name }));
+    setfilterData((prevData) => ({ ...prevData, [key]: Number(name) }));
   };
 
   return (
