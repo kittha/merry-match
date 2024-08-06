@@ -54,7 +54,6 @@ const SwipeCard = () => {
           console.log(`Users matched: ${data.user_id_1} and ${data.user_id_2}`);
         }
       }
-
       setUserQueue((prevQueue) => {
         const newQueue = [...prevQueue.slice(1)];
         return newQueue;
