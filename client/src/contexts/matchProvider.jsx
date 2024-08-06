@@ -134,6 +134,7 @@ function MatchProvider(props) {
         maxDailyQuota,
         addMerry,
         undoMerry,
+        setMaxDailyQuota,
       }}
     >
       {props.children}

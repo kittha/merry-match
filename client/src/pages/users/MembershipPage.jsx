@@ -5,7 +5,7 @@ import HeaderMembership from "../../components/membership/HeaderMembership";
 import MembershipPackage from "../../components/membership/MembershipPackage";
 import BillingHistory from "../../components/membership/BillingHistory";
 import Footer from "../../components/homepage-authen/Footer";
-import useMatching from "../../hooks/useMatching";
+import { useMatch } from "../../contexts/matchProvider";
 import { convertLength } from "@mui/material/styles/cssUtils";
 
 export const MembershipPage = () => {
@@ -16,7 +16,7 @@ export const MembershipPage = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const {setMaxDailyQuota} = useMatching(userId);
+  const { setMaxDailyQuota } = useMatch();
 
   const fetchData = async () => {
     try {
