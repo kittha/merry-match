@@ -42,10 +42,10 @@ function UserProfilePage() {
   }, []);
 
   return (
-    <div className="lg:w-screen lg:h-screen bg-[#FCFCFE] lg:pt-[171px] max-lg:px-[16px] pt-[93px] ">
+    <div className="lg:w-screen lg:h-screen bg-[#FCFCFE] lg:pt-[171px] pt-[93px] ">
       <div className="lg:w-screen bg-[#FCFCFE]">
-        <div className="lg:w-[931px] w-auto h-auto flex flex-col gap-[40px] lg:gap-[80px] lg:pb-[60px] mx-auto font-Nunito pb-[40px] max-lg:mb-[11px]">
-          <div className="lg:w-[931px] w-auto flex lg:flex-row flex-col lg:gap-[80px] gap-[20px]">
+        <div className="lg:w-[931px] w-auto h-auto flex flex-col gap-[40px] lg:gap-[80px] lg:pb-[60px] mx-auto font-Nunito pb-[40px] max-lg:mb-[11px] max-lg:px-[16px]">
+          <div className="lg:w-[931px] w-auto flex lg:flex-row flex-col lg:gap-[80px] gap-[20px] ">
             <header className="lg:w-[517px] flex flex-col gap-[8px]">
               <p className="text-[#7B4429] font-semibold text-base leading-6 lg:w-[517px] lg:h-[21px]">
                 PROFILE
