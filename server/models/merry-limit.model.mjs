@@ -19,7 +19,13 @@ export const getMerryLimit = async (userId) => {
       [userId]
     );
 
-    const userMerryLimit = result.rows[0].merry_limit;
+    let userMerryLimit = null;
+    if (result.rows[0] === undefined) {
+      // merry_limit_freemium_package_default_value
+      userMerryLimit = 20;
+    } else {
+      userMerryLimit = result.rows[0].merry_limit;
+    }
 
     return { merry_limit: userMerryLimit };
   } catch (error) {
