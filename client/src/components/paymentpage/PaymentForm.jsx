@@ -101,10 +101,12 @@ const PaymentForm = () => {
 
       if (paymentIntent && paymentIntent.status === "succeeded") {
         try {
+          // TODO need to refactor this
           const response = await axios.get(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}`
           );
-          setMaxDailyQuota(response.data.packageDetails.merry_limit)
+          const merryLimitToday = response.data.packageDetails.merry_limit
+          setMaxDailyQuota(merryLimitToday)
         } catch (err) {
           console.error(err);
         }
