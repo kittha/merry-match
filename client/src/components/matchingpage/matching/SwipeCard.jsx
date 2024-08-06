@@ -25,6 +25,8 @@ const SwipeCard = () => {
     useMatch();
 
   useEffect(() => {
+    if (!allUser) return;
+
     const validMatches = allUser.filter((user) => {
       if (user.user_id !== user.match_user_id_1) {
         return (
@@ -37,8 +39,14 @@ const SwipeCard = () => {
       }
     });
     console.log(validMatches);
-    setUserQueue(validMatches);
-  }, [allUser]);
+
+    const newQueue = [
+      ...validMatches.slice(currentIndex),
+      ...validMatches.slice(0, currentIndex),
+    ];
+
+    setUserQueue(newQueue);
+  }, [allUser, currentIndex]);
 
   const favourUser = (userId) => {
     if (availableClicksToday < maxDailyQuota) {
