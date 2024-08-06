@@ -29,7 +29,7 @@ function MerryListPage() {
   const getMerryLists = async () => {
     try {
       // BUG userId is missing after refresh
-      if (userId){
+      if (userId) {
         const result = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
         );
@@ -58,10 +58,9 @@ function MerryListPage() {
     setShowModalProfile(true);
   };
 
-  const { availableClicksToday, maxDailyQuota } = useMatching(userId);
-
   // Function to handle button click
-  const handleUnmatch = (userObj) => { // handleUnmatch -> handlePopup
+  const handleUnmatch = (userObj) => {
+    // handleUnmatch -> handlePopup
     setSelectedUser(userObj);
     setShowModalUnmatch(true);
   };
@@ -144,7 +143,7 @@ function MerryListPage() {
                     {list.url ? (
                       <img
                         src={list.url}
-                        className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
+                        className="hidden lg:block aspect-square lg:w-[187px] lg:h-[187px] rounded-[24px]"
                         alt="merry-list-image"
                       />
                     ) : (
@@ -260,9 +259,12 @@ function MerryListPage() {
 
                     {/************************************************************************************************/}
                     <div className="w-[343px] h-[156px] flex flex-col gap-[8px] lg:w-[447px] lg:h-[182px] lg:gap-[24px]">
-                      <section className="w-[343px] h-[30px] flex flex-row gap-[16px] lg:w-[490px]">
+                      <section className="w-[343px] h-[30px] flex flex-row gap-[25px] lg:w-[600px]">
                         <div className="w-auto h-[30px] flex flex-row gap-[8px] font-bold text-[24px] leading-[30px]">
-                          <h4 className="w-auto h-[30px] text-[#2A2E3F]">
+                          <h4 className="block lg:hidden w-auto h-[30px] text-[#2A2E3F]">
+                            {list.name.slice(0, 6) + ".."}
+                          </h4>
+                          <h4 className="hidden lg:block w-auto h-[30px] text-[#2A2E3F]">
                             {list.name}
                           </h4>
                           <h4 className="w-[29px] h-[30px] text-[#646D89]">
@@ -275,8 +277,12 @@ function MerryListPage() {
                             className="w-[11.2px] h-[13.6px] mt-[4px] ml-[4px]"
                             alt="location-icon"
                           />
-                          <p className="w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
-                            {list.city}, {list.country}
+                          <p className="block lg:hidden w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
+                            {list.city.slice(0, 7) + ".. "},{" "}
+                            {list.country.slice(0, 7) + ".."}
+                          </p>
+                          <p className="hidden lg:block w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
+                            {list.city},{list.country}
                           </p>
                         </section>
                       </section>
@@ -301,7 +307,12 @@ function MerryListPage() {
                           <label className="w-[167px] h-[24px] text-[#2A2E3F]">
                             Racial preferences
                           </label>
-                          <p className="w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
+                          <p className="block lg:hidden w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
+                            {list.racialPreference.length > 5
+                              ? list.racialPreference.slice(0, 15) + ".. "
+                              : list.racialPreference.slice(0, 15)}
+                          </p>
+                          <p className="hidden lg:block w-[176px] h-[24px] text-[#646D89] lg:w-[280px]">
                             {list.racialPreference}
                           </p>
                         </section>
