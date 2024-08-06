@@ -1,11 +1,11 @@
 import React from "react";
 //import { updateUserStatus } from "../../hooks/connectProfile.mjs"; // Make sure you have this function implemented
 import { useNavigate } from "react-router-dom";
-import useMatching from "../../hooks/useMatching";
+import { useMatch } from "../../contexts/matchProvider";
 
-const ModalPopup = ({ userId, onClose }) => {
+const ModalPopup = ({ onClose }) => {
   const navigate = useNavigate();
-  const { undoMerry } = useMatching(userId);
+  const { undoMerry } = useMatch();
   // ฟังก์ชันสำหรับปุ่ม "Yes"
   const handleUnmatch = () => {
     undoMerry();

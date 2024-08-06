@@ -54,11 +54,11 @@ function MerryListPage() {
     setShowModalProfile(true);
   };
 
-  const { availableClicksToday, maxDailyQuota } = useMatching(userId);
+  const { availableClicksToday, maxDailyQuota } = useMatch();
 
   // Function to handle button click
-  const handleUnmatch = (userId) => {
-    setSelectedUser(userId);
+  const handleUnmatch = () => {
+    //setSelectedUser(userId);
     setShowModalUnmatch(true);
   };
 
@@ -217,7 +217,12 @@ function MerryListPage() {
                                 className="mt-[5px] ml-[3px]"
                               />
                             </button>
-                            {showModalUnmatch && <ModalPopup />}
+                            {showModalUnmatch && (
+                              <ModalPopup
+                                //userId={selectedUser}
+                                onClose={() => setShowModalUnmatch(false)}
+                              />
+                            )}
                           </section>
                         </div>
                       ) : (
@@ -359,7 +364,7 @@ function MerryListPage() {
                           </button>
                           {showModalUnmatch && (
                             <ModalPopup
-                              userId={selectedUser}
+                              //userId={selectedUser}
                               onClose={() => setShowModalUnmatch(false)}
                             />
                           )}
