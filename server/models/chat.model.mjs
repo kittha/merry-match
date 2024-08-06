@@ -29,7 +29,7 @@ export const getMessages = async (matchId) => {
       `SELECT * FROM messages 
       LEFT JOIN media ON messages.media_id = media.media_id
       WHERE match_id = $1::INTEGER
-      ORDER BY sent_at`,
+      ORDER BY sent_at DESC`,
       [matchId]
     );
     return result.rows;
@@ -52,6 +52,23 @@ export const createMedia = async (imageUri) => {
       [url, publicId, fileType]
     );
     return result.rows[0];
+  } catch (error) {
+    console.error("Error in message model", error);
+    throw error;
+  }
+};
+
+export const getLastMessages = async (matchIds) => {
+  // console.log(matchIds);
+  try {
+    const result = await connectionPool.query(
+      `SELECT DISTINCT ON (match_id) *
+      FROM messages
+      WHERE match_id = ANY($1::int[])
+      ORDER BY match_id, sent_at DESC`,
+      [matchIds]
+    );
+    return result.rows;
   } catch (error) {
     console.error("Error in message model", error);
     throw error;

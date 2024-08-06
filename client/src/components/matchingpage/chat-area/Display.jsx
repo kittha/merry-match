@@ -31,7 +31,7 @@ const DisplayChat = ({ messages, userId }) => {
         </p>
       </div>
 
-      <div className="message w-full flex flex-col gap-2 lg:gap-4">
+      <div className="message w-full flex flex-col-reverse gap-2 lg:gap-4">
         {messages &&
           messages.map((msg, index) => {
             return msg.sender === userId ? (

@@ -4,19 +4,21 @@ import axios from "axios";
 import discover from "/assets/matchingpage/chatArea/discover-vector.png";
 import matched from "/assets/matchingpage/chatArea/merry-match.png";
 import { useMatch } from "../../../contexts/matchProvider";
+import { useChat } from "../../../contexts/chatProvider";
 
 const ChatContainer = () => {
   const [matches, setMatches] = useState([]);
   const navigate = useNavigate();
   const { allUser } = useMatch();
-
+  const { lastMsg } = useChat();
+  console.log("lastMsg", lastMsg);
   useEffect(() => {
     const validMatches = allUser
       .filter((match) => match.match_status_1 === "match")
       .sort((a, b) => {
         a.match_matched_at = new Date(a.match_matched_at);
         b.match_matched_at = new Date(b.match_matched_at);
-        console.log("a", a, "b", b);
+        // console.log("a", a, "b", b);
         return b.match_matched_at - a.match_matched_at;
       });
     console.log(validMatches);
@@ -72,30 +74,37 @@ const ChatContainer = () => {
             Chat with Merry Match
           </p>
           <div className="flex flex-col gap-[8px]">
-            {matches.map((match) => (
-              <button
-                key={match.user_id}
-                className=" w-auto h-[92px] rounded-[16px] bg-white border-0 hover:border-[1px] hover:border-[#A62D82] hover:bg-[#F6F7FC] focus:outline-none"
-                onClick={() => navigate(`/chat/${match.match_id}`)}
-              >
-                <div className="flex gap-[12px] mx-[12px] my-[16px]">
-                  <img
-                    src={match.avatars.image1}
-                    alt="profile"
-                    className="h-[60px] w-[60px] aspect-square object-cover rounded-full"
-                  />
-                  <div className="flex flex-col text-left justify-center">
-                    <p className="text-[16px] font-medium text-[#2A2E3F]">
-                      {match.name}
-                    </p>
-                    <p className="text-[14px] font-medium text-[#646D89] truncate w-[230px] lg:w-[180px]">
-                      message It is a long established fact that a reader will
-                      be distracted by the readable content
-                    </p>
-                  </div>
-                </div>
-              </button>
-            ))}
+            {lastMsg &&
+              matches &&
+              lastMsg.map((msg) => {
+                const index = matches.findIndex(
+                  (match) => match.match_id === msg.matchId
+                );
+
+                return index !== -1 ? (
+                  <button
+                    key={matches[index].user_id}
+                    className=" w-auto h-[92px] rounded-[16px] bg-white border-0 hover:border-[1px] hover:border-[#A62D82] hover:bg-[#F6F7FC] focus:outline-none"
+                    onClick={() => navigate(`/chat/${msg.matchId}`)}
+                  >
+                    <div className="flex gap-[12px] mx-[12px] my-[16px]">
+                      <img
+                        src={matches[index].avatars.image1}
+                        alt="profile"
+                        className="h-[60px] w-[60px] aspect-square object-cover rounded-full"
+                      />
+                      <div className="flex flex-col text-left justify-center">
+                        <p className="text-[16px] font-medium text-[#2A2E3F]">
+                          {matches[index].name}
+                        </p>
+                        <p className="text-[14px] font-medium text-[#646D89] truncate w-[230px] lg:w-[180px]">
+                          {msg.message ?? "sent a photo"}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                ) : null;
+              })}
           </div>
         </div>
       </div>

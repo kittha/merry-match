@@ -2,7 +2,9 @@ import {
   createMessage,
   getMessages,
   createMedia,
+  getLastMessages,
 } from "../models/chat.model.mjs";
+import { getAllMatch } from "../models/matching.model.mjs";
 import { cloudinaryUpload } from "../utils/cloudinary.uploader.mjs";
 
 export const sendMessage = async (req, res) => {
@@ -56,6 +58,29 @@ export const getChatHistory = async (req, res) => {
       dateTime: msg.sent_at,
     }));
     // console.log(data);
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error("Error in chat controller:", error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+export const checkLastMessage = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const matchResult = await getAllMatch(userId);
+    const matchIds = matchResult.map((result) => result.match_id);
+    // console.log(matchIds);
+    const lastResult = await getLastMessages(matchIds);
+    const data = lastResult.map((msg) => ({
+      sender: msg.sender_id,
+      receiver: msg.receiver_id,
+      matchId: msg.match_id,
+      message: msg.message,
+      dateTime: msg.sent_at,
+    }));
     return res.status(200).json(data);
   } catch (error) {
     console.error("Error in chat controller:", error);

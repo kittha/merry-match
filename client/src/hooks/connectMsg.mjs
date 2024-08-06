@@ -48,3 +48,15 @@ export const getMatchInfo = async (matchId) => {
     console.error("Error at getMatchInfo in connectMsg: ", error);
   }
 };
+
+export const getLastMessagesByUserId = async (userId) => {
+  try {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/messages/last/${userId}`
+    );
+    console.log("Get data from Database Success.");
+    return data;
+  } catch (error) {
+    console.error("Error at getLastMessagesByUserId in connectMsg: ", error);
+  }
+};

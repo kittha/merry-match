@@ -11,16 +11,18 @@ import {
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
+import { useChat } from "../../contexts/chatProvider";
 
 const Chat = () => {
   const { state } = useAuth();
-  console.log(state);
+  // console.log(state);
+  const { lastMsg, setLastMsg } = useChat();
 
   const userId = state.user?.id;
 
   let { matchId } = useParams();
   matchId = Number(matchId);
-  console.log("matchId: ", matchId);
+  // console.log("matchId: ", matchId);
 
   const [receiver, setReceiver] = useState();
   const [messages, setMessages] = useState([]);
@@ -87,16 +89,24 @@ const Chat = () => {
     const msgResponse = await createMessage(sendData);
     console.log("fromCreateMessage", msgResponse);
 
-    const newMessages = [...messages];
-    newMessages.push(msgResponse);
+    const newMessages = [msgResponse, ...messages];
+    // newMessages.unshift(msgResponse);
     setMessages(newMessages);
+
+    const newlastMsg = [...lastMsg];
+    const deleteIndex = newlastMsg.findIndex((msg) => msg.matchId === matchId);
+    if (deleteIndex !== -1) {
+      newlastMsg.splice(deleteIndex, 1);
+    }
+    newlastMsg.unshift(msgResponse);
+    setLastMsg(newlastMsg);
 
     //socket send message and photo
     socket.current.emit("send-msg", msgResponse);
   };
 
   useEffect(() => {
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+    arrivalMessage && setMessages((prev) => [arrivalMessage, ...prev]);
     console.log("arrivalEffect");
   }, [arrivalMessage]);
 
