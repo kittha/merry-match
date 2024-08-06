@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
 import { transformMerryListData } from "../../../../server/utils/transformMerryListData.mjs";
-import useMatching from "../../hooks/useMatching";
+// import useMatching from "../../hooks/useMatching";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
@@ -53,21 +53,21 @@ function MerryListPage() {
     setShowModal(true);
   };
 
-  const {
-    availableClicksToday,
-    maxDailyQuota,
-    addMerry,
-    undoMerry,
-    getPotentialMatches,
-  } = useMatching(userId);
+  // const {
+  //   availableClicksToday,
+  //   maxDailyQuota,
+  //   addMerry,
+  //   undoMerry,
+  //   getPotentialMatches,
+  // } = useMatching(userId);
 
   useEffect(() => {
     getMerryLists();
   }, [userId]);
 
-  useEffect(() => {
-    getPotentialMatches();
-  }, [userId]);
+  // useEffect(() => {
+  //   getPotentialMatches();
+  // }, [userId]);
 
   return (
     <>
