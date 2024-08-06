@@ -9,6 +9,7 @@ import Bullet from "../../../public/assets/paymentpage/Bullet.png";
 import Footer from "../../components/homepage/Footer";
 import { usePackage } from "../../contexts/PackageProvider";
 import { useAuth } from "../../contexts/authentication";
+import useMatching from "../../hooks/useMatching";
 
 const PaymentForm = () => {
   const navigate = useNavigate();
@@ -23,10 +24,12 @@ const PaymentForm = () => {
   const [cvcCardError, setCVCError] = useState("");
   const [nameCardError, setNameCardError] = useState("");
   const [loading, setLoading] = useState(false); // State to track loading status
+  
 
   const package_id = selectedPackage?.package_id;
   const package_name = selectedPackage?.name;
   const userId = state.user.id;
+  const {setMaxDailyQuota} = useMatching(userId);
 
   const handleConfirm = async (event) => {
     event.preventDefault();
@@ -97,6 +100,14 @@ const PaymentForm = () => {
       const paymentIntent = data.paymentIntent;
 
       if (paymentIntent && paymentIntent.status === "succeeded") {
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}`
+          );
+          setMaxDailyQuota(response.data.packageDetails.merry_limit)
+        } catch (err) {
+          console.error(err);
+        }
         navigate("/payment-success", {
           state: {
             packageId: package_id,

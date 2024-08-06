@@ -17,7 +17,7 @@ import { useMerryLimit } from "./userMerryLimit";
  */
 const useMatching = (currentUserId) => {
   const [allUser, setAllUser] = useState([]);
-  const { availableClicksToday, setAvailableClicksToday, maxDailyQuota } =
+  const { availableClicksToday, setAvailableClicksToday, maxDailyQuota, setMaxDailyQuota } =
     useMerryLimit();
 
   useEffect(() => {
@@ -113,6 +113,7 @@ const useMatching = (currentUserId) => {
     allUser,
     availableClicksToday,
     maxDailyQuota,
+    setMaxDailyQuota,
     addMerry,
     undoMerry,
   };

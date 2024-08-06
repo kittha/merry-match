@@ -58,16 +58,16 @@ function MerryListPage() {
     maxDailyQuota,
     addMerry,
     undoMerry,
-    getPotentialMatches,
+    // getPotentialMatches,
   } = useMatching(userId);
 
   useEffect(() => {
     getMerryLists();
   }, [userId]);
 
-  useEffect(() => {
-    getPotentialMatches();
-  }, [userId]);
+  // useEffect(() => {
+  //   getPotentialMatches();
+  // }, [userId]);
 
   return (
     <>
