@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import matched from "/assets/matchingpage/merry-match-icon.png";
 
-const DisplayChat = ({ messages, userId }) => {
+const DisplayChat = ({ messages, userId, anotherUser }) => {
   // console.log(messages);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const DisplayChat = ({ messages, userId }) => {
           className="ml-0 lg:ml-20 w-10 h-6 lg:w-[60px] lg:h-[35px]"
         />
         <p className="mr-0 lg:mr-20 text-[#64001D] text-xs leading-[18px] lg:text-sm font-Nunito font-medium">
-          Now you and {"Daeny"} are Merry Match!
+          Now you and {anotherUser.name} are Merry Match!
           <br />
           You can messege something nice and make a good conversation. Happy
           Merry!
@@ -58,9 +58,9 @@ const DisplayChat = ({ messages, userId }) => {
                 className="message-line flex flex-row items-end gap-3"
               >
                 <img
-                  src="#"
+                  src={anotherUser.avatars["image1"]}
                   alt="profile-image"
-                  className="profile-pic bg-slate-400 w-10 h-10 rounded-full"
+                  className="profile-pic bg-slate-400 w-10 h-10 aspect-square object-cover rounded-full"
                 />
                 <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit break-words rounded-3xl rounded-bl-none bg-[#EFC4E2] py-3 lg:py-4 px-6">
                   {msg.message}

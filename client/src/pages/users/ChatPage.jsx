@@ -12,10 +12,12 @@ import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
 import { useChat } from "../../contexts/chatProvider";
+import { useMatch } from "../../contexts/matchProvider";
 
 const Chat = () => {
   const { state } = useAuth();
   // console.log(state);
+  const { allUser } = useMatch();
   const { lastMsg, setLastMsg } = useChat();
 
   const userId = state.user?.id;
@@ -24,21 +26,24 @@ const Chat = () => {
   matchId = Number(matchId);
   // console.log("matchId: ", matchId);
 
-  const [receiver, setReceiver] = useState();
+  const anotherUser = allUser.find((user) => user.match_id === matchId);
+  console.log(anotherUser);
+
+  // const [receiver, setReceiver] = useState();
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const socket = useRef();
 
   const fetchData = async () => {
-    const response = await getMatchInfo(matchId);
+    // const response = await getMatchInfo(matchId);
     const data = await getPrevMessages(matchId);
 
-    console.log("response", response);
-    if (userId === response.user_id_1) {
-      setReceiver(response.user_id_2);
-    } else {
-      setReceiver(response.user_id_1);
-    }
+    // console.log("response", response);
+    // if (userId === response.user_id_1) {
+    //   setReceiver(response.user_id_2);
+    // } else {
+    //   setReceiver(response.user_id_1);
+    // }
     setMessages(data);
   };
 
@@ -78,7 +83,7 @@ const Chat = () => {
     }
     const sendData = {
       sender: userId,
-      receiver,
+      receiver: anotherUser.user_id,
       matchId,
       message: inputText ? inputText : null,
       file: inputFile,
@@ -117,7 +122,13 @@ const Chat = () => {
       </div>
       <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
         <BackBar />
-        {messages && <DisplayChat messages={messages} userId={userId} />}
+        {messages && anotherUser && (
+          <DisplayChat
+            messages={messages}
+            userId={userId}
+            anotherUser={anotherUser}
+          />
+        )}
         {messages && <InputSection handleSendMsg={handleSendMsg} />}
       </div>
     </div>

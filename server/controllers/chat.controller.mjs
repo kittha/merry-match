@@ -52,7 +52,7 @@ export const getChatHistory = async (req, res) => {
     const data = result.map((msg) => ({
       sender: msg.sender_id,
       receiver: msg.receiver_id,
-      matchId,
+      matchId: msg.match_id,
       message: msg.message,
       media: msg.url,
       dateTime: msg.sent_at,
