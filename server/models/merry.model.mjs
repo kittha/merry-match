@@ -292,6 +292,86 @@ export const getPotentialMatchesFilter = async (userId, filter) => {
  * @return {Promise<Object>} An object containing the user ID and a list of matches.
  * @throws {Error} If there is an error retrieving the matches.
  */
+export const getAvailableMatches = async (userId) => {
+  try {
+    const result = await connectionPool.query(
+      `
+      SELECT 
+          p2.user_id AS matched_user_id, 
+          p2.name AS matched_name, 
+          p2.hobbies AS matched_hobbies,
+          p2.date_of_birth AS matched_date_of_birth,
+          p2.location AS matched_location,
+          p2.city AS matched_city,
+          p2.sexual_identities AS matched_sexual_identities,
+          p2.sexual_preferences AS matched_sexual_preferences,
+          p2.racial_preferences AS matched_racial_preferences,
+          p2.meeting_interests AS matched_meeting_interests,
+          p2.bio AS matched_bio,
+          pp.sequence AS picture_sequence,
+          pp.url AS profile_picture_url,
+          ms.match_id AS match_id,
+          ms.created_at AS match_created_at,
+          ms.matched_at AS match_matched_at,
+          ms.status_1 AS match_status_1,
+          ms.status_2 AS match_status_2,
+          (
+              (CASE WHEN p2.date_of_birth BETWEEN p1.date_of_birth - INTERVAL '10 years' AND p1.date_of_birth + INTERVAL '10 years' THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.location = p2.location THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.city = p2.city THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.sexual_identities = p2.sexual_preferences THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.sexual_preferences = p2.sexual_identities THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.racial_preferences = p2.racial_preferences THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.meeting_interests = p2.meeting_interests THEN 1 ELSE 0 END) +
+              (CASE WHEN p1.bio = p2.bio THEN 1 ELSE 0 END) +
+              COALESCE(hobby_match_count, 0)
+          ) AS match_score
+      FROM 
+          profiles p1
+      JOIN 
+          profiles p2 ON p1.user_id != p2.user_id
+      LEFT JOIN 
+          match_status ms ON (p1.user_id = ms.user_id_1 AND p2.user_id = ms.user_id_2) OR (p1.user_id = ms.user_id_2 AND p2.user_id = ms.user_id_1)
+      LEFT JOIN LATERAL (
+          SELECT COUNT(*) AS hobby_match_count
+          FROM unnest(p1.hobbies) AS hobby1
+          JOIN unnest(p2.hobbies) AS hobby2 ON hobby1 = hobby2
+      ) hobby_matches ON true
+      LEFT JOIN 
+          profile_pictures pp ON p2.user_id = pp.user_id AND pp.sequence BETWEEN 1 AND 5
+      WHERE 
+          p1.user_id = $1
+          AND (
+              (p2.sexual_preferences = $2 OR $2 is null OR $2 = '') 
+              OR (p2.sexual_preferences = $3 OR $3 is null OR $3 = '')
+              OR (p2.sexual_preferences = $4 OR $4 is null OR $4 = '')
+          )
+          AND (AGE(CURRENT_DATE, p2.date_of_birth) BETWEEN $5 AND $6)
+
+      ORDER BY 
+          match_score DESC;
+      `,
+      [userId],
+      [checkbox1],
+      [checkbox2],
+      [checkbox3],
+      [ageLeft],
+      [ageRight]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error finding matches:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * Retrieves a list of available matches for a given user.
+ *
+ * @param {string} userId - The ID of the user to find matches for.
+ * @return {Promise<Object>} An object containing the user ID and a list of matches.
+ * @throws {Error} If there is an error retrieving the matches.
+ */
 // TODO
 // export const getAvailableMatches = async (userId) => {
 //   try {
