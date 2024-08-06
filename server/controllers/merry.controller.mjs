@@ -52,13 +52,13 @@ export const addMerry = async (req, res) => {
   const likedUserId = req.body.merryUserId;
 
   try {
-    const hasExceededLimit = await hasExceededMerryLimit(likingUserId);
+    // const hasExceededLimit = await hasExceededMerryLimit(likingUserId);
 
-    if (hasExceededLimit) {
-      return res
-        .status(400)
-        .json({ error: "User has exhausted their merry limit." });
-    }
+    // if (hasExceededLimit) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "User has exhausted their merry limit." });
+    // }
 
     const result = await addMerryToModel(likingUserId, likedUserId);
     console.log(result);
