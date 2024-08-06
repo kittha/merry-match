@@ -2,8 +2,11 @@ import { useNavigate } from "react-router-dom";
 import drag from "../../../../public/assets/adminpackage/drag.svg";
 import Delete from "../../../../public/assets/adminpackage/delete.svg";
 import edit from "../../../../public/assets/adminpackage/edit.svg";
+import DeletePackage from "./Deletepackage";
+import { useState } from "react";
 
-function MainContent({ Package, deletePackage }) {
+function MainContent({ Package, setpackage, deletePackage }) {
+  const [popup, setPopup] = useState(false);
   const navigate = useNavigate();
 
   const formatDate = (dateString) => {
@@ -78,9 +81,17 @@ function MainContent({ Package, deletePackage }) {
               <p className="ml-[16px]">{formatDate(items.updated_at)}</p>
             </div>
             <div className="w-[120px] h-[88px] flex justify-center items-center gap-[17px]">
-              <button onClick={() => deletePackage(items.package_id, index)}>
+              <button onClick={() => setPopup(true)}>
                 <img className="w-[24px] h-[24px]" src={Delete} alt="delete" />
               </button>
+              <DeletePackage
+                setpackage={setpackage}
+                Package={Package}
+                trigger={popup}
+                setTrigger={setPopup}
+                exit={items.package_id}
+                index={index}
+              ></DeletePackage>
               <button
                 onClick={() => navigate(`/admin/package/${items.package_id}`)}
               >
@@ -94,3 +105,7 @@ function MainContent({ Package, deletePackage }) {
   );
 }
 export default MainContent;
+
+{
+  /* <button onClick={() => deletePackage(items.package_id, index)}></button> */
+}

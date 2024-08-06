@@ -11,7 +11,7 @@ function FormPackage({ packageData, setPackageData, icon, setIcon }) {
   };
 
   return (
-    <div className="bg-[#F6F7FC] w-full min-h-[1024px] flex justify-center font-Nunito">
+    <div className="bg-[#F6F7FC] w-full min-h-[1024px] pb-10 flex justify-center font-Nunito">
       <div className="w-[1080px] h-full pb-[60px] flex flex-col items-center gap-[40px] bg-[#FFFFFF] rounded-2xl border-1 mt-[40px] border-black ">
         <div className="flex flex-col gap-[40px] mt-[40px]">
           <div className="flex gap-[40px]">
@@ -77,7 +77,12 @@ function FormPackage({ packageData, setPackageData, icon, setIcon }) {
             )}
           </div>
           <div className="flex flex-col gap-[8px]">
-            <UploadIcon icon={icon} setIcon={setIcon} />
+            <UploadIcon
+              packageData={packageData}
+              setPackageData={setPackageData}
+              icon={icon}
+              setIcon={setIcon}
+            />
           </div>
           <div className="w-[880px] h-[1px] bg-[#E4E6ED]"></div>
           <div className="w-[880px] h-[30px] font-semibold text-[20px] text-[#646D89]">

@@ -21,9 +21,12 @@ function PackageListPage() {
   };
 
   const getPackage = async (text) => {
+    const changeText = text.trim();
     try {
       const result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages/param?name=${text}`
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/v1/packages/param?name=${changeText}`
       );
       setpackage(
         result.data.data.sort((a, b) => {
@@ -61,7 +64,11 @@ function PackageListPage() {
       </div>
       <div className="w-screen h-screen  ">
         <Topbar setSearchText={setSearchText} searchText={searchText} />
-        <MainContent Package={Package} deletePackage={deletePackage} />
+        <MainContent
+          setpackage={setpackage}
+          Package={Package}
+          deletePackage={deletePackage}
+        />
       </div>
     </div>
   );

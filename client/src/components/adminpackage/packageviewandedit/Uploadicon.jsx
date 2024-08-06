@@ -5,6 +5,7 @@ function UploadIcon({ icon, setIcon }) {
   const handleFileChange = (event) => {
     setIcon({
       ...icon,
+      errors: { ...icon.errors, iconDetail: "" },
       url: event.target.files[0],
     });
     event.target.value = null;
@@ -54,6 +55,9 @@ function UploadIcon({ icon, setIcon }) {
               <p className="text-[14px]">Upload icon</p>
             </div>
           </label>
+          {icon.errors.iconDetail && (
+            <p className="text-red-500 pt-2">{icon.errors.iconDetail}</p>
+          )}
         </div>
       )}
       <input
