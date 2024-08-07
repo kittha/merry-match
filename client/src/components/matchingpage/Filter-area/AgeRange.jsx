@@ -28,9 +28,9 @@ const AgeSliderStyle = styled(Slider)({
   },
 });
 
-function AgeRange({ filterData, setfilterData }) {
+function AgeRange({ value, setValue, filterData, setfilterData }) {
   const minDistance = 1;
-  const [value, setValue] = useState([18, 80]);
+
   const [ageSlider, setAgeSlider] = useState([]);
 
   const handleChange = (event, newValue, activeThumb) => {
