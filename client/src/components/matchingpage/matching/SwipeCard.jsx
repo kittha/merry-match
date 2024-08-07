@@ -6,9 +6,11 @@ import HeartButton from "/assets/matchingpage/matching-area/icons/action-button-
 import ProfileDetial from "/assets/matchingpage/matching-area/icons/profile detail button.png";
 import LeftArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-left.png";
 import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right.png";
+import exit from "/assets/profilepicture/exit.png";
 import { useMerryLimit } from "../../../hooks/userMerryLimit";
 import UserProfilePopup from "./UserProfilePopup";
 import filter from "/assets/matchingpage/matching-area/filter.png";
+import mmLogo from "/assets/matchingpage/matching-area/merryMatch.gif";
 import ChatContainer from "../chatcontainer/ChatContainer";
 import FilterContainer from "../Filter-area/FilterContainer";
 import { useMatch } from "../../../contexts/matchProvider";
@@ -19,6 +21,7 @@ const SwipeCard = () => {
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
   const [showFilter, setShowFilter] = useState(false);
+  const [showMatchPopup, setShowMatchPopup] = useState(false);
   const navigate = useNavigate();
 
   const { allUser, availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
@@ -48,16 +51,34 @@ const SwipeCard = () => {
     setUserQueue(newQueue);
   }, [allUser, currentIndex]);
 
-  const favourUser = (userId) => {
+  const favourUser = async (userId) => {
     if (availableClicksToday < maxDailyQuota) {
-      addMerry(userId);
-      setUserQueue((prevQueue) =>
-        prevQueue.filter((user) => user.user_id !== userId)
+      const data = await addMerry(userId);
+      
+      // Log a message if the match is successful
+      if (data && data.match_id) {
+        const matchedUser = allUser.find(user => 
+          (user.user_id === data.user_id_1 || user.user_id === data.user_id_2) &&
+          user.match_id === data.match_id
+        );
+        
+        if (matchedUser) {
+          console.log(`Users matched: ${data.user_id_1} and ${data.user_id_2}`);
+          setSelectedUser(matchedUser);
+          setShowMatchPopup(true);
+        }
+      }
+      setUserQueue((prevQueue) => {
+        const newQueue = [...prevQueue.slice(1)];
+        return newQueue;
+      }
       );
     } else {
       alert("You don't have any more clicks today");
     }
   };
+
+  
 
   const disfavorUser = (userId) => {
     undoMerry(userId);
@@ -109,6 +130,14 @@ const SwipeCard = () => {
   const handleProfileDetailClick = (user) => {
     setSelectedUser(user);
     setShowModal(true);
+  };
+
+  const handleGotoChat = (matchId) => {
+    navigate(`/chat/${matchId}`);
+  };
+
+  const handleMatchPopupClose = () => {
+    setShowMatchPopup(false);
   };
 
   return (
@@ -199,7 +228,7 @@ const SwipeCard = () => {
             )}
             {index === 1 && (
               <div
-                className="lg:left-[700px] left-0 lg:top-[248px] top-[40vh] transform -translate-y-1/2 lg:w-[500px] w-screen lg:h-[500px] h-[80vh] rounded-[32px] relative"
+                className="lg:right-[700px] right-0 lg:top-[248px] top-[40vh] transform -translate-y-1/2 lg:w-[500px] w-screen lg:h-[500px] h-[80vh] rounded-[32px] relative"
                 style={{
                   backgroundImage: `url(${user.avatars.image1})`,
                   backgroundSize: "cover",
@@ -210,9 +239,9 @@ const SwipeCard = () => {
               </div>
             )}
 
-            {index === 2 && (
+            {index === userQueue.length - 1 && (
               <div
-                className="right-[700px] top-[248px] transform -translate-y-1/2 w-[500px] h-[500px] rounded-[32px] relative"
+                className="hidden lg:block lg:left-[700px] left-0 lg:top-[248px] top-[40vh] transform -translate-y-1/2 lg:w-[500px] w-screen lg:h-[500px] h-[80vh] rounded-[32px] relative"
                 style={{
                   backgroundImage: `url(${user.avatars.image1})`,
                   backgroundSize: "cover",
@@ -222,6 +251,7 @@ const SwipeCard = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#390741] rounded-[28px]"></div>
               </div>
             )}
+
           </div>
         ))}
       </div>
@@ -231,6 +261,31 @@ const SwipeCard = () => {
           onClose={() => setShowModal(false)}
         />
       )}
+      {showMatchPopup && selectedUser && (
+        <div className="absolute z-30">
+        <div className=" relative" > 
+            <img
+              src={selectedUser.avatars.image1}
+              alt="Matched User"
+              className="inset-0 object-cover lg:w-[700px] lg:h-[700px] w-screen h-screen rounded-[32px] bg-white"
+              style={{ transform: 'scale(1.1)' }}
+            />
+          <div className="absolute -inset-10 bg-gradient-to-b from-transparent to-[#390741] rounded-[28px]"></div>
+          <div className=" absolute top-1/2 flex w-full justify-center">
+            <img src={mmLogo} alt="match_logo" />
+          </div>
+          <div className=" absolute bottom-24 flex w-full justify-center">
+            <button onClick={handleGotoChat} className="bg-[#FFE1EA] text-[#95002B] rounded-full w-[188px] h-[48px]">
+            Start Conversation
+            </button>
+          </div>
+          <button onClick={handleMatchPopupClose} className=" absolute top-0 right-0 bg-[#95002B] rounded-full">
+            <img className="hidden lg:block" src={exit} alt="exit" />
+          </button>
+        </div>
+      </div>
+      )}
+
       <div className="flex justify-center lg:hidden">
         {showFilter && (
           <FilterContainer onClose={() => setShowFilter(setShowFilter)} />
