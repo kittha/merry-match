@@ -15,8 +15,7 @@ import ChatContainer from "../chatcontainer/ChatContainer";
 import FilterContainer from "../Filter-area/FilterContainer";
 import { useMatch } from "../../../contexts/matchProvider";
 
-const SwipeCard = () => {
-  const [userQueue, setUserQueue] = useState([]);
+const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
@@ -27,10 +26,12 @@ const SwipeCard = () => {
   const { allUser, availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
     useMatch();
 
-  useEffect(() => {
-    if (!allUser) return;
+  console.log(allUser);
 
-    const validMatches = allUser.filter((user) => {
+  useEffect(() => {
+    if (!Queue) return;
+
+    const validMatches = Queue.filter((user) => {
       if (user.user_id !== user.match_user_id_1) {
         return (
           user.match_status_1 !== "merry" && user.match_status_1 !== "match"
@@ -41,7 +42,7 @@ const SwipeCard = () => {
         );
       }
     });
-    console.log(validMatches);
+    // console.log(validMatches);
 
     const newQueue = [
       ...validMatches.slice(currentIndex),
@@ -49,7 +50,9 @@ const SwipeCard = () => {
     ];
 
     setUserQueue(newQueue);
-  }, [allUser, currentIndex]);
+  }, [Queue, currentIndex]);
+
+  console.log(userQueue);
 
   const favourUser = async (userId) => {
     if (availableClicksToday < maxDailyQuota) {

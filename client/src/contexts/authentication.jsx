@@ -27,7 +27,7 @@ function AuthProvider(props) {
         user: data,
         role: data.role,
       });
-    }else {
+    } else {
       setState((prevState) => ({ ...prevState, loading: false }));
     }
   }, []);
@@ -42,21 +42,19 @@ function AuthProvider(props) {
             { refresh_token }
           );
 
-      const token = result.data.session.access_token;
-      const newRefreshToken = result.data.session.refresh_token
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", newRefreshToken);
-      localStorage.setItem("data", JSON.stringify(result.data));
+          const token = result.data.session.access_token;
+          const newRefreshToken = result.data.session.refresh_token;
+          localStorage.setItem("token", token);
+          localStorage.setItem("refreshToken", newRefreshToken);
+          localStorage.setItem("data", JSON.stringify(result.data));
 
+          const userDataFromPayload = result.data;
 
-      const userDataFromPayload = result.data;
-
-      setState({
-        ...state,
-        user: userDataFromPayload,
-        role: userDataFromPayload.role,
-      });
-
+          setState({
+            ...state,
+            user: userDataFromPayload,
+            role: userDataFromPayload.role,
+          });
         } catch (error) {
           console.error("Error refreshing token:", error);
           logout();
@@ -79,7 +77,7 @@ function AuthProvider(props) {
       );
 
       const token = result.data.session.access_token;
-      const refreshToken = result.data.session.refresh_token
+      const refreshToken = result.data.session.refresh_token;
       localStorage.setItem("token", token);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("data", JSON.stringify(result.data));
