@@ -24,6 +24,8 @@ function PackageAddPage() {
     if (!packageData.price.trim()) newErrors.price = "Price is required";
     if (!packageData.details.length)
       newErrors.packageDetail = "At least one package detail is required";
+    if (Object.keys(icon).length === 0)
+      newErrors.iconDetail = "At least one image is required";
     setPackageData({ ...packageData, errors: newErrors });
     return Object.keys(newErrors).length === 0;
   };

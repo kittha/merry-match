@@ -37,6 +37,12 @@ function AddDetail({ packageDetail, setPackageData, errors }) {
     }));
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      addDetail();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-[40px]">
       {packageDetail.map((item, index) => (
@@ -84,6 +90,7 @@ function AddDetail({ packageDetail, setPackageData, errors }) {
                   id="package-detail"
                   value={detail}
                   onChange={handleDetail}
+                  onKeyDown={handleKeyPress}
                   className="w-[712px] h-[24px] focus:outline-none"
                 />
               </div>

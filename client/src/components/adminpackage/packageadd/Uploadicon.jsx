@@ -1,11 +1,15 @@
 import Frame from "../../../../public/assets/adminpackage/Frame.svg";
 
-function UploadIcon({ icon, setIcon }) {
+function UploadIcon({ packageData, setPackageData, icon, setIcon }) {
   const handleFileChange = (event) => {
     setIcon({
       ...icon,
       image: event.target.files[0],
     });
+    setPackageData((prevData) => ({
+      ...prevData,
+      errors: { ...prevData.errors, iconDetail: "" },
+    }));
     event.target.value = null;
   };
 
@@ -54,6 +58,9 @@ function UploadIcon({ icon, setIcon }) {
               <p className="text-[14px]">Upload icon</p>
             </div>
           </label>
+          {packageData.errors.iconDetail && (
+            <p className="text-red-500 pt-2">{packageData.errors.iconDetail}</p>
+          )}
         </div>
       )}
       <input

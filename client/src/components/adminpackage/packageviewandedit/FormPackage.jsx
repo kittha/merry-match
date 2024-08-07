@@ -57,8 +57,8 @@ function FormPackage({ packageData, setPackageData }) {
                   onChange={(event) => handleChange("name", event.target.value)}
                 />
               </div>
-              {packageData.errors.packageName && (
-                <p className="text-red-500">{packageData.errors.packageName}</p>
+              {packageData.errors.name && (
+                <p className="text-red-500">{packageData.errors.name}</p>
               )}
             </div>
             <div className="flex flex-col gap-[4px]">
@@ -77,8 +77,8 @@ function FormPackage({ packageData, setPackageData }) {
                   }
                 />
               </div>
-              {packageData.errors.merryLimit && (
-                <p className="text-red-500">{packageData.errors.merryLimit}</p>
+              {packageData.errors.merry_limit && (
+                <p className="text-red-500">{packageData.errors.merry_limit}</p>
               )}
             </div>
           </div>
