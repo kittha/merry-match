@@ -11,7 +11,7 @@ import { useImage } from "../../../hooks/useImage.mjs";
 import { FormContext } from "../../../contexts/FormProvider";
 
 const ProfileDetailModal = ({ user, onClose }) => {
-   const { calculateAge } = useContext(FormContext);
+  const { calculateAge } = useContext(FormContext);
   const { checkImage } = useImage();
 
   // convert Object user.avatars  to Array of avatar_url value

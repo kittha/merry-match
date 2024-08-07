@@ -262,7 +262,9 @@ function MerryListPage() {
                       <section className="w-[343px] h-[30px] flex flex-row gap-[25px] lg:w-[600px]">
                         <div className="w-auto h-[30px] flex flex-row gap-[8px] font-bold text-[24px] leading-[30px]">
                           <h4 className="block lg:hidden w-auto h-[30px] text-[#2A2E3F]">
-                            {list.name.slice(0, 6) + ".."}
+                            {list.name.length > 7
+                              ? list.name.slice(0, 6) + ".."
+                              : list.name}
                           </h4>
                           <h4 className="hidden lg:block w-auto h-[30px] text-[#2A2E3F]">
                             {list.name}
@@ -278,8 +280,9 @@ function MerryListPage() {
                             alt="location-icon"
                           />
                           <p className="block lg:hidden w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
-                            {list.city.slice(0, 7) + ".. "},{" "}
-                            {list.country.slice(0, 7) + ".."}
+                            {list.racialPreference.length > 10
+                              ? list.city.slice(0, 15) + ".. "
+                              : list.city}
                           </p>
                           <p className="hidden lg:block w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
                             {list.city},{list.country}
