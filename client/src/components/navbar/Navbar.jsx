@@ -34,7 +34,7 @@ const Navbar = () => {
             <img
               src={iconBell}
               alt="merry match message"
-              className="h-[26px] w-[26px]"
+              className="h-[26px] w-[26px] hidden"
             />
           </button>
           <button

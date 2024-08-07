@@ -93,7 +93,7 @@ const NavbarAuthen = () => {
             <img
               src={iconBell}
               alt="merry-match-message"
-              className="h-[26px] w-[26px]"
+              className="h-[26px] w-[26px] hidden"
             />
           </button>
           <button onClick={() => setShowChat(!showChat)}>
@@ -141,7 +141,7 @@ const NavbarAuthen = () => {
               <img
                 src={iconBell}
                 alt="merry-match-bell"
-                className="h-[48px] w-[48px]"
+                className="h-[48px] w-[48px] hidden"
               />
             </button>
             {bellMenuOpen && (
