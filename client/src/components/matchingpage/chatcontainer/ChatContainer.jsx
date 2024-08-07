@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import discover from "/assets/matchingpage/chatArea/discover-vector.png";
 import matched from "/assets/matchingpage/chatArea/merry-match.png";
 import { useMatch } from "../../../contexts/matchProvider";

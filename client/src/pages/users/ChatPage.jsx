@@ -93,10 +93,7 @@ const Chat = () => {
 
     const msgResponse = await createMessage(sendData);
     console.log("fromCreateMessage", msgResponse);
-
-    const newMessages = [msgResponse, ...messages];
-    // newMessages.unshift(msgResponse);
-    setMessages(newMessages);
+    setMessages([msgResponse, ...messages]);
 
     const newlastMsg = [...lastMsg];
     const deleteIndex = newlastMsg.findIndex((msg) => msg.matchId === matchId);
