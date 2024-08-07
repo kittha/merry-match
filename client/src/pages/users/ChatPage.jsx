@@ -50,7 +50,7 @@ const Chat = () => {
   //---------------------------------------------------------------------
   //this section should be call before click each chat
   useEffect(() => {
-    if (userId) {
+    if (userId && matchId) {
       // get chat history and match info from database
       fetchData();
 
@@ -113,21 +113,21 @@ const Chat = () => {
   }, [arrivalMessage]);
 
   return (
-    <div className="page flex flex-row">
+    <div className="page flex flex-row bg-[#160404]">
       <div className="sidebar hidden lg:flex">
         <ChatContainer />
       </div>
-      <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
-        {anotherUser && <BackBar anotherUser={anotherUser} />}
-        {messages && anotherUser && (
+      {anotherUser && (
+        <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
+          <BackBar anotherUser={anotherUser} />
           <DisplayChat
             messages={messages}
             userId={userId}
             anotherUser={anotherUser}
           />
-        )}
-        {messages && <InputSection handleSendMsg={handleSendMsg} />}
-      </div>
+          <InputSection handleSendMsg={handleSendMsg} />
+        </div>
+      )}
     </div>
   );
 };

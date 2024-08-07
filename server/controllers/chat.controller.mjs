@@ -4,7 +4,7 @@ import {
   createMedia,
   getLastMessages,
 } from "../models/chat.model.mjs";
-import { getAllMatch } from "../models/matching.model.mjs";
+import { getAllMatch, getAllStatus } from "../models/matching.model.mjs";
 import { cloudinaryUpload } from "../utils/cloudinary.uploader.mjs";
 
 export const sendMessage = async (req, res) => {
@@ -70,7 +70,7 @@ export const getChatHistory = async (req, res) => {
 export const checkLastMessage = async (req, res) => {
   const { userId } = req.params;
   try {
-    const matchResult = await getAllMatch(userId);
+    const matchResult = await getAllStatus(userId);
     const matchIds = matchResult.map((result) => result.match_id);
     // console.log(matchIds);
     const lastResult = await getLastMessages(matchIds);
