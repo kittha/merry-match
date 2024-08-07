@@ -9,7 +9,7 @@ const ModalPopup = ( {user, onClose }) => {
     
   const unlikedUserId = user?.user_id_2;
 
-  // ฟังก์ชันสำหรับปุ่ม "Yes"
+  // ฟังก์ชันสำหรับปุ่ม "Yes"//
   const handleUnmatch = async () => {
     if (user){
       await undoMerry(unlikedUserId);
