@@ -45,24 +45,25 @@ const ChatContainer = () => {
           <p className="text-[24px] font-bold text-[#2A2E3F]">Merry Match!</p>
           <div className="flex flex-row overflow-x-auto">
             <div className="flex flex-nowrap gap-[12px]">
-              {matches.map((match) => (
-                <button
-                  key={match.user_id}
-                  className="relative usermatch bg-white w-[100px] h-[100px] rounded-[24px]"
-                  onClick={() => navigate(`/chat/${match.match_id}`)}
-                >
-                  <img
-                    src={match.avatars.image1}
-                    alt="profile"
-                    className="w-full h-full aspect-square object-cover rounded-[24px]"
-                  />
-                  <img
-                    src={matched}
-                    alt="matched"
-                    className=" absolute bottom-0.5 right-0.5"
-                  />
-                </button>
-              ))}
+              {matches &&
+                matches.map((match) => (
+                  <button
+                    key={match.user_id}
+                    className="relative usermatch bg-white w-[100px] h-[100px] rounded-[24px]"
+                    onClick={() => navigate(`/chat/${match.match_id}`)}
+                  >
+                    <img
+                      src={match.avatars.image1}
+                      alt="profile"
+                      className="w-full h-full aspect-square object-cover rounded-[24px]"
+                    />
+                    <img
+                      src={matched}
+                      alt="matched"
+                      className=" absolute bottom-0.5 right-0.5"
+                    />
+                  </button>
+                ))}
             </div>
           </div>
         </div>
@@ -74,27 +75,27 @@ const ChatContainer = () => {
           </p>
           <div className="flex flex-col gap-[8px]">
             {lastMsg &&
-              matches &&
+              allUser &&
               lastMsg.map((msg) => {
-                const index = matches.findIndex(
+                const index = allUser.findIndex(
                   (match) => match.match_id === msg.matchId
                 );
 
                 return index !== -1 ? (
                   <button
-                    key={matches[index].user_id}
+                    key={allUser[index].user_id}
                     className=" w-auto h-[92px] rounded-[16px] bg-white border-0 hover:border-[1px] hover:border-[#A62D82] hover:bg-[#F6F7FC] focus:outline-none"
                     onClick={() => navigate(`/chat/${msg.matchId}`)}
                   >
                     <div className="flex gap-[12px] mx-[12px] my-[16px]">
                       <img
-                        src={matches[index].avatars.image1}
+                        src={allUser[index].avatars.image1}
                         alt="profile"
                         className="h-[60px] w-[60px] aspect-square object-cover rounded-full"
                       />
                       <div className="flex flex-col text-left justify-center">
                         <p className="text-[16px] font-medium text-[#2A2E3F]">
-                          {matches[index].name}
+                          {allUser[index].name}
                         </p>
                         <p className="text-[14px] font-medium text-[#646D89] truncate w-[230px] lg:w-[180px]">
                           {msg.message ?? "sent a photo"}
