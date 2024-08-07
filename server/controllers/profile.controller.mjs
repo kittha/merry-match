@@ -56,13 +56,13 @@ export const getUserProfileById = async (req, res) => {
 export const updateUserProfileById = async (req, res) => {
   const { userId } = req.params;
   try {
-    // console.log(req.body.avatar);
-    let avatarUrl = req.body.avatar;
-    if (Array.isArray(avatarUrl)) {
-      avatarUrl = req.body.avatar.map((avatar) => JSON.parse(avatar));
-    } else {
-      avatarUrl = [avatarUrl];
-    }
+    console.log(req.body.avatar);
+    const avatarUrl = req.body.avatar;
+    // if (Array.isArray(avatarUrl)) {
+    //   avatarUrl = req.body.avatar.map((avatar) => JSON.parse(avatar));
+    // } else {
+    //   avatarUrl = [JSON.parse(avatarUrl)];
+    // }
 
     await updateUser(userId, req.body);
     await updateProfile(userId, req.body);
