@@ -118,7 +118,7 @@ const Chat = () => {
         <ChatContainer />
       </div>
       <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
-        <BackBar />
+        {anotherUser && <BackBar anotherUser={anotherUser} />}
         {messages && anotherUser && (
           <DisplayChat
             messages={messages}

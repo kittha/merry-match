@@ -32,7 +32,7 @@ const NavbarAuthen = () => {
     left: 0,
   });
   const { resetForm } = useContext(FormContext);
-  
+
   const handleBellClick = () => {
     setBellMenuOpen(!bellMenuOpen);
     setProfileMenuOpen(false);
@@ -47,7 +47,7 @@ const NavbarAuthen = () => {
 
   const { logout, state } = useAuth();
   const userId = state.user?.id;
-  
+
   const handleLogout = () => {
     resetForm();
     logout();
@@ -115,7 +115,7 @@ const NavbarAuthen = () => {
         </div>
         {showChat && (
           <Portal>
-            <div className="fixed inset-0 z-40">
+            <div className="lg:hidden fixed inset-0 z-40">
               <div className="relative w-full h-full">
                 <div className="absolute inset-0 top-[52px] lg:top-[88px] bg-white z-40">
                   <ChatContainer />
@@ -124,8 +124,6 @@ const NavbarAuthen = () => {
             </div>
           </Portal>
         )}
-
-        
 
         {/*-------------------------------------------- Desktop Menu -----------------------------------------------*/}
         <div className="hidden lg:flex lg:items-end lg:justify-between lg:gap-8 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent lg:ml-[432px]">
@@ -151,15 +149,25 @@ const NavbarAuthen = () => {
                 <div
                   style={{
                     position: "fixed",
-                    top: window.innerWidth <= 640 ? "0" : `${bellMenuPosition.top}px`,
-                    left: window.innerWidth <= 640 ? "0" : `${bellMenuPosition.left}px`,
-                    transform: window.innerWidth <= 640 ? "none" : "translateX(-50%)",
+                    top:
+                      window.innerWidth <= 640
+                        ? "0"
+                        : `${bellMenuPosition.top}px`,
+                    left:
+                      window.innerWidth <= 640
+                        ? "0"
+                        : `${bellMenuPosition.left}px`,
+                    transform:
+                      window.innerWidth <= 640 ? "none" : "translateX(-50%)",
                     marginTop: window.innerWidth <= 640 ? "0" : "32px",
                     width: window.innerWidth <= 640 ? "100%" : "250px",
                     height: window.innerWidth <= 640 ? "100%" : "215px",
                     fontWeight: 500,
                     backgroundColor: "white",
-                    boxShadow: window.innerWidth <= 640 ? "none" : "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                    boxShadow:
+                      window.innerWidth <= 640
+                        ? "none"
+                        : "0px 0px 10px rgba(0, 0, 0, 0.1)",
                     borderRadius: window.innerWidth <= 640 ? "0" : "16px",
                     padding: "55px 10px",
                     zIndex: 30,
@@ -173,7 +181,10 @@ const NavbarAuthen = () => {
                       alt="icon2"
                       className="ml-1 mr-3 h-[32px] w-[32px]"
                     />
-                    <button onClick={() => navigate("/")} className="text-start">
+                    <button
+                      onClick={() => navigate("/")}
+                      className="text-start"
+                    >
                       ‘Khal Drogo’ Just Merry you! Click here to see profile
                     </button>
                   </div>
