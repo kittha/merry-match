@@ -7,13 +7,27 @@ const ModalPopup = ({ user, onClose }) => {
   const navigate = useNavigate();
   const { undoMerry } = useMatch();
 
+  let myUserId = JSON.parse(localStorage.getItem("data")).id;
+
+  let tmpUser = null;
+
+  // if myUserId is stay at database user_id column2; then swap user_id_2 <-> user_id_1
+  if (myUserId === user?.user_id_2) {
+    tmpUser = user?.user_id_1;
+    user.user_id_1 = myUserId;
+    user.user_id_2 = tmpUser;
+  }
+
   const unlikedUserId = user?.user_id_2;
+  console.log("unlikedUserId1 = ", unlikedUserId); // TODO delete me
 
   // ฟังก์ชันสำหรับปุ่ม "Yes"//
   const handleUnmatch = async () => {
     if (user) {
+      console.log("myUserId =", JSON.parse(localStorage.getItem("data")).id); // TODO delete me
+      console.log("unlinkedUserId2 = ", unlikedUserId); // TODO delete me
       await undoMerry(unlikedUserId);
-      //window.location.reload();
+      window.location.reload();
       navigate("/merry-list");
       onClose(false); // ปิด modal หลังจาก unmatch เสร็จ
     }

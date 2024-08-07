@@ -19,7 +19,7 @@ export const getMerryLists = async (userId) => {
        ms.status_2 AS status_2, ms.created_at AS created_at, ms.updated_1_at AS updated_1_at
        FROM profiles p LEFT JOIN profile_pictures pp 
        ON p.user_id = pp.user_id AND (pp.sequence = 1 OR pp.sequence = 2)
-       JOIN (SELECT * FROM match_status ms  WHERE (ms.user_id_1 = 10 AND ((ms.status_1 = 'match' AND ms.status_2 = 'match') OR ms.status_1 = 'merry')) 
+       JOIN (SELECT * FROM match_status ms  WHERE (ms.user_id_1 = $1 AND ((ms.status_1 = 'match' AND ms.status_2 = 'match') OR ms.status_1 = 'merry')) 
        OR (ms.user_id_2 = $1 AND ((ms.status_1 = 'match' AND ms.status_2 = 'match') OR ms.status_2 = 'merry')) ORDER BY ms.user_id_2) 
        AS ms ON p.user_id = ms.user_id_1 OR p.user_id = ms.user_id_2 WHERE p.user_id != $1`,
       [userId]
