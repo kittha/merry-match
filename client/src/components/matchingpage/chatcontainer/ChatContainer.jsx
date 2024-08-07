@@ -25,7 +25,7 @@ const ChatContainer = () => {
   }, [allUser]);
 
   return (
-    <div className="w-screen lg:w-[314px] h-screen bg-white shadow-2xl flex flex-col lg:pt-[88px] pt-[52px] font-Nunito z-20">
+    <div className="w-screen lg:w-[314px] h-screen bg-white shadow-2xl flex flex-col lg:pt-[88px] px font-Nunito z-20 overflow-y-auto ">
       <div className="discover flex justify-center h-[216px] lg:h-[259px] px-[15px] py-[20px] lg:py-[36px]">
         <button className="flex flex-col items-center justify-center text-center w-[343px] lg:w-[282px] h-[187px] rounded-[16px] border-[1px] border-[#A62D82] bg-white">
           <img src={discover} alt="Discover" />
@@ -67,9 +67,9 @@ const ChatContainer = () => {
           </div>
         </div>
       </div>
-      <div className="chat-with-match flex justify-center overflow-auto bg-white px-[15px]">
+      <div className="chat-with-match flex justify-center bg-white px-[15px] pb-[64px]">
         <div className="flex flex-col justify-start w-[343px] lg:w-[282px]">
-          <p className="text-[24px] font-bold text-[#2A2E3F] sticky top-0 z-10 bg-white py-[16px]">
+          <p className="text-[24px] font-bold text-[#2A2E3F]">
             Chat with Merry Match
           </p>
           <div className="flex flex-col gap-[8px]">
