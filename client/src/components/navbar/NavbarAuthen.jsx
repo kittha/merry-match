@@ -185,9 +185,9 @@ const NavbarAuthen = () => {
           <div className="relative">
             <button ref={profileIconRef} onClick={handleProfileClick}>
               <img
-                src={profile}
+                src={JSON.parse(localStorage.getItem("data")).avatars[0]}
                 alt="merry-match-profile"
-                className="h-[48px] w-[48px]"
+                className="h-[48px] w-[48px] rounded-full"
               />
             </button>
             {profileMenuOpen && (
