@@ -1,15 +1,10 @@
-import React from "react";
-//import { updateUserStatus } from "../../hooks/connectProfile.mjs"; // Make sure you have this function implemented
-import { useNavigate } from "react-router-dom";
 import { useMatch } from "../../contexts/matchProvider";
 
 const ModalPopup = ({ user, onClose }) => {
-  const navigate = useNavigate();
   const { undoMerry } = useMatch();
-
   let myUserId = JSON.parse(localStorage.getItem("data")).id;
-
   let tmpUser = null;
+  const unlikedUserId = user?.user_id_2;
 
   // if myUserId is stay at database user_id column2; then swap user_id_2 <-> user_id_1
   if (myUserId === user?.user_id_2) {
@@ -18,23 +13,17 @@ const ModalPopup = ({ user, onClose }) => {
     user.user_id_2 = tmpUser;
   }
 
-  const unlikedUserId = user?.user_id_2;
-  console.log("unlikedUserId1 = ", unlikedUserId); // TODO delete me
-
-  // ฟังก์ชันสำหรับปุ่ม "Yes"//
   const handleUnmatch = async () => {
     if (user) {
-      console.log("myUserId =", JSON.parse(localStorage.getItem("data")).id); // TODO delete me
-      console.log("unlinkedUserId2 = ", unlikedUserId); // TODO delete me
       await undoMerry(unlikedUserId);
       window.location.reload();
-      navigate("/merry-list");
-      onClose(false); // ปิด modal หลังจาก unmatch เสร็จ
+      onClose(false); // close modal when unmatch finish
     }
   };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="DeleteButton w-[528px] h-[200px] bg-white rounded-[24px] flex flex-col z-30 shadow-2xl ">
+      <div className="UnmatchButton w-[528px] h-[200px] bg-white rounded-[24px] flex flex-col z-30 shadow-2xl ">
         <div className="flex flex-row space-x-[45%]">
           <h1 className="text-[1.25rem] m-[5%] font-[600]">
             Unmatch Confirmation
