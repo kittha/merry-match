@@ -49,6 +49,7 @@ const InputSection = ({ handleSendMsg }) => {
     if (file[0]?.type.includes("image")) {
       setInputFile(event.target.files[0]);
     }
+    event.target.value = null;
   };
 
   const handleEmojiClick = (emojiObject) => {

@@ -4,11 +4,12 @@ import { FormContext } from "../contexts/FormProvider";
 export const useImage = () => {
   const { formData, setFormData } = useContext(FormContext);
 
-  const handleAvatarChange = (action, avatarKey, file) => {
+  const handleAvatarChange = (action, avatarKey, event) => {
     const newAvatars = [...formData.avatars];
     switch (action) {
       case "add":
-        newAvatars.push(file);
+        newAvatars.push(event.target.files[0]);
+        event.target.value = null;
         break;
       case "delete":
         newAvatars.splice(avatarKey, 1);
