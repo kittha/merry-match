@@ -68,7 +68,7 @@ function ProfilePicturesSections() {
               name="avatar"
               type="file"
               onChange={(event) => {
-                handleAvatarChange("add", index, event.target.files[0]);
+                handleAvatarChange("add", index, event);
               }}
               hidden
             />
