@@ -98,7 +98,7 @@ function UserProfilePage() {
             </div>
           </div>
           <div className="flex lg:justify-end justify-center items-center">
-            <div className="w-[128px] h-[32px] py-[4px] px-[8px]">
+            <div className="hidden w-[128px] h-[32px] py-[4px] px-[8px]">
               <button
                 className="w-[112px] h-[24px] font-semibold text-[16px] leading-[24px] text-[#646D89]"
                 onClick={openDeleteConfirmation}
