@@ -30,8 +30,8 @@ const ProfilePopup = ({ profileData, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto rounded-[32px] shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30">
+      <div className="bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto lg:rounded-[32px] rounded-0 shadow-2xl lg:overflow-hidden overflow-scroll py-8 lg:py-0">
         <div className="flex justify-end pr-4 ">
           <button onClick={onClose}>
             <img className="hidden lg:block" src={exit} alt="exit" />
