@@ -15,7 +15,7 @@ export const checkUserDoesNotExist = async (req, res, next) => {
       return res.status(400).json({ error: "Email already exists" });
     }
 
-    next();
+    return next();
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

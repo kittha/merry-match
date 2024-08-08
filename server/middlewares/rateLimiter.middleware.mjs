@@ -19,6 +19,6 @@ export const rateLimiter = (limit, windowMs) => {
     }
 
     timestamps[ip].push(now);
-    next();
+    return next();
   };
 };

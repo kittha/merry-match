@@ -3,7 +3,7 @@ const skipJsonParsing = (req, res, next) => {
     req.headers["content-type"] = "text/plain";
     req.headers["accept"] = "text/plain";
   }
-  next();
+  return next();
 };
 
 export default skipJsonParsing;

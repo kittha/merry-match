@@ -13,5 +13,5 @@ export const checkResourceOwnerByReqParam = (req, res, next) => {
       .json({ error: "Forbidden: You do not have access to this resource" });
   }
 
-  next();
+  return next();
 };

@@ -6,5 +6,5 @@ export const validateUsernameLength = (req, res, next) => {
       .status(400)
       .json({ error: "Username must be longer than 6 characters." });
   }
-  next();
+  return next();
 };
