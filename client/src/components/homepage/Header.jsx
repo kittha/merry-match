@@ -12,9 +12,9 @@ const Header = () => {
 
   return (
     <div className="relative bg-[#160404] text-white w-full lg:h-[846px] h-[1035px] overflow-hidden">
-      <div className="container mx-auto flex flex-col items-center justify-center h-screen lg:w-[1440px] w-full lg:px-[50px] px-4">
-        <div className="flex flex-col items-center justify-start w-full h-full">
-          <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:h-[758px] md:h-auto h-full z-10 relative">
+      <div className="container mx-auto flex flex-col  lg:w-[1440px] w-full lg:px-[50px] px-4">
+        <div className="flex flex-col items-center justify-start w-full ">
+          <div className="flex flex-col lg:flex-row w-full lg:justify-between items-center lg:h-[758px]  z-10 relative">
             <img
               src={headerimage2}
               alt="image2"
