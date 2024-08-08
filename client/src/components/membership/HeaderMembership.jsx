@@ -6,8 +6,8 @@ function HeaderMembership() {
       </h1>
       <h2 className="text-[#A62D82] font-[800] text-[32px] lg:text-[46px] leading-[40px] lg:leading-[57.5px]">
         Manage your membership
-        <br />
-        and payment method
+        {/* <br />
+        and payment method */}
       </h2>
     </div>
   );

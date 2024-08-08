@@ -11,7 +11,7 @@ import { useContext } from "react";
 import { FormContext } from "../../contexts/FormProvider";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import { useState } from "react";
 function UserProfilePage() {
   const {
     isPopupOpen,
@@ -25,7 +25,7 @@ function UserProfilePage() {
 
   const { formData, setFormData, handleSubmit } = useContext(FormContext);
   const { userId } = useParams();
-
+  const [loading, setLoading] = useState(false);
   const fetchData = async () => {
     const data = await getProfileData(userId);
     setFormData(data);
@@ -33,8 +33,9 @@ function UserProfilePage() {
 
   const handleUpdateProfile = async (event) => {
     event.preventDefault();
+    setLoading(true);
     await handleSubmit(event, userId);
-    alert("Profile updated successfully!");
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -69,8 +70,9 @@ function UserProfilePage() {
                 <button
                   className="w-[156px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full font-bold text-base leading-6 text-center text-[#FFFFFF] bg-[#C70039]"
                   onClick={handleUpdateProfile}
+                  disabled={loading}
                 >
-                  Update Profile
+                  {loading ? "Updating..." : "Update Profile"}
                 </button>
               </div>
             </div>
@@ -92,12 +94,13 @@ function UserProfilePage() {
               <button
                 className="w-[156px] h-[48px] p-[12px, 24px, 12px, 24px] rounded-full font-bold text-base leading-6 text-center text-[#FFFFFF] bg-[#C70039]"
                 onClick={handleUpdateProfile}
+                disabled={loading}
               >
-                Update Profile
+                {loading ? "Updating..." : "Update Profile"}
               </button>
             </div>
           </div>
-          <div className="flex lg:justify-end justify-center items-center">
+          {/* <div className="flex lg:justify-end justify-center items-center">
             <div className="hidden w-[128px] h-[32px] py-[4px] px-[8px]">
               <button
                 className="w-[112px] h-[24px] font-semibold text-[16px] leading-[24px] text-[#646D89]"
@@ -112,7 +115,7 @@ function UserProfilePage() {
                 />
               )}
             </div>
-          </div>
+          </div> */}
         </div>
         <footer className="lg:w-screen">
           <Footer />

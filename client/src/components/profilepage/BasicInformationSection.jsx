@@ -89,7 +89,7 @@ function BasicInformationSection() {
             <img
               src={CalendarIcon}
               alt="calendar"
-              className="h-[24px] w-[24px] absolute top-12 right-4 transform -translate-y-1/2 cursor-pointer"
+              className="h-[24px] w-[24px] absolute top-[52px] right-4 transform -translate-y-1/2 cursor-pointer"
               onClick={handleIconClick}
             />
             {errors.birthday && <div className="error">{errors.birthday}</div>}

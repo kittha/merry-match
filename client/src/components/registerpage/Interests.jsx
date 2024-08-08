@@ -163,7 +163,7 @@ function IdentitiesAndInterests() {
             >
               Hobbies / Interests (Maximum 10)
             </label>
-            <div className="flex flex-row flex-wrap  border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-full lg:w-[930px] mt-[4px]">
+            <div className="flex flex-row flex-wrap  border-[1px] border-[#D6D9E4] rounded-[8px] gap-[8px] pt-[12px] pr-[16px] pb-[12px] pl-[12px] w-full lg:w-[930px] mt-[4px] bg-white">
               {formData.hobbies.map((item, index) => (
                 <div
                   key={index}
