@@ -47,6 +47,7 @@ export const signIn = async (reqBody) => {
     }
 
     console.log("User signed in successfully");
+    console.log("sign in data", data);
     return data;
   } catch (error) {
     console.error("Error occurred during signIn:", error);

@@ -58,12 +58,14 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { session } = await signIn(req.body);
-    console.log("get session from supabase auth");
+    console.log("get session from supabase auth", session.user.email);
     //get user data from database
     const userResult = await getUser(session.user.email);
-    const userId = userResult.user_id;
+    console.log("user obj from local db Result: ", userResult);
+    const userId = 15;
     // get role name from database
     const { name } = await getRole(userId);
+    console.log("user Role", name);
     // get avatars from database
     const avatars = await getAvatars(userId);
     const avatarsUrl = avatars.map((avatar) => avatar.url);
