@@ -12,7 +12,7 @@ export const getMerryLimitByUserId = async (req, res) => {
   try {
     const userMerryLimit = await getMerryLimitFromModel(Number(userId));
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Get merry-limit successfully.",
       data: userMerryLimit,
     });
@@ -33,7 +33,7 @@ export const getAvailableClicksTodayByUserId = async (req, res) => {
     Number(userId)
   );
 
-  res.status(200).json({
+  return res.status(200).json({
     message: "Get todays available click successfully.",
     data: availableClicksToday,
   });
