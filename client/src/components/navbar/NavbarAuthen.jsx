@@ -79,7 +79,7 @@ const NavbarAuthen = () => {
   }, [location.pathname]);
 
   return (
-    <nav className="Navbar text-[#64001D] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-50 overflow-auto flex items-center justify-between w-full lg:h-[88px] h-[52px] font-bold shadow-md">
+    <nav className="Navbar text-[#64001D] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-50 overflow-auto flex items-center justify-between w-full lg:h-[88px] h-[52px] font-bold shadow-md max-lg:mt-[-1px]">
       <div className="flex items-center justify-between w-full lg:w-[1440px] mx-auto px-4 lg:px-0">
         <button onClick={() => navigate("/")}>
           <img
@@ -115,7 +115,7 @@ const NavbarAuthen = () => {
         </div>
         {showChat && (
           <Portal>
-            <div className="lg:hidden fixed inset-0 z-40">
+            <div className="lg:hidden fixed inset-0 z-40 mt-[-2px]">
               <div className="relative w-full h-full">
                 <div className="absolute inset-0 top-[52px] lg:top-[88px] bg-white z-40">
                   <ChatContainer />
@@ -135,7 +135,7 @@ const NavbarAuthen = () => {
 
         {/* ------------------------------------------notification ---------------------------------------------------- */}
 
-        <div className="hidden lg:flex lg:items-end lg:gap-4 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent lg:mr-[160px]">
+        <div className="hidden lg:flex lg:items-end lg:gap-4 inset-0 top-[52px] lg:top-auto lg:static bg-white lg:bg-transparent lg:mr-[160px] ">
           <div className="relative">
             <button ref={bellIconRef} onClick={handleBellClick}>
               <img
@@ -266,7 +266,7 @@ const NavbarAuthen = () => {
 
       {/*------------------------------------- Mobile Menu -------------------------------------------------- */}
       {isOpen && (
-        <div className="lg:hidden fixed inset-0 top-[52px] bg-white z-10 font-Nunito text-gray-700 font-medium">
+        <div className="lg:hidden fixed inset-0 top-[52px] bg-white z-10 font-Nunito text-gray-700 font-medium mt-[-3px]">
           <div className="flex justify-center items-center p-[16px] pt-[24px]">
             <button
               className="flex justify-center items-center bg-gradient-to-r from-[#742138] to-[#A878BF] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[343px] font-[700]"

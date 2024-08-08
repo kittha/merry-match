@@ -57,10 +57,9 @@ function PaymentSuccessPage() {
           </div>
           <div className="right">
             <div className="lg:w-[357px] p-[16px] lg:p-[40px] rounded-[32px] bg-gradient-to-r from-[#742138] to-[#A878BF] flex flex-col gap-[16px] lg:gap-[24px]">
-              <img
-                src={selectedPackage?.url}
-                className="w-[60px] h-[60px]"
-              ></img>
+              <div className="bg-[#F6F7FC] size-[60px] rounded-[16px] flex justify-center items-center">
+                <img src={selectedPackage?.url} className="size-[36px]"></img>
+              </div>
               <div className="top">
                 <p className="text-white text-[32px] font-[700]">
                   {selectedPackage?.name || "N/A"}

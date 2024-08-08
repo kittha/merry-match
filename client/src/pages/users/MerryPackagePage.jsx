@@ -28,28 +28,33 @@ const MerryPackage = () => {
 
   return (
     <div className="page-container h-screen w-screen flex flex-col items-center bg-[#FCFCFE]">
-      <div className="content-container lg:h-[663px] lg:w-[1119px] h-auto flex flex-col items-center lg:gap-[80px] gap-[43px] mt-[52px] lg:mt-[168px] lg:mb-[160px] lg:p-0 px-4 py-10 font-Nunito">
-        <header className="lg:w-full lg:h-[145px] flex flex-col gap-2 mt-0 p-0">
+      <div className="content-container lg:h-[663px] lg:w-[1119px] h-auto flex flex-col items-center lg:gap-[80px] gap-[43px] mt-[52px] lg:mt-[168px] lg:mb-[160px] lg:p-0 py-10 font-Nunito">
+        <header className="lg:w-full w-[343px] lg:h-[145px] flex flex-col gap-2">
           <p className="text-[#7B4429] font-semibold text-sm lg:h-[29px]">
             MERRY MEMBERSHIP
           </p>
-          <h2 className="text-[#A62D82] text-3xl lg:text-[46px] lg:leading-[57.5px] font-bold lg:font-extrabold text-left w-auto lg:h-[116px] h-auto">
+          <h2 className="text-[#A62D82] text-3xl lg:text-[46px] lg:leading-[57.5px] font-bold lg:font-extrabold text-left w-auto lg:h-[116px] h-auto max-lg:hidden">
             Be part of Merry Membership
             <br />
             to make more Merry!
+          </h2>
+          <h2 className="text-[#A62D82] text-[36px] leading-[40px] font-[700] text-left w-auto lg:h-[116px] h-auto lg:hidden">
+            Join us and start matching
           </h2>
         </header>
         <main className="card-container lg:w-full lg:h-[438px] flex flex-col lg:flex-row gap-6">
           {packages.map((pack) => (
             <div
               key={pack.package_id}
-              className="card w-[357px] h-full border border-[#D6D9E4] rounded-[32px] p-4 lg:p-10 flex flex-col gap-4 lg:gap-6 bg-white"
+              className="card lg:w-[357px] w-[343px] h-full border border-[#D6D9E4] rounded-[32px] p-4 lg:p-10 flex flex-col gap-4 lg:gap-6 bg-white"
             >
-              <img
-                src={pack.url}
-                alt="icon-package"
-                className="icon w-[60px] h-[60px] rounded-2xl bg-[#F6F7FC]"
-              />
+              <div className="size-[60px] flex items-center justify-center rounded-[16px] bg-[#F6F7FC]">
+                <img
+                  src={pack.url}
+                  alt="icon-package"
+                  className="icon size-[36px] rounded-2xl"
+                />
+              </div>
               <div className="top w-full h-[78px] flex flex-col gap-2">
                 <h3 className="text-[#411032] text-[32px] leading-10 font-bold h-10">
                   {pack.name}
@@ -61,7 +66,7 @@ const MerryPackage = () => {
                   <p className="text-[#9AA1B9]">/Month</p>
                 </div>
               </div>
-              <div className="detail-container w-full h-[100px] border-[#E4E6ED] border-b flex flex-col gap-4">
+              <div className="detail-container w-full h-[100px] border-[#E4E6ED] border-b flex flex-col gap-[12px] lg:gap-4 pb-[24px] lg:pd-[36px]">
                 {pack.details.map((detail, index) => (
                   <div key={index} className="detail flex gap-3">
                     <img
