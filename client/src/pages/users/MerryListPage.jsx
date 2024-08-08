@@ -28,7 +28,6 @@ function MerryListPage() {
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
   const getMerryLists = async () => {
     try {
-      // BUG userId is missing after refresh
       if (userId) {
         const result = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`

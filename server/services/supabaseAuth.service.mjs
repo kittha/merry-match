@@ -54,21 +54,6 @@ export const signIn = async (reqBody) => {
   }
 };
 
-// TODO : prepare to delete
-// export const getUser = async (jwtToken) => {
-//   try {
-//     const { user, error } = supabase.auth.user(jwtToken);
-//     if (error) {
-//       console.error("Error from Supabase Auth:", error);
-//       throw error;
-//     }
-//     return user;
-//   } catch (error) {
-//     console.error("Error occurred while fetching user:", error);
-//     throw error;
-//   }
-// };
-
 /**
  * Refreshes the session using the provided old refresh token object.
  *

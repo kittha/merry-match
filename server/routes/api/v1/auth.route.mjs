@@ -5,10 +5,6 @@ import {
   fetchUser,
   refreshUserSession,
 } from "../../../controllers/auth.controller.mjs";
-// import {
-//   forgotPassword,
-//   resetPassword,
-// } from "../../../controllers/auth.controller.mjs"; // TODO : prepare to delete
 import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 import { validatePicture } from "../../../middlewares/picture.validation.mjs";
 import { validateSignUpInput } from "../../../middlewares/signUpInput.validation.mjs";

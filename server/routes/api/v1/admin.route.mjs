@@ -15,7 +15,6 @@ import { validatePackageData } from "../../../middlewares/packageData.validation
 import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 
 const router = express.Router();
-// TODO add middleware to chk Authentication & Authorization; chk input validation
 router.get("/complaints", getAllComplaints);
 router.get("/complaints/param", getComplaintsByParam);
 router.get("/complaints/list", getComplaintsByStatus);
