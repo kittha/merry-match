@@ -23,11 +23,11 @@ router.use("/membership", [authenticateUser], membershipRoutes);
 router.use("/merry", [authenticateUser], merryRoutes);
 
 router.use("/match", [authenticateUser], matchRoutes);
-router.use("/messages", messagesRoutes);
+router.use("/messages", [authenticateUser], messagesRoutes);
 router.use("/merry-list", [authenticateUser], merryListRoutes);
 
-router.use("/packages", packageRoutes);
-router.use("/payment", paymentRoutes);
+router.use("/packages", [authenticateUser], packageRoutes);
+router.use("/payment", [authenticateUser], paymentRoutes);
 router.use("/profiles", [authenticateUser], profilesRoutes);
 
 export default router;
