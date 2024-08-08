@@ -8,6 +8,7 @@ export const checkResourceOwnerByMatchId = async (req, res, next) => {
 
   const { matchId } = req.params;
   const matchIdNum = Number(matchId);
+
   const matchIdNumArr = [matchIdNum];
   const lastResult = await getLastMessages(matchIdNumArr);
 
@@ -15,9 +16,9 @@ export const checkResourceOwnerByMatchId = async (req, res, next) => {
   const chatReceiverId = String(lastResult[lastResult.length - 1]?.receiver_id);
 
   if (
-    lastResult &&
-    (chatSenderId === userIdFromJwtToken ||
-      chatReceiverId === userIdFromJwtToken)
+    (!undefined && chatSenderId === userIdFromJwtToken) ||
+    (!undefined && chatReceiverId === userIdFromJwtToken) ||
+    lastResult.length === 0 // handle edge case : if both users have no chat : have some vulnerbility risk
   ) {
     return next();
   }
