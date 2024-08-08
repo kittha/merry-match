@@ -68,7 +68,7 @@ function ProfilePictures() {
                 name="avatar"
                 type="file"
                 onChange={(event) =>
-                  handleAvatarChange("add", avatarKey, event.target.files[0])
+                  handleAvatarChange("add", avatarKey, event)
                 }
                 hidden
               />
