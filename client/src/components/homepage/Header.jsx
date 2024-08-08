@@ -11,7 +11,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative bg-[#160404] text-white w-full lg:h-[846px]  overflow-hidden">
+    <div className="relative bg-[#160404] text-white min-[320px]:w-auto w-[375px] lg:h-[846px] h-[1000px] overflow-hidden">
       <div className="container mx-auto flex flex-col  lg:w-[1440px] w-full lg:px-[50px] px-4">
         <div className="flex flex-col items-center justify-start w-full ">
           <div className="flex flex-col lg:flex-row w-full lg:justify-between items-center lg:h-[758px]  z-10 relative">
@@ -23,7 +23,7 @@ const Header = () => {
             <img
               src={headerimage3}
               alt="image3"
-              className="lg:translate-y-48 lg:translate-x-10 md:translate-y-4 md:translate-x-56 md:w-[275px] translate-y-10 translate-x-28 lg:order-1 order-3 w-2/3 lg:w-auto md:hidden block"
+              className="lg:translate-y-48 lg:translate-x-10 md:translate-y-4 md:translate-x-56 translate-y-10 translate-x-28 lg:order-1 order-3 w-[175px] lg:w-auto md:hidden block"
             />
             <div className="flex flex-col items-center justify-start h-auto gap-4 lg:order-2 order-2 text-center px-4 lg:px-0">
               <h3 className="text-[50px] text-white font-Nunito font-extrabold leading-snug lg:mt-20">
