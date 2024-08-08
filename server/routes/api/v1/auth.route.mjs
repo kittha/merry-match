@@ -41,8 +41,6 @@ router.post(
   [validateSignInInput, validateEmailRegex, validatePasswordLength],
   loginUser
 );
-// router.post("/forgot-password", forgotPassword); // TODO : prepare to delete
-// router.post("/reset-password/:token", resetPassword); // TODO : prepare to delete
 router.get("/:tokenId", fetchUser);
 router.post("/refresh-token", refreshUserSession);
 
