@@ -12,6 +12,7 @@ import {
 import { validateComplaintStatus } from "../../../middlewares/complaintStatus.validation.mjs";
 import authenticateAdmin from "../../../middlewares/authenticateAdmin.middleware.mjs";
 import { validatePackageData } from "../../../middlewares/packageData.validation.mjs";
+import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 
 const router = express.Router();
 // TODO add middleware to chk Authentication & Authorization; chk input validation
@@ -27,13 +28,13 @@ router.put(
 
 router.post(
   "/package",
-  [authenticateAdmin, validatePackageData],
+  [avatarUpload, authenticateAdmin, validatePackageData],
   createPackage
 );
 
 router.put(
   "/:packageId",
-  [authenticateAdmin, validatePackageData],
+  [avatarUpload, authenticateAdmin, validatePackageData],
   updatePackageById
 );
 

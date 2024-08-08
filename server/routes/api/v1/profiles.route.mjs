@@ -10,6 +10,7 @@ import { bioCharacterLength } from "../../../middlewares/bio.validation.mjs";
 import { validateHobbiesArrayLength } from "../../../middlewares/hobbyArrayLength.validation.mjs";
 import { blockEmailChange } from "../../../middlewares/blockEmailChange.middleware.mjs";
 import { checkResourceOwnerByReqParam } from "../../../middlewares/checkResourceOwnerByReqParam.mjs";
+import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.get("/:userId", getUserProfileById);
 router.put(
   "/:userId",
   [
+    avatarUpload,
     validatePicture,
     ageValidator,
     bioCharacterLength,
