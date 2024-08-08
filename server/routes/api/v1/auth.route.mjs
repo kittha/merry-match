@@ -18,7 +18,6 @@ import { validateUsernameLength } from "../../../middlewares/usernameLength.vali
 import { validatePasswordLength } from "../../../middlewares/passwordLength.validation.mjs";
 import { validateSignInInput } from "../../../middlewares/signInInput.validation.mjs";
 import { checkUserDoesNotExist } from "../../../middlewares/checkUserDoesNotExist.middleware.mjs";
-import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 
 const router = express.Router();
 
