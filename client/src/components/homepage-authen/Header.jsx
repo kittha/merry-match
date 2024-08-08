@@ -11,7 +11,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative bg-[#160404] text-white min-[320px]:w-auto w-[375px] lg:h-[846px] h-[1000px] overflow-hidden">
+    <div className="relative bg-[#160404] text-white min-[320px]:w-auto w-[375px] lg:h-[846px] overflow-hidden">
       <div className="container mx-auto flex flex-col  lg:w-[1440px] w-full lg:px-[50px] px-4">
         <div className="flex flex-col items-center justify-start w-full ">
           <div className="flex flex-col lg:flex-row w-full lg:justify-between items-center lg:h-[758px]  z-10 relative">

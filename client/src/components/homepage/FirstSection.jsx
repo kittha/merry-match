@@ -4,7 +4,7 @@ import vector2 from "/assets/header-image/vector2.png";
 function FirstSection() {
   return (
     <div id="first-section">
-      <div className="w-full bg-[#160404] lg:h-[533px] h-auto lg:flex justify-center items-center space-x-9 relative pt-10 ">
+      <div className="min-[320px]:w-auto w-[375px] bg-[#160404] lg:h-[533px] h-auto lg:flex justify-center items-center space-x-9 relative pt-10 ">
         <div className="lg:w-[549px] lg:h-[325px] lg:flex lg:flex-col justify-center px-0 lg:px-160">
           <h1
             className="text-[#DF89C6] text-[46px] font-Nunito font-[800] lg:pl-10 px-4 2xl:pl-0"
