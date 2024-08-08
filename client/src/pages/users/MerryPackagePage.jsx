@@ -15,10 +15,7 @@ const MerryPackage = () => {
       const result = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/packages`
       );
-      const topThreePackage = result.data.data
-        .sort((a, b) => b.price - a.price)
-        .slice(0, 3)
-        .reverse();
+      const topThreePackage = result.data.data.slice(0, 3);
       setPackages(topThreePackage);
     } catch (error) {
       console.error("Error in Merry Package Page: ", error);
