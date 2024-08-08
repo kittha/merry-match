@@ -9,7 +9,7 @@ import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right
 import exit from "/assets/profilepicture/exit.png";
 import { useMerryLimit } from "../../../hooks/userMerryLimit";
 import UserProfilePopup from "./UserProfilePopup";
-import filter from "/assets/matchingpage/matching-area/filter.png";
+
 import mmLogo from "/assets/matchingpage/matching-area/merryMatch.gif";
 import ChatContainer from "../chatcontainer/ChatContainer";
 import FilterContainer from "../Filter-area/FilterContainer";
@@ -19,14 +19,12 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
-  const [showFilter, setShowFilter] = useState(false);
+
   const [showMatchPopup, setShowMatchPopup] = useState(false);
   const navigate = useNavigate();
 
-  const { allUser, availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
+  const { availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
     useMatch();
-
-  console.log(allUser);
 
   useEffect(() => {
     if (!Queue) return;
@@ -57,14 +55,16 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   const favourUser = async (userId) => {
     if (availableClicksToday < maxDailyQuota) {
       const data = await addMerry(userId);
-      
+
       // Log a message if the match is successful
-      if (data && data.match_id) {
-        const matchedUser = allUser.find(user => 
-          (user.user_id === data.user_id_1 || user.user_id === data.user_id_2) &&
-          user.match_id === data.match_id
+      if (data.status_1 === "match") {
+        const matchedUser = Queue.find(
+          (user) =>
+            (user.user_id === data.user_id_1 ||
+              user.user_id === data.user_id_2) &&
+            user.match_id === data.match_id
         );
-        
+
         if (matchedUser) {
           console.log(`Users matched: ${data.user_id_1} and ${data.user_id_2}`);
           setSelectedUser(matchedUser);
@@ -74,14 +74,11 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
       setUserQueue((prevQueue) => {
         const newQueue = [...prevQueue.slice(1)];
         return newQueue;
-      }
-      );
+      });
     } else {
       alert("You don't have any more clicks today");
     }
   };
-
-  
 
   const disfavorUser = (userId) => {
     undoMerry(userId);
@@ -146,7 +143,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   return (
     <div className="relative flex flex-col items-center justify-center bg-[#160404] w-screen h-screen lg:pt-[88px] pt-[32px] font-Nunito overflow-hidden">
       <div className="absolute bottom-[20px] flex gap-2">
-        <div className="flex flex-col justify-center lg:w-0 w-48">
+        {/* <div className="flex flex-col justify-center lg:w-0 w-48">
           <button
             onClick={() => setShowFilter(true)}
             className="lg:hidden flex gap-2 w-auto z-30"
@@ -156,7 +153,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
               Filter
             </p>
           </button>
-        </div>
+        </div> */}
         <div className="flex float-col gap-2">
           <p className="lg:text-[16px] text-[14px] text-[#646D89] font-light text-center ">
             Merry limit today:{" "}
@@ -254,7 +251,6 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#390741] rounded-[28px]"></div>
               </div>
             )}
-
           </div>
         ))}
       </div>
@@ -266,34 +262,34 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
       )}
       {showMatchPopup && selectedUser && (
         <div className="absolute z-30">
-        <div className=" relative" > 
+          <div className=" relative">
             <img
               src={selectedUser.avatars.image1}
               alt="Matched User"
               className="inset-0 object-cover lg:w-[700px] lg:h-[700px] w-screen h-screen rounded-[32px] bg-white"
-              style={{ transform: 'scale(1.1)' }}
+              style={{ transform: "scale(1.1)" }}
             />
-          <div className="absolute -inset-10 bg-gradient-to-b from-transparent to-[#390741] rounded-[28px]"></div>
-          <div className=" absolute top-1/2 flex w-full justify-center">
-            <img src={mmLogo} alt="match_logo" />
-          </div>
-          <div className=" absolute bottom-24 flex w-full justify-center">
-            <button onClick={handleGotoChat} className="bg-[#FFE1EA] text-[#95002B] rounded-full w-[188px] h-[48px]">
-            Start Conversation
+            <div className="absolute -inset-10 bg-gradient-to-b from-transparent to-[#390741] rounded-[28px]"></div>
+            <div className=" absolute top-1/2 flex w-full justify-center">
+              <img src={mmLogo} alt="match_logo" />
+            </div>
+            <div className=" absolute bottom-24 flex w-full justify-center">
+              <button
+                onClick={handleGotoChat}
+                className="bg-[#FFE1EA] text-[#95002B] rounded-full w-[188px] h-[48px]"
+              >
+                Start Conversation
+              </button>
+            </div>
+            <button
+              onClick={handleMatchPopupClose}
+              className=" absolute top-0 right-0 bg-[#95002B] rounded-full"
+            >
+              <img className="hidden lg:block" src={exit} alt="exit" />
             </button>
           </div>
-          <button onClick={handleMatchPopupClose} className=" absolute top-0 right-0 bg-[#95002B] rounded-full">
-            <img className="hidden lg:block" src={exit} alt="exit" />
-          </button>
         </div>
-      </div>
       )}
-
-      <div className="flex justify-center lg:hidden">
-        {showFilter && (
-          <FilterContainer onClose={() => setShowFilter(setShowFilter)} />
-        )}
-      </div>
     </div>
   );
 };
