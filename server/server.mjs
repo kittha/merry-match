@@ -29,7 +29,7 @@ const limiterMax = process.env.RATE_LIMITER_MAX || 50;
 
 const limiterWindow = process.env.RATE_LIMITER_WINDOW_MS || 60000;
 
-// app.use(rateLimiter(limiterMax, limiterWindow));  // TODO plan to enable in production
+// app.use(rateLimiter(limiterMax, limiterWindow));
 
 app.use(compression());
 

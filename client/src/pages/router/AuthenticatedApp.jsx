@@ -18,6 +18,8 @@ import Chat from "../users/ChatPage";
 // import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
 import ComplaintListPage from "../admin/ComplaintListPage";
 import ComplaintDetailPage from "../admin/ComplaintDetailPage";
+import { PackageProvider } from "../../contexts/PackageProvider";
+import MatchingAndMerryWrapper from "../../components/wrapper/MatchingAndMerryWrapper";
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -32,16 +34,67 @@ const AuthenticatedApp = () => {
       <Routes>
         <Route path="/" element={<HomePageAuthen />} />
         <Route path="/user-profile/:userId" element={<UserProfilePage />} />
-        <Route path="/merry-list" element={<MerryListPage />} />
-        <Route path="/membership/:userId" element={<MembershipPage />} />
         <Route path="/complaint" element={<ComplaintPage />} />
-        <Route path="/matching" element={<MatchingPage />} />
-        <Route path="/payment" element={<PaymentPage />} />
-        <Route path="/payment-success" element={<PaymentSuccessPage />} />
-        <Route path="/package" element={<MerryPackage />} />
-        <Route path="/chat/:matchId" element={<Chat />} />
         <Route path="*" element={<HomePageAuthen />} />
-        {/* <Route path="/matchingArea" element={<MatchingArea />} /> */}
+
+        <Route 
+          path="/chat/:matchId" 
+          element={
+            <MatchingAndMerryWrapper>
+              <Chat />
+            </MatchingAndMerryWrapper>
+          } 
+        />
+        <Route 
+          path="/matching" 
+          element={
+            <MatchingAndMerryWrapper>
+              <MatchingPage />
+            </MatchingAndMerryWrapper>
+          } 
+        />
+          <Route 
+          path="/membership/:userId" 
+          element={
+            <MatchingAndMerryWrapper>
+              <MembershipPage />
+            </MatchingAndMerryWrapper>
+          } 
+        />
+        <Route 
+          path="/merry-list" 
+          element={
+            <MatchingAndMerryWrapper>
+              <MerryListPage />
+            </MatchingAndMerryWrapper>
+          } 
+        />
+        <Route 
+          path="/package" 
+          element={
+          <PackageProvider>
+            <MerryPackage />
+          </PackageProvider>
+        } 
+        />
+          <Route 
+          path="/payment" 
+          element={
+            <PackageProvider>
+            <MatchingAndMerryWrapper>
+              <PaymentPage />
+            </MatchingAndMerryWrapper>
+            </PackageProvider>
+          } 
+        />
+        <Route 
+          path="/payment-success" 
+          element={
+              <PackageProvider>
+               <PaymentSuccessPage />
+             </PackageProvider>
+            } 
+            />
 
         {role === "Admin" && (
           <>
