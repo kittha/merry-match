@@ -10,11 +10,11 @@ import {
   getComplaintsByStatus,
 } from "../../../controllers/admin.controller.mjs";
 import { validateComplaintStatus } from "../../../middlewares/complaintStatus.validation.mjs";
-import authenticateAdmin from "../../../middlewares/authenticateAdmin.middleware.mjs";
 import { validatePackageData } from "../../../middlewares/packageData.validation.mjs";
 import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 
 const router = express.Router();
+
 router.get("/complaints", getAllComplaints);
 router.get("/complaints/param", getComplaintsByParam);
 router.get("/complaints/list", getComplaintsByStatus);
@@ -25,18 +25,14 @@ router.put(
   updateComplaintStatus
 );
 
-router.post(
-  "/package",
-  [avatarUpload, authenticateAdmin, validatePackageData],
-  createPackage
-);
+router.post("/package", [avatarUpload, validatePackageData], createPackage);
 
 router.put(
   "/:packageId",
-  [avatarUpload, authenticateAdmin, validatePackageData],
+  [avatarUpload, validatePackageData],
   updatePackageById
 );
 
-router.delete("/:packageId", [authenticateAdmin], deletePackageById);
+router.delete("/:packageId", deletePackageById);
 
 export default router;
