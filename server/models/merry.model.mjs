@@ -215,15 +215,12 @@ export const getPotentialMatches = async (userId) => {
 export const getPotentialMatchesFilter = async (userId, filter) => {
   const { checkbox1, checkbox2, checkbox3, ageLeft, ageRight } = filter;
 
-  if (
-    checkbox1 === null ||
-    checkbox1 === undefined ||
-    (checkbox1 === "" && checkbox2 === null) ||
-    checkbox2 === undefined ||
-    (checkbox2 === "" && checkbox3 === null) ||
-    checkbox3 === undefined ||
-    checkbox3 === ""
-  ) {
+  const isAllCheckboxesEmpty =
+    (checkbox1 === null || checkbox1 === undefined || checkbox1 === "") &&
+    (checkbox2 === null || checkbox2 === undefined || checkbox2 === "") &&
+    (checkbox3 === null || checkbox3 === undefined || checkbox3 === "");
+
+  if (isAllCheckboxesEmpty) {
     try {
       const result = await connectionPool.query(
         `
@@ -263,7 +260,7 @@ export const getPotentialMatchesFilter = async (userId, filter) => {
           profiles p1
       JOIN 
           profiles p2 ON p1.user_id != p2.user_id
-      LEFT JOIN 
+      LEFT JOIN
           match_status ms ON (p1.user_id = ms.user_id_1 AND p2.user_id = ms.user_id_2) OR (p1.user_id = ms.user_id_2 AND p2.user_id = ms.user_id_1)
       LEFT JOIN LATERAL (
           SELECT COUNT(*) AS hobby_match_count
@@ -274,24 +271,12 @@ export const getPotentialMatchesFilter = async (userId, filter) => {
           profile_pictures pp ON p2.user_id = pp.user_id AND pp.sequence BETWEEN 1 AND 5
       WHERE 
             p1.user_id = $1
-            AND (
-                (p2.sexual_identities = $2 OR $2 is null OR $2 = '') 
-                AND (p2.sexual_identities = $3 OR $3 is null OR $3 = '')
-                AND (p2.sexual_identities = $4 OR $4 is null OR $4 = '')
-            )
-            AND (AGE(CURRENT_DATE, p2.date_of_birth) BETWEEN $5 AND $6)
+            AND (AGE(CURRENT_DATE, p2.date_of_birth) BETWEEN $2 AND $3)
   
         ORDER BY 
             match_score DESC;
         `,
-        [
-          userId,
-          checkbox1,
-          checkbox2,
-          checkbox3,
-          `${ageLeft} years`,
-          `${ageRight} years`,
-        ]
+        [userId, `${ageLeft} years`, `${ageRight} years`]
       );
       return result.rows;
     } catch (error) {
@@ -302,6 +287,7 @@ export const getPotentialMatchesFilter = async (userId, filter) => {
     try {
       const result = await connectionPool.query(
         `
+        SELECT
         p2.user_id AS matched_user_id, 
           p2.name AS matched_name, 
           p2.hobbies AS matched_hobbies,
