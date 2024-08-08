@@ -9,6 +9,11 @@ function ComplaintListPage() {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [complaint, setComplaint] = useState([]);
+  const [show, setShow] = useState(false);
+
+  const handleClick = () => {
+    setShow(!show);
+  };
 
   const debounce = (func, delay) => {
     let timer;
@@ -22,20 +27,43 @@ function ComplaintListPage() {
     };
   };
 
-  const getComplaint = async (text) => {
-    try {
-      const result = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/v1/admin/complaints/param?name=${text}`
-      );
-      setComplaint(
-        result.data.sort((a, b) => {
-          return a.complaint_id - b.complaint_id;
-        })
-      );
-    } catch (error) {
-      console.error("Error fetching data:", error);
+  const getComplaint = async (text, status) => {
+    if (status === undefined) {
+      try {
+        const result = await axios.get(
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/v1/admin/complaints/param?name=${text}&status=`
+        );
+        setComplaint(
+          result.data.sort((a, b) => {
+            return a.complaint_id - b.complaint_id;
+          })
+        );
+        if (show === true) {
+          setShow(!show);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    } else {
+      try {
+        const result = await axios.get(
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/v1/admin/complaints/param?name=${text}&status=${status}`
+        );
+        setComplaint(
+          result.data.sort((a, b) => {
+            return a.complaint_id - b.complaint_id;
+          })
+        );
+        if (show === true) {
+          setShow(!show);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
   };
 
@@ -65,10 +93,12 @@ function ComplaintListPage() {
       <Sidebar />
       <div className="w-screen h-screen">
         <Topbar
-          complaint={complaint}
-          setComplaint={setComplaint}
+          show={show}
+          setShow={setShow}
+          getComplaint={getComplaint}
           searchText={searchText}
           setSearchText={setSearchText}
+          handleClick={handleClick}
         />
         <MainContent complaint={complaint} updateStatus={updateStatus} />
       </div>

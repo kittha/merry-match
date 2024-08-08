@@ -37,7 +37,7 @@ export const getAllComplaints = async () => {
   }
 };
 
-export const getComplaintsByParam = async (name) => {
+export const getComplaintsByParam = async (name, status) => {
   try {
     const result = await connectionPool.query(
       `
@@ -45,8 +45,9 @@ export const getComplaintsByParam = async (name) => {
           from complaints 
           inner join users 
           on complaints.created_by = users.user_id where username LIKE $1
+          and (status = $2 or $2 is null or $2 = '') 
           `,
-      [`%${name}%`]
+      [`%${name}%`, status]
     );
     const complaints = result.rows;
     return complaints;
