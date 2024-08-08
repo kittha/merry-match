@@ -7,7 +7,7 @@ const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 // File filter function to validate file type
 const fileFilter = (req, file, cb) => {
   // Define allowed file types
-  const allowedTypes = /jpeg|jpg|png|gif/;
+  const allowedTypes = /jpeg|jpg|png|gif|webp|svg/;
 
   // Check MIME type
   const mimeType = allowedTypes.test(file.mimetype);
@@ -21,7 +21,11 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
   } else {
     // Otherwise, reject the file with an error
-    cb(new Error("Invalid file type. Only JPEG, PNG, and GIF are allowed."));
+    cb(
+      new Error(
+        "Invalid file type. Only JPEG, PNG, GIF, WEBP, SVG are allowed."
+      )
+    );
   }
 };
 
