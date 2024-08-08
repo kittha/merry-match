@@ -53,42 +53,46 @@ const ProfileDetailModal = ({ user, onClose }) => {
         <div className="lg:flex flex-row">
           <div className="lg:Lside lg:w-1/2 flex justify-center relative">
             <div className="lg:w-[400px] lg:h-[400px] w-screen h-[356px] rounded-2xl">
-              {avatarsArr.length > 0 && (
-                <>
-                  <img
-                    className="rounded-2xl bg-cover lg:w-[400px] lg:h-[400px] w-screen h-[315px]"
-                    src={avatarsArr[currentAvatarIndex]}
-                    alt="profile"
-                  />
-                  <div className="flex justify-center -translate-y-10">
-                    <div className="flex justify-center rounded-md">
-                      <button>
-                        <img src={crossbutton} alt="cross" />
-                      </button>
-                    </div>
-                    <div className="flex justify-center rounded-md">
-                      <button>
-                        <img src={lovebutton} alt="love" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="flex justify-between px-8 -translate-y-20">
-                    <div className="PhotoCount flex mt-2.5">
-                      <p>
-                        {currentAvatarIndex + 1}/{avatarsArr.length}
-                      </p>
-                    </div>
-                    <div className="arrowBtn flex">
-                      <button onClick={handlePrevAvatar}>
-                        <img src={arrowL} alt="leftArrow" />
-                      </button>
-                      <button onClick={handleNextAvatar}>
-                        <img src={arrowR} alt="rightArrow" />
-                      </button>
-                    </div>
-                  </div>
-                </>
+              {avatarsArr.length > 0 ? (
+                <img
+                  className="rounded-2xl bg-cover lg:w-[400px] lg:h-[400px] w-screen h-[315px]"
+                  src={avatarsArr[currentAvatarIndex]}
+                  alt="profile"
+                />
+              ) : (
+                <div className="rounded-2xl lg:w-[400px] lg:h-[400px] w-screen h-[315px] bg-gray-200 flex justify-center items-center">
+                  <p className="text-gray-500 text-center">
+                    No Image Available
+                  </p>
+                </div>
               )}
+              <div className="flex justify-center -translate-y-10">
+                <div className="flex justify-center rounded-md">
+                  <button>
+                    <img src={crossbutton} alt="cross" />
+                  </button>
+                </div>
+                <div className="flex justify-center rounded-md">
+                  <button>
+                    <img src={lovebutton} alt="love" />
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-between px-8 -translate-y-20">
+                <div className="PhotoCount flex mt-2.5">
+                  <p>
+                    {currentAvatarIndex + 1}/{avatarsArr.length}
+                  </p>
+                </div>
+                <div className="arrowBtn flex">
+                  <button onClick={handlePrevAvatar}>
+                    <img src={arrowL} alt="leftArrow" />
+                  </button>
+                  <button onClick={handleNextAvatar}>
+                    <img src={arrowR} alt="rightArrow" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 

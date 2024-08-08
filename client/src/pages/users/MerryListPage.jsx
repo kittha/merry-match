@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
-import { transformMerryListData } from "../../../../server/utils/transformMerryListData.mjs"; // TODO refactor this
+import { transformMerryListData } from "../../utils/transformMerryListData.mjs";
 import { useMatch } from "../../contexts/matchProvider";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
@@ -10,7 +10,6 @@ import Locationicon from "/assets/merrylist-image/location.png";
 import Chaticon from "/assets/merrylist-image/chat.png";
 import Vectoricon from "/assets/merrylist-image/vector.png";
 import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
-import Testericon from "/assets/merrylist-image/tester.png";
 import Footer from "../../components/homepage/Footer";
 import UserProfilePopup from "../../components/matchingpage/matching/UserProfilePopup";
 import CountdownTimer from "../../components/merry-list/CountdownTimer";
@@ -138,11 +137,11 @@ function MerryListPage() {
                       alt="merry-list-image"
                     />
                   ) : (
-                    <img
-                      src={Testericon}
-                      className="hidden lg:block lg:w-[187px] lg:h-[187px] rounded-[24px]"
-                      alt="tester-image"
-                    />
+                    <div className="hidden lg:block lg:w-[187px] lg:h-[187px] p-16 rounded-[24px] bg-gray-200">
+                      <p className="text-gray-500 text-center">
+                        No Image Available
+                      </p>
+                    </div>
                   )}
 
                   {/********************************** Mobile Responsive **********************************/}
@@ -150,15 +149,15 @@ function MerryListPage() {
                     {list.url ? (
                       <img
                         src={list.url}
-                        className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
+                        className="lg:hidden w-[104px] h-[104px] rounded-[24px] aspect-square"
                         alt="merry-list-image"
                       />
                     ) : (
-                      <img
-                        src={Testericon}
-                        className="lg:hidden w-[104px] h-[104px] rounded-[24px]"
-                        alt="tester-image"
-                      />
+                      <div className="lg:hidden w-[104px] h-[104px] rounded-[24px] bg-gray-200 flex items-center">
+                        <p className="text-gray-500 text-center">
+                          No Image Available
+                        </p>
+                      </div>
                     )}
                     {list.status_1 === "match" && list.status_2 === "match" ? (
                       <div className="lg:hidden w-[168px] h-[104px] flex flex-col gap-[24px] items-end lg:w-[176px]">
@@ -394,13 +393,13 @@ function MerryListPage() {
                             className="mt-[15.6px] ml-[12px] mb-[12px]"
                           />
                         </button>
+                        {showModalProfile && (
+                          <UserProfilePopup
+                            user={selectedUser}
+                            onClose={() => setShowModalProfile(false)}
+                          />
+                        )}
                       </section>
-                      {showModalProfile && (
-                        <UserProfilePopup
-                          user={selectedUser}
-                          onClose={() => setShowModalProfile(false)}
-                        />
-                      )}
                     </div>
                   )}
                   {/************************************************************************************************/}
