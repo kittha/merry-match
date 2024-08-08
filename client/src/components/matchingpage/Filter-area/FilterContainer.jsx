@@ -30,21 +30,23 @@ function FilterContainer({
 
   const getFilterData = async (filterData) => {
     let result;
-    try {
-      result = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/v1/merry/match/filter/${currentUserId}?checkbox1=${
-          filterData.checkMale
-        }&checkbox2=${filterData.checkFemale}&checkbox3=${
-          filterData.checkOther
-        }&ageLeft=${filterData.searchAgeRangeNumberLeft}&ageRight=${
-          filterData.searchAgeRangeNumberRight
-        }`
-      );
-      setQueue(result.data.matches);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    if (currentUserId) {
+      try {
+        result = await axios.get(
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/v1/merry/match/filter/${currentUserId}?checkbox1=${
+            filterData.checkMale
+          }&checkbox2=${filterData.checkFemale}&checkbox3=${
+            filterData.checkOther
+          }&ageLeft=${filterData.searchAgeRangeNumberLeft}&ageRight=${
+            filterData.searchAgeRangeNumberRight
+          }`
+        );
+        setQueue(result.data.matches);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
   };
 

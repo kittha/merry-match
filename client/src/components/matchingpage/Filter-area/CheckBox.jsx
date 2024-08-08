@@ -17,19 +17,21 @@ function CheckBox({
   const [profileData, setProfileData] = useState("");
   const getSexualPreference = async () => {
     let result;
-    try {
-      result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${currentUserId}`
-      );
-      setProfileData(result.data.sexualPreference);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    if (currentUserId) {
+      try {
+        result = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${currentUserId}`
+        );
+        setProfileData(result.data.sexualPreference);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
   };
 
   useEffect(() => {
     getSexualPreference();
-  }, []);
+  }, [currentUserId]);
 
   const handleChange = (key, value, event, check) => {
     event;
