@@ -7,6 +7,7 @@ function BillingHistory({ history }) {
   const { userId } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [isPdfLoading, setIsPdfLoading] = useState(false);
 
   if (!history || !Array.isArray(history)) {
     return <p>No billing history available.</p>;
@@ -45,6 +46,7 @@ function BillingHistory({ history }) {
   };
 
   const handleRequestPDF = async () => {
+    setIsPdfLoading(true);
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}/pdf`,
@@ -62,6 +64,8 @@ function BillingHistory({ history }) {
     } catch (error) {
       console.error("Error generating PDF:", error);
       alert("Failed to generate PDF. Please try again later."); // User feedback
+    } finally {
+      setIsPdfLoading(false);
     }
   };
 
@@ -128,8 +132,9 @@ function BillingHistory({ history }) {
             >
               Previous
             </button>
+
             <button
-              className="text-[#C70039] font-[700] hover:text-red-500"
+              className="text-[#C70039] font-[700] hover:text-red-500 pr-[10px]"
               onClick={handleNextPage}
               disabled={indexOfLastItem >= sortedHistory.length}
             >
@@ -137,12 +142,13 @@ function BillingHistory({ history }) {
             </button>
           </div>
         </div>
-        <div className="flex lg:justify-end border-t border-[#E4E6ED] pt-[16px] max-lg:mb-[58px]">
+        <div className="flex lg:justify-end border-t border-[#E4E6ED] pt-[16px] max-lg:py-[4px] max-lg:px-[16px] max-lg:mb-[58px]">
           <button
-            className="text-[#C70039] font-[700] px-[8px] py-[4px] hover:text-red-500"
+            className="text-[#C70039] font-[700] hover:text-red-500"
             onClick={handleRequestPDF}
+            disabled={isPdfLoading}
           >
-            Request PDF
+            {isPdfLoading ? "Generating PDF..." : "Request PDF"}
           </button>
         </div>
       </div>

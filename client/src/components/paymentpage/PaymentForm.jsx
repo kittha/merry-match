@@ -23,7 +23,7 @@ const PaymentForm = () => {
   const [expCardError, setExpCardError] = useState("");
   const [cvcCardError, setCVCError] = useState("");
   const [nameCardError, setNameCardError] = useState("");
-  const [loading, setLoading] = useState(false); // State to track loading status
+  const [loading, setLoading] = useState(false);
 
   const package_id = selectedPackage?.package_id;
   const package_name = selectedPackage?.name;
