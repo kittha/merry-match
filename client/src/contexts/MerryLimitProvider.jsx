@@ -19,7 +19,7 @@ export function MerryLimitProvider({ children }) {
         return state?.user?.id || JSON.parse(localStorage.getItem('data'))?.id;
     });
     const [availableClicksToday, setAvailableClicksToday] = useState(0);
-    const [maxDailyQuota, setMaxDailyQuota] = useState(null);
+    const [maxDailyQuota, setMaxDailyQuota] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {

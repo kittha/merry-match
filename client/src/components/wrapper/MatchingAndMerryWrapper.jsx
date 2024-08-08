@@ -1,15 +1,13 @@
 import PropTypes from 'prop-types'; 
 import { MatchProvider } from "../../contexts/matchProvider";
 import { MerryLimitProvider } from "../../contexts/MerryLimitProvider";
-import { ChatProvider } from "../../contexts/chatProvider";
 
+// MatchProvider have dependencies on MerryLimitProvider, it must be the child of MerryLimitProvider
 const MatchingAndMerryWrapper = ({ children }) => {
   return (
     <MerryLimitProvider>
       <MatchProvider>
-        <ChatProvider>
           {children}
-        </ChatProvider>
       </MatchProvider>
     </MerryLimitProvider>
   );

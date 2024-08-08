@@ -15,9 +15,9 @@ import MatchingPage from "../users/MatchingPage";
 import MerryListPage from "../users/MerryListPage";
 import ComplaintPage from "../users/ComplaintPage";
 import Chat from "../users/ChatPage";
-// import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
 import ComplaintListPage from "../admin/ComplaintListPage";
 import ComplaintDetailPage from "../admin/ComplaintDetailPage";
+import { ChatProvider } from "../../contexts/chatProvider";
 import { PackageProvider } from "../../contexts/PackageProvider";
 import MatchingAndMerryWrapper from "../../components/wrapper/MatchingAndMerryWrapper";
 
@@ -26,7 +26,13 @@ const AuthenticatedApp = () => {
   const role = state.role;
 
   // Conditionally render the Navbar based on the role
-  const renderNavbar = role !== "Admin" ? <NavbarAuthen /> : null;
+  const renderNavbar = role !== "Admin" ? 
+  <MatchingAndMerryWrapper>
+    <ChatProvider>
+      <NavbarAuthen />
+    </ChatProvider>
+  </MatchingAndMerryWrapper> : 
+  null;
 
   return (
     <div>
@@ -41,7 +47,9 @@ const AuthenticatedApp = () => {
           path="/chat/:matchId" 
           element={
             <MatchingAndMerryWrapper>
-              <Chat />
+              <ChatProvider>
+                <Chat />
+              </ChatProvider>
             </MatchingAndMerryWrapper>
           } 
         />
@@ -49,7 +57,9 @@ const AuthenticatedApp = () => {
           path="/matching" 
           element={
             <MatchingAndMerryWrapper>
-              <MatchingPage />
+              <ChatProvider>
+                <MatchingPage />
+              </ChatProvider>
             </MatchingAndMerryWrapper>
           } 
         />
@@ -81,18 +91,18 @@ const AuthenticatedApp = () => {
           path="/payment" 
           element={
             <PackageProvider>
-            <MatchingAndMerryWrapper>
-              <PaymentPage />
-            </MatchingAndMerryWrapper>
+              <MatchingAndMerryWrapper>
+                <PaymentPage />
+              </MatchingAndMerryWrapper>
             </PackageProvider>
           } 
         />
         <Route 
           path="/payment-success" 
           element={
-              <PackageProvider>
+            <PackageProvider>
                <PaymentSuccessPage />
-             </PackageProvider>
+            </PackageProvider>
             } 
             />
 
