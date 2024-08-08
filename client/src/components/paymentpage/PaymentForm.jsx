@@ -9,6 +9,7 @@ import Bullet from "../../../public/assets/paymentpage/Bullet.png";
 import Footer from "../../components/homepage/Footer";
 import { usePackage } from "../../contexts/PackageProvider";
 import { useAuth } from "../../contexts/authentication";
+import { useMatch } from "../../contexts/matchProvider";
 
 const PaymentForm = () => {
   const navigate = useNavigate();
@@ -22,11 +23,12 @@ const PaymentForm = () => {
   const [expCardError, setExpCardError] = useState("");
   const [cvcCardError, setCVCError] = useState("");
   const [nameCardError, setNameCardError] = useState("");
-  const [loading, setLoading] = useState(false); // State to track loading status
+  const [loading, setLoading] = useState(false);
 
   const package_id = selectedPackage?.package_id;
   const package_name = selectedPackage?.name;
   const userId = state.user.id;
+  const { setMaxDailyQuota } = useMatch();
 
   const handleConfirm = async (event) => {
     event.preventDefault();
@@ -67,7 +69,7 @@ const PaymentForm = () => {
 
     setLoading(true); // Set loading state to true
 
-    const stripe = window.Stripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+    const stripe = window.Stripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
 
     const paymentData = {
       user: {
@@ -94,10 +96,19 @@ const PaymentForm = () => {
         throw new Error("Missing client_secret from backend response.");
       }
 
-      // Retrieve PaymentIntent to check its status
       const paymentIntent = data.paymentIntent;
 
       if (paymentIntent && paymentIntent.status === "succeeded") {
+        try {
+          // TODO need to refactor this
+          const response = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/v1/membership/${userId}`
+          );
+          const merryLimitToday = response.data.packageDetails.merry_limit;
+          setMaxDailyQuota(merryLimitToday);
+        } catch (err) {
+          console.error(err);
+        }
         navigate("/payment-success", {
           state: {
             packageId: package_id,
@@ -107,7 +118,6 @@ const PaymentForm = () => {
         return;
       }
 
-      // Confirm the payment if not already completed
       const confirmResult = await stripe.confirmCardPayment(
         data.client_secret,
         {
@@ -140,7 +150,10 @@ const PaymentForm = () => {
         });
       }
     } catch (error) {
-      console.error("Payment error:", error);
+      console.error(
+        "Payment error:",
+        error.response ? error.response.data : error.message
+      );
       setLoading(false); // Reset loading state on error
     }
   };

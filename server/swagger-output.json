@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:3000",
+  "host": "localhost:4000",
   "basePath": "/",
   "schemes": [
     "http"
@@ -163,6 +163,12 @@
                 },
                 "packageDetails": {
                   "example": "any"
+                },
+                "avatar": {
+                  "example": "any"
+                },
+                "id": {
+                  "example": "any"
                 }
               }
             }
@@ -296,6 +302,33 @@
         }
       }
     },
+    "/api/v1/auth/refresh-token": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "refresh_token": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/v1/complaints/": {
       "post": {
         "description": "",
@@ -329,6 +362,27 @@
         }
       }
     },
+    "/api/v1/membership/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/v1/merry/available-clicks/{userId}": {
       "get": {
         "description": "",
@@ -346,6 +400,24 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/merry/available-matches/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
@@ -429,7 +501,7 @@
       }
     },
     "/api/v1/merry/undoMerry": {
-      "delete": {
+      "post": {
         "description": "",
         "parameters": [
           {
@@ -446,6 +518,88 @@
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/match/{matchId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/messages/{matchId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/merry-list/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -502,10 +656,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "packageId": {
+                "user": {
                   "example": "any"
                 },
-                "card": {
+                "product": {
+                  "example": "any"
+                },
+                "cardDetail": {
                   "example": "any"
                 }
               }
@@ -518,6 +675,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

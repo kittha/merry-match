@@ -1,17 +1,14 @@
 import express from "express";
 import {
+  checkLastMessage,
   getChatHistory,
   sendMessage,
-} from "../../../controllers/message.controller.mjs";
+} from "../../../controllers/chat.controller.mjs";
 
 const router = express.Router();
 
+router.get("/last/:userId", checkLastMessage);
 router.get("/:matchId", getChatHistory);
-
-// router.get("/:userId", getUserMessages);
-
-// router.post("/:userId", sendMessages);
-
-// router.delete("/:userId", deleteMessage);
+router.post("/:matchId", sendMessage);
 
 export default router;

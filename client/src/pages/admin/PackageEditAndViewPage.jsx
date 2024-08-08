@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import FormPackage from "../../components/packageviewandedit/FormPackage";
-import Sidebar from "../../components/packageviewandedit/Sidebar";
-import Topbar from "../../components/packageviewandedit/Topbar";
+import FormPackage from "../../components/adminpackage/packageviewandedit/FormPackage";
+import Sidebar from "../../components/adminpackage/packageviewandedit/Sidebar";
+import Topbar from "../../components/adminpackage/packageviewandedit/Topbar";
 
 function PackageEditAndViewPage() {
   const navigate = useNavigate();
@@ -20,13 +20,15 @@ function PackageEditAndViewPage() {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!packageData.name.trim())
-      newErrors.packageName = "Package name is required";
+    if (!packageData.name.trim()) newErrors.name = "Package name is required";
     if (!String(packageData.merry_limit).trim())
-      newErrors.merryLimit = "Merry limit is required";
+      newErrors.merry_limit = "Merry limit is required";
     if (!packageData.price.trim()) newErrors.price = "Price is required";
     if (!packageData.details.length)
       newErrors.packageDetail = "At least one package detail is required";
+    if (packageData.url === null) {
+      newErrors.iconDetail = "At least one image is required";
+    }
     setPackageData({ ...packageData, errors: newErrors });
     return Object.keys(newErrors).length === 0;
   };
@@ -65,7 +67,7 @@ function PackageEditAndViewPage() {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col">
+      <div className="w-screen h-screen">
         <form onSubmit={handleSubmit}>
           <Topbar />
           <FormPackage

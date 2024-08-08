@@ -4,6 +4,7 @@ import { rateLimiter } from "./middlewares/rateLimiter.middleware.mjs";
 import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
+import http from "http";
 import logger from "./utils/logger.mjs";
 import morgan from "morgan";
 import errorHandler from "./middlewares/errorHandler.middleware.mjs";
@@ -11,8 +12,16 @@ import apiV1Routes from "./routes/api/v1/index.mjs";
 import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
 import { avatarUpload } from "./middlewares/multer.middleware.mjs";
-
+import socket from "./utils/socket.mjs";
+import "./controllers/transaction.controller.mjs";
 const app = express();
+
+const corsOptions = {
+  origin: `${process.env.FRONTEND_URL}` || "http://localhost:5173",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 4000;
 
@@ -20,14 +29,9 @@ const limiterMax = process.env.RATE_LIMITER_MAX || 50;
 
 const limiterWindow = process.env.RATE_LIMITER_WINDOW_MS || 60000;
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  optionsSuccessStatus: 200,
-};
+// app.use(rateLimiter(limiterMax, limiterWindow));  // TODO plan to enable in production
 
-app.use(rateLimiter(limiterMax, limiterWindow));
-
-// app.use(compression());
+app.use(compression());
 
 app.use(helmet());
 
@@ -37,15 +41,13 @@ app.use(
   })
 );
 
-app.use(cors(corsOptions));
-
 app.use(express.json());
 
 app.get("/status", (req, res) => {
   return res.status(200).json("Server API is working");
 });
 
-app.use("/api/v1", [avatarUpload], apiV1Routes);
+app.use("/api/v1", [avatarUpload], apiV1Routes); // FIXME plan to relocate multer(avatarUpload), follow PoLA principle
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
 
@@ -55,7 +57,11 @@ app.get("*", (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+const httpServer = http.createServer(app);
+// connect soket io
+socket(httpServer);
+
+httpServer.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
 

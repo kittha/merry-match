@@ -5,11 +5,13 @@ import checkmark from "../../../public/assets/paymentSuccesspage/checkmark.svg";
 import Footer from "../../components/homepage/Footer";
 import { useNavigate } from "react-router-dom";
 import { usePackage } from "../../contexts/PackageProvider";
+import { useAuth } from "../../contexts/authentication";
 
 function PaymentSuccessPage() {
   const navigate = useNavigate();
   const { selectedPackage } = usePackage();
-
+  const { state } = useAuth();
+  const userId = state.user?.id;
   const today = new Date();
 
   const startDate = today.toLocaleDateString("th-TH");
@@ -45,7 +47,7 @@ function PaymentSuccessPage() {
               </button>
               <button
                 onClick={() => {
-                  navigate("/membership");
+                  navigate(`/membership/${userId}`);
                 }}
                 className="px-[24px] py-[12px] bg-[#C70039] text-white font-[700] text-center rounded-full"
               >
@@ -55,7 +57,9 @@ function PaymentSuccessPage() {
           </div>
           <div className="right">
             <div className="lg:w-[357px] p-[16px] lg:p-[40px] rounded-[32px] bg-gradient-to-r from-[#742138] to-[#A878BF] flex flex-col gap-[16px] lg:gap-[24px]">
-              <img src={icon} className="w-[60px] h-[60px]"></img>
+              <div className="bg-[#F6F7FC] size-[60px] rounded-[16px] flex justify-center items-center">
+                <img src={selectedPackage?.url} className="size-[36px]"></img>
+              </div>
               <div className="top">
                 <p className="text-white text-[32px] font-[700]">
                   {selectedPackage?.name || "N/A"}
@@ -98,7 +102,7 @@ function PaymentSuccessPage() {
             </button>
             <button
               onClick={() => {
-                navigate("/membership");
+                navigate(`/membership/${userId}`);
               }}
               className="w-[177px] h-[48px] px-[15px] py-[12px] bg-[#C70039] text-white font-[700] rounded-full"
             >

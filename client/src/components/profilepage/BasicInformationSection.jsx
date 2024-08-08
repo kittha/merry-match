@@ -42,11 +42,11 @@ function BasicInformationSection() {
 
   return (
     <>
-      <div className="flex flex-col w-full lg:pl-0 lg:pr-0 pl-[16px] pr-[16px] lg:w-[930px] lg:mt-[5px] mt-[40px]">
+      <div className="flex flex-col w-full  lg:w-[930px]">
         <h1 className="basicInformation text-[#2A2E3F] font-[700] text-[24px]">
           Basic Information
         </h1>
-        <div className="column1 flex mt-[24px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+        <div className="column1 flex lg:mt-[24px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
           <div className="flex flex-col lg:mr-[12px]">
             <label
               htmlFor="name"
@@ -89,14 +89,14 @@ function BasicInformationSection() {
             <img
               src={CalendarIcon}
               alt="calendar"
-              className="h-[24px] w-[24px] absolute top-12 right-4 transform -translate-y-1/2 cursor-pointer"
+              className="h-[24px] w-[24px] absolute top-[52px] right-4 transform -translate-y-1/2 cursor-pointer"
               onClick={handleIconClick}
             />
             {errors.birthday && <div className="error">{errors.birthday}</div>}
           </div>
         </div>
 
-        <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+        <div className="column3 flex lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
           <div className="flex flex-col lg:mr-[12px]">
             <label
               htmlFor="location"
@@ -152,7 +152,7 @@ function BasicInformationSection() {
           </div>
         </div>
 
-        <div className="column2 flex mt-[24px] lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
+        <div className="column flex  lg:mt-[40px] lg:flex-row flex-col-reverse lg:gap-0 gap-[30px]">
           <div className="flex flex-col lg:mr-[12px]">
             <label
               htmlFor="username"

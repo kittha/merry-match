@@ -6,14 +6,18 @@ import {
   createPackage,
   updatePackageById,
   deletePackageById,
+  getComplaintsByParam,
+  getComplaintsByStatus,
 } from "../../../controllers/admin.controller.mjs";
 import { validateComplaintStatus } from "../../../middlewares/complaintStatus.validation.mjs";
 import authenticateAdmin from "../../../middlewares/authenticateAdmin.middleware.mjs";
 import { validatePackageData } from "../../../middlewares/packageData.validation.mjs";
 
 const router = express.Router();
-
+// TODO add middleware to chk Authentication & Authorization; chk input validation
 router.get("/complaints", getAllComplaints);
+router.get("/complaints/param", getComplaintsByParam);
+router.get("/complaints/list", getComplaintsByStatus);
 router.get("/complaint/:complaintId", getComplaintById);
 router.put(
   "/complaint/:complaintId/status",

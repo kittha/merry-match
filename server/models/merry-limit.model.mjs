@@ -6,24 +6,26 @@ import connectionPool from "../configs/db.mjs";
  * @param {number} userId - The Number of user id.
  * @returns {object} - The Object that contain key:value pair of merry-limit of that user.
  */
+
 export const getMerryLimit = async (userId) => {
   try {
     const result = await connectionPool.query(
       `
           SELECT packages.merry_limit
           FROM users
-          JOIN roles ON users.role_id = roles.role_id
-          JOIN packages ON roles.package_id = packages.package_id
+          JOIN packages ON users.package_id = packages.package_id
           WHERE users.user_id = $1
           `,
       [userId]
     );
 
-    if (result.rows.length === 0) {
-      throw new Error("No data found for the given userId.");
+    let userMerryLimit = null;
+    if (result.rows[0] === undefined) {
+      // merry_limit_freemium_package_default_value
+      userMerryLimit = 20;
+    } else {
+      userMerryLimit = result.rows[0].merry_limit;
     }
-
-    const userMerryLimit = result.rows[0].merry_limit;
 
     return { merry_limit: userMerryLimit };
   } catch (error) {
@@ -31,12 +33,10 @@ export const getMerryLimit = async (userId) => {
     throw error;
   }
 };
-
 export const getAvailableClicksTodayByUserId = async (userId) => {
   try {
     const currentDateTime = new Date();
     const currentDate = currentDateTime.toISOString().split("T")[0];
-
     const result = await connectionPool.query(
       `
       SELECT *
@@ -48,14 +48,7 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
       [userId, currentDate]
     );
 
-    if (result.rows.length === 0) {
-      throw new Error(
-        "No data found for the given userId. User may not user any merry quota yet."
-      );
-    }
-
     const availableClicksToday = result.rowCount;
-    console.log(availableClicksToday);
 
     return { availableClicksToday: availableClicksToday };
   } catch (error) {
@@ -64,6 +57,7 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
   }
 };
 
+// TODO Prepare do delete this
 // export const updateAvailableClicksToday = async (userId) => {
 //   try {
 //     const result = await connectionPool.query(

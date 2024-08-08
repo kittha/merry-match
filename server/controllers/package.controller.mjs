@@ -1,6 +1,7 @@
 import {
   getAllPackages as getAllPackagesFromModel,
   getPackageById as getPackageByIdFromModel,
+  getPackagesByParam as getPackagesByParamFromModel,
 } from "../models/package.model.mjs";
 
 /**
@@ -13,10 +14,30 @@ import {
 export const getAllPackages = async (req, res) => {
   try {
     const packagesList = await getAllPackagesFromModel(req);
-    console.log("Finally, I'm here");
     return res.status(200).json({
       message: "Fetch list of packages successfully.",
       data: packagesList,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+/**
+ * Get all packages data from the Merry Match application.
+ *
+ * @param {object} req - The request object, contain nothing.
+ * @param {object} res - The response object, used to send response with data back to the client.
+ * @returns
+ */
+export const getPackagesByParam = async (req, res) => {
+  try {
+    const name = req.query.name;
+    const packagesParam = await getPackagesByParamFromModel(name);
+    return res.status(200).json({
+      data: packagesParam,
     });
   } catch (error) {
     res.status(500).json({

@@ -1,6 +1,8 @@
 import {
   getAllComplaints as getAllComplaintsFromModel,
   getComplaintById as getComplaintByIdFromModel,
+  getComplaintsByParam as getComplaintsByParamFromModel,
+  getComplaintsByStatus as getComplaintsByStatusFromModel,
   updateComplaintStatus as updateComplaintStatusFromModel,
 } from "../models/complaint.model.mjs";
 
@@ -15,6 +17,26 @@ import { cloudinaryUpload } from "../utils/cloudinary.uploader.mjs";
 export const getAllComplaints = async (req, res) => {
   try {
     const complaints = await getAllComplaintsFromModel();
+    return res.status(200).json(complaints);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve complaints." });
+  }
+};
+
+export const getComplaintsByParam = async (req, res) => {
+  try {
+    const name = req.query.name;
+    const complaints = await getComplaintsByParamFromModel(name);
+    return res.status(200).json(complaints);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve complaints." });
+  }
+};
+
+export const getComplaintsByStatus = async (req, res) => {
+  try {
+    const status = req.query.status;
+    const complaints = await getComplaintsByStatusFromModel(status);
     return res.status(200).json(complaints);
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve complaints." });

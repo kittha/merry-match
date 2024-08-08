@@ -13,8 +13,6 @@ import { authorizeUser } from "../../../middlewares/authorization.middleware.mjs
 
 const router = express.Router();
 
-// router.get("/", getAllProfiles);
-
 router.get("/:userId", getUserProfileById);
 
 router.put(

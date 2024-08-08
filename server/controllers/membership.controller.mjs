@@ -1,48 +1,54 @@
-// import getUserPackageById from "./transaction.controller.mjs";
-// import getUserTransactionsById from "./transaction.controller.mjs";
+import {
+  getPackageIdByUserId,
+  removeUserPackage,
+} from "../models/user.model.mjs";
+import { getPackageById } from "../models/package.model.mjs";
+import { getTransactionWithPackageDetails } from "../models/transaction.model.mjs";
 
-// export const getmembershipDataById = async (req, res) => {
-//   const userId = req.user.user_id;
-//   try {
-//     const mockReq = { userId }; // send req by using userId as argument
+export const getMembershipData = async (req, res) => {
+  const { userId } = req.params;
 
-//     let userPackage, userTransaction;
-//     let userPackageStatusCode, userTransactionStatusCode;
+  try {
+    // Fetch package ID associated with the user
+    const packageId = await getPackageIdByUserId(userId);
 
-//     const userPackageResponse = {
-//       status: (statusCode) => {
-//         userPackageStatusCode = statusCode;
-//         return {
-//           json: (data) => {
-//             userPackage = data;
-//           },
-//         };
-//       },
-//     };
+    // Fetch package details using the package ID
+    const packageDetails = await getPackageById(packageId);
 
-//     const userTransactionResponse = {
-//       status: (statusCode) => {
-//         userTransactionStatusCode = statusCode;
-//         return {
-//           json: (data) => {
-//             userTransaction = data;
-//           },
-//         };
-//       },
-//     };
+    // Fetch billing history with package details using the user ID
+    const billingHistoryWithPackageDetails =
+      await getTransactionWithPackageDetails(userId);
 
-//     await getUserPackageById(mockReq, userPackageResponse); // reuse api
-//     await getUserTransactionsById(mockReq, userTransactionResponse); // reuse api
+    // Respond with combined data
+    res.status(200).json({
+      packageDetails,
+      billingHistory: billingHistoryWithPackageDetails,
+    });
+  } catch (error) {
+    console.error("Error getting membership data:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
 
-//     const membershipData = { userPackage, userTransaction };
+export const cancelUserPackage = async (req, res) => {
+  const { userId } = req.params;
 
-//     if (userPackageStatusCode !== 200 || userTransactionStatusCode !== 200) {
-//       return res.status(500).json({ error: "Failed to fetch membership data" });
-//     }
+  try {
+    console.log(`Fetching package ID for userId: ${userId}`);
+    const packageId = await getPackageIdByUserId(userId);
+    console.log(`Fetched packageId: ${packageId} for userId: ${userId}`);
 
-//     res.status(200).json(membershipData);
-//   } catch (error) {
-//     console.error("Error fetching membership data:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
+    if (!packageId) {
+      return res
+        .status(404)
+        .json({ message: "User has no package to cancel." });
+    }
+
+    const result = await removeUserPackage(userId, packageId);
+
+    res.status(200).json({ message: "Package canceled successfully.", result });
+  } catch (error) {
+    console.error("Error canceling package:", error);
+    res.status(500).json({ message: error.message });
+  }
+};

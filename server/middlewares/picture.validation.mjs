@@ -1,5 +1,11 @@
 export const validatePicture = (req, res, next) => {
-  // console.log(req.body.avatar);
+  // let avatarUrl = req.body.avatar;
+  if (Array.isArray(req.body.avatar)) {
+    req.body.avatar = req.body.avatar.map((avatar) => JSON.parse(avatar));
+  } else {
+    req.body.avatar = [JSON.parse(req.body.avatar)];
+  }
+
   const numberOfUrl = req.body.avatar?.length;
   // console.log("url", numberOfUrl);
   const numberOfFile = req.files.avatar?.length;

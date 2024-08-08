@@ -11,7 +11,7 @@ import { useImage } from "../../../hooks/useImage.mjs";
 import { FormContext } from "../../../contexts/FormProvider";
 
 const ProfileDetailModal = ({ user, onClose }) => {
-   const { calculateAge } = useContext(FormContext);
+  const { calculateAge } = useContext(FormContext);
   const { checkImage } = useImage();
 
   // convert Object user.avatars  to Array of avatar_url value
@@ -34,8 +34,8 @@ const ProfileDetailModal = ({ user, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto rounded-[32px] shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 flex items-center justify-center bg-[#00000022] z-30">
+      <div className="overflow-scroll lg:overflow-hidden py-8 bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto lg:rounded-[32px] rounded-0 shadow-lg">
         <div className="flex justify-end pr-4 ">
           <button onClick={onClose}>
             <img className="hidden lg:block" src={exit} alt="exit" />
@@ -52,48 +52,47 @@ const ProfileDetailModal = ({ user, onClose }) => {
         </div>
         <div className="lg:flex flex-row">
           <div className="lg:Lside lg:w-1/2 flex justify-center relative">
-            <div className="lg:w-[400px] lg:h-[400px] rounded-2xl">
-              {avatarsArr.length > 0 && (
-                <>
-                  <img
-                    className="rounded-2xl bg-cover lg:w-[400px] lg:h-[400px] lg:block"
-                    src={avatarsArr[currentAvatarIndex]}
-                    alt="profile"
-                  />
-                  <img
-                    className="rounded-2xl bg-cover lg:w-[400px] lg:h-[400px] block lg:hidden"
-                    src={avatarsArr[currentAvatarIndex]}
-                    alt="profile"
-                  />
-                  <div className="flex justify-center absolute left-[180px] lg:bottom-32 bottom-5">
-                    <div className="flex justify-center rounded-md">
-                      <button>
-                        <img src={crossbutton} alt="cross" />
-                      </button>
-                    </div>
-                    <div className="flex justify-center rounded-md">
-                      <button>
-                        <img src={lovebutton} alt="love" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="flex justify-between px-8 pt-4">
-                    <div className="PhotoCount flex mt-2.5">
-                      <p>
-                        {currentAvatarIndex + 1}/{avatarsArr.length}
-                      </p>
-                    </div>
-                    <div className="arrowBtn flex">
-                      <button onClick={handlePrevAvatar}>
-                        <img src={arrowL} alt="leftArrow" />
-                      </button>
-                      <button onClick={handleNextAvatar}>
-                        <img src={arrowR} alt="rightArrow" />
-                      </button>
-                    </div>
-                  </div>
-                </>
+            <div className="lg:w-[400px] lg:h-[400px] w-screen h-[356px] rounded-2xl">
+              {avatarsArr.length > 0 ? (
+                <img
+                  className="rounded-2xl bg-cover lg:w-[400px] lg:h-[400px] w-screen h-[315px]"
+                  src={avatarsArr[currentAvatarIndex]}
+                  alt="profile"
+                />
+              ) : (
+                <div className="rounded-2xl lg:w-[400px] lg:h-[400px] w-screen h-[315px] bg-gray-200 flex justify-center items-center">
+                  <p className="text-gray-500 text-center">
+                    No Image Available
+                  </p>
+                </div>
               )}
+              <div className="flex justify-center -translate-y-10">
+                <div className="flex justify-center rounded-md">
+                  <button>
+                    <img src={crossbutton} alt="cross" />
+                  </button>
+                </div>
+                <div className="flex justify-center rounded-md">
+                  <button>
+                    <img src={lovebutton} alt="love" />
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-between px-8 -translate-y-20">
+                <div className="PhotoCount flex mt-2.5">
+                  <p>
+                    {currentAvatarIndex + 1}/{avatarsArr.length}
+                  </p>
+                </div>
+                <div className="arrowBtn flex">
+                  <button onClick={handlePrevAvatar}>
+                    <img src={arrowL} alt="leftArrow" />
+                  </button>
+                  <button onClick={handleNextAvatar}>
+                    <img src={arrowR} alt="rightArrow" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 

@@ -5,15 +5,15 @@ import BasicInformation from "../../components/registerpage/Information";
 import { FormContext } from "../../contexts/FormProvider";
 
 const RegisterPage = () => {
-  const { handleSubmit, handleNext, handleBack, step } =
+  const { handleSubmit, handleNext, handleBack, step, loading } =
     useContext(FormContext);
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="font-Nunito lg:bg-[url('/assets/registerpage/registerpage-bg.svg')]  flex flex-col items-center justify-center w-screen h-screen bg-no-repeat bg-cover">
-        <div className="h-screen flex  flex-col lg:justify-center lg:items-center lg:flex-col w-screen lg:w-[930px] lg:h-[703px]">
-          <div className="lg:mt-[400px] mt-[100px] px-[16px]">
-            <header className="w-full flex flex-col  justify-start   lg:flex-row lg:justify-between">
+      <div className="font-Nunito lg:bg-[url('/assets/registerpage/registerpage-bg.svg')]  flex flex-col items-center justify-start w-screen bg-no-repeat bg-cover pt-[81px] lg:pt-[168px]">
+        <div className=" flex  flex-col lg:justify-center lg:items-center lg:flex-col w-screen lg:w-[930px] ">
+          <div className=" px-[16px]">
+            <header className="w-full flex flex-col  justify-start lg:flex-row lg:justify-between">
               <div className="flex flex-col items-start justify-center ">
                 <p className="text-[14px] text-[#7B4429] mb-1 font-[600]">
                   REGISTER
@@ -156,11 +156,11 @@ const RegisterPage = () => {
                   <span className="text-[#9AA1B9]">/3</span>
                 </p>
                 {/* Back button */}
-                <div className="">
+                <div className="flex justify-between items-center">
                   <button
                     onClick={handleBack}
                     type="button"
-                    className="text-[#C8CCDB] hover:text-[#C70039] font-[700]"
+                    className="text-[#C8CCDB] hover:text-[#C70039] font-[700] rounded-full px-[16px] py-[8px] sm:px-[24px] sm:py-[12px]"
                   >
                     🡐 Back
                   </button>
@@ -177,9 +177,10 @@ const RegisterPage = () => {
                     <button
                       type="submit"
                       onClick={handleSubmit}
-                      className="drop-shadow-register text-[16px] leading-[24px] text-white bg-[#C70039] hover:bg-red-800 font-[700] rounded-[99px] px-[24px] py-[12px] text-center ml-[24px]"
+                      className="drop-shadow-lg text-[16px] leading-[24px] text-white bg-[#C70039] hover:bg-red-800 font-[700] rounded-[99px] px-[24px] py-[12px] text-center ml-[24px]"
+                      disabled={loading}
                     >
-                      Confirm
+                      {loading ? "Confirming..." : "Confirm"}
                     </button>
                   )}
                 </div>

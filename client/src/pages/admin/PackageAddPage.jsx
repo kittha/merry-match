@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import FormPackage from "../../components/packageadd/FormPackage";
-import Sidebar from "../../components/packageadd/Sidebar";
-import Topbar from "../../components/packageadd/Topbar";
+import FormPackage from "../../components/adminpackage/packageadd/FormPackage";
+import Sidebar from "../../components/adminpackage/packageadd/Sidebar";
+import Topbar from "../../components/adminpackage/packageadd/Topbar";
 
 function PackageAddPage() {
   const navigate = useNavigate();
@@ -24,6 +24,8 @@ function PackageAddPage() {
     if (!packageData.price.trim()) newErrors.price = "Price is required";
     if (!packageData.details.length)
       newErrors.packageDetail = "At least one package detail is required";
+    if (Object.keys(icon).length === 0)
+      newErrors.iconDetail = "At least one image is required";
     setPackageData({ ...packageData, errors: newErrors });
     return Object.keys(newErrors).length === 0;
   };
@@ -59,7 +61,7 @@ function PackageAddPage() {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col">
+      <div className="w-screen h-screen">
         <form onSubmit={handleSubmit}>
           <Topbar />
           <FormPackage

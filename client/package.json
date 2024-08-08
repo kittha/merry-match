@@ -12,12 +12,16 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@mui/material": "^5.16.4",
+    "@mui/material": "^5.16.6",
     "@react-spring/web": "^9.7.4",
     "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^4.1.0",
+    "@supabase/supabase-js": "^2.45.0",
     "axios": "^1.7.2",
+    "date-fns": "^3.6.0",
+    "emoji-picker-react": "^4.11.1",
     "jwt-decode": "^4.0.0",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
     "react-datepicker": "^7.2.0",
@@ -44,5 +48,9 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "^0.23.0", 
+    "@rollup/rollup-linux-x64-gnu": "^4.19.1"
   }
 }

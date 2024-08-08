@@ -1,3 +1,3 @@
-function ColorFilterComponent() {}
+// function ColorFilterComponent() {}
 
-export default ColorFilterComponent;
+// export default ColorFilterComponent;

@@ -12,7 +12,7 @@ const Navbar = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
-    <nav className="Navbar text-[#411032] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-20 overflow-auto flex items-center justify-between w-screen lg:h-[88px] h-[52px] font-bold shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.12)]">
+    <nav className="Navbar text-[#411032] text-[1rem] font-Nunito bg-[#FFFFFF] fixed z-20 overflow-auto flex items-center justify-between w-screen lg:h-[88px] h-[52px] font-bold shadow-md max-lg:mt-[-1px]">
       <div className="flex items-center justify-between w-full lg:w-[1440px] mx-auto px-4 lg:px-0">
         <button
           onClick={() => {
@@ -34,7 +34,7 @@ const Navbar = () => {
             <img
               src={iconBell}
               alt="merry match message"
-              className="h-[26px] w-[26px]"
+              className="h-[26px] w-[26px] hidden"
             />
           </button>
           <button
@@ -108,7 +108,7 @@ const Navbar = () => {
 
         {/*-------------------------------------------- Mobile Menu -----------------------------------------------------------------------*/}
         {isOpen && (
-          <div className="lg:hidden fixed inset-0 top-[52px] bg-white z-10 font-Nunito text-gray-700 font-medium">
+          <div className="lg:hidden fixed inset-0 top-[52px] bg-white z-10 font-Nunito text-gray-700 font-medium mt-[-3px]">
             <div className="flex justify-center items-center p-[16px] pt-[24px]">
               <button
                 className="flex justify-center items-center bg-[#C70039] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[343px] font-[700]"
