@@ -26,12 +26,12 @@ const CountdownTimer = () => {
   }, []);
 
   return (
-    <div>
-      <p>
+    <>
+      <span>
         Reset in {hoursLeft}
         {hoursLeft === 1 ? "h" : "h"}...
-      </p>
-    </div>
+      </span>
+    </>
   );
 };
 
