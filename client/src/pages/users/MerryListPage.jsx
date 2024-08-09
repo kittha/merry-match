@@ -11,9 +11,9 @@ import Chaticon from "/assets/merrylist-image/chat.png";
 import Vectoricon from "/assets/merrylist-image/vector.png";
 import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
-import UserProfilePopup from "../../components/matchingpage/matching/UserProfilePopup";
+import ProfileMatchAndMerryPopup from "../../components/merry-list/ProfileMatchAndMerryPopup";
 import CountdownTimer from "../../components/merry-list/CountdownTimer";
-import ModalPopup from "../../components/merry-list/UnmatchPopup";
+import UnmatchModalPopup from "../../components/merry-list/UnmatchPopup";
 
 function MerryListPage() {
   const { availableClicksToday, maxDailyQuota } = useMatch();
@@ -388,18 +388,6 @@ function MerryListPage() {
                     </div>
                   )}
                   {/************************************************************************************************/}
-                  {showModalProfile && (
-                    <UserProfilePopup
-                      user={selectedUser}
-                      onClose={() => setShowModalProfile(false)}
-                    />
-                  )}
-                  {showModalUnmatch && selectedUser ? (
-                    <ModalPopup
-                      user={selectedUser}
-                      onClose={() => setShowModalUnmatch(false)}
-                    />
-                  ) : null}
                 </article>
               </section>
             );
@@ -407,6 +395,18 @@ function MerryListPage() {
         </section>
       </article>
       <Footer />
+      {showModalProfile && (
+        <ProfileMatchAndMerryPopup
+          user={selectedUser}
+          onClose={() => setShowModalProfile(false)}
+        />
+      )}
+      {showModalUnmatch && selectedUser ? (
+        <UnmatchModalPopup
+          user={selectedUser}
+          onClose={() => setShowModalUnmatch(false)}
+        />
+      ) : null}
     </main>
   );
 }
