@@ -120,13 +120,16 @@ function AuthProvider(props) {
   };
 
   // register the user
-  const register = async (data) => {
+  const register = async (data, resetForm) => {
     try {
       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/register`,
         data
       );
+
       navigate("/login");
+      resetForm();
+      alert("Registration successful");
     } catch (error) {
       console.error("Registration error:", error);
     }

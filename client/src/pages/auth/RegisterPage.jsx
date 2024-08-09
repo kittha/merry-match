@@ -4,8 +4,7 @@ import BasicInformation from "../../components/registerpage/Information";
 import { useForm } from "../../hooks/useForm";
 
 const RegisterPage = () => {
-  const { handleSubmit, handleNext, handleBack, step, loading } =
-  useForm();
+  const { handleSubmit, handleNext, handleBack, step, loading } = useForm();
 
   return (
     <form onSubmit={handleSubmit}>
