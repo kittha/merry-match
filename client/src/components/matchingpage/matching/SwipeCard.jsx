@@ -85,11 +85,11 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
 
   const swiped = (direction, userId) => {
     console.log(`Removing: ${userId}, Direction: ${direction}`);
-    // if (direction === 'left') {
-    //   disfavorUser(userId);
-    // } else if (direction === 'right') {
-    //   addMerry(userId);
-    // }
+    if (direction === 'left') {
+      disfavorUser(userId);
+    } else if (direction === 'right') {
+      favourUser(userId);
+    }
     setUserQueue((prevQueue) => {
       const newQueue = [...prevQueue.slice(1), prevQueue[0]]; // Move the first user to the end
       return newQueue;

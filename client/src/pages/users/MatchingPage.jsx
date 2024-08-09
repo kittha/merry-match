@@ -23,7 +23,7 @@ function MatchingPage() {
   }, [allUser]);
 
   return (
-    <div className="flex flex-col lg:flex-row">
+    <div className="flex lg:flex-row">
       <div className="hidden lg:flex ">
         <ChatContainer />
       </div>
@@ -33,7 +33,7 @@ function MatchingPage() {
         userQueue={userQueue}
         setUserQueue={setUserQueue}
       />
-      <div className={`${showFilter ? "flex" : "hidden"} lg:flex`}>
+      <div className={`${showFilter ? "" : "hidden"} lg:flex`}>
         <FilterContainer
           Queue={Queue}
           setQueue={setQueue}
@@ -42,7 +42,7 @@ function MatchingPage() {
           setShowFilter={setShowFilter}
         />
       </div>
-      <div className="absolute bottom-0 lg:w-0 w-48">
+      <div className="absolute bottom-[20px] sm:left-auto left-4 flex gap-2">
         <button
           onClick={() => setShowFilter(true)}
           className="lg:hidden flex gap-2 w-auto z-30"

@@ -68,7 +68,7 @@ function FilterContainer({
   };
   return (
     // <div className="lg:w-[220px] w-screen lg:h-screen h-[80vh] bg-white z-30 lg:overflow-hidden overflow-auto rounded-[24px]">
-    <div className="w-screen h-fit flex flex-col justify-end items-center lg:w-[220px] lg:h-[936px] font-Nunito  lg:pt-[124px] z-20">
+    <div className="w-screen h-fit flex flex-col items-center lg:w-[220px] lg:h-[936px] font-Nunito  lg:pt-[124px] pt-12 z-20">
       <div className="pt-[64px] relative bottom-[32px] w-full h-[44px] flex rounded-t-[24px] justify-between items-center lg:hidden bg-white">
         <button
           className="ml-[16px]"
