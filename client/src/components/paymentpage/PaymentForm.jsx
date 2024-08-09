@@ -69,8 +69,6 @@ const PaymentForm = () => {
 
     setLoading(true); // Set loading state to true
 
-    const stripe = window.Stripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
-
     const paymentData = {
       user: {
         name: nameCard,
@@ -117,38 +115,39 @@ const PaymentForm = () => {
         });
         return;
       }
+      // unnecessary
+      // const stripe = window.Stripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
+      // const confirmResult = await stripe.confirmCardPayment(
+      //   data.client_secret,
+      //   {
+      //     payment_method: {
+      //       card: {
+      //         number: cardNumber.replace(/\s+/g, ""),
+      //         exp_month: expCard.split("/")[0],
+      //         exp_year: expCard.split("/")[1],
+      //         cvc: cvcCard,
+      //       },
+      //       billing_details: {
+      //         name: nameCard,
+      //       },
+      //     },
+      //   }
+      // );
 
-      const confirmResult = await stripe.confirmCardPayment(
-        data.client_secret,
-        {
-          payment_method: {
-            card: {
-              number: cardNumber.replace(/\s+/g, ""),
-              exp_month: expCard.split("/")[0],
-              exp_year: expCard.split("/")[1],
-              cvc: cvcCard,
-            },
-            billing_details: {
-              name: nameCard,
-            },
-          },
-        }
-      );
-
-      if (confirmResult.error) {
-        console.error(
-          "Payment confirmation error:",
-          confirmResult.error.message
-        );
-        setLoading(false); // Reset loading state on error
-      } else if (confirmResult.paymentIntent.status === "succeeded") {
-        navigate("/payment-success", {
-          state: {
-            packageId: package_id,
-            packageName: package_name,
-          },
-        });
-      }
+      // if (confirmResult.error) {
+      //   console.error(
+      //     "Payment confirmation error:",
+      //     confirmResult.error.message
+      //   );
+      //   setLoading(false); // Reset loading state on error
+      // } else if (confirmResult.paymentIntent.status === "succeeded") {
+      //   navigate("/payment-success", {
+      //     state: {
+      //       packageId: package_id,
+      //       packageName: package_name,
+      //     },
+      //   });
+      // }
     } catch (error) {
       console.error(
         "Payment error:",

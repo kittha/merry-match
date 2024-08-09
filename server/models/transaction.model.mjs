@@ -6,15 +6,8 @@ import connectionPool from "../configs/db.mjs";
  * @returns {Promise<object>} - Returns an object containing the transaction_id.
  */
 export const createTransaction = async (transaction) => {
-  const {
-    user_id,
-
-    package_id,
-    status,
-    created_at,
-    updated_at,
-    session_id,
-  } = transaction;
+  const { user_id, package_id, status, created_at, updated_at, session_id } =
+    transaction;
 
   try {
     const result = await connectionPool.query(

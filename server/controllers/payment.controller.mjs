@@ -77,7 +77,7 @@ export const processPayment = async (req, res) => {
 
     // Create a payment intent using the predefined card type
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amountInTHB, // Amount in cents
+      amount: amountInTHB, // Amount in satang
       currency: "thb",
       customer: customer.id,
       payment_method: mappedCardType,
