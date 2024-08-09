@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Portal from "./Portal";
@@ -8,7 +8,7 @@ import headerMerryMatchLogo from "/assets/header-image/header-merrymatch-logo.sv
 import iconBell from "/assets/navbar-image/icon_bell.png";
 import iconChat from "/assets/navbar-image/icon_chat.png";
 import profileMenu1 from "/assets/navbar-image/profile_menu1.png";
-import profile from "/assets/navbar-image/profile.png";
+// import profile from "/assets/navbar-image/profile.png";
 import icon1 from "/assets/navbar-image/icon1.png";
 import icon2 from "/assets/navbar-image/icon2.png";
 import icon3 from "/assets/navbar-image/icon3.png";

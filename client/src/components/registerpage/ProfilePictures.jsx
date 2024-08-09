@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import plus from "../../../public/assets/profilepicture/plus.png";
 import { useForm } from "../../hooks/useForm";
 import { useImage } from "../../hooks/useImage.mjs";

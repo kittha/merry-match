@@ -26,7 +26,7 @@ export const FormProvider = ({ children }) => {
 
   const token = localStorage.getItem("token");
   const [errors, setErrors] = useState({});
-  const { register, state } = useAuth();
+  const { register } = useAuth();
   const [loading, setLoading] = useState(false);
   const resetForm = () => {
     setFormData(initialData);

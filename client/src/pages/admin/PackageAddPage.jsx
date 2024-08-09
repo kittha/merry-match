@@ -42,7 +42,7 @@ function PackageAddPage() {
     }
 
     try {
-      result = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/package`,
         sentAdminData
       );

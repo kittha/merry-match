@@ -113,7 +113,7 @@ function AuthProvider(props) {
 
       setState({
         ...state,
-        error: error.response.data.message,
+        error: errorMessage,
         loading: false,
       });
     }
@@ -129,14 +129,6 @@ function AuthProvider(props) {
       navigate("/login");
     } catch (error) {
       console.error("Registration error:", error);
-      let errorMessage = "An unexpected error occurred";
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        errorMessage = error.response.data.message;
-      }
     }
   };
 

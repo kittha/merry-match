@@ -45,7 +45,7 @@ function PackageEditAndViewPage() {
       sentAdminData.append("details[]", packageData.details[index]);
     }
     try {
-      result = await axios.put(
+      await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/${
           packageData.package_id
         }`,

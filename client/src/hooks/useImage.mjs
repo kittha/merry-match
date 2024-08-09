@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useForm } from "./useForm";
 
 export const useImage = () => {

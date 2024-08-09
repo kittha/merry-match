@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AgeRange from "./AgeRange";
 import CheckBox from "./CheckBox";
 import cross from "../../../../public/assets/filter-area/Vector.svg";
-import search from "../../../../public/assets/filter-area/search.svg";
+// import search from "../../../../public/assets/filter-area/search.svg";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 
+// TODO what is setShowFilter, getData?
 function FilterContainer({
   Queue,
   userQueue,
@@ -15,7 +16,7 @@ function FilterContainer({
   showFilter,
 }) {
   const { state } = useAuth();
-  const [filterQueue, setfilterQueue] = useState([]);
+  // const [filterQueue, setfilterQueue] = useState([]);
   const [isCheckedMale, setIsCheckMale] = useState(false);
   const [isCheckedFemale, setIsCheckFemale] = useState(false);
   const [isCheckedBinary, setIsCheckBinary] = useState(false);

@@ -16,7 +16,7 @@ import "./controllers/transaction.controller.mjs";
 const app = express();
 
 const corsOptions = {
-  origin: `${process.env.FRONTEND_URL}` || "http://localhost:5173",
+  origin: `${process.env.FRONTEND_URL}`,
   optionsSuccessStatus: 200,
 };
 

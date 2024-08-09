@@ -6,7 +6,6 @@ import useAuth from "../../hooks/useAuth";
 import {
   createMessage,
   getPrevMessages,
-  getMatchInfo,
 } from "../../hooks/connectMsg.mjs";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";

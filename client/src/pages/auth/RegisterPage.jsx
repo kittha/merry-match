@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import IdentitiesAndInterests from "../../components/registerpage/Interests";
 import ProfilePictures from "../../components/registerpage/ProfilePictures";
 import BasicInformation from "../../components/registerpage/Information";
