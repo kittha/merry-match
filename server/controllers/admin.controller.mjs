@@ -26,7 +26,8 @@ export const getAllComplaints = async (req, res) => {
 export const getComplaintsByParam = async (req, res) => {
   try {
     const name = req.query.name;
-    const complaints = await getComplaintsByParamFromModel(name);
+    const status = req.query.status;
+    const complaints = await getComplaintsByParamFromModel(name, status);
     return res.status(200).json(complaints);
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve complaints." });
