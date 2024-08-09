@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getStoredData } from "../utils/sessionManager";
 
 export const AuthContext = React.createContext();
 
@@ -16,7 +17,7 @@ function AuthProvider(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("data"));
+    const data = getStoredData();
     // console.log(data);
     if (data) {
       setState({

@@ -16,6 +16,7 @@ import icon4 from "/assets/navbar-image/icon4.png";
 import icon5 from "/assets/navbar-image/icon5.png";
 import icon6 from "/assets/navbar-image/icon6.png";
 import ChatContainer from "../matchingpage/chatcontainer/ChatContainer";
+import { getStoredData } from "../../utils/sessionManager";
 
 const NavbarAuthen = () => {
   const navigate = useNavigate();
@@ -202,7 +203,7 @@ const NavbarAuthen = () => {
             <div className="flex items-center justify-center h-[64px] w-auto py-6 px-4 text-white text-sm">
               <p>{userName}</p>
               <img
-                src={JSON.parse(localStorage.getItem("data")).avatars[0]}
+                src={getStoredData()?.avatars?.[0]}
                 alt="merry-match-profile"
                 className="h-[48px] w-[48px] rounded-full ml-4 bg-white"
               />

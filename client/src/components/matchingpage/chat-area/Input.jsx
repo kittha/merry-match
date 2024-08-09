@@ -128,7 +128,7 @@ const InputSection = ({ handleSendMsg }) => {
         rows="1"
         wrap="soft"
         placeholder="Message here..."
-        maxlength="1000"
+        maxLength="1000"
         className="input-msg flex-1 resize-none placeholder:text-[#9B9EAD] text-[#9B9EAD]
         bg-transparent focus:outline-none "
         value={inputText}

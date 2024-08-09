@@ -1,8 +1,9 @@
 import { useMatch } from "../../hooks/useMatch";
+import { getStoredData } from "../../utils/sessionManager";
 
 const UnmatchModalPopup = ({ user, onClose }) => {
   const { undoMerry } = useMatch();
-  let myUserId = JSON.parse(localStorage.getItem("data")).id;
+  let myUserId = getStoredData()?.id;
   let tmpUser = null;
   const unlikedUserId = user?.user_id_2;
 
