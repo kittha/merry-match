@@ -113,12 +113,12 @@ const Chat = () => {
   }, [arrivalMessage]);
 
   return (
-    <div className="page flex flex-row bg-[#160404]">
+    <div className="page w-screen flex flex-row bg-[#160404] overflow-hidden">
       <div className="sidebar hidden lg:flex">
         <ChatContainer />
       </div>
       {anotherUser && (
-        <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
+        <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col overflow-auto">
           <BackBar anotherUser={anotherUser} />
           <DisplayChat
             messages={messages}

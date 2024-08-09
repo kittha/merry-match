@@ -16,7 +16,7 @@ const DisplayChat = ({ messages, userId, anotherUser }) => {
   }, [messages]);
 
   return (
-    <main className="display-section box-border h-fit w-full py-6 lg:py-10 px-4 lg:px-[60px] flex-1 flex flex-col gap-7 lg:gap-12 justify-between items-center overflow-y-auto">
+    <main className="display-section box-border h-fit w-full py-6 lg:py-10 px-4 lg:px-[60px] flex-1 flex flex-col gap-7 lg:gap-12 justify-between items-center overflow-y-auto overflow-x-hidden">
       <div className="headbox max-w-[749px] w-fit lg:h-[90px] bg-[#F4EBF2] border border-[#DF89C6] rounded-2xl py-3 px-4 lg:py-6 lg:px-0 flex flex-row gap-4 lg:gap-6 justify-center items-center">
         <img
           src={matched}
@@ -38,7 +38,7 @@ const DisplayChat = ({ messages, userId, anotherUser }) => {
               // owner bubble
               <div
                 key={index}
-                className="message-line flex flex-row-reverse items-end gap-3"
+                className="message-line w-full flex flex-row-reverse items-end gap-3"
               >
                 <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit break-words rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
                   {msg.message}
@@ -55,7 +55,7 @@ const DisplayChat = ({ messages, userId, anotherUser }) => {
               // other user bubble
               <div
                 key={index}
-                className="message-line flex flex-row items-end gap-3"
+                className="message-line w-full flex flex-row items-end gap-3"
               >
                 <img
                   src={anotherUser.avatars["image1"]}
