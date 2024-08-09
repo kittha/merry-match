@@ -1,8 +1,9 @@
 export const validatePicture = (req, res, next) => {
   // let avatarUrl = req.body.avatar;
+
   if (Array.isArray(req.body.avatar)) {
     req.body.avatar = req.body.avatar.map((avatar) => JSON.parse(avatar));
-  } else {
+  } else if (req.body.avatar) {
     req.body.avatar = [JSON.parse(req.body.avatar)];
   }
 

@@ -180,8 +180,6 @@ export const FormProvider = ({ children }) => {
       return true;
     }
 
-    console.log("Form Data Submitted: ", formData);
-
     setLoading(true);
 
     const sentFormData = new FormData();
@@ -226,13 +224,11 @@ export const FormProvider = ({ children }) => {
         await updateProfile(userId, sentFormData);
         console.log("Updated Profile successful");
       } else {
-        await register(sentFormData);
-
+        await register(sentFormData, resetForm);
         setStep(1);
-        console.log("Registration successful");
       }
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Submission failed:", error);
     } finally {
       setLoading(false);
     }
