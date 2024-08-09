@@ -104,6 +104,11 @@ function AgeRange({ value, setValue, filterData, setfilterData }) {
               handleValueChangeLeft("searchAgeRangeNumberLeft", e.target.value)
             }
             onBlur={valueChange18}
+            onInput={(e) => {
+              if (e.target.value.startsWith("0") && e.target.value.length > 1) {
+                e.target.value = e.target.value.replace(/^0+/, "");
+              }
+            }}
             type="number"
             max="80"
             min="18"
@@ -121,6 +126,11 @@ function AgeRange({ value, setValue, filterData, setfilterData }) {
               )
             }
             onBlur={valueChange80}
+            onInput={(e) => {
+              if (e.target.value.startsWith("0") && e.target.value.length > 1) {
+                e.target.value = e.target.value.replace(/^0+/, "");
+              }
+            }}
             type="number"
             min="18"
             max="80"

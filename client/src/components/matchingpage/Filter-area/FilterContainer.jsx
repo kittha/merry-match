@@ -19,14 +19,14 @@ function FilterContainer({
   const [isCheckedMale, setIsCheckMale] = useState(false);
   const [isCheckedFemale, setIsCheckFemale] = useState(false);
   const [isCheckedBinary, setIsCheckBinary] = useState(false);
-  const [value, setValue] = useState([18, 80]);
+  const [value, setValue] = useState([18, 50]);
   const currentUserId = state.user?.id;
   const [filterData, setFilterData] = useState({
     checkMale: "",
     checkFemale: "",
     checkOther: "",
     searchAgeRangeNumberLeft: 18,
-    searchAgeRangeNumberRight: 80,
+    searchAgeRangeNumberRight: 50,
   });
 
   const getFilterData = async (filterData) => {
@@ -51,10 +51,6 @@ function FilterContainer({
     }
   };
 
-  const getData = () => {
-    getFilterData();
-  };
-
   const reset = () => {
     setFilterData((prevData) => ({
       ...prevData,
@@ -62,12 +58,12 @@ function FilterContainer({
       checkFemale: "",
       checkOther: "",
       searchAgeRangeNumberLeft: 18,
-      searchAgeRangeNumberRight: 80,
+      searchAgeRangeNumberRight: 50,
     }));
     setIsCheckMale(false);
     setIsCheckFemale(false);
     setIsCheckBinary(false);
-    setValue([18, 80]);
+    setValue([18, 50]);
   };
   return (
     // <div className="lg:w-[220px] w-screen lg:h-screen h-[80vh] bg-white z-30 lg:overflow-hidden overflow-auto rounded-[24px]">
