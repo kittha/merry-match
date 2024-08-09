@@ -96,7 +96,7 @@ const NavbarAuthen = () => {
               className="h-[26px] w-[26px] hidden"
             />
           </button>
-          <button onClick={() => setShowChat(!showChat)}>
+          <button onClick={() => navigate("/chat")}>
             <img
               src={iconChat}
               alt="merry match notification"

@@ -18,6 +18,7 @@ import Chat from "../users/ChatPage";
 // import MatchingArea from "../../components/matchingpage/matching-area/MatchingArea";
 import ComplaintListPage from "../admin/ComplaintListPage";
 import ComplaintDetailPage from "../admin/ComplaintDetailPage";
+import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -40,6 +41,7 @@ const AuthenticatedApp = () => {
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/package" element={<MerryPackage />} />
         <Route path="/chat/:matchId" element={<Chat />} />
+        <Route path="/chat" element={<ChatContainer />} />
         <Route path="*" element={<HomePageAuthen />} />
         {/* <Route path="/matchingArea" element={<MatchingArea />} /> */}
 
