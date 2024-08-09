@@ -47,6 +47,7 @@ const NavbarAuthen = () => {
 
   const { logout, state } = useAuth();
   const userId = state.user?.id;
+  const userName = state.user.username ?? null  
 
   const handleLogout = () => {
     resetForm();
@@ -193,15 +194,20 @@ const NavbarAuthen = () => {
             )}
           </div>
           {/* ------------------------------------------ profile menu ---------------------------------------------------- */}
-          <div className="relative">
-            <button ref={profileIconRef} onClick={handleProfileClick}>
+          <button
+            ref={profileIconRef} 
+            className="relative flex  bg-gradient-to-r from-[#742138] to-[#A878BF] rounded-[24px]"
+            onClick={handleProfileClick}>
+            <div className="flex items-center justify-center h-[64px] w-auto py-6 px-4 text-white text-sm">
+              <p>{userName}</p>
               <img
                 src={JSON.parse(localStorage.getItem("data")).avatars[0]}
                 alt="merry-match-profile"
-                className="h-[48px] w-[48px] rounded-full"
+                className="h-[48px] w-[48px] rounded-full ml-4 bg-white"
               />
-            </button>
-            {profileMenuOpen && (
+            </div>
+          </button>
+          {profileMenuOpen && (
               <Portal>
                 <div
                   id="portal-root"
@@ -211,6 +217,7 @@ const NavbarAuthen = () => {
                     left: `${profileMenuPosition.left}px`,
                     transform: "translateX(-50%)",
                     marginTop: "32px",
+                    marginLeft: "108px",
                   }}
                   className="w-[198px] h-[258px] font-[500] bg-white shadow-lg rounded-[16px] py-2 z-30 font-Nunito text-sm"
                 >
@@ -260,7 +267,6 @@ const NavbarAuthen = () => {
                 </div>
               </Portal>
             )}
-          </div>
         </div>
       </div>
 
