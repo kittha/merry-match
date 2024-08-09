@@ -11,14 +11,10 @@ function MatchingPage() {
   // const currentUserId = currentUser.id;
   // const { allUser, availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
   //   useMatch();
-  const { allUser, user } = useMatch();
+  const { user } = useMatch();
   const [userQueue, setUserQueue] = useState([]);
-<<<<<<< Updated upstream
-  const [Queue, setQueue] = useState(allUser);
   const [showFilter, setShowFilter] = useState(false);
-=======
   const [Queue, setQueue] = useState(user);
->>>>>>> Stashed changes
 
   useEffect(() => {
     if (user) {

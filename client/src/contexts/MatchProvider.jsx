@@ -26,7 +26,7 @@ function MatchProvider(props) {
   const currentUserId = state.user?.id;
 
   const [allUser, setAllUser] = useState([]);
-  const [user, setUer] = useState([]);
+  const [user, setUser] = useState([]);
   const {
     availableClicksToday,
     setAvailableClicksToday,
@@ -57,7 +57,7 @@ function MatchProvider(props) {
       // console.log(response.data.matches);
       if (Array.isArray(response.data.matches)) {
         setAllUser(response.data.matches);
-        setUer(response.data.matches);
+        setUser(response.data.matches);
       } else {
         console.error("API response is not an array:", response.data);
       }
