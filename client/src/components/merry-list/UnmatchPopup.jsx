@@ -1,4 +1,4 @@
-import { useMatch } from "../../contexts/matchProvider";
+import { useMatch } from "../../contexts/MatchProvider";
 
 const ModalPopup = ({ user, onClose }) => {
   const { undoMerry } = useMatch();

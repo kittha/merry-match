@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
 import { transformMerryListData } from "../../utils/transformMerryListData.mjs";
-import { useMatch } from "../../contexts/matchProvider";
+import { useMatch } from "../../contexts/MatchProvider";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";

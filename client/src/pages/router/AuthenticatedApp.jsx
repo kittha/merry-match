@@ -10,14 +10,13 @@ import { useAuth } from "../../contexts/authentication";
 import PackageEditAndViewPage from "../admin/PackageEditAndViewPage";
 import PackageListPage from "../admin/PackageListPage";
 import PackageAddPage from "../admin/PackageAddPage";
-import FilterContainer from "../../components/matchingpage/Filter-area/FilterContainer";
 import MatchingPage from "../users/MatchingPage";
 import MerryListPage from "../users/MerryListPage";
 import ComplaintPage from "../users/ComplaintPage";
 import Chat from "../users/ChatPage";
 import ComplaintListPage from "../admin/ComplaintListPage";
 import ComplaintDetailPage from "../admin/ComplaintDetailPage";
-import { ChatProvider } from "../../contexts/chatProvider";
+import { ChatProvider } from "../../contexts/ChatProvider";
 import { PackageProvider } from "../../contexts/PackageProvider";
 import MatchingAndMerryWrapper from "../../components/wrapper/MatchingAndMerryWrapper";
 
@@ -27,14 +26,13 @@ const AuthenticatedApp = () => {
 
   // Conditionally render the Navbar based on the role
   const renderNavbar = role !== "Admin" ? 
-  <MatchingAndMerryWrapper>
     <ChatProvider>
       <NavbarAuthen />
-    </ChatProvider>
-  </MatchingAndMerryWrapper> : 
+    </ChatProvider> : 
   null;
 
   return (
+    <MatchingAndMerryWrapper>
     <div>
       {renderNavbar}
       <Routes>
@@ -46,37 +44,29 @@ const AuthenticatedApp = () => {
         <Route 
           path="/chat/:matchId" 
           element={
-            <MatchingAndMerryWrapper>
               <ChatProvider>
                 <Chat />
               </ChatProvider>
-            </MatchingAndMerryWrapper>
           } 
         />
         <Route 
           path="/matching" 
           element={
-            <MatchingAndMerryWrapper>
               <ChatProvider>
                 <MatchingPage />
               </ChatProvider>
-            </MatchingAndMerryWrapper>
           } 
         />
           <Route 
           path="/membership/:userId" 
           element={
-            <MatchingAndMerryWrapper>
               <MembershipPage />
-            </MatchingAndMerryWrapper>
           } 
         />
         <Route 
           path="/merry-list" 
           element={
-            <MatchingAndMerryWrapper>
               <MerryListPage />
-            </MatchingAndMerryWrapper>
           } 
         />
         <Route 
@@ -91,9 +81,7 @@ const AuthenticatedApp = () => {
           path="/payment" 
           element={
             <PackageProvider>
-              <MatchingAndMerryWrapper>
                 <PaymentPage />
-              </MatchingAndMerryWrapper>
             </PackageProvider>
           } 
         />
@@ -123,6 +111,7 @@ const AuthenticatedApp = () => {
         )}
       </Routes>
     </div>
+    </MatchingAndMerryWrapper>
   );
 };
 

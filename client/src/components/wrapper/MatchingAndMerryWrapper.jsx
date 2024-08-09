@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'; 
-import { MatchProvider } from "../../contexts/matchProvider";
+import { MatchProvider } from "../../contexts/MatchProvider";
 import { MerryLimitProvider } from "../../contexts/MerryLimitProvider";
 
 // MatchProvider have dependencies on MerryLimitProvider, it must be the child of MerryLimitProvider

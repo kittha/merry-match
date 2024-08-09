@@ -11,8 +11,8 @@ import {
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
-import { useChat } from "../../contexts/chatProvider";
-import { useMatch } from "../../contexts/matchProvider";
+import { useChat } from "../../contexts/ChatProvider";
+import { useMatch } from "../../contexts/MatchProvider";
 
 const Chat = () => {
   const { state } = useAuth();

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import discover from "/assets/matchingpage/chatArea/discover-vector.png";
 import matched from "/assets/matchingpage/chatArea/merry-match.png";
-import { useMatch } from "../../../contexts/matchProvider";
-import { useChat } from "../../../contexts/chatProvider";
+import { useMatch } from "../../../contexts/MatchProvider";
+import { useChat } from "../../../contexts/ChatProvider";
 
 const ChatContainer = () => {
   const [matches, setMatches] = useState([]);

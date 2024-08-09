@@ -12,7 +12,7 @@ import UserProfilePopup from "./UserProfilePopup";
 import mmLogo from "/assets/matchingpage/matching-area/merryMatch.gif";
 import ChatContainer from "../chatcontainer/ChatContainer";
 import FilterContainer from "../Filter-area/FilterContainer";
-import { useMatch } from "../../../contexts/matchProvider";
+import { useMatch } from "../../../contexts/MatchProvider";
 
 const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

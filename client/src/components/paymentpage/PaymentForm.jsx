@@ -9,7 +9,7 @@ import Bullet from "../../../public/assets/paymentpage/Bullet.png";
 import Footer from "../../components/homepage/Footer";
 import { usePackage } from "../../contexts/PackageProvider";
 import { useAuth } from "../../contexts/authentication";
-import { useMatch } from "../../contexts/matchProvider";
+import { useMatch } from "../../contexts/MatchProvider";
 
 const PaymentForm = () => {
   const navigate = useNavigate();

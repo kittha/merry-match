@@ -5,7 +5,7 @@ import HeaderMembership from "../../components/membership/HeaderMembership";
 import MembershipPackage from "../../components/membership/MembershipPackage";
 import BillingHistory from "../../components/membership/BillingHistory";
 import Footer from "../../components/homepage-authen/Footer";
-import { useMatch } from "../../contexts/matchProvider";
+import { useMatch } from "../../contexts/MatchProvider";
 import { convertLength } from "@mui/material/styles/cssUtils";
 
 export const MembershipPage = () => {
