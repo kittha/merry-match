@@ -24,5 +24,5 @@ export const validatePicture = (req, res, next) => {
       .status(400)
       .json({ error: "You must upload between 2 to 5 images." });
   }
-  next();
+  return next();
 };

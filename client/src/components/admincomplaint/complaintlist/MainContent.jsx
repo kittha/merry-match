@@ -10,8 +10,8 @@ function MainContent({ complaint, updateStatus }) {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear();
 
-    let hours = date.getHours();
-    hours = hours % 12 || 12; // Convert to 12-hour format
+    // let hours = date.getHours();
+    // hours = hours % 12 || 12; // Convert to 12-hour format
 
     const formattedDate = `${month}/${day}/${year} `;
 

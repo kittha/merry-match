@@ -1,4 +1,3 @@
-import React from "react";
 import headerimage1 from "/assets/header-image/header-image1.png";
 import headerimage2 from "/assets/header-image/header-image2.png";
 import headerimage3 from "/assets/header-image/header-image3.png";

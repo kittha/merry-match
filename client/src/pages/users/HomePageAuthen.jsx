@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../../components/homepage-authen/Header";
 import FirstSection from "../../components/homepage-authen/FirstSection";
 import SecondSection from "../../components/homepage-authen/SecondSection";

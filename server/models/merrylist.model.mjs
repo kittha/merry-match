@@ -8,7 +8,6 @@ import connectionPool from "../configs/db.mjs";
  */
 export const getMerryLists = async (userId) => {
   try {
-    // BUG FIXME
     const result = await connectionPool.query(
       `SELECT p.user_id As user_id, pp.sequence AS profile_picture_sequence,
        pp.url AS profile_picture, p.name AS name, p.date_of_birth AS birthday,

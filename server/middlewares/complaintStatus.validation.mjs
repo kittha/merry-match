@@ -4,5 +4,5 @@ export const validateComplaintStatus = (req, res, next) => {
   if (!status) {
     return res.status(400).json({ error: "Please provide complaint status." });
   }
-  next();
+  return next();
 };

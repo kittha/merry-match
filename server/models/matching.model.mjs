@@ -8,7 +8,7 @@ export const getAllStatus = async (userId) => {
         WHERE user_id_1 = $1 OR user_id_2 = $1`,
       [userId]
     );
-    console.log(result.rows);
+    // console.log(result.rows);
     return result.rows;
   } catch (error) {
     await connectionPool.query("ROLLBACK");

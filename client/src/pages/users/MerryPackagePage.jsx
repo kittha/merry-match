@@ -3,7 +3,7 @@ import Footer from "../../components/homepage/Footer";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { usePackage } from "../../contexts/PackageProvider";
+import { usePackage } from "../../hooks/usePackage";
 
 const MerryPackage = () => {
   const navigate = useNavigate();

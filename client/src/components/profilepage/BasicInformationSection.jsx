@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState, useRef } from "react";
-import { FormContext } from "../../contexts/FormProvider";
+import { useEffect, useState, useRef } from "react";
+import { useForm } from "../../hooks/useForm";
 import Countrydata from "/src/mock-city/Countrydata.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CalendarIcon from "../../../public/assets/registerpage/calendar.png";
 
 function BasicInformationSection() {
-  const { formData, handleChange, errors } = useContext(FormContext);
+  const { formData, handleChange, errors } = useForm();
   const [cities, setCities] = useState([]);
   const [selectDate, setSelectDate] = useState(null);
 

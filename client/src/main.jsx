@@ -7,8 +7,6 @@ import { AuthProvider } from "./contexts/authentication.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { FormProvider } from "./contexts/FormProvider.jsx";
 
-import { PackageProvider } from "./contexts/PackageProvider.jsx";
-
 if (import.meta.env.VITE_NODE_ENV === "development") {
   console.log("Running in development mode");
 }
@@ -21,11 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <PackageProvider>
           <FormProvider>
             <App />
           </FormProvider>
-        </PackageProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -38,9 +38,9 @@ export const cloudinaryUpload = async (files) => {
 export const cloudinaryDestroy = async (publicIds) => {
   try {
     for (let publicId of publicIds) {
-      console.log(publicId);
+      // console.log(publicId);
       const result = await cloudinary.uploader.destroy(publicId);
-      console.log(result);
+      // console.log(result);
     }
   } catch (error) {
     console.error("Error deleting from Cloudinary:", error);

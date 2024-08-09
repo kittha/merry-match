@@ -5,10 +5,9 @@ import ProfilePopup from "../../components/profilepage/ProfilePopup";
 import BasicInformationSection from "../../components/profilepage/BasicInformationSection";
 import IdentitiesSection from "../../components/profilepage/IdentitiesSection";
 import ProfilePicturesSections from "../../components/profilepage/ProfilePicturesSections";
-import ModalPopup from "../../components/profilepage/DeletePopup";
+// import ModalPopup from "../../components/profilepage/DeletePopup";
 import { getProfileData } from "../../hooks/connectProfile.mjs";
-import { useContext } from "react";
-import { FormContext } from "../../contexts/FormProvider";
+import { useForm } from "../../hooks/useForm";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
@@ -17,13 +16,13 @@ function UserProfilePage() {
     isPopupOpen,
     openPopup,
     closePopup,
-    openDeleteConfirmation,
-    closeDeleteConfirmation,
-    handleDeleteProfile,
-    isDeleteConfirmationOpen,
+    // openDeleteConfirmation,
+    // closeDeleteConfirmation,
+    // handleDeleteProfile,
+    // isDeleteConfirmationOpen,
   } = usePopup();
 
-  const { formData, setFormData, handleSubmit } = useContext(FormContext);
+  const { formData, setFormData, handleSubmit } = useForm();
   const { userId } = useParams();
   const [loading, setLoading] = useState(false);
   const fetchData = async () => {

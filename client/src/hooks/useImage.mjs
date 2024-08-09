@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { FormContext } from "../contexts/FormProvider";
+import { useForm } from "./useForm";
 
 export const useImage = () => {
-  const { formData, setFormData } = useContext(FormContext);
+  const { formData, setFormData } = useForm();
 
   const handleAvatarChange = (action, avatarKey, event) => {
     const newAvatars = [...formData.avatars];

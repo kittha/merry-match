@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useAuth } from "./authentication";
+import useAuth from "../hooks/useAuth";
 import { getLastMessagesByUserId } from "../hooks/connectMsg.mjs";
 
-const ChatContext = React.createContext();
-
-// this is a hook that consume MatchContext
-const useChat = () => React.useContext(ChatContext);
+export const ChatContext = React.createContext();
 
 function ChatProvider(props) {
   const [lastMsg, setLastMsg] = useState([]);
@@ -42,4 +38,4 @@ function ChatProvider(props) {
   );
 }
 
-export { ChatProvider, useChat };
+export { ChatProvider };
