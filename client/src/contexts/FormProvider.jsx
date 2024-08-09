@@ -227,7 +227,7 @@ export const FormProvider = ({ children }) => {
         console.log("Updated Profile successful");
       } else {
         await register(sentFormData);
-        resetForm();
+
         setStep(1);
         console.log("Registration successful");
       }

@@ -1,36 +1,34 @@
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "../../hooks/useForm";
-import Countrydata from "/src/mock-city/Countrydata.json";
+import { Country, State } from "country-state-city";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CalendarIcon from "../../../public/assets/registerpage/calendar.png";
 
 function BasicInformationSection() {
   const { formData, handleChange, errors } = useForm();
-  const [cities, setCities] = useState([]);
+  const [state, setState] = useState([]);
   const [selectDate, setSelectDate] = useState(null);
 
   useEffect(() => {
     if (formData.country) {
-      const selectedCountry = Countrydata.find(
-        (country) => country.country_name === formData.country
-      );
-      if (selectedCountry) {
-        setCities(selectedCountry.states);
-      }
+      const selectedStates = State.getStatesOfCountry(formData.country);
+      setState(selectedStates);
     }
     if (formData.birthday) {
       setSelectDate(new Date(formData.birthday));
     }
   }, [formData.country, formData.birthday]);
 
-  const handleCountry = (event) => {
-    const getCountryId = event.target.value;
-    const getStateData = Countrydata.find(
-      (country) => country.country_name === getCountryId
-    ).states;
-    setCities(getStateData);
-    handleChange("country", getCountryId);
+  const handleCountryChange = (e) => {
+    const countryId = e.target.value;
+    handleChange("country", countryId);
+    setState(State.getStatesOfCountry(countryId));
+  };
+
+  const handleStateChange = (e) => {
+    const stateId = e.target.value;
+    handleChange("city", stateId);
   };
 
   const datePickerRef = useRef(null);
@@ -106,20 +104,16 @@ function BasicInformationSection() {
             </label>
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
-              onChange={(event) => handleCountry(event)}
+              onChange={(event) => handleCountryChange(event)}
               value={formData.country}
               required
             >
               <option disabled value="">
                 {formData.country}
               </option>
-              {Countrydata.map((getcountry, index) => (
-                <option
-                  className=""
-                  value={getcountry.country_name}
-                  key={index}
-                >
-                  {getcountry.country_name}
+              {Country.getAllCountries().map((country) => (
+                <option key={country.isoCode} value={country.isoCode}>
+                  {country.name}
                 </option>
               ))}
             </select>
@@ -142,9 +136,13 @@ function BasicInformationSection() {
               <option disabled value="">
                 {formData.city}
               </option>
-              {cities.map((getStateData, index) => (
-                <option value={getStateData.state_name} key={index}>
-                  {getStateData.state_name}
+              {state.map((state) => (
+                <option
+                  value={state.isoCode}
+                  key={state.isoCode}
+                  className="text-black"
+                >
+                  {state.name}
                 </option>
               ))}
             </select>
