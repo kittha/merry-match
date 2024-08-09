@@ -1,6 +1,6 @@
 import { useMatch } from "../../hooks/useMatch";
 
-const ModalPopup = ({ user, onClose }) => {
+const UnmatchModalPopup = ({ user, onClose }) => {
   const { undoMerry } = useMatch();
   let myUserId = JSON.parse(localStorage.getItem("data")).id;
   let tmpUser = null;
@@ -54,4 +54,4 @@ const ModalPopup = ({ user, onClose }) => {
   );
 };
 
-export default ModalPopup;
+export default UnmatchModalPopup;

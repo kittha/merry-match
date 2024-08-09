@@ -34,6 +34,7 @@ export const transformMerryListData = (rows) => {
         hobbies: row.hobbies,
         status_1: row.status_1,
         status_2: row.status_2,
+        match_id: row.match_id,
         user_id_1: row.user_id_1,
         user_id_2: row.user_id_2,
         created_at: row.created_at,
