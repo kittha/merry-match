@@ -1,10 +1,10 @@
 import "react-datepicker/dist/react-datepicker.css";
 import { useContext, useState } from "react";
-import { FormContext } from "../../contexts/FormProvider";
+import { useForm } from "../../hooks/useForm";
 
 function IdentitiesSection() {
   const { formData, handleChange, addHobby, deleteHobby, errors } =
-    useContext(FormContext);
+  useForm();
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {

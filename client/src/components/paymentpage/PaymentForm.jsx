@@ -7,9 +7,9 @@ import "../../App.css";
 import Frame from "../../../public/assets/paymentpage/Frame.png";
 import Bullet from "../../../public/assets/paymentpage/Bullet.png";
 import Footer from "../../components/homepage/Footer";
-import { usePackage } from "../../contexts/PackageProvider";
-import { useAuth } from "../../contexts/authentication";
-import { useMatch } from "../../contexts/MatchProvider";
+import { usePackage } from "../../hooks/usePackage";
+import useAuth from "../../hooks/useAuth";
+import { useMatch } from "../../hooks/useMatch";
 
 const PaymentForm = () => {
   const navigate = useNavigate();

@@ -6,7 +6,7 @@ import PaymentPage from "../users/PaymentPage";
 import PaymentSuccessPage from "../users/PaymentSuccessPage";
 import { MembershipPage } from "../users/MembershipPage";
 import MerryPackage from "../users/MerryPackagePage";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 import PackageEditAndViewPage from "../admin/PackageEditAndViewPage";
 import PackageListPage from "../admin/PackageListPage";
 import PackageAddPage from "../admin/PackageAddPage";

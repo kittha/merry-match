@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import image from "/assets/complaint-image/image.png";
 import Footer from "../../components/homepage/Footer";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 
 function ComplaintPage() {
   const { state } = useAuth();

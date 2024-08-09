@@ -4,7 +4,7 @@ import CheckBox from "./CheckBox";
 import cross from "../../../../public/assets/filter-area/Vector.svg";
 import search from "../../../../public/assets/filter-area/search.svg";
 import axios from "axios";
-import { useAuth } from "../../../contexts/authentication";
+import useAuth from "../../../hooks/useAuth";
 
 function FilterContainer({
   Queue,

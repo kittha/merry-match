@@ -4,8 +4,8 @@ import icon from "../../../public/assets/paymentSuccesspage/icon.png";
 import checkmark from "../../../public/assets/paymentSuccesspage/checkmark.svg";
 import Footer from "../../components/homepage/Footer";
 import { useNavigate } from "react-router-dom";
-import { usePackage } from "../../contexts/PackageProvider";
-import { useAuth } from "../../contexts/authentication";
+import { usePackage } from "../../hooks/usePackage";
+import useAuth from "../../hooks/useAuth";
 
 function PaymentSuccessPage() {
   const navigate = useNavigate();

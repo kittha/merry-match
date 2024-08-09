@@ -8,10 +8,10 @@ import location from "/assets/profilepicture/location.png";
 import arrowB from "/assets/profilepicture/arrowB.png";
 import { useState, useContext } from "react";
 import { useImage } from "../../../hooks/useImage.mjs";
-import { FormContext } from "../../../contexts/FormProvider";
+import { useForm } from "../../../hooks/useForm";
 
 const ProfileDetailModal = ({ user, onClose }) => {
-  const { calculateAge } = useContext(FormContext);
+  const { calculateAge } = useForm()
   const { checkImage } = useImage();
 
   // convert Object user.avatars  to Array of avatar_url value

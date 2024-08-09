@@ -3,7 +3,7 @@ import EyeIconOpen from "/assets/loginpage/EyeIconOpen.png";
 import EyeIconClosed from "/assets/loginpage/EyeIconClosed.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");

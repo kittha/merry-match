@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types'; 
-import { useAuth } from './authentication.jsx';
+import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 
 export const MerryLimitContext = React.createContext(null);

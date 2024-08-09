@@ -1,8 +1,6 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState } from "react";
 
-const PackageContext = createContext();
-
-export const usePackage = () => useContext(PackageContext);
+export const PackageContext = createContext();
 
 export const PackageProvider = ({ children }) => {
   const [selectedPackage, setSelectedPackage] = useState(null);

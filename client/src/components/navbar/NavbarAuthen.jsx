@@ -2,8 +2,8 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Portal from "./Portal";
-import { useAuth } from "../../contexts/authentication";
-import { FormContext } from "../../contexts/FormProvider";
+import useAuth from "../../hooks/useAuth";
+import { useForm } from "../../hooks/useForm";
 import headerMerryMatchLogo from "/assets/header-image/header-merrymatch-logo.svg";
 import iconBell from "/assets/navbar-image/icon_bell.png";
 import iconChat from "/assets/navbar-image/icon_chat.png";
@@ -31,7 +31,7 @@ const NavbarAuthen = () => {
     top: 0,
     left: 0,
   });
-  const { resetForm } = useContext(FormContext);
+  const { resetForm } = useForm();
 
   const handleBellClick = () => {
     setBellMenuOpen(!bellMenuOpen);

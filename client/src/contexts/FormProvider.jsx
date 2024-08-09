@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { useAuth } from "./authentication";
+import useAuth from "../hooks/useAuth";
 import { updateProfile } from "../hooks/connectProfile.mjs";
 
 export const FormContext = createContext();

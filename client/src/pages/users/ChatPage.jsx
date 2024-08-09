@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import InputSection from "../../components/matchingpage/chat-area/Input";
 import DisplayChat from "../../components/matchingpage/chat-area/Display";
 import BackBar from "../../components/matchingpage/chat-area/BackBar";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 import {
   createMessage,
   getPrevMessages,
@@ -11,8 +11,8 @@ import {
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
-import { useChat } from "../../contexts/ChatProvider";
-import { useMatch } from "../../contexts/MatchProvider";
+import { useChat } from "../../hooks/useChat";
+import { useMatch } from "../../hooks/useMatch";
 
 const Chat = () => {
   const { state } = useAuth();

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import supabase from "../utils/supabaseClient";
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 // this is a hook that consume AuthContext
-const useAuth = () => React.useContext(AuthContext);
 
 function AuthProvider(props) {
   const [state, setState] = useState({
@@ -165,4 +163,4 @@ function AuthProvider(props) {
   );
 }
 
-export { AuthProvider, useAuth };
+export { AuthProvider };

@@ -9,7 +9,7 @@ import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right
 import exit from "/assets/profilepicture/exit.png";
 import UserProfilePopup from "./UserProfilePopup";
 import mmLogo from "/assets/matchingpage/matching-area/merryMatch.gif";
-import { useMatch } from "../../../contexts/MatchProvider";
+import { useMatch } from "../../../hooks/useMatch";
 
 const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useMerryLimit } from "../hooks/userMerryLimit";
-import { useAuth } from "./authentication";
+import useAuth from "../hooks/useAuth";
 
 /**
  * Custom React hook that manages the matching functionality for a given user.
@@ -16,10 +16,8 @@ import { useAuth } from "./authentication";
  *   - addMerry: A function that sends a POST request to add a "merry" status for a given user.
  *   - undoMerry: A function that undoes a "merry" status (POST "unmatch" status) for a given user.
  */
-const MatchContext = React.createContext();
+export const MatchContext = React.createContext();
 
-// this is a hook that consume MatchContext
-const useMatch = () => React.useContext(MatchContext);
 
 function MatchProvider(props) {
   // const currentUserJson = localStorage.getItem("data");
@@ -142,4 +140,4 @@ function MatchProvider(props) {
   );
 }
 
-export { MatchProvider, useMatch };
+export { MatchProvider };

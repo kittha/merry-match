@@ -8,11 +8,11 @@ import location from "../../../public/assets/profilepicture/location.png";
 import arrowB from "../../../public/assets/profilepicture/arrowB.png";
 import { useState, useContext } from "react";
 import { useImage } from "../../hooks/useImage.mjs";
-import { FormContext } from "../../contexts/FormProvider";
+import { useForm } from "../../hooks/useForm";
 
 const ProfilePopup = ({ profileData, onClose }) => {
   // console.log(profileData);
-  const { calculateAge } = useContext(FormContext);
+  const { calculateAge } = useForm();
   const { checkImage } = useImage();
 
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
