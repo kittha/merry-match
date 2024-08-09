@@ -6,5 +6,5 @@ export const bioCharacterLength = (req, res, next) => {
       .status(400)
       .json({ error: "Bio must not be longer than 150 characters." });
   }
-  next();
+  return next();
 };

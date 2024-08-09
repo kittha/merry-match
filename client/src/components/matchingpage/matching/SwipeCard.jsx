@@ -7,13 +7,9 @@ import ProfileDetial from "/assets/matchingpage/matching-area/icons/profile deta
 import LeftArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-left.png";
 import RightArrowIcon from "/assets/matchingpage/matching-area/icons/arrow-right.png";
 import exit from "/assets/profilepicture/exit.png";
-import { useMerryLimit } from "../../../hooks/userMerryLimit";
 import UserProfilePopup from "./UserProfilePopup";
-
 import mmLogo from "/assets/matchingpage/matching-area/merryMatch.gif";
-import ChatContainer from "../chatcontainer/ChatContainer";
-import FilterContainer from "../Filter-area/FilterContainer";
-import { useMatch } from "../../../contexts/matchProvider";
+import { useMatch } from "../../../hooks/useMatch";
 
 const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -142,7 +138,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
 
   return (
     <div className="relative flex flex-col items-center justify-center bg-[#160404] w-screen h-screen lg:pt-[88px] pt-[32px] font-Nunito overflow-hidden">
-      <div className="absolute bottom-[20px] flex gap-2">
+      <div className="absolute bottom-[20px] sm:right-auto right-4 flex gap-2">
         {/* <div className="flex flex-col justify-center lg:w-0 w-48">
           <button
             onClick={() => setShowFilter(true)}

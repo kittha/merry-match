@@ -5,5 +5,5 @@ export const validateEmailRegex = (req, res, next) => {
   if (!email || !emailRegex.test(email)) {
     return res.status(400).json({ error: "Invalid email format." });
   }
-  next();
+  return next();
 };

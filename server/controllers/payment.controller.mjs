@@ -132,7 +132,7 @@ export const processPayment = async (req, res) => {
 
     await updateUserPackage(user.user_id, product.package_id);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       client_secret: paymentIntent.client_secret,
       paymentIntent: paymentIntent,

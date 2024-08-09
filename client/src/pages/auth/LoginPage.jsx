@@ -3,7 +3,7 @@ import EyeIconOpen from "/assets/loginpage/EyeIconOpen.png";
 import EyeIconClosed from "/assets/loginpage/EyeIconClosed.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -118,7 +118,7 @@ const LoginPage = () => {
               </button>
               <div className="flex gap-[4px] lg:justify-start">
                 <p className="text-black font-[400] text-[16px] leading-[24px]">
-                  Don't have an account?
+                  Don&apos;t have an account?
                 </p>
                 <button
                   className="text-[#C70039] font-[700] text-[16px] leading-[24px]"

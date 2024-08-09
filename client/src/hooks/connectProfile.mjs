@@ -14,7 +14,7 @@ export const getProfileData = async (userId) => {
 
 export const updateProfile = async (userId, data) => {
   try {
-    const result = await axios.put(
+    await axios.put(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`,
       data
     );
@@ -25,9 +25,10 @@ export const updateProfile = async (userId, data) => {
   }
 };
 
+// FIXME 'data' is not defined
 export const deleteAccount = async (userId) => {
   try {
-    const result = await axios.delete(
+    await axios.delete(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`,
       data
     );

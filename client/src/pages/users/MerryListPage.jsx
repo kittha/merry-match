@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { transformMerryListData } from "../../utils/transformMerryListData.mjs";
-import { useMatch } from "../../contexts/matchProvider";
+import { useMatch } from "../../hooks/useMatch";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
@@ -28,7 +28,6 @@ function MerryListPage() {
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
   const getMerryLists = async () => {
     try {
-      // BUG userId is missing after refresh
       if (userId) {
         const result = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useReducer } from "react";
+import { useRef, useReducer } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -73,7 +73,7 @@ export const usePopup = () => {
 
   const handleDeleteProfile = async () => {
     try {
-      const result = await axios.delete(
+      await axios.delete(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`
       );
       dispatch({

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
 import FilterContainer from "../../components/matchingpage/Filter-area/FilterContainer";
 import SwipeCard from "../../components/matchingpage/matching/SwipeCard";
-import { useMatch } from "../../contexts/matchProvider";
+import { useMatch } from "../../hooks/useMatch";
 import filter from "/assets/matchingpage/matching-area/filter.png";
 
 function MatchingPage() {

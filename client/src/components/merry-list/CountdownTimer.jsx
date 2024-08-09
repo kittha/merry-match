@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { differenceInHours, endOfDay } from "date-fns";
 
 const CountdownTimer = () => {

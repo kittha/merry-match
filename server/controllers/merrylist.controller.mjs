@@ -31,8 +31,8 @@ export const getMerryLists = async (req, res) => {
       });
     }
 
-    console.log("Merry List:", merryList);
-    console.log("Counts:", counts);
+    // console.log("Merry List:", merryList);
+    // console.log("Counts:", counts);
 
     return res.status(200).json({
       message: "Fetch merry list successfully.",

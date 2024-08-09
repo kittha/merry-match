@@ -19,15 +19,15 @@ const router = express.Router();
 router.use("/admin", [authenticateAdmin], adminRoutes);
 router.use("/auth", authRoutes);
 router.use("/complaints", [authenticateUser], fileComplaint);
-router.use("/membership", [authenticateUser], membershipRoutes);
-router.use("/merry", [authenticateUser], merryRoutes);
-
 router.use("/match", [authenticateUser], matchRoutes);
-router.use("/messages", messagesRoutes);
-router.use("/merry-list", [authenticateUser], merryListRoutes);
+router.use("/membership", [authenticateUser], membershipRoutes);
 
-router.use("/packages", packageRoutes);
-router.use("/payment", paymentRoutes);
+router.use("/merry", [authenticateUser], merryRoutes);
+router.use("/messages", [authenticateUser], messagesRoutes);
+router.use("/merry-list", [authenticateUser], merryListRoutes);
+router.use("/packages", [authenticateUser], packageRoutes);
+router.use("/payment", [authenticateUser], paymentRoutes);
+
 router.use("/profiles", [authenticateUser], profilesRoutes);
 
 export default router;

@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import IdentitiesAndInterests from "../../components/registerpage/Interests";
 import ProfilePictures from "../../components/registerpage/ProfilePictures";
 import BasicInformation from "../../components/registerpage/Information";
-import { FormContext } from "../../contexts/FormProvider";
+import { useForm } from "../../hooks/useForm";
 
 const RegisterPage = () => {
   const { handleSubmit, handleNext, handleBack, step, loading } =
-    useContext(FormContext);
+  useForm();
 
   return (
     <form onSubmit={handleSubmit}>
