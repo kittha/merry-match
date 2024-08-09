@@ -59,7 +59,6 @@ export const createMedia = async (imageUri) => {
 };
 
 export const getLastMessages = async (matchIds) => {
-  // console.log(matchIds);
   try {
     const result = await connectionPool.query(
       `SELECT DISTINCT ON (match_id) *

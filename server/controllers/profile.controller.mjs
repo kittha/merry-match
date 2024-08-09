@@ -27,7 +27,7 @@ export const getUserProfileById = async (req, res) => {
     const avatars = resultAvatars.map((avatar) => ({
       url: avatar.url,
     }));
-    console.log(avatars);
+    // console.log(avatars);
 
     const data = {
       username,
@@ -56,7 +56,7 @@ export const getUserProfileById = async (req, res) => {
 export const updateUserProfileById = async (req, res) => {
   const { userId } = req.params;
   try {
-    console.log(req.body.avatar);
+    // console.log(req.body.avatar);
     const avatarUrl = req.body.avatar;
     // if (Array.isArray(avatarUrl)) {
     //   avatarUrl = req.body.avatar.map((avatar) => JSON.parse(avatar));
@@ -75,11 +75,11 @@ export const updateUserProfileById = async (req, res) => {
     let avatars = [];
     for (let k = 0; k < 5; k++) {
       if (avatarUrl[i] && k in avatarUrl[i]) {
-        console.log(avatarUrl[i][k]);
+        // console.log(avatarUrl[i][k]);
         avatars.push(avatarUrl[i][k]);
         i++;
       } else if (avatarUri && avatarUri[j]) {
-        console.log(avatarUri[j]);
+        // console.log(avatarUri[j]);
         avatars.push(avatarUri[j]);
         j++;
       }
@@ -107,7 +107,7 @@ export const deleteUserById = async (req, res) => {
   const { userId } = req.params;
   try {
     const { auth_id } = await deleteUser(userId);
-    console.log(auth_id);
+    // console.log(auth_id);
     const { data, error } = await supabase.auth.admin.deleteUser(auth_id);
     // delete user from database
     // delete avatars from cloudinary

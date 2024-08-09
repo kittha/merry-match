@@ -7,5 +7,5 @@ export const blockEmailChange = (req, res, next) => {
     });
   }
 
-  next();
+  return next();
 };

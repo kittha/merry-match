@@ -30,5 +30,5 @@ export const ageValidator = (req, res, next) => {
 
   // Replace the original birthdaywith the formatted one
   req.body.birthday = formattedDate;
-  next();
+  return next();
 };

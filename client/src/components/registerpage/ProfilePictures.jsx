@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import plus from "../../../public/assets/profilepicture/plus.png";
-import { FormContext } from "../../contexts/FormProvider";
+import { useForm } from "../../hooks/useForm";
 import { useImage } from "../../hooks/useImage.mjs";
 
 function ProfilePictures() {
-  const { formData, errors } = useContext(FormContext);
+  const { formData, errors } = useForm();
   const { handleAvatarChange, handleAvatarSwap } = useImage();
 
   const handleDragStart = (event, avatarKey) => {

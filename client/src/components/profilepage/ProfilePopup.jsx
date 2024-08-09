@@ -1,4 +1,3 @@
-import React from "react";
 import exit from "../../../public/assets/profilepicture/exit.png";
 import crossbutton from "../../../public/assets/profilepicture/crossbutton.png";
 import lovebutton from "../../../public/assets/profilepicture/lovebutton.png";
@@ -6,13 +5,13 @@ import arrowL from "../../../public/assets/profilepicture/arrowL.png";
 import arrowR from "../../../public/assets/profilepicture/arrowR.png";
 import location from "../../../public/assets/profilepicture/location.png";
 import arrowB from "../../../public/assets/profilepicture/arrowB.png";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useImage } from "../../hooks/useImage.mjs";
-import { FormContext } from "../../contexts/FormProvider";
+import { useForm } from "../../hooks/useForm";
 
 const ProfilePopup = ({ profileData, onClose }) => {
   // console.log(profileData);
-  const { calculateAge } = useContext(FormContext);
+  const { calculateAge } = useForm();
   const { checkImage } = useImage();
 
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);

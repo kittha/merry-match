@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../../contexts/authentication";
+import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
 
 function CheckBox({

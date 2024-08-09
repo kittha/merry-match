@@ -18,6 +18,7 @@
     "@stripe/stripe-js": "^4.1.0",
     "@supabase/supabase-js": "^2.45.0",
     "axios": "^1.7.2",
+    "country-state-city": "^3.2.1",
     "date-fns": "^3.6.0",
     "emoji-picker-react": "^4.11.1",
     "jwt-decode": "^4.0.0",
@@ -50,7 +51,7 @@
     "vite": "^5.3.1"
   },
   "optionalDependencies": {
-    "@esbuild/linux-x64": "^0.23.0", 
+    "@esbuild/linux-x64": "^0.23.0",
     "@rollup/rollup-linux-x64-gnu": "^4.19.1"
   }
 }

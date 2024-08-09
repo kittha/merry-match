@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { FormContext } from "../../contexts/FormProvider";
+import { useForm } from "../../hooks/useForm";
 import "../../App.css";
 function IdentitiesAndInterests() {
   const { formData, handleChange, addHobby, deleteHobby, errors } =
-    useContext(FormContext);
+  useForm();
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {

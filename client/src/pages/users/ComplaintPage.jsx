@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import image from "/assets/complaint-image/image.png";
 import Footer from "../../components/homepage/Footer";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 
 function ComplaintPage() {
   const { state } = useAuth();
@@ -46,7 +46,7 @@ function ComplaintPage() {
                 COMPLAINT
               </p>
               <h2 className="w-[343px] h-[120px] text-[32px] leading-[40px] text-[#A62D82] text-left font-bold  lg:w-[548px] lg:h-[116px] lg:text-[46px] lg:leading-[57.5px] lg:font-extrabold">
-                If you have any trouble <br /> Don't be afraid to tell us!
+                If you have any trouble <br /> Don&apos;t be afraid to tell us!
               </h2>
             </header>
 

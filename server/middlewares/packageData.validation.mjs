@@ -10,5 +10,5 @@ export const validatePackageData = (req, res, next) => {
     });
   }
 
-  next();
+  return next();
 };

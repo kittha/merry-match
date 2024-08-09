@@ -12,7 +12,7 @@ export const getMerryLimitByUserId = async (req, res) => {
   try {
     const userMerryLimit = await getMerryLimitFromModel(Number(userId));
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Get merry-limit successfully.",
       data: userMerryLimit,
     });
@@ -33,28 +33,8 @@ export const getAvailableClicksTodayByUserId = async (req, res) => {
     Number(userId)
   );
 
-  res.status(200).json({
+  return res.status(200).json({
     message: "Get todays available click successfully.",
     data: availableClicksToday,
   });
 };
-
-// TODO : remove this function
-// export const updateAvailableClicksTodayByUserId = async (req, res) => {
-//   const { likingUserId, likedUserId } = req.body;
-//   if (!userId || !likingUserId || isNaN(userId) || isNaN(likedUserId)) {
-//     return res.status(400).json({ error: "Invalid user ID." });
-//   }
-//   try {
-//     const availableClicksToday = await updateAvailableClicksTodayFromModel(
-//       Number(userId)
-//     );
-//     res.status(200).json({
-//       message: "Get todays available click successfully.",
-//       data: availableClicksToday,
-//     });
-//   } catch (error) {
-//     console.error("Error fetching merry-limit:", error);
-//     res.status(500).json({ error: "Failed to get merry-limit." });
-//   }
-// };

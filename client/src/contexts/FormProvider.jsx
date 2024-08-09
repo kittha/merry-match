@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { useAuth } from "./authentication";
+import useAuth from "../hooks/useAuth";
 import { updateProfile } from "../hooks/connectProfile.mjs";
 
 export const FormContext = createContext();
@@ -26,7 +26,7 @@ export const FormProvider = ({ children }) => {
 
   const token = localStorage.getItem("token");
   const [errors, setErrors] = useState({});
-  const { register, state } = useAuth();
+  const { register } = useAuth();
   const [loading, setLoading] = useState(false);
   const resetForm = () => {
     setFormData(initialData);
@@ -180,8 +180,6 @@ export const FormProvider = ({ children }) => {
       return true;
     }
 
-    console.log("Form Data Submitted: ", formData);
-
     setLoading(true);
 
     const sentFormData = new FormData();
@@ -226,13 +224,11 @@ export const FormProvider = ({ children }) => {
         await updateProfile(userId, sentFormData);
         console.log("Updated Profile successful");
       } else {
-        await register(sentFormData);
-        resetForm();
+        await register(sentFormData, resetForm);
         setStep(1);
-        console.log("Registration successful");
       }
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Submission failed:", error);
     } finally {
       setLoading(false);
     }

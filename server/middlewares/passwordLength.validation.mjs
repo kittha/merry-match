@@ -6,5 +6,5 @@ export const validatePasswordLength = (req, res, next) => {
       .status(400)
       .json({ error: "Password must be longer than 8 characters." });
   }
-  next();
+  return next();
 };

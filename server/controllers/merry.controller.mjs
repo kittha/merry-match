@@ -57,8 +57,10 @@ export const addMerry = async (req, res) => {
     // }
 
     const result = await addMerryToModel(likingUserId, likedUserId);
-    console.log(result);
-    res.status(200).json({ message: "Merry user successfully.", ...result });
+    // console.log("result from addMerryToModel",result);
+    return res
+      .status(200)
+      .json({ message: "Merry user successfully.", ...result });
   } catch (error) {
     res.status(500).json({ error: "Failed to add merry user." });
   }
@@ -76,7 +78,7 @@ export const undoMerry = async (req, res) => {
   const { userId, merryUserId } = req.body;
   try {
     await undoMerryFromModel(userId, merryUserId);
-    res.status(200).json({ message: "Unmerry user successfully." });
+    return res.status(200).json({ message: "Unmerry user successfully." });
   } catch (error) {
     res.status(500).json({ error: "Failed to unmerry user." });
   }
@@ -97,7 +99,7 @@ export const getMatchListByUserId = async (req, res) => {
   try {
     const result = await getPotentialMatchesFromModel(userId);
     const matches = transformMatchedData(result);
-    res.status(200).json({ user_id: userId, matches });
+    return res.status(200).json({ user_id: userId, matches });
   } catch (error) {
     res.status(500).json({ error: "Failed to get match list." });
   }
@@ -110,7 +112,7 @@ export const getMatchListByUserIdFilter = async (req, res) => {
   try {
     const result = await getPotentialMatchesFilterFromModel(userId, filter);
     const matches = transformMatchedData(result);
-    res.status(200).json({ user_id: userId, matches });
+    return res.status(200).json({ user_id: userId, matches });
   } catch (error) {
     res.status(500).json({ error: "Failed to get match list." });
   }

@@ -7,5 +7,5 @@ export const validateHobbiesArrayLength = (req, res, next) => {
       .json({ error: "Hobbies must be an array with at most 10 elements." });
   }
 
-  next();
+  return next();
 };
