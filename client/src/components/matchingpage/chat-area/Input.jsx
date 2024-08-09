@@ -124,15 +124,18 @@ const InputSection = ({ handleSendMsg }) => {
         )}
       </div>
 
-      <input
-        type="text"
+      <textarea
+        rows="1"
+        wrap="soft"
         placeholder="Message here..."
-        className="input-msg flex-1 placeholder:text-[#9B9EAD] text-[#9B9EAD] bg-transparent focus:outline-none"
+        maxlength="1000"
+        className="input-msg flex-1 resize-none placeholder:text-[#9B9EAD] text-[#9B9EAD]
+        bg-transparent focus:outline-none "
         value={inputText}
         onChange={(event) => {
           setInputText(event.target.value);
         }}
-      />
+      ></textarea>
 
       <button type="submit">
         <img

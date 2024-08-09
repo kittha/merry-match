@@ -16,9 +16,13 @@ import ComplaintPage from "../users/ComplaintPage";
 import Chat from "../users/ChatPage";
 import ComplaintListPage from "../admin/ComplaintListPage";
 import ComplaintDetailPage from "../admin/ComplaintDetailPage";
+
+import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
+
 import { ChatProvider } from "../../contexts/ChatProvider";
 import { PackageProvider } from "../../contexts/PackageProvider";
 import MatchingAndMerryWrapper from "../../components/wrapper/MatchingAndMerryWrapper";
+
 
 const AuthenticatedApp = () => {
   const { state } = useAuth();
@@ -40,7 +44,14 @@ const AuthenticatedApp = () => {
         <Route path="/user-profile/:userId" element={<UserProfilePage />} />
         <Route path="/complaint" element={<ComplaintPage />} />
         <Route path="*" element={<HomePageAuthen />} />
-
+        <Route 
+          path="/chat" 
+          element={
+              <ChatProvider>
+                <ChatContainer />
+              </ChatProvider>
+          } 
+        />
         <Route 
           path="/chat/:matchId" 
           element={
