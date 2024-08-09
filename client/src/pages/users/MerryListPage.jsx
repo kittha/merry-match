@@ -172,7 +172,7 @@ function MerryListPage() {
                         </section>
                         <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
                           <button
-                            onClick={() => navigate(`/chat/${userId}`)}
+                            onClick={() => navigate(`/chat/${list.match_id}`)}
                             className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
                           >
                             <img
@@ -191,12 +191,6 @@ function MerryListPage() {
                               className="mt-[15.6px] ml-[12px] mb-[12px]"
                             />
                           </button>
-                          {showModalProfile && (
-                            <UserProfilePopup
-                              user={selectedUser}
-                              onClose={() => setShowModalProfile(false)}
-                            />
-                          )}
 
                           <button
                             onClick={() => handleOpenModalUnmatch(list)} // list meaning userObj
@@ -208,12 +202,6 @@ function MerryListPage() {
                               className="mt-[5px] ml-[3px]"
                             />
                           </button>
-                          {showModalUnmatch && (
-                            <ModalPopup
-                              user={selectedUser}
-                              onClose={() => setShowModalUnmatch(false)}
-                            />
-                          )}
                         </section>
                       </div>
                     ) : (
@@ -234,12 +222,17 @@ function MerryListPage() {
                               className="mt-[15.6px] ml-[12px] mb-[12px]"
                             />
                           </button>
-                          {showModalProfile && (
-                            <UserProfilePopup
-                              user={selectedUser}
-                              onClose={() => setShowModalProfile(false)}
+
+                          <button
+                            onClick={() => handleOpenModalUnmatch(list)} // list meaning userObj
+                            className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg"
+                          >
+                            <img
+                              src={WhiteHearticon}
+                              alt="white-heart-icon"
+                              className="mt-[5px] ml-[3px]"
                             />
-                          )}
+                          </button>
                         </section>
                       </div>
                     )}
@@ -331,7 +324,7 @@ function MerryListPage() {
                       </section>
                       <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
                         <button
-                          onClick={() => navigate(`/chat/${userId}`)}
+                          onClick={() => navigate(`/chat/${list.match_id}`)}
                           className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
                         >
                           <img
@@ -350,12 +343,7 @@ function MerryListPage() {
                             className="mt-[15.6px] ml-[12px] mb-[12px]"
                           />
                         </button>
-                        {showModalProfile && (
-                          <UserProfilePopup
-                            user={selectedUser}
-                            onClose={() => setShowModalProfile(false)}
-                          />
-                        )}
+
                         <button
                           onClick={() => handleOpenModalUnmatch(list)}
                           className="w-[48px] h-[48px] rounded-2xl shadow-lg bg-[#C70039]"
@@ -366,12 +354,6 @@ function MerryListPage() {
                             className="mt-[5px] ml-[3px]"
                           />
                         </button>
-                        {showModalUnmatch && selectedUser ? (
-                          <ModalPopup
-                            user={selectedUser}
-                            onClose={() => setShowModalUnmatch(false)}
-                          />
-                        ) : null}
                       </section>
                     </div>
                   ) : (
@@ -392,16 +374,32 @@ function MerryListPage() {
                             className="mt-[15.6px] ml-[12px] mb-[12px]"
                           />
                         </button>
-                        {showModalProfile && (
-                          <UserProfilePopup
-                            user={selectedUser}
-                            onClose={() => setShowModalProfile(false)}
+                        <button
+                          onClick={() => handleOpenModalUnmatch(list)}
+                          className="w-[48px] h-[48px] rounded-2xl shadow-lg bg-[#C70039]"
+                        >
+                          <img
+                            src={WhiteHearticon}
+                            alt="white-heart-icon"
+                            className="mt-[5px] ml-[3px]"
                           />
-                        )}
+                        </button>
                       </section>
                     </div>
                   )}
                   {/************************************************************************************************/}
+                  {showModalProfile && (
+                    <UserProfilePopup
+                      user={selectedUser}
+                      onClose={() => setShowModalProfile(false)}
+                    />
+                  )}
+                  {showModalUnmatch && selectedUser ? (
+                    <ModalPopup
+                      user={selectedUser}
+                      onClose={() => setShowModalUnmatch(false)}
+                    />
+                  ) : null}
                 </article>
               </section>
             );

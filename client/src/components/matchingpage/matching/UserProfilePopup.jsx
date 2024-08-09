@@ -10,7 +10,7 @@ import { useImage } from "../../../hooks/useImage.mjs";
 import { useForm } from "../../../hooks/useForm";
 
 const ProfileDetailModal = ({ user, onClose }) => {
-  const { calculateAge } = useForm()
+  const { calculateAge } = useForm();
   const { checkImage } = useImage();
 
   // convert Object user.avatars  to Array of avatar_url value
