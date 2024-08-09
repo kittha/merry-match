@@ -11,16 +11,20 @@ function MatchingPage() {
   // const currentUserId = currentUser.id;
   // const { allUser, availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
   //   useMatch();
-  const { allUser } = useMatch();
+  const { allUser, user } = useMatch();
   const [userQueue, setUserQueue] = useState([]);
+<<<<<<< Updated upstream
   const [Queue, setQueue] = useState(allUser);
   const [showFilter, setShowFilter] = useState(false);
+=======
+  const [Queue, setQueue] = useState(user);
+>>>>>>> Stashed changes
 
   useEffect(() => {
-    if (allUser) {
-      setQueue(allUser);
+    if (user) {
+      setQueue(user);
     }
-  }, [allUser]);
+  }, [user]);
 
   return (
     <div className="flex lg:flex-row">

@@ -18,7 +18,6 @@ import useAuth from "../hooks/useAuth";
  */
 export const MatchContext = React.createContext();
 
-
 function MatchProvider(props) {
   // const currentUserJson = localStorage.getItem("data");
   // const currentUser = JSON.parse(currentUserJson);
@@ -27,6 +26,7 @@ function MatchProvider(props) {
   const currentUserId = state.user?.id;
 
   const [allUser, setAllUser] = useState([]);
+  const [user, setUer] = useState([]);
   const {
     availableClicksToday,
     setAvailableClicksToday,
@@ -57,6 +57,7 @@ function MatchProvider(props) {
       // console.log(response.data.matches);
       if (Array.isArray(response.data.matches)) {
         setAllUser(response.data.matches);
+        setUer(response.data.matches);
       } else {
         console.error("API response is not an array:", response.data);
       }
@@ -77,7 +78,7 @@ function MatchProvider(props) {
         { userId: currentUserId, merryUserId: likedUserId }
       );
       setAvailableClicksToday((prev) => prev + 1);
-      let newUser = [...allUser];
+      let newUser = [...user];
       console.log("data", data);
       newUser = newUser.map((user) => {
         if (
@@ -128,6 +129,7 @@ function MatchProvider(props) {
     <MatchContext.Provider
       value={{
         allUser,
+        user,
         availableClicksToday,
         maxDailyQuota,
         addMerry,

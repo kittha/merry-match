@@ -19,7 +19,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   const [showMatchPopup, setShowMatchPopup] = useState(false);
   const navigate = useNavigate();
 
-  const { availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
+  const { alluser, availableClicksToday, maxDailyQuota, addMerry, undoMerry } =
     useMatch();
 
   useEffect(() => {
@@ -222,7 +222,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
                 </div>
               </TinderCard>
             )}
-            {index === 1 && (
+            {index === userQueue.length - 1 && (
               <div
                 className="lg:right-[700px] right-0 lg:top-[248px] top-[40vh] transform -translate-y-1/2 lg:w-[500px] w-screen lg:h-[500px] h-[80vh] rounded-[32px] relative"
                 style={{
@@ -234,8 +234,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#390741] rounded-[28px]"></div>
               </div>
             )}
-
-            {index === userQueue.length - 1 && (
+            {index === 1 && (
               <div
                 className="hidden lg:block lg:left-[700px] left-0 lg:top-[248px] top-[40vh] transform -translate-y-1/2 lg:w-[500px] w-screen lg:h-[500px] h-[80vh] rounded-[32px] relative"
                 style={{
