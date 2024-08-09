@@ -84,7 +84,7 @@ export const updateUserProfileById = async (req, res) => {
         j++;
       }
     }
-    // console.log(avatars);
+    // console.log("avatar", avatars);
 
     // update profile picture in database
     const avatarsResult = await upsertAvatars(userId, avatars);
@@ -93,8 +93,12 @@ export const updateUserProfileById = async (req, res) => {
     // *still can't delete from cloudinary
     // const cloudinaryId = avatarsResult.map((record) => record.cloudinary_id);
     // await cloudinaryDestroy(cloudinaryId);
-
-    return res.status(200).json({ message: "Updated Successful" });
+    avatars.map((avatar) => avatar.url);
+    return res.status(200).json({
+      message: "Updated Successful",
+      avatars: avatars.map((avatar) => avatar.url),
+      username: req.body.username,
+    });
   } catch (error) {
     console.error("Error in update profile controller:", error);
     res.status(500).json({

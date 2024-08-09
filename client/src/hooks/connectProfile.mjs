@@ -12,14 +12,14 @@ export const getProfileData = async (userId) => {
   }
 };
 
-export const updateProfile = async (userId, data) => {
+export const updateProfile = async (userId, inputData) => {
   try {
-    await axios.put(
+    const { data } = await axios.put(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`,
-      data
+      inputData
     );
     console.log("Send data to Database Success.");
-    return { message: "Get data from Database Success." };
+    return data;
   } catch (error) {
     console.error("Error at updateProfile in connectProfile: ", error);
   }
