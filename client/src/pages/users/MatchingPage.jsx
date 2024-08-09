@@ -3,6 +3,7 @@ import ChatContainer from "../../components/matchingpage/chatcontainer/ChatConta
 import FilterContainer from "../../components/matchingpage/Filter-area/FilterContainer";
 import SwipeCard from "../../components/matchingpage/matching/SwipeCard";
 import { useMatch } from "../../contexts/matchProvider";
+import filter from "/assets/matchingpage/matching-area/filter.png";
 
 function MatchingPage() {
   // const currentUserJson = localStorage.getItem("data");
@@ -13,6 +14,7 @@ function MatchingPage() {
   const { allUser } = useMatch();
   const [userQueue, setUserQueue] = useState([]);
   const [Queue, setQueue] = useState(allUser);
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     if (allUser) {
@@ -31,13 +33,25 @@ function MatchingPage() {
         userQueue={userQueue}
         setUserQueue={setUserQueue}
       />
-      <div className="hidden lg:flex">
+      <div className={`${showFilter ? "flex" : "hidden"} lg:flex`}>
         <FilterContainer
           Queue={Queue}
           setQueue={setQueue}
           userQueue={userQueue}
           setUserQueue={setUserQueue}
+          setShowFilter={setShowFilter}
         />
+      </div>
+      <div className="absolute bottom-0 lg:w-0 w-48">
+        <button
+          onClick={() => setShowFilter(true)}
+          className="lg:hidden flex gap-2 w-auto z-30"
+        >
+          <img src={filter} alt="filter" />
+          <p className="lg:hidden text-[14px] text-[#646D89] font-light text-center">
+            Filter
+          </p>
+        </button>
       </div>
     </div>
   );
