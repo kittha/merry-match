@@ -1,3 +1,4 @@
+import axios from "axios";
 /**
  * Decode a JWT token and return the payload.
  * @param {string} token - The JWT token to decode.
@@ -69,3 +70,47 @@ export function getDaysUntilExpiration(token) {
   const daysLeft = Math.ceil(timeLeftInSeconds / (60 * 60 * 24));
   return daysLeft;
 }
+
+export const refreshToken = async () => {
+  const refresh_token = localStorage.getItem("refreshToken");
+  if (refresh_token) {
+    try {
+      const result = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
+        { refresh_token }
+      );
+
+      const token = result.data.session.access_token;
+      const newRefreshToken = result.data.session.refresh_token;
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", newRefreshToken);
+      localStorage.setItem("data", JSON.stringify(result.data));
+
+      return result.data;
+    } catch (error) {
+      console.error("Error refreshing token:", error);
+      throw error;
+    }
+  }
+  throw new Error("No refresh token found");
+};
+
+export const initializeTokenRefresh = (setState, logout) => {
+  const refreshAndSetState = async () => {
+    try {
+      const userDataFromPayload = await refreshToken();
+      setState((prevState) => ({
+        ...prevState,
+        user: userDataFromPayload,
+        role: userDataFromPayload.role,
+      }));
+    } catch (error) {
+      logout();
+    }
+  };
+
+  refreshAndSetState();
+
+  const interval = setInterval(refreshAndSetState, 15 * 60 * 1000); // 15 * 60 * 1000 = Refresh every 15 minutes
+  return () => clearInterval(interval);
+};

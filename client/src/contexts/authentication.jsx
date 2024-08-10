@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getStoredData } from "../utils/sessionManager";
+import { initializeTokenRefresh } from "../utils/tokenUtils";
 
 export const AuthContext = React.createContext();
 
-// this is a hook that consume AuthContext
 
 function AuthProvider(props) {
   const [state, setState] = useState({
@@ -32,37 +32,7 @@ function AuthProvider(props) {
   }, []);
 
   useEffect(() => {
-    const refreshToken = async () => {
-      const refresh_token = localStorage.getItem("refreshToken");
-      if (refresh_token) {
-        try {
-          const result = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
-            { refresh_token }
-          );
-
-          const token = result.data.session.access_token;
-          const newRefreshToken = result.data.session.refresh_token;
-          localStorage.setItem("token", token);
-          localStorage.setItem("refreshToken", newRefreshToken);
-          localStorage.setItem("data", JSON.stringify(result.data));
-
-          const userDataFromPayload = result.data;
-
-          setState({
-            ...state,
-            user: userDataFromPayload,
-            role: userDataFromPayload.role,
-          });
-        } catch (error) {
-          console.error("Error refreshing token:", error);
-          logout();
-        }
-      }
-    };
-
-    const interval = setInterval(refreshToken, 15 * 60 * 1000); // 15 * 60 * 1000 = Refresh every 15 minutes
-    return () => clearInterval(interval);
+    return initializeTokenRefresh(setState, logout);
   }, []);
 
   // make a login request
@@ -75,6 +45,8 @@ function AuthProvider(props) {
         data
       );
 
+      // FIXME NEED TO MIGRATE FROM STORING JWT TOKEN IN LOCAL STORAGE
+      // USE HttpOnly Cookie for SECURE STORAGE
       const token = result.data.session.access_token;
       const refreshToken = result.data.session.refresh_token;
       localStorage.setItem("token", token);
