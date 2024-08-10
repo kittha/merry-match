@@ -1,4 +1,9 @@
 import axios from "axios";
+import { debounce } from "./debounce";
+import logout from "../hooks/useAuth";
+
+let isRefreshing = false;
+
 /**
  * Decode a JWT token and return the payload.
  * @param {string} token - The JWT token to decode.
@@ -6,6 +11,7 @@ import axios from "axios";
  */
 export function decodeJWT(token) {
   try {
+    // FIXME need validation
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
@@ -72,7 +78,14 @@ export function getDaysUntilExpiration(token) {
 }
 
 export const refreshToken = async () => {
+  if (isRefreshing) return; // Prevent multiple refreshes
+
+  isRefreshing = true;
+
   const refresh_token = localStorage.getItem("refreshToken");
+
+  console.log("refreshing token", refresh_token);
+
   if (refresh_token) {
     try {
       const result = await axios.post(
@@ -80,37 +93,46 @@ export const refreshToken = async () => {
         { refresh_token }
       );
 
-      const token = result.data.session.access_token;
-      const newRefreshToken = result.data.session.refresh_token;
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", newRefreshToken);
-      localStorage.setItem("data", JSON.stringify(result.data));
+      const token = result.data?.session?.access_token;
+      const newRefreshToken = result.data?.session?.refresh_token;
 
-      return result.data;
+      if (token && newRefreshToken) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("refreshToken", newRefreshToken);
+      } else {
+        throw new Error(
+          "Failed to refresh token: missing token or refresh token in response."
+        );
+      }
+      return;
     } catch (error) {
-      console.error("Error refreshing token:", error);
-      throw error;
+      // console.error("Error refreshing token:", error);
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("data");
+      window.location.replace("/login"); // Redirect to login page
+    } finally {
+      isRefreshing = false;
     }
+  } else {
+    isRefreshing = false; // Reset flag if no refresh_token is found
   }
-  throw new Error("No refresh token found");
 };
 
-export const initializeTokenRefresh = (setState, logout) => {
+export const initializeTokenRefresh = () => {
   const refreshAndSetState = async () => {
     try {
-      const userDataFromPayload = await refreshToken();
-      setState((prevState) => ({
-        ...prevState,
-        user: userDataFromPayload,
-        role: userDataFromPayload.role,
-      }));
+      await refreshToken();
     } catch (error) {
-      logout();
+      // console.error("Error refreshing token:", error);
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("data");
+      window.location.replace("/login"); // Redirect to login page
     }
   };
 
-  refreshAndSetState();
-
-  const interval = setInterval(refreshAndSetState, 15 * 60 * 1000); // 15 * 60 * 1000 = Refresh every 15 minutes
+  // const interval = setInterval(refreshAndSetState, 15000); // 15 sec * 1000 ms = Refresh every 15 seconds (for testing purpose)
+  const interval = setInterval(refreshAndSetState, 15 * 60 * 1000); // 15 min * 60 sec * 1000 ms = Refresh every 15 minutes
   return () => clearInterval(interval);
 };

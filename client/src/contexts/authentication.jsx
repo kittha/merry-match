@@ -32,7 +32,7 @@ function AuthProvider(props) {
   }, []);
 
   useEffect(() => {
-    return initializeTokenRefresh(setState, logout);
+    return initializeTokenRefresh();
   }, []);
 
   // make a login request
@@ -51,6 +51,7 @@ function AuthProvider(props) {
       const refreshToken = result.data.session.refresh_token;
       localStorage.setItem("token", token);
       localStorage.setItem("refreshToken", refreshToken);
+      console.log("step 1 set refreshToken", refreshToken);
       localStorage.setItem("data", JSON.stringify(result.data));
 
       // const userDataFromToken = jwtDecode(token);

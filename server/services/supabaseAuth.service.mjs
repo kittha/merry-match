@@ -62,14 +62,17 @@ export const signIn = async (reqBody) => {
  * @throws {Error} If there is an error refreshing the access token or if no data is returned.
  */
 export const refreshSession = async (oldRefreshTokenObj) => {
+  console.log("oldRefreshTokenObj is : ", oldRefreshTokenObj);
   try {
     const { data, error } = await supabase.auth.refreshSession(
       oldRefreshTokenObj
     );
-    if (error) {
-      console.error("Error refreshing access token:", error.message);
-      throw new Error("Failed to refresh session");
-    }
+
+    console.log("newRefreshTokenObj is : ", data?.session);
+    // if (error) {
+    //   console.error("Error refreshing access token:", error.message);
+    //   throw new Error("Failed to refresh session");
+    // }
 
     if (!data) {
       throw new Error("No data returned from refresh access token");

@@ -124,27 +124,27 @@ export const refreshUserSession = async (req, res) => {
     }
 
     const { session } = await refreshSession(oldRefreshTokenObj);
-    if (!session) {
-      return res.status(401).json({ message: "Session refresh failed" });
-    }
+
     console.log("get session from supabase auth (refresh session)");
 
-    //get user data from database
-    const userResult = await getUser(session.user.email);
-    const userId = userResult.user_id;
-    // get role name from database
-    const { name } = await getRole(userId);
-    // get avatars from database
-    const avatars = await getAvatars(userId);
-    const avatarsUrl = avatars.map((avatar) => avatar.url);
+    // //get user data from database
+    // const userResult = await getUser(session.user.email);
+    // const userId = userResult.user_id;
+    // // get role name from database
+    // const { name } = await getRole(userId);
+    // // get avatars from database
+    // const avatars = await getAvatars(userId);
+    // const avatarsUrl = avatars.map((avatar) => avatar.url);
 
-    const data = {
-      id: userId,
-      username: userResult.username,
-      role: name,
-      avatars: avatarsUrl,
-      session,
-    };
+    // const data = {
+    //   id: userId,
+    //   username: userResult.username,
+    //   role: name,
+    //   avatars: avatarsUrl,
+    //   session,
+    // };
+
+    const data = { session };
     return res.status(200).json(data);
   } catch (error) {
     console.error("Error refreshing session:", error);

@@ -6,6 +6,8 @@ function jwtInterceptor() {
     async (config) => {
       let token = localStorage.getItem("token");
 
+      console.log("istokenexpired", isTokenExpired(token));
+
       if (token && isTokenExpired(token)) {
         try {
           await refreshToken(); // Refresh the token if expired
@@ -21,9 +23,12 @@ function jwtInterceptor() {
       }
 
       if (token) {
-        config.headers["Authorization"] = `Bearer ${token}`;
+        config.headers = {
+          ...config.headers,
+          Authorization: `Bearer ${token}`,
+          Content_Type: "application/json",
+        };
       }
-
       return config;
     },
     (error) => {
@@ -41,6 +46,7 @@ function jwtInterceptor() {
         error.response.status === 401 &&
         error.response.statusText === "Unauthorized"
       ) {
+        console.error("Unauthorized error:", error);
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("data");

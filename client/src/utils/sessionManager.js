@@ -4,7 +4,7 @@ export function getStoredData() {
   let storedData = localStorage.getItem("data");
 
   if (!storedData) {
-    console.error("No data found in localStorage.");
+    // console.error("No data found in localStorage.");
     return null;
   }
 
