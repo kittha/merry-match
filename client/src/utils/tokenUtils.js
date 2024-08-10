@@ -34,6 +34,14 @@ export function isTokenExpired(token) {
     return true; // Consider token expired if it's not decodable or doesn't have an exp field
   }
 
+  // // **********
+  // // DEBUGGER: Check if the token is expired
+  // if (token) {
+  //   const daysLeft = getDaysUntilExpiration(token);
+  //   console.log(`Days left until token expires: ${daysLeft}`);
+  // }
+  // // **********
+
   const currentTime = Math.floor(Date.now() / 1000);
   return currentTime > decodedToken.exp;
 }

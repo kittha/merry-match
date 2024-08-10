@@ -1,8 +1,4 @@
-import {
-  decodeJWT,
-  isTokenExpired,
-  getDaysUntilExpiration,
-} from "./tokenUtils.js";
+import { isTokenExpired } from "./tokenUtils.js";
 
 export function getStoredData() {
   let storedData = localStorage.getItem("data");
@@ -36,10 +32,3 @@ export function getStoredData() {
     return null;
   }
 }
-
-// Check if the token is expired
-// const token = localStorage.getItem("token");
-// if (token) {
-//   const daysLeft = getDaysUntilExpiration(token);
-//   console.log(`Days left until token expires: ${daysLeft}`);
-// }
