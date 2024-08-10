@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 
 function IdentitiesSection() {
-  const { formData, handleChange, addHobby, deleteHobby, errors } =
-  useForm();
+  const { formData, handleChange, addHobby, deleteHobby, errors } = useForm();
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {
@@ -197,7 +196,7 @@ function IdentitiesSection() {
           <textarea
             className="textarea lg:w-[931px] w-auto h-[120px] rounded-[8px] border border-1 pt-3 pl-3 pb-3 pr-3 resize-none"
             placeholder="I know nothing..but you"
-            value={formData.bio}
+            value={formData.bio || ""}
             onChange={(event) => {
               const text = event.target.value;
               if (text.length <= 150) {

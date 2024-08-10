@@ -38,7 +38,7 @@ const DisplayChat = ({ messages, userId, anotherUser }) => {
               // owner bubble
               <div
                 key={index}
-                className="message-line w-full flex flex-row-reverse items-end gap-3"
+                className="message-line w-full flex flex-row-reverse items-end gap-1"
               >
                 <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit break-words rounded-3xl rounded-br-none bg-[#7D2262] py-3 lg:py-4 px-6 text-white">
                   {msg.message}
@@ -50,17 +50,29 @@ const DisplayChat = ({ messages, userId, anotherUser }) => {
                     />
                   )}
                 </div>
+                <div>
+                  {/* <p className="date text-[#f4ebf2]">
+                    {new Date(msg.dateTime).toLocaleDateString("en-GB")}
+                  </p> */}
+                  <p className="time text-[#f4ebf2] opacity-50 text-sm">
+                    {new Date(msg.dateTime).toLocaleTimeString([], {
+                      hour12: false,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
               </div>
             ) : (
               // other user bubble
               <div
                 key={index}
-                className="message-line w-full flex flex-row items-end gap-3"
+                className="message-line w-full flex flex-row items-end gap-1"
               >
                 <img
                   src={anotherUser.avatars["image1"]}
                   alt="profile-image"
-                  className="profile-pic bg-slate-400 w-10 h-10 aspect-square object-cover rounded-full"
+                  className="profile-pic bg-slate-400 w-10 h-10 aspect-square object-cover rounded-full mr-2"
                 />
                 <div className="message-box max-w-[70%] lg:max-w-[50%] w-fit h-fit break-words rounded-3xl rounded-bl-none bg-[#EFC4E2] py-3 lg:py-4 px-6">
                   {msg.message}
@@ -71,6 +83,18 @@ const DisplayChat = ({ messages, userId, anotherUser }) => {
                       className="image w-52 my-2"
                     />
                   )}
+                </div>
+                <div>
+                  {/* <p className="date text-[#f4ebf2]">
+                    {new Date(msg.dateTime).toLocaleDateString("en-GB")}
+                  </p> */}
+                  <p className="time text-[#f4ebf2] opacity-50 text-sm">
+                    {new Date(msg.dateTime).toLocaleTimeString([], {
+                      hour12: false,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
                 </div>
               </div>
             );
