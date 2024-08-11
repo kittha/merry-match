@@ -116,6 +116,7 @@ function AuthProvider(props) {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("data");
       setState({ ...state, user: null, role: "", error: null });
+      navigate("/login");
     } catch (error) {
       console.error("Logout error:", error);
     }
