@@ -38,8 +38,8 @@ const ProfileMatchAndMerryPopup = ({ user, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto  lg:rounded-[32px] shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 flex items-center justify-center bg-[#00000022] z-50">
+      <div className="overflow-scroll lg:overflow-hidden py-8 bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto lg:rounded-[32px] rounded-0 shadow-lg">
         <div className="flex justify-end pr-4 ">
           <button onClick={onClose}>
             <img className="hidden lg:block" src={exit} alt="exit" />
@@ -48,7 +48,7 @@ const ProfileMatchAndMerryPopup = ({ user, onClose }) => {
         <div className="flex justify-start pl-0 pt-0">
           <button onClick={onClose}>
             <img
-              className="block lg:hidden absolute z-30 pt-10 pl-8 filter drop-shadow-[5px_6px_5px_gray]"
+              className="block lg:hidden absolute z-30 pt-10 pl-8"
               src={arrowB}
               alt="exit"
             />
@@ -81,7 +81,7 @@ const ProfileMatchAndMerryPopup = ({ user, onClose }) => {
                         <img
                           src={Chaticon}
                           alt="chat-icon"
-                          className="w-[27px] h-[27px] mt-[5px] ml-[14.4px]"
+                          className="w-[27px] h-[27px] mt-[3px] ml-[14px]"
                         />
                       </button>
                     </div>
@@ -93,15 +93,9 @@ const ProfileMatchAndMerryPopup = ({ user, onClose }) => {
                         <img
                           src={WhiteHearticon}
                           alt="white-heart-icon"
-                          className="w-[57px] h-[57px] mt-[5px] ml-[3px]"
+                          className="w-[57px] h-[57px] mt-[5px] ml-[4px]"
                         />
                       </button>
-                      {showModalUnmatch && selectedUser ? (
-                        <UnmatchModalPopup
-                          user={selectedUser}
-                          onClose={() => setShowModalUnmatch(false)}
-                        />
-                      ) : null}
                     </div>
                   </>
                 ) : (

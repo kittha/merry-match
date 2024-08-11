@@ -199,7 +199,7 @@ function MerryListPage() {
                             <img
                               src={WhiteHearticon}
                               alt="white-heart-icon"
-                              className="mt-[5px] ml-[3px]"
+                              className="mt-[5px] ml-[5px]"
                             />
                           </button>
                         </section>
