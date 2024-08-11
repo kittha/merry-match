@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getStoredData } from "../utils/sessionManager";
-import { initializeTokenRefresh } from "../utils/tokenUtils";
+import { initializeTokenRefresh, clearAuthDataAndRedirect } from "../utils/tokenUtils";
 
 export const AuthContext = React.createContext();
 
@@ -13,23 +13,47 @@ function AuthProvider(props) {
     error: null,
     user: null,
     role: "",
+    authenticated: false,
   });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const data = getStoredData();
-    // console.log(data);
-    if (data) {
-      setState({
-        loading: false,
-        error: null,
-        user: data,
-        role: data.role,
-      });
-    } else {
-      setState((prevState) => ({ ...prevState, loading: false }));
-    }
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/check-auth`
+        );
+
+        // console.log("checkAuth response", response.data.authenticated);
+
+        const data = getStoredData();
+        if (data && response.data.authenticated) {
+          setState({
+            loading: false,
+            authenticated: true,
+            error: null,
+            user: data,
+            role: data.role,
+          });
+        } else {
+          setState((prevState) => ({ ...prevState, loading: false, authenticated: false }));
+        }
+
+      } catch (error) {
+        console.error("Authentication check failed:", error);
+        setState(prevState => ({
+          ...prevState,
+          loading: false,
+          user: null,
+          role: "",
+          authenticated: false,
+        }));
+      }
+    };
+
+    checkAuth();
   }, []);
+
 
   useEffect(() => {
     return initializeTokenRefresh();
@@ -38,40 +62,29 @@ function AuthProvider(props) {
   // make a login request
   const login = async (data) => {
     try {
-      setState({ ...state, error: null, loading: true });
+      setState(prevState => ({ ...prevState, error: null, loading: true }));
 
       const result = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/login`,
-        data, {
-          withCredentials: true
-        }
+        data
       );
 
-      console.log(result);
+      // console.log(result);
 
-      // FIXME NEED TO MIGRATE FROM STORING JWT TOKEN IN LOCAL STORAGE
-      // USE HttpOnly Cookie for SECURE STORAGE
-      const token = result.data.session.access_token;
-      const refreshToken = result.data.session.refresh_token;
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
-      // console.log("setting refreshToken", refreshToken);
-      localStorage.setItem("data", JSON.stringify(result.data));
+      localStorage.setItem("data", JSON.stringify(result.data.data));
 
-      // const userDataFromToken = jwtDecode(token);
-      // console.log(userDataFromToken);
-
-      const userDataFromPayload = result.data;
-
+      const userDataFromPayload = result.data.data;
+      const authenticatedFromPayload = result.data.authenticated;
       // console.log("login", userDataFromPayload);
-
+      
       setState({
         ...state,
         user: userDataFromPayload,
         role: userDataFromPayload.role,
         loading: false,
+        authenticated: authenticatedFromPayload,
       });
-
+      
       if (userDataFromPayload.role === "Admin") {
         navigate("/admin/package");
       } else {
@@ -93,6 +106,7 @@ function AuthProvider(props) {
         ...state,
         error: errorMessage,
         loading: false,
+        authenticated: false,
       });
     }
   };
@@ -115,18 +129,16 @@ function AuthProvider(props) {
 
   // clear the token in localStorage and the user data
   const logout = () => {
+    console.log("calling logout function");
     try {
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("data");
-      setState({ ...state, user: null, role: "", error: null });
-      navigate("/login");
+      setState({ ...state, user: null, role: "", error: null, authenticated: false });
+      clearAuthDataAndRedirect();
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
 
-  const isAuthenticated = Boolean(localStorage.getItem("token"));
+  const isAuthenticated = state.authenticated;
 
   return (
     <AuthContext.Provider

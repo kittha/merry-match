@@ -5,6 +5,7 @@ import cross from "../../../../public/assets/filter-area/Vector.svg";
 // import search from "../../../../public/assets/filter-area/search.svg";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import { getUserIdFromStoredData } from "../../../utils/sessionManager";
 
 // TODO what is setShowFilter, getData?
 function FilterContainer({
@@ -21,7 +22,8 @@ function FilterContainer({
   const [isCheckedFemale, setIsCheckFemale] = useState(false);
   const [isCheckedBinary, setIsCheckBinary] = useState(false);
   const [value, setValue] = useState([18, 50]);
-  const currentUserId = state.user?.id;
+  const userData = state.user?.data
+  const currentUserId = userData?.id || getUserIdFromStoredData();
   const [filterData, setFilterData] = useState({
     checkMale: "",
     checkFemale: "",

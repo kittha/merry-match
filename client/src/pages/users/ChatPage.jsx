@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
 import { useChat } from "../../hooks/useChat";
 import { useMatch } from "../../hooks/useMatch";
+import { getUserIdFromStoredData } from "../../utils/sessionManager";
 
 const Chat = () => {
   const { state } = useAuth();
@@ -19,7 +20,8 @@ const Chat = () => {
   const { allUser } = useMatch();
   const { lastMsg, setLastMsg } = useChat();
 
-  const userId = state.user?.id;
+  const userData = state.user?.data
+  const userId = userData?.id || getUserIdFromStoredData();
 
   let { matchId } = useParams();
   matchId = Number(matchId);

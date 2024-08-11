@@ -10,6 +10,7 @@ import Footer from "../../components/homepage/Footer";
 import { usePackage } from "../../hooks/usePackage";
 import useAuth from "../../hooks/useAuth";
 import { useMatch } from "../../hooks/useMatch";
+import { getUserIdFromStoredData } from "../../utils/sessionManager";
 
 const PaymentForm = () => {
   const navigate = useNavigate();
@@ -27,7 +28,8 @@ const PaymentForm = () => {
 
   const package_id = selectedPackage?.package_id;
   const package_name = selectedPackage?.name;
-  const userId = state.user.id;
+  const userData = state.user?.data
+  const userId = userData?.id || getUserIdFromStoredData();
   const { setMaxDailyQuota } = useMatch();
 
   const handleConfirm = async (event) => {

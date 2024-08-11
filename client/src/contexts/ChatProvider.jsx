@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { getLastMessagesByUserId } from "../hooks/connectMsg.mjs";
+import {getUserIdFromStoredData} from "../utils/sessionManager";
 
 export const ChatContext = React.createContext();
 
 function ChatProvider(props) {
   const [lastMsg, setLastMsg] = useState([]);
   const { state } = useAuth();
-  const userId = state.user?.id;
+  const userData = state.user?.data
+  const userId = userData?.id || getUserIdFromStoredData();
 
   const fetchData = async () => {
     const data = await getLastMessagesByUserId(userId);

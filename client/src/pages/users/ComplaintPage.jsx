@@ -3,10 +3,14 @@ import axios from "axios";
 import image from "/assets/complaint-image/image.png";
 import Footer from "../../components/homepage/Footer";
 import useAuth from "../../hooks/useAuth";
+import { getUserIdFromStoredData } from "../../utils/sessionManager";
 
 function ComplaintPage() {
   const { state } = useAuth();
-  const userId = state && state.user ? state.user.id : null;
+
+  const userData = state.user?.data
+  const userId = userData?.id || getUserIdFromStoredData();
+  
   const [issue, setIssue] = useState("");
   const [description, setDescription] = useState("");
 

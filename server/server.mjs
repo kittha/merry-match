@@ -13,6 +13,7 @@ import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
 import socket from "./utils/socket.mjs";
 import "./controllers/transaction.controller.mjs";
+import cookieParser from "cookie-parser";
 const app = express();
 
 const corsOptions = {
@@ -43,9 +44,14 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/status", (req, res) => {
   return res.status(200).json("Server API is working");
+});
+
+app.get("/test-cookies", (req, res) => {
+  res.json(req.cookies);
 });
 
 app.use("/api/v1", apiV1Routes);

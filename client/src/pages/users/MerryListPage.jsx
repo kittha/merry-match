@@ -14,11 +14,13 @@ import Footer from "../../components/homepage/Footer";
 import ProfileMatchAndMerryPopup from "../../components/merry-list/ProfileMatchAndMerryPopup";
 import CountdownTimer from "../../components/merry-list/CountdownTimer";
 import UnmatchModalPopup from "../../components/merry-list/UnmatchPopup";
+import { getUserIdFromStoredData } from "../../utils/sessionManager";
 
 function MerryListPage() {
   const { availableClicksToday, maxDailyQuota } = useMatch();
   const { state } = useAuth();
-  const userId = state && state.user ? state.user.id : null;
+  const userData = state.user?.data
+  const userId = userData?.id || getUserIdFromStoredData();
   const navigate = useNavigate();
   const [merryList, setMerryList] = useState([]);
   const [merryCount, setMerryCount] = useState([]);

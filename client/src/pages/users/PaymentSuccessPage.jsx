@@ -5,12 +5,14 @@ import Footer from "../../components/homepage/Footer";
 import { useNavigate } from "react-router-dom";
 import { usePackage } from "../../hooks/usePackage";
 import useAuth from "../../hooks/useAuth";
+import { getUserIdFromStoredData } from "../../utils/sessionManager";
 
 function PaymentSuccessPage() {
   const navigate = useNavigate();
   const { selectedPackage } = usePackage();
   const { state } = useAuth();
-  const userId = state.user?.id;
+  const userData = state.user?.data
+  const userId = userData?.id || getUserIdFromStoredData();
   const today = new Date();
 
   const startDate = today.toLocaleDateString("th-TH");

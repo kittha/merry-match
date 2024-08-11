@@ -2,8 +2,9 @@ import express from "express";
 import {
   registerUser,
   loginUser,
-  fetchUser,
+  // fetchUser,
   refreshUserSession,
+  checkAuth,
 } from "../../../controllers/auth.controller.mjs";
 import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 import { validatePicture } from "../../../middlewares/picture.validation.mjs";
@@ -38,7 +39,8 @@ router.post(
   [validateSignInInput, validateEmailRegex, validatePasswordLength],
   loginUser
 );
-router.get("/:tokenId", fetchUser);
+// router.get("/:tokenId", fetchUser);
 router.post("/refresh-token", refreshUserSession);
+router.get("/check-auth", checkAuth);
 
 export default router;

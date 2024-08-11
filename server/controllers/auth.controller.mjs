@@ -9,6 +9,7 @@ import { cloudinaryUpload } from "../utils/cloudinary.uploader.mjs";
 import { createProfile } from "../models/profile.model.mjs";
 import { createAvatars, getAvatars } from "../models/profilePicture.model.mjs";
 import { getRole } from "../models/role.model.mjs";
+import jwt from "jsonwebtoken";
 
 /**
  * Register User for the Merry Match application.
@@ -71,11 +72,10 @@ export const loginUser = async (req, res) => {
       username: userResult.username,
       role: name,
       avatars: avatarsUrl,
-      session: {
-        access_token: session.access_token,
-        refresh_token: session.refresh_token,
-      },
     };
+    // console.log("session", session);
+    // console.log("session.access_token", session.access_token);
+    // console.log("session.refresh_token", session.refresh_token);
 
     res.cookie("token", session.access_token, {
       httpOnly: true,
@@ -91,7 +91,7 @@ export const loginUser = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
     });
 
-    return res.status(200).json(data);
+    return res.status(200).json({ data, authenticated: true });
   } catch (error) {
     console.error("Error in loginUser:", error);
     res.status(500).json({
@@ -100,31 +100,37 @@ export const loginUser = async (req, res) => {
   }
 };
 
-/**
- * Fetch User details (from table users, user_profiles, hobbies, avatars) from the Merry Match application.
- *
- * @param {object} req - The request object, contain jwt token.
- * @param {object} res - The response object, used to send data (from table users, user_profiles, hobbies, profile_pictures) and response back to the client.
- * @returns
- */
-export const fetchUser = async (req, res) => {
-  try {
-    const jwtToken = req.body;
-    const user = getUser(jwtToken);
+// /**
+//  * Fetch User details (from table users, user_profiles, hobbies, avatars) from the Merry Match application.
+//  *
+//  * @param {object} req - The request object, contain jwt token.
+//  * @param {object} res - The response object, used to send data (from table users, user_profiles, hobbies, profile_pictures) and response back to the client.
+//  * @returns
+//  */
+// export const fetchUser = async (req, res) => {
+//   try {
+//     const jwtToken = req.cookie.token;
 
-    if (!user) {
-      console.error("No user is signed in");
-      return null;
-    }
+//     if (!jwtToken) {
+//       return res.sendStatus(401); // Unauthorized if no token is present
+//     }
 
-    console.log("Authenticated user:", user);
-    return user;
-  } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-    });
-  }
-};
+//     console.log("jwtToken:", jwtToken);
+//     const user = await getUser(jwtToken);
+
+//     if (!user) {
+//       console.error("No user is signed in");
+//       return null;
+//     }
+
+//     console.log("Authenticated user:", user);
+//     return user;
+//   } catch (error) {
+//     res.status(500).json({
+//       message: "Internal server error",
+//     });
+//   }
+// };
 
 /**
  * Refreshes the user session.
@@ -134,8 +140,9 @@ export const fetchUser = async (req, res) => {
  * @return {Promise<Object>} The updated user session data.
  */
 export const refreshUserSession = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
   try {
-    const oldRefreshTokenObj = req.body;
+    const oldRefreshTokenObj = { refresh_token: refreshToken };
 
     if (!oldRefreshTokenObj) {
       return res.status(400).json({ message: "Invalid session data" });
@@ -153,4 +160,25 @@ export const refreshUserSession = async (req, res) => {
       message: "Internal server error",
     });
   }
+};
+
+export const checkAuth = async (req, res) => {
+  // console.log("req.cookies.token = ", req.cookies.token);
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ authenticated: false, message: "Not authenticated" });
+  }
+
+  jwt.verify(token, process.env.SUPABASE_JWT_TOKEN, (err, user) => {
+    if (err) {
+      return res
+        .status(401)
+        .json({ authenticated: false, message: "Token invalid or expired" });
+    }
+
+    res.status(200).json({ authenticated: true, message: "Authenticated" });
+  });
 };

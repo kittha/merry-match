@@ -24,9 +24,9 @@ export const FormProvider = ({ children }) => {
   };
   const [formData, setFormData] = useState(initialData);
 
-  const token = localStorage.getItem("token");
   const [errors, setErrors] = useState({});
   const { state, setState, register } = useAuth();
+  const isAuthenticated = state.authenticated;
   const [loading, setLoading] = useState(false);
   const resetForm = () => {
     setFormData(initialData);
@@ -90,7 +90,7 @@ export const FormProvider = ({ children }) => {
     if (!email) newErrors.email = "Email is required";
     if (email && !emailRegex.test(email))
       newErrors.email = "Email must be valid";
-    if (!token) {
+    if (!isAuthenticated) {
       // console.log(token);
       if (!password) newErrors.password = "Password is required";
       if (password && password.length < 8)

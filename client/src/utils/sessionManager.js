@@ -1,21 +1,8 @@
-import { isTokenExpired, clearAuthDataAndRedirect } from "./tokenUtils.js";
+import { clearAuthDataAndRedirect } from "./tokenUtils.js";
 
 export function getStoredData() {
-  const storedData = localStorage.getItem("data");
-  const token = localStorage.getItem("token");
-
-  if (!storedData) {
-    // console.error("No data found in localStorage.");
-    return null;
-  }
-
-  if (token && isTokenExpired(token)) {
-    console.warn("JWT token is expired.");
-    clearAuthDataAndRedirect();
-    return null;
-  }
-
   try {
+    const storedData = localStorage.getItem("data");
     const parsedData = JSON.parse(storedData);
     return parsedData;
   } catch (error) {
@@ -23,4 +10,12 @@ export function getStoredData() {
     clearAuthDataAndRedirect();
     return null;
   }
+}
+
+export function getUserIdFromStoredData() {
+  const data = getStoredData();
+  if (!data) {
+    return null;
+  }
+  return data.id;
 }

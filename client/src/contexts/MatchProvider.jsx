@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useMerryLimit } from "../hooks/userMerryLimit";
 import useAuth from "../hooks/useAuth";
+import { getUserIdFromStoredData } from "../utils/sessionManager";
 
 /**
  * Custom React hook that manages the matching functionality for a given user.
@@ -23,7 +24,8 @@ function MatchProvider(props) {
   // const currentUser = JSON.parse(currentUserJson);
   // const currentUserId = currentUser.id;
   const { state } = useAuth();
-  const currentUserId = state.user?.id;
+  const userData = state.user?.data
+  const currentUserId = userData?.id || getUserIdFromStoredData();
 
   const [allUser, setAllUser] = useState([]);
   const [user, setUser] = useState([]);

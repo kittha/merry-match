@@ -11,28 +11,26 @@ import "dotenv/config";
  * @returns
  */
 const authenticateUser = async (req, res, next) => {
+  // console.log("cookie is :", req.cookies);
+  // console.log("token is : ", req.cookies?.token);
+  // console.log("refreshToken is : ", req.cookies?.refreshToken);
+
+  const accessToken = req.cookies?.token;
+
+  if (!accessToken) {
+    return res.sendStatus(401); // Unauthorized if no token is present
+  }
+
+  let decodedData;
   try {
-    // chech if request has header "Authorization"
-    if (!req.headers.authorization) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
+    decodedData = jwt.verify(accessToken, process.env.SUPABASE_JWT_TOKEN);
+    console.log("Token is valid");
+  } catch (error) {
+    console.error("Token verification failed:", error);
+    return res.status(403).json({ error: "Token is invalid" });
+  }
 
-    // read JWT Token -> get uuid from token
-    const accessToken = req.headers.authorization.split(" ")[1];
-    let decodedData = "";
-    jwt.verify(
-      accessToken,
-      process.env.SUPABASE_JWT_TOKEN,
-      (error, decoded) => {
-        if (error) {
-          console.error("Token verification failed:", error);
-        } else {
-          console.log("Token is valid");
-          decodedData = decoded;
-        }
-      }
-    );
-
+  try {
     const userEmail = decodedData.email;
 
     // then identify user email (unique value) (email has strong authentication, I think we can trust this uniqueness)
@@ -60,7 +58,6 @@ const authenticateUser = async (req, res, next) => {
       username,
       role_id,
     };
-
     req.user = bundledUserData;
     return next();
   } catch (error) {

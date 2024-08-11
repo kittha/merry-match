@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
+import { getUserIdFromStoredData } from "../../../utils/sessionManager";
 
 function CheckBox({
   filterData,
@@ -13,7 +14,8 @@ function CheckBox({
   setIsCheckBinary,
 }) {
   const { state } = useAuth();
-  const currentUserId = state.user?.id;
+  const userData = state.user?.data
+  const currentUserId = userData?.id || getUserIdFromStoredData();
   const [profileData, setProfileData] = useState("");
   const getSexualPreference = async () => {
     let result;
