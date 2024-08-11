@@ -58,7 +58,7 @@ app.get("*", (req, res) => {
 app.use(errorHandler);
 
 const httpServer = http.createServer(app);
-// connect soket io
+// connect Socket.IO
 socket(httpServer);
 
 httpServer.listen(PORT, () => {
