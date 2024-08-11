@@ -38,7 +38,7 @@ const ProfileMatchAndMerryPopup = ({ user, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-[#00000022] z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-[#00000022] z-30">
       <div className="overflow-scroll lg:overflow-hidden py-8 bg-white lg:w-[1064px] lg:h-[740px] w-full h-full mx-auto lg:rounded-[32px] rounded-0 shadow-lg">
         <div className="flex justify-end pr-4 ">
           <button onClick={onClose}>
