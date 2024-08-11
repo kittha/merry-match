@@ -115,6 +115,7 @@ export async function refreshToken() {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
 

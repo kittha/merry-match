@@ -42,8 +42,12 @@ function AuthProvider(props) {
 
       const result = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/login`,
-        data
+        data, {
+          withCredentials: true
+        }
       );
+
+      console.log(result);
 
       // FIXME NEED TO MIGRATE FROM STORING JWT TOKEN IN LOCAL STORAGE
       // USE HttpOnly Cookie for SECURE STORAGE

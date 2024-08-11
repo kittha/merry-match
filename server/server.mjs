@@ -17,6 +17,7 @@ const app = express();
 
 const corsOptions = {
   origin: `${process.env.FRONTEND_URL}`,
+  credentials: true,
   optionsSuccessStatus: 200,
   upgradeInsecureRequests: [],
 };
