@@ -152,8 +152,24 @@ export const refreshUserSession = async (req, res) => {
 
     console.log("get session from supabase auth (refresh session)");
 
+    res.cookie("token", session.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "development",
+      sameSite: "Strict",
+      maxAge: 3600000, // 1 hour in milliseconds
+    });
+
+    res.cookie("refreshToken", session.refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "development",
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+    });
+
     const data = { session };
-    return res.status(200).json(data);
+    return res
+      .status(200)
+      .json({ message: "Refresh Token Success", authenticated: true });
   } catch (error) {
     console.error("Error refreshing session:", error);
     res.status(500).json({
