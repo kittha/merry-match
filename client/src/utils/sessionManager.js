@@ -1,4 +1,4 @@
-import { isTokenExpired } from "./tokenUtils.js";
+import { isTokenExpired, clearAuthDataAndRedirect } from "./tokenUtils.js";
 
 export function getStoredData() {
   let storedData = localStorage.getItem("data");
@@ -12,10 +12,7 @@ export function getStoredData() {
     const token = localStorage.getItem("token");
     if (token && isTokenExpired(token)) {
       console.warn("JWT token is expired.");
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("data");
-      window.location.replace("/");
+      clearAuthDataAndRedirect();
       return null;
     }
 
@@ -25,10 +22,7 @@ export function getStoredData() {
   } catch (error) {
     console.error("Error parsing JSON data from localStorage:", error);
     console.warn("JWT token is expired.");
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("data");
-    window.location.replace("/");
+    clearAuthDataAndRedirect();
     return null;
   }
 }

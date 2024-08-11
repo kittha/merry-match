@@ -1,23 +1,29 @@
 import axios from "axios";
-import { isTokenExpired, refreshToken } from "./tokenUtils";
+import {
+  isTokenExpiringSoon,
+  refreshToken,
+  clearAuthDataAndRedirect,
+} from "./tokenUtils";
 
+/**
+ * Sets up an interceptor for Axios requests and responses to handle JWT token refresh, set Bearer Token at Header and unauthorized errors.
+ *
+ * @return {void}
+ */
 function jwtInterceptor() {
   axios.interceptors.request.use(
     async (config) => {
       let token = localStorage.getItem("token");
 
-      console.log("istokenexpired", isTokenExpired(token));
+      // console.log("isTokenExpiringSoon", isTokenExpiringSoon(token));
 
-      if (token && isTokenExpired(token)) {
+      if (token && isTokenExpiringSoon(token)) {
         try {
           await refreshToken(); // Refresh the token if expired
-          token = localStorage.getItem("token"); // Get the new token
+          token = localStorage.getItem("token");
         } catch (error) {
           console.error("Error refreshing token:", error);
-          localStorage.removeItem("token");
-          localStorage.removeItem("refreshToken");
-          localStorage.removeItem("data");
-          window.location.replace("/login"); // Redirect to login page
+          clearAuthDataAndRedirect();
           return Promise.reject(error);
         }
       }
@@ -26,7 +32,6 @@ function jwtInterceptor() {
         config.headers = {
           ...config.headers,
           Authorization: `Bearer ${token}`,
-          Content_Type: "application/json",
         };
       }
       return config;
@@ -47,10 +52,7 @@ function jwtInterceptor() {
         error.response.statusText === "Unauthorized"
       ) {
         console.error("Unauthorized error:", error);
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("data");
-        window.location.replace("/login"); // Redirect to login page
+        clearAuthDataAndRedirect();
       }
 
       return Promise.reject(error);

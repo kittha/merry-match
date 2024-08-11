@@ -69,10 +69,10 @@ export const refreshSession = async (oldRefreshTokenObj) => {
     );
 
     // console.log("newRefreshTokenObj is : ", data?.session);
-    // if (error) {
-    //   console.error("Error refreshing access token:", error.message);
-    //   throw new Error("Failed to refresh session");
-    // }
+    if (error) {
+      console.error("Error refreshing access token:", error.message);
+      throw new Error("Failed to refresh session");
+    }
 
     if (!data) {
       throw new Error("No data returned from refresh access token");
