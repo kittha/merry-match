@@ -21,7 +21,10 @@ function AuthProvider(props) {
     const checkAuth = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/check-auth`
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/check-auth`,
+          data, {
+            withCredentials: true,
+          }
         );
 
         // console.log("checkAuth response", response.data.authenticated);
@@ -66,7 +69,9 @@ function AuthProvider(props) {
 
       const result = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/login`,
-        data
+        data, {
+          withCredentials: true,
+        }
       );
 
       // console.log(result);

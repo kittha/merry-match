@@ -13,6 +13,7 @@ function ChatProvider(props) {
 
   const fetchData = async () => {
     const data = await getLastMessagesByUserId(userId);
+    console.log("at ChatProvider.jsx line 16 : data is ", data);
     data.sort((a, b) => {
       a.dateTime = new Date(a.dateTime);
       b.dateTime = new Date(b.dateTime);

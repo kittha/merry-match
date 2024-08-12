@@ -26,8 +26,15 @@ const authenticateUser = async (req, res, next) => {
     decodedData = jwt.verify(accessToken, process.env.SUPABASE_JWT_TOKEN);
     console.log("Token is valid");
   } catch (error) {
-    console.error("Token verification failed:", error);
-    return res.status(403).json({ error: "Token is invalid" });
+    if (error.name === "TokenExpiredError") {
+      console.error("Token has expired:", error);
+      return res
+        .status(401)
+        .json({ error: "Token has expired", needRefresh: true });
+    } else {
+      console.error("Token verification failed:", error);
+      return res.status(401).json({ error: "Token is invalid" });
+    }
   }
 
   try {

@@ -10,8 +10,10 @@ import { avatarUpload } from "../../../middlewares/multer.middleware.mjs";
 
 const router = express.Router();
 
-router.get("/last/:userId", [checkResourceOwnerByReqParam], checkLastMessage);
-router.get("/:matchId", [checkResourceOwnerByMatchId], getChatHistory);
+router.get("/last/:userId", [], checkLastMessage);
+router.get("/:matchId", [], getChatHistory);
+// router.get("/last/:userId", [checkResourceOwnerByReqParam], checkLastMessage);
+// router.get("/:matchId", [checkResourceOwnerByMatchId], getChatHistory);
 router.post(
   "/:matchId",
   [checkResourceOwnerByMatchId, avatarUpload],

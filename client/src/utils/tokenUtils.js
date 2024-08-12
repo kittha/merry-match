@@ -18,9 +18,17 @@ export function clearAuthDataAndRedirect() {
 export async function refreshToken() {
   if (isRefreshing) return; // Prevent multiple refreshes
 
+  isRefreshing = true;
+
   try {
     await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
   } catch (error) {
     console.error("Error refreshing token:", error);

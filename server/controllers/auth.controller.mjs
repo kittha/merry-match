@@ -141,14 +141,21 @@ export const loginUser = async (req, res) => {
  */
 export const refreshUserSession = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
-  try {
-    const oldRefreshTokenObj = { refresh_token: refreshToken };
 
-    if (!oldRefreshTokenObj) {
-      return res.status(400).json({ message: "Invalid session data" });
+  if (!refreshToken) {
+    return res.status(400).json({ message: "Invalid session data" });
+  }
+
+  console.log("Old refreshToken is ", refreshToken);
+
+  try {
+    const { session } = await refreshSession({ refresh_token: refreshToken });
+
+    if (!session) {
+      throw new Error("Failed to refresh session");
     }
 
-    const { session } = await refreshSession(oldRefreshTokenObj);
+    console.log("New refreshToken is ", session.refresh_token);
 
     console.log("get session from supabase auth (refresh session)");
 
@@ -166,14 +173,17 @@ export const refreshUserSession = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
     });
 
-    const data = { session };
     return res
       .status(200)
       .json({ message: "Refresh Token Success", authenticated: true });
   } catch (error) {
     console.error("Error refreshing session:", error);
-    res.status(500).json({
-      message: "Internal server error",
+
+    res.clearCookie("token");
+    res.clearCookie("refreshToken");
+
+    return res.status(401).json({
+      message: "Failed to refresh token, please log in again",
     });
   }
 };
@@ -190,6 +200,9 @@ export const checkAuth = async (req, res) => {
 
   jwt.verify(token, process.env.SUPABASE_JWT_TOKEN, (err, user) => {
     if (err) {
+      res.clearCookie("token");
+      res.clearCookie("refreshToken");
+
       return res
         .status(401)
         .json({ authenticated: false, message: "Token invalid or expired" });
