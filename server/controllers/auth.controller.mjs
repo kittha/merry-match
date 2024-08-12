@@ -79,14 +79,21 @@ export const loginUser = async (req, res) => {
 
     res.cookie("token", session.access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "development",
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       maxAge: 3600000, // 1 hour in milliseconds
     });
 
     res.cookie("refreshToken", session.refresh_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "development",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+    });
+
+    res.cookie("session", session, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
     });
@@ -132,20 +139,6 @@ export const loginUser = async (req, res) => {
 //   }
 // };
 
-let isRefreshing = false;
-let refreshQueue = [];
-
-const processQueue = (error, session = null) => {
-  refreshQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.resolve(session);
-    }
-  });
-  refreshQueue = [];
-};
-
 /**
  * Refreshes the user session.
  *
@@ -153,62 +146,62 @@ const processQueue = (error, session = null) => {
  * @param {Object} res - The response object.
  * @return {Promise<Object>} The updated user session data.
  */
-export const refreshUserSession = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
 
-  if (!refreshToken) {
+const sessionStore = {};
+let isRefreshing = false;
+export const refreshUserSession = async (req, res) => {
+  if (isRefreshing) return;
+  isRefreshing = true;
+
+  const refreshSessionInCookie = req.cookies.session;
+  console.log("refreshSessionCookie is ", refreshSessionInCookie);
+
+  if (!refreshSessionInCookie) {
     return res.status(400).json({ message: "Invalid session data" });
   }
 
-  if (typeof refreshToken !== "string") {
-    console.error("Invalid refresh token format");
-    return res.status(400).json({ message: "Invalid refresh token format" });
+  const refreshTokenFingerPrint = refreshSessionInCookie.refresh_token;
+  if (sessionStore[refreshTokenFingerPrint]) {
+    return res.status(400).json({
+      message: "Refresh request already in progress. Please wait.",
+    });
   }
 
-  console.log("Old refreshToken is ", refreshToken);
-
-  if (isRefreshing) {
-    console.log("Refresh already in progress. Queuing this request.");
-    return res
-      .status(429)
-      .json({ message: "Refresh in progress. Please wait." });
-  }
-
-  isRefreshing = true;
-  let session;
+  sessionStore[refreshTokenFingerPrint] = true;
 
   try {
-    session = await attemptRefresh(refreshToken);
+    const session = await refreshSession(refreshSessionInCookie);
 
-    if (!session) {
-      console.warn("First refresh attempt failed, retrying...");
-      await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms delay
-      session = await attemptRefresh(refreshToken);
+    console.log("data.session(session) is ", session);
+    //if (!session) {
+    //throw new Error("Failed to refresh session");
+    //}
+
+    // console.log("New refreshToken is ", session.refresh_token);
+    // console.log("get session from supabase auth (refresh session)");
+
+    if (session?.session !== null || session?.session !== undefined) {
+      res.cookie("token", session.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 3600000, // 1 hour in milliseconds
+      });
+
+      res.cookie("refreshToken", session.refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+      });
+
+      res.cookie("session", session, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+      });
     }
-
-    if (!session) {
-      throw new Error("Failed to refresh session after retry");
-    }
-
-    console.log("New refreshToken is ", session.refresh_token);
-
-    console.log("get session from supabase auth (refresh session)");
-
-    res.cookie("token", session.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "development",
-      sameSite: "Strict",
-      maxAge: 3600000, // 1 hour in milliseconds
-    });
-
-    res.cookie("refreshToken", session.refresh_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "development",
-      sameSite: "Strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-    });
-
-    console.log("Session refreshed successfully");
 
     return res
       .status(200)
@@ -218,45 +211,39 @@ export const refreshUserSession = async (req, res) => {
 
     res.clearCookie("token");
     res.clearCookie("refreshToken");
+    res.clearCookie("session");
 
-    return res.status(401).json({
+    return res.status(400).json({
       message: "Failed to refresh token, please log in again",
     });
-  }
-};
-
-/**
- * Helper function to attempt token refresh
- * @param {string} refreshToken - The current refresh token
- * @returns {Promise<Object|null>} - The new session object or null if failed
- */
-const attemptRefresh = async (refreshToken) => {
-  try {
-    const session = await refreshSession({ refresh_token: refreshToken });
-    return session || null;
-  } catch (error) {
-    console.error("Error during refresh attempt:", error.message);
-    return null;
+  } finally {
+    setTimeout(() => {
+      delete sessionStore[refreshTokenFingerPrint];
+    }, 5000); // 5000 milliseconds = 5 second delay
+    isRefreshing = false;
   }
 };
 
 export const checkAuth = async (req, res) => {
   // console.log("req.cookies.token = ", req.cookies.token);
-  const token = req.cookies.token;
+  const session = req.cookies.session;
 
-  if (!token) {
+  if (!session) {
     return res
-      .status(401)
+      .status(400)
       .json({ authenticated: false, message: "Not authenticated" });
   }
 
-  jwt.verify(token, process.env.SUPABASE_JWT_TOKEN, (err, user) => {
+  const accessToken = refreshSessionInCookie?.access_token;
+
+  jwt.verify(accessToken, process.env.SUPABASE_JWT_TOKEN, (err, user) => {
     if (err) {
       res.clearCookie("token");
       res.clearCookie("refreshToken");
+      res.clearCookie("session");
 
       return res
-        .status(401)
+        .status(400)
         .json({ authenticated: false, message: "Token invalid or expired" });
     }
 
