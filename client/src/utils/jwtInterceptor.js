@@ -30,7 +30,7 @@ function jwtInterceptor() {
 
         if (error.response.data?.needRefresh === undefined) {
           console.log(
-            "Token refresh not required or not possible, redirecting to login."
+            "From jwtInterceptor.js line 33 : Token refresh not required or not possible, redirecting to login."
           );
           clearAuthDataAndRedirect();
           return; // Stop execution
