@@ -12,7 +12,7 @@ import apiV1Routes from "./routes/api/v1/index.mjs";
 import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
 import socket from "./utils/socket.mjs";
-import "./controllers/transaction.controller.mjs";
+// import "./controllers/transaction.controller.mjs";
 const app = express();
 
 const corsOptions = {

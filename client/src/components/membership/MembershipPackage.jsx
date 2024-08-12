@@ -35,7 +35,7 @@ function MembershipPackage({ details, history, onCancel }) {
       <h1 className="text-[#2A2E3F] font-[700] text-[24px]">
         Merry Membership Package
       </h1>
-      <div className="flex justify-center">
+      <div className="">
         {!details ? (
           <button
             onClick={() => {

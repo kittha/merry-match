@@ -55,6 +55,18 @@ const PaymentForm = () => {
       isValid = false;
     }
 
+    const [month, year] = expCard.split("/");
+    if (
+      !month ||
+      !year ||
+      parseInt(month) > 12 ||
+      month.length !== 2 ||
+      year.length !== 2
+    ) {
+      setExpCardError("Invalid expiry date.");
+      return false;
+    }
+
     if (!cvcCard) {
       setCVCError("CVC is required.");
       isValid = false;

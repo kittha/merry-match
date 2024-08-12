@@ -39,7 +39,6 @@ const cardMapping = {
 
 export const processPayment = async (req, res) => {
   const { user, product, cardDetail } = req.body;
-  console.log("Received data:", req.body);
 
   try {
     const customer = await stripe.customers.create({
@@ -48,7 +47,6 @@ export const processPayment = async (req, res) => {
 
     // Fetch package details
     const packageDetails = await getPackageById(product.package_id);
-    console.log("Package Details:", packageDetails);
 
     // Ensure package details are valid
     if (!packageDetails || !packageDetails.price) {
@@ -64,7 +62,6 @@ export const processPayment = async (req, res) => {
     // Determine the card type
     const cardNumber = cardDetail.card.replace(/\s+/g, ""); // Remove spaces
     const cardType = getCardType(cardNumber);
-    console.log("Card Type:", cardType);
 
     // Map the card type to the predefined card
     const mappedCardType = cardMapping[cardType];
@@ -88,8 +85,6 @@ export const processPayment = async (req, res) => {
         allow_redirects: "never",
       },
     });
-
-    console.log("Payment Intent:", paymentIntent);
 
     // Extract the last 4 digits of the card number
     const last4Digits = cardNumber.slice(-4);

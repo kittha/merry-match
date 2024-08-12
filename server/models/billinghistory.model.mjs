@@ -1,8 +1,7 @@
-import { getTransactionByUserId } from "./transaction.model.mjs"; // Adjust the import if necessary
+import { getTransactionByUserId } from "./transaction.model.mjs";
 
 export const getBillingHistoryByUserId = async (userId) => {
   try {
-    // Fetch billing history for the user
     const billingHistory = await getTransactionByUserId(userId);
     return billingHistory;
   } catch (error) {

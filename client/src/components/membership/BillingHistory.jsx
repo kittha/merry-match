@@ -9,10 +9,6 @@ function BillingHistory({ history }) {
   const itemsPerPage = 5;
   const [isPdfLoading, setIsPdfLoading] = useState(false);
 
-  if (!history || !Array.isArray(history)) {
-    return <p>No billing history available.</p>;
-  }
-
   // Function to format date
   const formatDate = (dateString) => {
     return format(parseISO(dateString), "dd/MM/yyyy");
@@ -63,7 +59,7 @@ function BillingHistory({ history }) {
       a.remove();
     } catch (error) {
       console.error("Error generating PDF:", error);
-      alert("Failed to generate PDF. Please try again later."); // User feedback
+      alert("Failed to generate PDF. Please try again later.");
     } finally {
       setIsPdfLoading(false);
     }
@@ -86,28 +82,28 @@ function BillingHistory({ history }) {
       <h1 className="text-[#2A2E3F] font-[700] text-[24px] max-lg:pt-[8px] max-lg:px-[16px]">
         Billing History
       </h1>
-      <div className="billing-box lg:px-[32px] lg:pb-[24px] lg:pt-[32px] lg:border border-[#D6D9E4] lg:rounded-[32px]">
-        <h2 className="px-[16px] border-b border-[#E4E6ED] pb-[8px] font-[600] text-[20px] text-gray-700">
+      <div className="billing-box flex flex-col lg:px-[32px] lg:pb-[24px] lg:pt-[32px] lg:border border-[#D6D9E4] lg:rounded-[32px] gap-[16px]">
+        <h2 className=" border-b border-[#E4E6ED] max-lg:px-[16px] py-[8px] font-[600] text-[20px] text-gray-700">
           Next billing :{" "}
           {nextBillingDate ? format(nextBillingDate, "dd/MM/yyyy") : "N/A"}
         </h2>
-        <div className="pb-[24px]">
+        <div className="pb-[24px] lg:px-[16px] border-b border-[#E4E6ED]">
           {currentHistory.length > 0 ? (
             currentHistory.map((item, index) => (
               <div
-                key={item.id || item.created_at} // Prefer unique key if available
-                className="p-[16px]"
+                key={item.id || item.created_at}
+                className="lg:rounded-[8px]"
                 style={{
                   backgroundColor: getBackgroundColor(index),
                 }}
               >
                 <div className="flex flex-col">
-                  <div className="flex flex-row justify-between gap-[16px] items-center">
+                  <div className="flex flex-row justify-between gap-[16px] items-center p-[16px]">
                     <div className="flex gap-[16px] font-[400] text-gray-700">
                       <p className="date w-[104px]">
                         {formatDate(item.created_at)}
                       </p>
-                      <p className="package-name w-[118px] lg:w-[609px]">
+                      <p className="package-name w-[110px] lg:w-[500px]">
                         {item.package_name}
                       </p>
                     </div>
@@ -121,12 +117,14 @@ function BillingHistory({ history }) {
               </div>
             ))
           ) : (
-            <p>No billing records found.</p>
+            <p className="flex justify-center items-center p-[16px] bg-[#F6F7FC] lg:rounded-[8px]">
+              No billing records found.
+            </p>
           )}
 
-          <div className="flex justify-between px-[16px]">
+          <div className="flex justify-between p-[16px]">
             <button
-              className="text-[#C70039] font-[700] hover:text-red-500"
+              className="text-[#C70039] font-[700] hover:text-red-500 "
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
             >
@@ -134,7 +132,7 @@ function BillingHistory({ history }) {
             </button>
 
             <button
-              className="text-[#C70039] font-[700] hover:text-red-500 pr-[10px]"
+              className="text-[#C70039] font-[700] hover:text-red-500"
               onClick={handleNextPage}
               disabled={indexOfLastItem >= sortedHistory.length}
             >
@@ -142,7 +140,7 @@ function BillingHistory({ history }) {
             </button>
           </div>
         </div>
-        <div className="flex lg:justify-end border-t border-[#E4E6ED] pt-[16px] max-lg:py-[4px] max-lg:px-[16px] max-lg:mb-[58px]">
+        <div className="flex lg:justify-end max-lg:py-[4px] max-lg:px-[16px] max-lg:mb-[58px]">
           <button
             className="text-[#C70039] font-[700] hover:text-red-500"
             onClick={handleRequestPDF}
