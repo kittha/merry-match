@@ -132,6 +132,20 @@ export const loginUser = async (req, res) => {
 //   }
 // };
 
+let isRefreshing = false;
+let refreshQueue = [];
+
+const processQueue = (error, session = null) => {
+  refreshQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(session);
+    }
+  });
+  refreshQueue = [];
+};
+
 /**
  * Refreshes the user session.
  *
@@ -146,13 +160,34 @@ export const refreshUserSession = async (req, res) => {
     return res.status(400).json({ message: "Invalid session data" });
   }
 
+  if (typeof refreshToken !== "string") {
+    console.error("Invalid refresh token format");
+    return res.status(400).json({ message: "Invalid refresh token format" });
+  }
+
   console.log("Old refreshToken is ", refreshToken);
 
+  if (isRefreshing) {
+    console.log("Refresh already in progress. Queuing this request.");
+    return res
+      .status(429)
+      .json({ message: "Refresh in progress. Please wait." });
+  }
+
+  isRefreshing = true;
+  let session;
+
   try {
-    const { session } = await refreshSession({ refresh_token: refreshToken });
+    session = await attemptRefresh(refreshToken);
 
     if (!session) {
-      throw new Error("Failed to refresh session");
+      console.warn("First refresh attempt failed, retrying...");
+      await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms delay
+      session = await attemptRefresh(refreshToken);
+    }
+
+    if (!session) {
+      throw new Error("Failed to refresh session after retry");
     }
 
     console.log("New refreshToken is ", session.refresh_token);
@@ -173,6 +208,8 @@ export const refreshUserSession = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
     });
 
+    console.log("Session refreshed successfully");
+
     return res
       .status(200)
       .json({ message: "Refresh Token Success", authenticated: true });
@@ -185,6 +222,21 @@ export const refreshUserSession = async (req, res) => {
     return res.status(401).json({
       message: "Failed to refresh token, please log in again",
     });
+  }
+};
+
+/**
+ * Helper function to attempt token refresh
+ * @param {string} refreshToken - The current refresh token
+ * @returns {Promise<Object|null>} - The new session object or null if failed
+ */
+const attemptRefresh = async (refreshToken) => {
+  try {
+    const session = await refreshSession({ refresh_token: refreshToken });
+    return session || null;
+  } catch (error) {
+    console.error("Error during refresh attempt:", error.message);
+    return null;
   }
 };
 
