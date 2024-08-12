@@ -24,9 +24,6 @@ function AuthProvider(props) {
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/check-auth`,
           data, {
             withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
           }
         );
 

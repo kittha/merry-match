@@ -15,12 +15,10 @@ const authenticateUser = async (req, res, next) => {
   // console.log("token is : ", req.cookies?.token);
   // console.log("refreshToken is : ", req.cookies?.refreshToken);
 
-  // const accessToken = req.cookies?.token;
-  const refreshSessionInCookie = req.cookies?.session;
-  const accessToken = refreshSessionInCookie?.access_token;
+  const accessToken = req.cookies?.token;
 
   if (!accessToken) {
-    return res.sendStatus(400); // Unauthorized if no token is present
+    return res.sendStatus(401); // Unauthorized if no token is present
   }
 
   let decodedData;
@@ -35,7 +33,7 @@ const authenticateUser = async (req, res, next) => {
         .json({ error: "Token has expired", needRefresh: true });
     } else {
       console.error("Token verification failed:", error);
-      return res.status(400).json({ error: "Token is invalid" });
+      return res.status(401).json({ error: "Token is invalid" });
     }
   }
 
@@ -52,13 +50,13 @@ const authenticateUser = async (req, res, next) => {
     const userDataFromDatabase = supabaseQueryResult.rows[0];
 
     if (!userDataFromDatabase) {
-      return res.status(400).json({ error: "Unauthorized" });
+      return res.status(401).json({ error: "Unauthorized" });
     }
 
     const { user_id, username, role_id } = userDataFromDatabase;
 
     if (role_id !== 1 && role_id !== 2) {
-      return res.status(400).json({ error: "Unauthorized" });
+      return res.status(401).json({ error: "Unauthorized" });
     }
 
     const bundledUserData = {

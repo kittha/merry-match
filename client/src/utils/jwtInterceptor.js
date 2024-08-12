@@ -1,27 +1,15 @@
 import axios from "axios";
 import { clearAuthDataAndRedirect } from "./tokenUtils";
 
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-let isRefreshing = false;
-let refreshSubscribers = [];
-let lastRefreshTime = null; // Timestamp of the last refresh
-
-function onRefreshed() {
-  refreshSubscribers.forEach((callback) => callback());
-  refreshSubscribers = [];
-}
-
-function addRefreshSubscriber(callback) {
-  refreshSubscribers.push(callback);
-}
-
+/**
+ * Sets up an interceptor for Axios requests and responses to handle JWT token refresh, set Bearer Token at Header and unauthorized errors.
+ *
+ * @return {void}
+ */
 function jwtInterceptor() {
   axios.interceptors.request.use(
-    (config) => {
-      config.withCredentials = true; // Ensure cookies are sent with requests
+    async (config) => {
+      config.withCredentials = true;
       return config;
     },
     (error) => {
@@ -34,55 +22,40 @@ function jwtInterceptor() {
     async (error) => {
       const originalRequest = error.config;
 
-      if (error.response?.status === 429) {
-        await delay(1234); // Delay before retrying
-        return axios(originalRequest);
-      }
+      if (error.response?.status === 401 && !originalRequest.__isRetryRequest) {
+        console.log(
+          "error.response.data?.needRefresh",
+          error.response.data?.needRefresh
+        );
 
-      if (error.response?.status === 401 && !originalRequest._retry) {
-        const now = Date.now();
+        if (error.response.data?.needRefresh === undefined) {
+          console.log(
+            "Token refresh not required or not possible, redirecting to login."
+          );
+          clearAuthDataAndRedirect();
+          return; // Stop execution
+        }
 
-        if (isRefreshing) {
-          // If another request is refreshing, wait for it to finish
-          return new Promise((resolve) => {
-            addRefreshSubscriber(() => {
-              originalRequest._retry = true;
-              resolve(axios(originalRequest));
-            });
-          });
-        } else if (!lastRefreshTime || now - lastRefreshTime > 60000) {
-          // If no refresh is in progress and more than 1 minute has passed
-          originalRequest._retry = true;
-          isRefreshing = true;
-          lastRefreshTime = now;
-
+        if (error.response.data?.needRefresh) {
           try {
             await axios.post(
               `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
               {},
               {
-                withCredentials: true, // Send cookies with the refresh token request
+                headers: {
+                  "Content-Type": "application/json",
+                },
               }
             );
 
-            isRefreshing = false;
-            onRefreshed();
-            return axios(originalRequest); // Retry the original request
+            originalRequest.__isRetryRequest = true;
+            return axios(originalRequest); // Retry original request with new token
           } catch (refreshError) {
             console.error("Failed to refresh token:", refreshError);
-            isRefreshing = false;
             clearAuthDataAndRedirect();
-            return Promise.reject(refreshError);
           }
-        } else {
-          // Ignore if within the 1-minute window to avoid multiple refresh requests
-          console.log(
-            "Refresh token request ignored: Throttling refresh requests."
-          );
-          return Promise.reject(error);
         }
       }
-
       return Promise.reject(error);
     }
   );

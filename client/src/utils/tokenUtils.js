@@ -25,7 +25,6 @@ export async function refreshToken() {
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
       {},
       {
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
