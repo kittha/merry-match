@@ -1,5 +1,4 @@
 import { supabase } from "../utils/supabaseClient.mjs";
-import connectionPool from "../configs/db.mjs";
 
 export const signUp = async (reqBody) => {
   try {
@@ -61,26 +60,32 @@ export const signIn = async (reqBody) => {
  * @return {Promise<Object>} The refreshed session data.
  * @throws {Error} If there is an error refreshing the access token or if no data is returned.
  */
-export const refreshSession = async (oldRefreshTokenObj) => {
-  // console.log("oldRefreshTokenObj is : ", oldRefreshTokenObj);
+let isRefreshing = false;
+export const refreshSession = async (refreshSessionCookie) => {
+  if (isRefreshing) return;
+  isRefreshing = true;
+
+  // console.log("refreshSessionCookie is : ", refreshSessionCookie);
   try {
     const { data, error } = await supabase.auth.refreshSession(
-      oldRefreshTokenObj
+      refreshSessionCookie
     );
 
-    // console.log("newRefreshTokenObj is : ", data?.session);
+    console.log("newRefreshTokenObj is : ", data?.session);
     if (error) {
       console.error("Error refreshing access token:", error.message);
       throw new Error("Failed to refresh session");
     }
 
-    if (!data) {
+    if (!data || !data.session) {
       throw new Error("No data returned from refresh access token");
     }
 
-    return data;
+    return data.session;
   } catch (error) {
     console.error("Error in refreshSession function:", error.message);
     throw error;
+  } finally {
+    isRefreshing = false;
   }
 };

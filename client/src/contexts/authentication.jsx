@@ -22,7 +22,8 @@ function AuthProvider(props) {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/check-auth`,
-          data, {
+          data,
+          {
             withCredentials: true,
           }
         );

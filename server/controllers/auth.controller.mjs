@@ -140,7 +140,7 @@ export const loginUser = async (req, res) => {
  * @return {Promise<Object>} The updated user session data.
  */
 export const refreshUserSession = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = String(req.cookies.refreshToken);
 
   if (!refreshToken) {
     return res.status(400).json({ message: "Invalid session data" });
@@ -149,7 +149,7 @@ export const refreshUserSession = async (req, res) => {
   console.log("Old refreshToken is ", refreshToken);
 
   try {
-    const { session } = await refreshSession({ refresh_token: refreshToken });
+    const session = await refreshSession({ refresh_token: refreshToken });
 
     if (!session) {
       throw new Error("Failed to refresh session");

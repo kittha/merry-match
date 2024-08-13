@@ -40,10 +40,13 @@ function jwtInterceptor() {
           try {
             await axios.post(
               `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh-token`,
-              {},
+              null,
               {
+                withCredentials: true,
                 headers: {
                   "Content-Type": "application/json",
+                  "Cache-control": "no-cache",
+                  Accept: "*/*",
                 },
               }
             );
