@@ -36,7 +36,7 @@ router.get(
   [checkResourceOwnerByReqParam],
   getMatchListByUserIdFilter
 );
-router.post("/addMerry", [checkResourceOwnerAddUndoMerry], addMerry);
-router.post("/undoMerry", [checkResourceOwnerAddUndoMerry], undoMerry);
+router.post("/addMerry", [], addMerry);
+router.post("/undoMerry", [], undoMerry);
 
 export default router;
