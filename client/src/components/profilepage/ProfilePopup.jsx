@@ -8,6 +8,7 @@ import arrowB from "../../../public/assets/profilepicture/arrowB.png";
 import { useState } from "react";
 import { useImage } from "../../hooks/useImage.mjs";
 import { useForm } from "../../hooks/useForm";
+import { Country, State } from "country-state-city";
 
 const ProfilePopup = ({ profileData, onClose }) => {
   // console.log(profileData);
@@ -26,6 +27,15 @@ const ProfilePopup = ({ profileData, onClose }) => {
     setCurrentAvatarIndex((prevIndex) =>
       prevIndex === 0 ? profileData.avatars.length - 1 : prevIndex - 1
     );
+  };
+  const getCountryName = (isoCode) => {
+    const country = Country.getCountryByCode(isoCode);
+    return country ? country.name : isoCode;
+  };
+
+  const getStateName = (countryIsoCode, stateIsoCode) => {
+    const state = State.getStateByCodeAndCountry(stateIsoCode, countryIsoCode);
+    return state ? state.name : stateIsoCode;
   };
 
   return (
@@ -102,7 +112,8 @@ const ProfilePopup = ({ profileData, onClose }) => {
                 <img src={location} />
                 <div className="flex ml-[20px] text-[#646D89]">
                   <p>
-                    {profileData.city}, {profileData.country}
+                    {getStateName(profileData.country, profileData.city)},
+                    {getCountryName(profileData.country)}
                   </p>
                 </div>
               </div>
