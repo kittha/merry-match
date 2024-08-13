@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { useAuth } from "./authentication";
+import useAuth from "../hooks/useAuth";
 import { updateProfile } from "../hooks/connectProfile.mjs";
 
 export const FormContext = createContext();
@@ -26,7 +26,7 @@ export const FormProvider = ({ children }) => {
 
   const token = localStorage.getItem("token");
   const [errors, setErrors] = useState({});
-  const { register, state } = useAuth();
+  const { state, setState, register } = useAuth();
   const [loading, setLoading] = useState(false);
   const resetForm = () => {
     setFormData(initialData);
@@ -180,8 +180,6 @@ export const FormProvider = ({ children }) => {
       return true;
     }
 
-    console.log("Form Data Submitted: ", formData);
-
     setLoading(true);
 
     const sentFormData = new FormData();
@@ -223,16 +221,28 @@ export const FormProvider = ({ children }) => {
 
     try {
       if (userId) {
-        await updateProfile(userId, sentFormData);
+        const { username, avatars } = await updateProfile(userId, sentFormData);
+        const localData = JSON.parse(localStorage.getItem("data"));
+        const newData = {
+          ...localData,
+          username,
+          avatars,
+        };
+        // console.log("local", localData, "newData", newData);
+        localStorage.setItem("data", JSON.stringify(newData));
+        setState((prev) => ({
+          ...prev,
+          loading: false,
+          error: null,
+          user: newData,
+        }));
         console.log("Updated Profile successful");
       } else {
-        await register(sentFormData);
-        resetForm();
+        await register(sentFormData, resetForm);
         setStep(1);
-        console.log("Registration successful");
       }
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Submission failed:", error);
     } finally {
       setLoading(false);
     }

@@ -2,17 +2,16 @@ import { useState, useEffect, useRef } from "react";
 import InputSection from "../../components/matchingpage/chat-area/Input";
 import DisplayChat from "../../components/matchingpage/chat-area/Display";
 import BackBar from "../../components/matchingpage/chat-area/BackBar";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 import {
   createMessage,
   getPrevMessages,
-  getMatchInfo,
 } from "../../hooks/connectMsg.mjs";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import ChatContainer from "../../components/matchingpage/chatcontainer/ChatContainer";
-import { useChat } from "../../contexts/chatProvider";
-import { useMatch } from "../../contexts/matchProvider";
+import { useChat } from "../../hooks/useChat";
+import { useMatch } from "../../hooks/useMatch";
 
 const Chat = () => {
   const { state } = useAuth();
@@ -113,12 +112,12 @@ const Chat = () => {
   }, [arrivalMessage]);
 
   return (
-    <div className="page flex flex-row bg-[#160404]">
+    <div className="page w-screen flex flex-row bg-[#160404] overflow-hidden">
       <div className="sidebar hidden lg:flex">
         <ChatContainer />
       </div>
       {anotherUser && (
-        <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col">
+        <div className="chat-container bg-[#160404] relative h-screen w-full pt-[52px] lg:pt-[88px] flex flex-col overflow-auto">
           <BackBar anotherUser={anotherUser} />
           <DisplayChat
             messages={messages}

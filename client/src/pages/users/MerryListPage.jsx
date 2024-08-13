@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useAuth } from "../../contexts/authentication";
+import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { transformMerryListData } from "../../utils/transformMerryListData.mjs";
-import { useMatch } from "../../contexts/matchProvider";
+import { useMatch } from "../../hooks/useMatch";
 import RedHearticon from "/assets/merrylist-image/red-heart.png";
 import GroupHearticon from "/assets/merrylist-image/group-heart.png";
 import Locationicon from "/assets/merrylist-image/location.png";
@@ -11,9 +11,9 @@ import Chaticon from "/assets/merrylist-image/chat.png";
 import Vectoricon from "/assets/merrylist-image/vector.png";
 import WhiteHearticon from "/assets/merrylist-image/white-heart.png";
 import Footer from "../../components/homepage/Footer";
-import UserProfilePopup from "../../components/matchingpage/matching/UserProfilePopup";
+import ProfileMatchAndMerryPopup from "../../components/merry-list/ProfileMatchAndMerryPopup";
 import CountdownTimer from "../../components/merry-list/CountdownTimer";
-import ModalPopup from "../../components/merry-list/UnmatchPopup";
+import UnmatchModalPopup from "../../components/merry-list/UnmatchPopup";
 
 function MerryListPage() {
   const { availableClicksToday, maxDailyQuota } = useMatch();
@@ -28,7 +28,6 @@ function MerryListPage() {
   const [selectedUser, setSelectedUser] = useState(null); // Selected user for the modal
   const getMerryLists = async () => {
     try {
-      // BUG userId is missing after refresh
       if (userId) {
         const result = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/merry-list/${userId}`
@@ -173,7 +172,7 @@ function MerryListPage() {
                         </section>
                         <section className="w-[168px] lg:w-[176px] gap-[12px] h-[48px] flex flex-row lg:gap-[16px] justify-end">
                           <button
-                            onClick={() => navigate(`/chat/${userId}`)}
+                            onClick={() => navigate(`/chat/${list.match_id}`)}
                             className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
                           >
                             <img
@@ -192,12 +191,6 @@ function MerryListPage() {
                               className="mt-[15.6px] ml-[12px] mb-[12px]"
                             />
                           </button>
-                          {showModalProfile && (
-                            <UserProfilePopup
-                              user={selectedUser}
-                              onClose={() => setShowModalProfile(false)}
-                            />
-                          )}
 
                           <button
                             onClick={() => handleOpenModalUnmatch(list)} // list meaning userObj
@@ -206,15 +199,9 @@ function MerryListPage() {
                             <img
                               src={WhiteHearticon}
                               alt="white-heart-icon"
-                              className="mt-[5px] ml-[3px]"
+                              className="mt-[5px] ml-[5px]"
                             />
                           </button>
-                          {showModalUnmatch && (
-                            <ModalPopup
-                              user={selectedUser}
-                              onClose={() => setShowModalUnmatch(false)}
-                            />
-                          )}
                         </section>
                       </div>
                     ) : (
@@ -235,12 +222,17 @@ function MerryListPage() {
                               className="mt-[15.6px] ml-[12px] mb-[12px]"
                             />
                           </button>
-                          {showModalProfile && (
-                            <UserProfilePopup
-                              user={selectedUser}
-                              onClose={() => setShowModalProfile(false)}
+
+                          <button
+                            onClick={() => handleOpenModalUnmatch(list)} // list meaning userObj
+                            className="w-[48px] h-[48px] rounded-2xl bg-[#C70039] shadow-lg"
+                          >
+                            <img
+                              src={WhiteHearticon}
+                              alt="white-heart-icon"
+                              className="mt-[5px] ml-[3px]"
                             />
-                          )}
+                          </button>
                         </section>
                       </div>
                     )}
@@ -332,7 +324,7 @@ function MerryListPage() {
                       </section>
                       <section className="w-[168px] h-[48px] flex flex-row justify-end gap-[12px] lg:w-[176px] lg:gap-[16px]">
                         <button
-                          onClick={() => navigate(`/chat/${userId}`)}
+                          onClick={() => navigate(`/chat/${list.match_id}`)}
                           className="w-[48px] h-[48px] rounded-2xl bg-[#FFFFFF] shadow-lg"
                         >
                           <img
@@ -351,12 +343,7 @@ function MerryListPage() {
                             className="mt-[15.6px] ml-[12px] mb-[12px]"
                           />
                         </button>
-                        {showModalProfile && (
-                          <UserProfilePopup
-                            user={selectedUser}
-                            onClose={() => setShowModalProfile(false)}
-                          />
-                        )}
+
                         <button
                           onClick={() => handleOpenModalUnmatch(list)}
                           className="w-[48px] h-[48px] rounded-2xl shadow-lg bg-[#C70039]"
@@ -367,12 +354,6 @@ function MerryListPage() {
                             className="mt-[5px] ml-[3px]"
                           />
                         </button>
-                        {showModalUnmatch && selectedUser ? (
-                          <ModalPopup
-                            user={selectedUser}
-                            onClose={() => setShowModalUnmatch(false)}
-                          />
-                        ) : null}
                       </section>
                     </div>
                   ) : (
@@ -393,12 +374,16 @@ function MerryListPage() {
                             className="mt-[15.6px] ml-[12px] mb-[12px]"
                           />
                         </button>
-                        {showModalProfile && (
-                          <UserProfilePopup
-                            user={selectedUser}
-                            onClose={() => setShowModalProfile(false)}
+                        <button
+                          onClick={() => handleOpenModalUnmatch(list)}
+                          className="w-[48px] h-[48px] rounded-2xl shadow-lg bg-[#C70039]"
+                        >
+                          <img
+                            src={WhiteHearticon}
+                            alt="white-heart-icon"
+                            className="mt-[5px] ml-[3px]"
                           />
-                        )}
+                        </button>
                       </section>
                     </div>
                   )}
@@ -410,6 +395,18 @@ function MerryListPage() {
         </section>
       </article>
       <Footer />
+      {showModalProfile && (
+        <ProfileMatchAndMerryPopup
+          user={selectedUser}
+          onClose={() => setShowModalProfile(false)}
+        />
+      )}
+      {showModalUnmatch && selectedUser ? (
+        <UnmatchModalPopup
+          user={selectedUser}
+          onClose={() => setShowModalUnmatch(false)}
+        />
+      ) : null}
     </main>
   );
 }

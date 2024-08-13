@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useMerryLimit } from "../hooks/userMerryLimit";
-import { useAuth } from "./authentication";
+import useAuth from "../hooks/useAuth";
 
 /**
  * Custom React hook that manages the matching functionality for a given user.
@@ -16,10 +16,7 @@ import { useAuth } from "./authentication";
  *   - addMerry: A function that sends a POST request to add a "merry" status for a given user.
  *   - undoMerry: A function that undoes a "merry" status (POST "unmatch" status) for a given user.
  */
-const MatchContext = React.createContext();
-
-// this is a hook that consume MatchContext
-const useMatch = () => React.useContext(MatchContext);
+export const MatchContext = React.createContext();
 
 function MatchProvider(props) {
   // const currentUserJson = localStorage.getItem("data");
@@ -29,6 +26,7 @@ function MatchProvider(props) {
   const currentUserId = state.user?.id;
 
   const [allUser, setAllUser] = useState([]);
+  const [user, setUser] = useState([]);
   const {
     availableClicksToday,
     setAvailableClicksToday,
@@ -59,6 +57,7 @@ function MatchProvider(props) {
       // console.log(response.data.matches);
       if (Array.isArray(response.data.matches)) {
         setAllUser(response.data.matches);
+        setUser(response.data.matches);
       } else {
         console.error("API response is not an array:", response.data);
       }
@@ -79,7 +78,7 @@ function MatchProvider(props) {
         { userId: currentUserId, merryUserId: likedUserId }
       );
       setAvailableClicksToday((prev) => prev + 1);
-      let newUser = [...allUser];
+      let newUser = [...user];
       console.log("data", data);
       newUser = newUser.map((user) => {
         if (
@@ -130,6 +129,7 @@ function MatchProvider(props) {
     <MatchContext.Provider
       value={{
         allUser,
+        user,
         availableClicksToday,
         maxDailyQuota,
         addMerry,
@@ -142,4 +142,4 @@ function MatchProvider(props) {
   );
 }
 
-export { MatchProvider, useMatch };
+export { MatchProvider };

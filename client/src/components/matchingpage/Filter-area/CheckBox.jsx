@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../../contexts/authentication";
+import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
 
 function CheckBox({
@@ -134,7 +134,7 @@ function CheckBox({
             className="ml-[12px] peer-checked:text-[#2A2E3F]"
             htmlFor="checkbox2"
           >
-            Male
+            Female
           </label>
           <svg
             className="mb-1 ml-[1px] absolute w-[20px] h-[20px] mt-1 hidden peer-checked:block pointer-events-none"

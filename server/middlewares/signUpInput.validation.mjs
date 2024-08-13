@@ -6,5 +6,5 @@ export const validateSignUpInput = (req, res, next) => {
       .status(400)
       .json({ error: "Username, password, and email are required." });
   }
-  next();
+  return next();
 };

@@ -5,8 +5,7 @@ import HeaderMembership from "../../components/membership/HeaderMembership";
 import MembershipPackage from "../../components/membership/MembershipPackage";
 import BillingHistory from "../../components/membership/BillingHistory";
 import Footer from "../../components/homepage-authen/Footer";
-import { useMatch } from "../../contexts/matchProvider";
-import { convertLength } from "@mui/material/styles/cssUtils";
+import { useMatch } from "../../hooks/useMatch";
 
 export const MembershipPage = () => {
   const { userId } = useParams();

@@ -2,47 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import drop_down from "../../../../public/assets/admincomplaint/arrow_drop_down_black.svg";
 
-function FilterStatus({ setComplaint, complaint }) {
-  const [show, setShow] = useState(false);
-
-  const handleClick = () => {
-    setShow(!show);
-  };
-
-  const getComplaint = async () => {
-    try {
-      const result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/complaints`
-      );
-      setComplaint(
-        result.data.sort((a, b) => {
-          return a.complaint_id - b.complaint_id;
-        })
-      );
-      handleClick();
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const getComplaintByStatus = async (text) => {
-    try {
-      const result = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/v1/admin/complaints/list?status=${text}`
-      );
-      setComplaint(
-        result.data.sort((a, b) => {
-          return a.complaint_id - b.complaint_id;
-        })
-      );
-      handleClick();
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
+function FilterStatus({
+  show,
+  setShow,
+  handleClick,
+  getComplaint,
+  searchText,
+}) {
   return (
     <>
       <div className="w-[200px] h-[48px]  rounded-lg border-[#D6D9E4] border-[1px] ">
@@ -57,31 +23,31 @@ function FilterStatus({ setComplaint, complaint }) {
           <div className="w-[200px] h-[120px] rounded-lg border-[#D6D9E4] border-[1px] bg-white z-10 absolute top-16">
             <ul className=" flex flex-col">
               <button
-                onClick={() => getComplaint()}
+                onClick={() => getComplaint(searchText)}
                 className=" hover:bg-[#C70039] hover:text-white"
               >
                 <li>All status</li>
               </button>
               <button
-                onClick={() => getComplaintByStatus("New")}
+                onClick={() => getComplaint(searchText, "New")}
                 className=" hover:bg-[#C70039] hover:text-white"
               >
                 <li>New</li>
               </button>
               <button
-                onClick={() => getComplaintByStatus("Pending")}
+                onClick={() => getComplaint(searchText, "Pending")}
                 className=" hover:bg-[#C70039] hover:text-white"
               >
                 <li>Pending</li>
               </button>
               <button
-                onClick={() => getComplaintByStatus("Resolved")}
+                onClick={() => getComplaint(searchText, "Resolved")}
                 className=" hover:bg-[#C70039] hover:text-white"
               >
                 <li>Resolved</li>
               </button>
               <button
-                onClick={() => getComplaintByStatus("Cancel")}
+                onClick={() => getComplaint(searchText, "Cancel")}
                 className=" hover:bg-[#C70039] hover:text-white"
               >
                 <li>Cancel</li>

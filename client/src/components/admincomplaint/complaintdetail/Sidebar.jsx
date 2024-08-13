@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/authentication";
+import useAuth from "../../../hooks/useAuth";
 import logo from "../../../../public/assets/admincomplaint/logo.svg";
 import Package from "../../../../public/assets/admincomplaint/package.svg";
 import complaint from "../../../../public/assets/admincomplaint/complaint.svg";

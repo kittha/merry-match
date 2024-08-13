@@ -7,9 +7,9 @@ import "../../App.css";
 import Frame from "../../../public/assets/paymentpage/Frame.png";
 import Bullet from "../../../public/assets/paymentpage/Bullet.png";
 import Footer from "../../components/homepage/Footer";
-import { usePackage } from "../../contexts/PackageProvider";
-import { useAuth } from "../../contexts/authentication";
-import { useMatch } from "../../contexts/matchProvider";
+import { usePackage } from "../../hooks/usePackage";
+import useAuth from "../../hooks/useAuth";
+import { useMatch } from "../../hooks/useMatch";
 
 const PaymentForm = () => {
   const navigate = useNavigate();
@@ -55,6 +55,18 @@ const PaymentForm = () => {
       isValid = false;
     }
 
+    const [month, year] = expCard.split("/");
+    if (
+      !month ||
+      !year ||
+      parseInt(month) > 12 ||
+      month.length !== 2 ||
+      year.length !== 2
+    ) {
+      setExpCardError("Invalid expiry date.");
+      return false;
+    }
+
     if (!cvcCard) {
       setCVCError("CVC is required.");
       isValid = false;
@@ -68,8 +80,6 @@ const PaymentForm = () => {
     if (!isValid) return;
 
     setLoading(true); // Set loading state to true
-
-    const stripe = window.Stripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
 
     const paymentData = {
       user: {
@@ -117,38 +127,39 @@ const PaymentForm = () => {
         });
         return;
       }
+      // unnecessary
+      // const stripe = window.Stripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
+      // const confirmResult = await stripe.confirmCardPayment(
+      //   data.client_secret,
+      //   {
+      //     payment_method: {
+      //       card: {
+      //         number: cardNumber.replace(/\s+/g, ""),
+      //         exp_month: expCard.split("/")[0],
+      //         exp_year: expCard.split("/")[1],
+      //         cvc: cvcCard,
+      //       },
+      //       billing_details: {
+      //         name: nameCard,
+      //       },
+      //     },
+      //   }
+      // );
 
-      const confirmResult = await stripe.confirmCardPayment(
-        data.client_secret,
-        {
-          payment_method: {
-            card: {
-              number: cardNumber.replace(/\s+/g, ""),
-              exp_month: expCard.split("/")[0],
-              exp_year: expCard.split("/")[1],
-              cvc: cvcCard,
-            },
-            billing_details: {
-              name: nameCard,
-            },
-          },
-        }
-      );
-
-      if (confirmResult.error) {
-        console.error(
-          "Payment confirmation error:",
-          confirmResult.error.message
-        );
-        setLoading(false); // Reset loading state on error
-      } else if (confirmResult.paymentIntent.status === "succeeded") {
-        navigate("/payment-success", {
-          state: {
-            packageId: package_id,
-            packageName: package_name,
-          },
-        });
-      }
+      // if (confirmResult.error) {
+      //   console.error(
+      //     "Payment confirmation error:",
+      //     confirmResult.error.message
+      //   );
+      //   setLoading(false); // Reset loading state on error
+      // } else if (confirmResult.paymentIntent.status === "succeeded") {
+      //   navigate("/payment-success", {
+      //     state: {
+      //       packageId: package_id,
+      //       packageName: package_name,
+      //     },
+      //   });
+      // }
     } catch (error) {
       console.error(
         "Payment error:",

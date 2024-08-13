@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export function ThirdSection() {
   const navigate = useNavigate();
 
+  // TODO check what is setIdOpen?
   return (
     <section className="bg-[#160404] w-full h-[564px] font-Nunito">
       <div className="bg-[#160404] lg:h-[570px] h-[564px] lg:w-full flex flex-col m-0 mx-auto">

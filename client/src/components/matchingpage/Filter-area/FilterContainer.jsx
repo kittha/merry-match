@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AgeRange from "./AgeRange";
 import CheckBox from "./CheckBox";
 import cross from "../../../../public/assets/filter-area/Vector.svg";
-import search from "../../../../public/assets/filter-area/search.svg";
+// import search from "../../../../public/assets/filter-area/search.svg";
 import axios from "axios";
-import { useAuth } from "../../../contexts/authentication";
+import useAuth from "../../../hooks/useAuth";
 
+// TODO what is setShowFilter, getData?
 function FilterContainer({
   Queue,
   userQueue,
@@ -15,18 +16,18 @@ function FilterContainer({
   showFilter,
 }) {
   const { state } = useAuth();
-  const [filterQueue, setfilterQueue] = useState([]);
+  // const [filterQueue, setfilterQueue] = useState([]);
   const [isCheckedMale, setIsCheckMale] = useState(false);
   const [isCheckedFemale, setIsCheckFemale] = useState(false);
   const [isCheckedBinary, setIsCheckBinary] = useState(false);
-  const [value, setValue] = useState([18, 80]);
+  const [value, setValue] = useState([18, 50]);
   const currentUserId = state.user?.id;
   const [filterData, setFilterData] = useState({
     checkMale: "",
     checkFemale: "",
     checkOther: "",
     searchAgeRangeNumberLeft: 18,
-    searchAgeRangeNumberRight: 80,
+    searchAgeRangeNumberRight: 50,
   });
 
   const getFilterData = async (filterData) => {
@@ -51,10 +52,6 @@ function FilterContainer({
     }
   };
 
-  const getData = () => {
-    getFilterData();
-  };
-
   const reset = () => {
     setFilterData((prevData) => ({
       ...prevData,
@@ -62,16 +59,16 @@ function FilterContainer({
       checkFemale: "",
       checkOther: "",
       searchAgeRangeNumberLeft: 18,
-      searchAgeRangeNumberRight: 80,
+      searchAgeRangeNumberRight: 50,
     }));
     setIsCheckMale(false);
     setIsCheckFemale(false);
     setIsCheckBinary(false);
-    setValue([18, 80]);
+    setValue([18, 50]);
   };
   return (
     // <div className="lg:w-[220px] w-screen lg:h-screen h-[80vh] bg-white z-30 lg:overflow-hidden overflow-auto rounded-[24px]">
-    <div className="w-screen h-fit flex flex-col justify-end items-center lg:w-[220px] lg:h-[936px] font-Nunito  lg:pt-[124px] z-20">
+    <div className="w-screen h-fit flex flex-col items-center lg:w-[220px] lg:h-[936px] font-Nunito  lg:pt-[124px] pt-12 z-20">
       <div className="pt-[64px] relative bottom-[32px] w-full h-[44px] flex rounded-t-[24px] justify-between items-center lg:hidden bg-white">
         <button
           className="ml-[16px]"

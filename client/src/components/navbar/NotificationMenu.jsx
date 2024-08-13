@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import profileMenu1 from "/assets/navbar-image/profile_menu1.png";
 
+// TODO what is setIdMobile
 const NotificationMenu = ({ bellMenuOpen, bellMenuPosition, onClose }) => {
   const navigate = useNavigate();
 

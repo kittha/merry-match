@@ -11,14 +11,14 @@ import errorHandler from "./middlewares/errorHandler.middleware.mjs";
 import apiV1Routes from "./routes/api/v1/index.mjs";
 import { loadSwaggerDocument } from "./utils/swagger.mjs";
 import swaggerUi from "swagger-ui-express";
-import { avatarUpload } from "./middlewares/multer.middleware.mjs";
 import socket from "./utils/socket.mjs";
-import "./controllers/transaction.controller.mjs";
+// import "./controllers/transaction.controller.mjs";
 const app = express();
 
 const corsOptions = {
-  origin: `${process.env.FRONTEND_URL}` || "http://localhost:5173",
+  origin: `${process.env.FRONTEND_URL}`,
   optionsSuccessStatus: 200,
+  upgradeInsecureRequests: [],
 };
 
 app.use(cors(corsOptions));
@@ -29,7 +29,7 @@ const limiterMax = process.env.RATE_LIMITER_MAX || 50;
 
 const limiterWindow = process.env.RATE_LIMITER_WINDOW_MS || 60000;
 
-// app.use(rateLimiter(limiterMax, limiterWindow));  // TODO plan to enable in production
+// app.use(rateLimiter(limiterMax, limiterWindow));
 
 app.use(compression());
 
@@ -47,7 +47,7 @@ app.get("/status", (req, res) => {
   return res.status(200).json("Server API is working");
 });
 
-app.use("/api/v1", [avatarUpload], apiV1Routes); // FIXME plan to relocate multer(avatarUpload), follow PoLA principle
+app.use("/api/v1", apiV1Routes);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
 

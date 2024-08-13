@@ -19,8 +19,6 @@ import { getRole } from "../models/role.model.mjs";
  */
 export const registerUser = async (req, res) => {
   try {
-    // TODO: check datetime format
-
     // console.log("Registering user with data:", req.body);
 
     // signUp via "Supabase Auth" service @/services/supabaseAuth.service.mjs

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import supabase from "../utils/supabaseClient";
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 // this is a hook that consume AuthContext
-const useAuth = () => React.useContext(AuthContext);
 
 function AuthProvider(props) {
   const [state, setState] = useState({
@@ -115,30 +113,25 @@ function AuthProvider(props) {
 
       setState({
         ...state,
-        error: error.response.data.message,
+        error: errorMessage,
         loading: false,
       });
     }
   };
 
   // register the user
-  const register = async (data) => {
+  const register = async (data, resetForm) => {
     try {
       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/register`,
         data
       );
+
       navigate("/login");
+      resetForm();
+      alert("Registration successful");
     } catch (error) {
       console.error("Registration error:", error);
-      let errorMessage = "An unexpected error occurred";
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        errorMessage = error.response.data.message;
-      }
     }
   };
 
@@ -158,11 +151,11 @@ function AuthProvider(props) {
 
   return (
     <AuthContext.Provider
-      value={{ state, login, logout, register, isAuthenticated }}
+      value={{ state, setState, login, logout, register, isAuthenticated }}
     >
       {props.children}
     </AuthContext.Provider>
   );
 }
 
-export { AuthProvider, useAuth };
+export { AuthProvider };

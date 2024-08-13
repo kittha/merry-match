@@ -1,4 +1,3 @@
-import React from "react";
 import { deleteAccount } from "../../hooks/connectProfile.mjs";
 import { useNavigate } from "react-router-dom";
 

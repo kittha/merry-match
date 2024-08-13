@@ -2,9 +2,12 @@ import { useState } from "react";
 import Checkmark from "../../../public/assets/membershipPage/checkmark.svg";
 import { addMonths, format } from "date-fns";
 import Cancel from "../../../public/assets/membershipPage/cancel.svg";
+import icon1 from "/assets/membershipPage/icon1.svg";
+import { useNavigate } from "react-router-dom";
+import "../../App.css";
 function MembershipPackage({ details, history, onCancel }) {
   const [showPopup, setShowPopup] = useState(false);
-
+  const navigate = useNavigate();
   const lastBillingDate =
     history && history.length > 0
       ? new Date(Math.max(...history.map((item) => new Date(item.created_at))))
@@ -32,13 +35,23 @@ function MembershipPackage({ details, history, onCancel }) {
       <h1 className="text-[#2A2E3F] font-[700] text-[24px]">
         Merry Membership Package
       </h1>
-      <div className="package-box bg-gradient-to-r from-[#742138] to-[#A878BF] p-[16px] lg:p-[32px] rounded-[32px] drop-shadow-lg flex items-center justify-center">
+      <div className="">
         {!details ? (
-          <p className="text-center text-[#FFFFFF] font-[600] text-[18px]">
-            No package.
-          </p>
+          <button
+            onClick={() => {
+              navigate("/package");
+            }}
+            className="group flex items-center justify-center gap-[10px] text-white bg-gradient-to-r from-[#742138] to-[#A878BF] p-[25px] w-full rounded-[32px] text-[24px] transition-all duration-300 ease-in-out hover:shadow-sm hover:shadow-[#A878BF] hover:scale-101"
+          >
+            <img
+              src={icon1}
+              alt="icon1"
+              className="w-[30px] h-[30px] animate-pulse group-hover:animate-none"
+            />
+            Get Merry Package!
+          </button>
         ) : (
-          <div className="w-full">
+          <div className=" package-box bg-gradient-to-r from-[#742138] to-[#A878BF] p-[16px] lg:p-[32px] rounded-[32px] drop-shadow-lg flex flex-col">
             <div className="flex gap-[86px] pb-[40px] border-b border-[#DF89C6]">
               <div className="flex flex-col lg:flex-row gap-[16px]">
                 <div className="flex flex-col lg:flex-row gap-[16px] w-full lg:w-[319px]">

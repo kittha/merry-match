@@ -1,14 +1,14 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Portal from "./Portal";
-import { useAuth } from "../../contexts/authentication";
-import { FormContext } from "../../contexts/FormProvider";
+import useAuth from "../../hooks/useAuth";
+import { useForm } from "../../hooks/useForm";
 import headerMerryMatchLogo from "/assets/header-image/header-merrymatch-logo.svg";
 import iconBell from "/assets/navbar-image/icon_bell.png";
 import iconChat from "/assets/navbar-image/icon_chat.png";
 import profileMenu1 from "/assets/navbar-image/profile_menu1.png";
-import profile from "/assets/navbar-image/profile.png";
+// import profile from "/assets/navbar-image/profile.png";
 import icon1 from "/assets/navbar-image/icon1.png";
 import icon2 from "/assets/navbar-image/icon2.png";
 import icon3 from "/assets/navbar-image/icon3.png";
@@ -31,7 +31,7 @@ const NavbarAuthen = () => {
     top: 0,
     left: 0,
   });
-  const { resetForm } = useContext(FormContext);
+  const { resetForm } = useForm();
 
   const handleBellClick = () => {
     setBellMenuOpen(!bellMenuOpen);
@@ -47,6 +47,7 @@ const NavbarAuthen = () => {
 
   const { logout, state } = useAuth();
   const userId = state.user?.id;
+  const userName = state.user?.username;
 
   const handleLogout = () => {
     resetForm();
@@ -96,7 +97,7 @@ const NavbarAuthen = () => {
               className="h-[26px] w-[26px] hidden"
             />
           </button>
-          <button onClick={() => setShowChat(!showChat)}>
+          <button onClick={() => navigate("/chat")}>
             <img
               src={iconChat}
               alt="merry match notification"
@@ -193,74 +194,80 @@ const NavbarAuthen = () => {
             )}
           </div>
           {/* ------------------------------------------ profile menu ---------------------------------------------------- */}
-          <div className="relative">
-            <button ref={profileIconRef} onClick={handleProfileClick}>
+          <button
+            ref={profileIconRef}
+            className="relative flex  bg-gradient-to-r from-[#742138] to-[#A878BF] rounded-[24px]"
+            onClick={handleProfileClick}
+          >
+            <div className="flex items-center justify-center h-[64px] w-auto py-6 px-4 text-white text-sm">
+              <p>{userName}</p>
               <img
                 src={JSON.parse(localStorage.getItem("data")).avatars[0]}
                 alt="merry-match-profile"
-                className="h-[48px] w-[48px] rounded-full"
+                className="h-[48px] w-[48px] rounded-full ml-4 bg-white"
               />
-            </button>
-            {profileMenuOpen && (
-              <Portal>
-                <div
-                  id="portal-root"
-                  style={{
-                    position: "fixed",
-                    top: `${profileMenuPosition.top}px`,
-                    left: `${profileMenuPosition.left}px`,
-                    transform: "translateX(-50%)",
-                    marginTop: "32px",
-                  }}
-                  className="w-[198px] h-[258px] font-[500] bg-white shadow-lg rounded-[16px] py-2 z-30 font-Nunito text-sm"
-                >
-                  <div className="flex justify-center items-center pb-2 pt-0.5 ">
-                    <button
-                      className="flex justify-center items-center bg-gradient-to-r from-[#742138] to-[#A878BF] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[179px] "
-                      onClick={() => {
-                        navigate("/package");
-                        setIsOpen(false);
-                      }}
-                    >
-                      <img src={icon1} alt="icon1" className="mr-2 " />
-                      More limit Merry!
-                    </button>
-                  </div>
-                  <div className="flex items-center h-[37px] p-[8px]">
-                    <img src={icon2} alt="icon2" className="mr-2  pl-4" />
-                    <button
-                      onClick={() => navigate(`/user-profile/${state.user.id}`)}
-                    >
-                      Profile
-                    </button>
-                  </div>
-                  <div className="flex items-center h-[37px] p-[8px]">
-                    <img src={icon3} alt="icon3" className="mr-2 pl-4" />
-                    <button onClick={() => navigate("/merry-list")}>
-                      Merry list
-                    </button>
-                  </div>
-                  <div className="flex items-center h-[37px] p-[8px]">
-                    <img src={icon4} alt="icon4" className="mr-2 pl-4" />
-                    <button onClick={() => navigate(`/membership/${userId}`)}>
-                      Merry Membership
-                    </button>
-                  </div>
-                  <div className="flex items-center h-[37px] p-[8px] mb-1">
-                    <img src={icon5} alt="icon5" className="mr-2 pl-4" />
-                    <button onClick={() => navigate("/complaint")}>
-                      Compliant
-                    </button>
-                  </div>
-                  <div className="mx-auto border-t border-gray-300 w-full p-[2px]"></div>
-                  <div className="flex items-center h-[37px] p-[8px]">
-                    <img src={icon6} alt="icon6" className="mr-2 pl-4" />
-                    <button onClick={handleLogout}>Log out</button>
-                  </div>
+            </div>
+          </button>
+          {profileMenuOpen && (
+            <Portal>
+              <div
+                id="portal-root"
+                style={{
+                  position: "fixed",
+                  top: `${profileMenuPosition.top}px`,
+                  left: `${profileMenuPosition.left}px`,
+                  transform: "translateX(-50%)",
+                  marginTop: "32px",
+                  marginLeft: "108px",
+                }}
+                className="w-[198px] h-[258px] font-[500] bg-white shadow-lg rounded-[16px] py-2 z-30 font-Nunito text-sm"
+              >
+                <div className="flex justify-center items-center pb-2 pt-0.5 ">
+                  <button
+                    className="flex justify-center items-center bg-gradient-to-r from-[#742138] to-[#A878BF] button-nav shadow-[2px 2px 12px 0 rgba(64, 50, 133, 0.16)] rounded-[99px] text-[#ffffff] h-[41px] w-[179px] "
+                    onClick={() => {
+                      navigate("/package");
+                      setIsOpen(false);
+                    }}
+                  >
+                    <img src={icon1} alt="icon1" className="mr-2 " />
+                    More limit Merry!
+                  </button>
                 </div>
-              </Portal>
-            )}
-          </div>
+                <div className="flex items-center h-[37px] p-[8px]">
+                  <img src={icon2} alt="icon2" className="mr-2  pl-4" />
+                  <button
+                    onClick={() => navigate(`/user-profile/${state.user.id}`)}
+                  >
+                    Profile
+                  </button>
+                </div>
+                <div className="flex items-center h-[37px] p-[8px]">
+                  <img src={icon3} alt="icon3" className="mr-2 pl-4" />
+                  <button onClick={() => navigate("/merry-list")}>
+                    Merry list
+                  </button>
+                </div>
+                <div className="flex items-center h-[37px] p-[8px]">
+                  <img src={icon4} alt="icon4" className="mr-2 pl-4" />
+                  <button onClick={() => navigate(`/membership/${userId}`)}>
+                    Merry Membership
+                  </button>
+                </div>
+                <div className="flex items-center h-[37px] p-[8px] mb-1">
+                  <img src={icon5} alt="icon5" className="mr-2 pl-4" />
+                  <button onClick={() => navigate("/complaint")}>
+                    Compliant
+                  </button>
+                </div>
+                <div className="mx-auto border-t border-gray-300 w-full p-[2px]"></div>
+                <div className="flex items-center h-[37px] p-[8px]">
+                  <img src={icon6} alt="icon6" className="mr-2 pl-4" />
+                  <button onClick={handleLogout}>Log out</button>
+                </div>
+              </div>
+            </Portal>
+          )}
         </div>
       </div>
 

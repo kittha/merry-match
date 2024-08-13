@@ -56,25 +56,3 @@ export const getAvailableClicksTodayByUserId = async (userId) => {
     throw error;
   }
 };
-
-// TODO Prepare do delete this
-// export const updateAvailableClicksToday = async (userId) => {
-//   try {
-//     const result = await connectionPool.query(
-//       `
-//           `,
-//       [userId]
-//     );
-
-//     if (result.rows.length === 0) {
-//       throw new Error("No data found for the given userId.");
-//     }
-
-//     const availableClicksToday = result.rows[0].merry_limit;
-
-//     return { availableClicksToday: availableClicksToday };
-//   } catch (error) {
-//     console.error("Error fetching packages:", error);
-//     throw error;
-//   }
-// };

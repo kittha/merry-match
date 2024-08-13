@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState, useRef } from "react";
-import { FormContext } from "../../contexts/FormProvider";
-import Countrydata from "/src/mock-city/Countrydata.json";
+import { useEffect, useState, useRef } from "react";
+import { useForm } from "../../hooks/useForm";
+import { Country, State } from "country-state-city";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CalendarIcon from "../../../public/assets/registerpage/calendar.png";
@@ -10,7 +10,7 @@ import EyeIconOpen from "../../../public/assets/registerpage/EyeIconOpen.png";
 import "../../App.css";
 
 function BasicInformation() {
-  const { formData, handleChange, errors } = useContext(FormContext);
+  const { formData, handleChange, errors } = useForm();
   const [state, setState] = useState([]);
   const [selectDate, setSelectDate] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -18,31 +18,25 @@ function BasicInformation() {
 
   useEffect(() => {
     if (formData.country) {
-      const selectedCountry = Countrydata.find(
-        (country) => country.country_name === formData.country
-      );
-      if (selectedCountry) {
-        setState(selectedCountry.states);
-      }
+      const selectedStates = State.getStatesOfCountry(formData.country);
+      setState(selectedStates);
     }
     if (formData.birthday) {
       setSelectDate(new Date(formData.birthday));
     }
   }, [formData.country, formData.birthday]);
 
-  const handleCountry = (e) => {
-    const getCountryId = e.target.value;
-    const getStateData = Countrydata.find(
-      (country) => country.country_name === getCountryId
-    ).states;
-    setState(getStateData);
-    handleChange("country", getCountryId);
+  const handleCountryChange = (e) => {
+    const countryId = e.target.value;
+    handleChange("country", countryId);
+    setState(State.getStatesOfCountry(countryId));
   };
 
-  const handleState = (e) => {
-    const city = e.target.value;
-    handleChange("city", city);
+  const handleStateChange = (e) => {
+    const stateId = e.target.value;
+    handleChange("city", stateId);
   };
+
   const datePickerRef = useRef(null);
   const handleIconClick = () => {
     if (datePickerRef.current) {
@@ -119,20 +113,16 @@ function BasicInformation() {
             </label>
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
-              onChange={(e) => handleCountry(e)}
+              onChange={(e) => handleCountryChange(e)}
               value={formData.country}
               required
             >
               <option value="" disabled>
                 Select Country
               </option>
-              {Countrydata.map((getcountry, index) => (
-                <option
-                  className="text-black"
-                  value={getcountry.country_name}
-                  key={index}
-                >
-                  {getcountry.country_name}
+              {Country.getAllCountries().map((country) => (
+                <option key={country.isoCode} value={country.isoCode}>
+                  {country.name}
                 </option>
               ))}
             </select>
@@ -148,20 +138,20 @@ function BasicInformation() {
             </label>
             <select
               className="w-full lg:w-[453px] h-[48px] border border-[#D6D9E4] rounded-lg pt-[12px] pr-[16px] pb-[12px] pl-[12px] mt-[4px]"
-              onChange={(e) => handleState(e)}
+              onChange={(e) => handleStateChange(e)}
               value={formData.city}
               required
             >
               <option disabled value="">
                 Select City
               </option>
-              {state.map((getStateData, index) => (
+              {state.map((state) => (
                 <option
-                  value={getStateData.state_name}
-                  key={index}
+                  value={state.isoCode}
+                  key={state.isoCode}
                   className="text-black"
                 >
-                  {getStateData.state_name}
+                  {state.name}
                 </option>
               ))}
             </select>

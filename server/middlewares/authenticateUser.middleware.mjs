@@ -62,7 +62,7 @@ const authenticateUser = async (req, res, next) => {
     };
 
     req.user = bundledUserData;
-    next();
+    return next();
   } catch (error) {
     console.error("Error in Supabase authentication middleware:", error);
     return res.status(500).json({ error: "Internal Server Error" });

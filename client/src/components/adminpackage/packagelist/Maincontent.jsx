@@ -5,7 +5,7 @@ import edit from "../../../../public/assets/adminpackage/edit.svg";
 import DeletePackage from "./Deletepackage";
 import { useState } from "react";
 
-function MainContent({ Package, setpackage, deletePackage }) {
+function MainContent({ Package, setpackage }) {
   const [popup, setPopup] = useState({ show: false, packageId: null });
   const navigate = useNavigate();
 
@@ -30,49 +30,6 @@ function MainContent({ Package, setpackage, deletePackage }) {
     const formattedDate = `${month}/${day}/${year} ${time}`;
 
     return formattedDate;
-  };
-
-  const handleDragStart = (event, packageId) => {
-    console.log("Drag started:", packageId);
-    event.dataTransfer.setData("packageId", packageId);
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    console.log("Drag over");
-  };
-
-  const handleDrop = (event, targetPackageId) => {
-    event.preventDefault();
-    const sourcePackageId = event.dataTransfer.getData("packageId");
-    console.log("Drop:", sourcePackageId, "to", targetPackageId);
-    if (sourcePackageId !== targetPackageId) {
-      handlePackageSwap(sourcePackageId, targetPackageId);
-    }
-  };
-
-  const handlePackageSwap = (sourcePackageId, targetPackageId) => {
-    const sourceIndex = Package.findIndex(
-      (pkg) => pkg.package_id === parseInt(sourcePackageId)
-    );
-    const targetIndex = Package.findIndex(
-      (pkg) => pkg.package_id === parseInt(targetPackageId)
-    );
-
-    console.log("Swapping:", sourceIndex, targetIndex);
-
-    if (sourceIndex === -1 || targetIndex === -1) {
-      console.error("Package ID not found");
-      return;
-    }
-
-    const updatedPackages = [...Package];
-    const [movedPackage] = updatedPackages.splice(sourceIndex, 1);
-    updatedPackages.splice(targetIndex, 0, movedPackage);
-
-    console.log("Updated Packages:", updatedPackages);
-
-    setpackage(updatedPackages);
   };
 
   return (
@@ -102,11 +59,7 @@ function MainContent({ Package, setpackage, deletePackage }) {
               className={`w-[1080px] h-[88px] flex text-base bg-white font-normal ${
                 isLastIndex ? "rounded-b-2xl" : ""
               }`}
-              key={items.package_id}
-              draggable
-              onDragStart={(event) => handleDragStart(event, items.package_id)}
-              onDragOver={handleDragOver}
-              onDrop={(event) => handleDrop(event, items.package_id)}
+              key={index}
             >
               <div className="w-[56px] h-[88px]">
                 <img src={drag} alt="drag" />
@@ -165,7 +118,3 @@ function MainContent({ Package, setpackage, deletePackage }) {
   );
 }
 export default MainContent;
-
-{
-  /* <button onClick={() => deletePackage(items.package_id, index)}></button> */
-}

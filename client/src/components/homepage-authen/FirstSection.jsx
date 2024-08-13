@@ -1,4 +1,3 @@
-import React from "react";
 import vector2 from "/assets/header-image/vector2.png";
 
 function FirstSection() {

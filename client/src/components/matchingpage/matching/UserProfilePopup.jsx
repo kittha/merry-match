@@ -1,4 +1,3 @@
-import React from "react";
 import exit from "/assets/profilepicture/exit.png";
 import crossbutton from "/assets/profilepicture/crossbutton.png";
 import lovebutton from "/assets/profilepicture/lovebutton.png";
@@ -6,12 +5,12 @@ import arrowL from "/assets/profilepicture/arrowL.png";
 import arrowR from "/assets/profilepicture/arrowR.png";
 import location from "/assets/profilepicture/location.png";
 import arrowB from "/assets/profilepicture/arrowB.png";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useImage } from "../../../hooks/useImage.mjs";
-import { FormContext } from "../../../contexts/FormProvider";
+import { useForm } from "../../../hooks/useForm";
 
 const ProfileDetailModal = ({ user, onClose }) => {
-  const { calculateAge } = useContext(FormContext);
+  const { calculateAge } = useForm();
   const { checkImage } = useImage();
 
   // convert Object user.avatars  to Array of avatar_url value
@@ -22,14 +21,12 @@ const ProfileDetailModal = ({ user, onClose }) => {
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
 
   const handleNextAvatar = () => {
-    setCurrentAvatarIndex((prevIndex) =>
-      prevIndex === avatarsArr.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentAvatarIndex((prevIndex) => (prevIndex + 1) % avatarsArr.length);
   };
 
   const handlePrevAvatar = () => {
-    setCurrentAvatarIndex((prevIndex) =>
-      prevIndex === 0 ? avatarsArr.length - 1 : prevIndex - 1
+    setCurrentAvatarIndex(
+      (prevIndex) => (prevIndex - 1 + avatarsArr.length) % avatarsArr.length
     );
   };
 
