@@ -5,6 +5,7 @@ import arrowR from "/assets/profilepicture/arrowR.png";
 import location from "/assets/profilepicture/location.png";
 import arrowB from "/assets/profilepicture/arrowB.png";
 import UnmatchModalPopup from "../../components/merry-list/UnmatchPopup";
+import { Country, State } from "country-state-city";
 const ProfileMatchAndMerryPopup = ({ user, onClose }) => {
   const avatarsArr = Object.values(user.avatars || {});
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
@@ -26,6 +27,15 @@ const ProfileMatchAndMerryPopup = ({ user, onClose }) => {
     const diffMs = Date.now() - dob.getTime();
     const ageDt = new Date(diffMs);
     return Math.abs(ageDt.getUTCFullYear() - 1970);
+  };
+
+  const getCountryName = (isoCode) => {
+    const country = Country.getCountryByCode(isoCode);
+    return country ? country.name : isoCode;
+  };
+  const getStateName = (countryIsoCode, stateIsoCode) => {
+    const state = State.getStateByCodeAndCountry(stateIsoCode, countryIsoCode);
+    return state ? state.name : stateIsoCode;
   };
 
   return (
@@ -95,7 +105,8 @@ const ProfileMatchAndMerryPopup = ({ user, onClose }) => {
                 <img src={location} />
                 <div className="flex ml-[20px] text-[#646D89]">
                   <p>
-                    {user.city}, {user.country}
+                    {getStateName(user.country, user.city)},{" "}
+                    {getCountryName(user.country)}
                   </p>
                 </div>
               </div>

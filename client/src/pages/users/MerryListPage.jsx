@@ -14,6 +14,7 @@ import Footer from "../../components/homepage/Footer";
 import ProfileMatchAndMerryPopup from "../../components/merry-list/ProfileMatchAndMerryPopup";
 import CountdownTimer from "../../components/merry-list/CountdownTimer";
 import UnmatchModalPopup from "../../components/merry-list/UnmatchPopup";
+import { Country, State } from "country-state-city";
 
 function MerryListPage() {
   const { availableClicksToday, maxDailyQuota } = useMatch();
@@ -58,6 +59,15 @@ function MerryListPage() {
   useEffect(() => {
     getMerryLists();
   }, [userId]);
+
+  const getCountryName = (isoCode) => {
+    const country = Country.getCountryByCode(isoCode);
+    return country ? country.name : isoCode;
+  };
+  const getStateName = (countryIsoCode, stateIsoCode) => {
+    const state = State.getStateByCodeAndCountry(stateIsoCode, countryIsoCode);
+    return state ? state.name : stateIsoCode;
+  };
 
   return (
     <main className="w-[375px] min-[320px]:w-auto h-auto flex flex-col items-center gap-[40px] pt-[90px] bg-[#FCFCFE] font-Nunito mx-auto lg:w-screen lg:gap-[80px] lg:pt-[160px]">
@@ -261,10 +271,11 @@ function MerryListPage() {
                           alt="location-icon"
                         />
                         <p className="block lg:hidden w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
-                          {list.city}
+                          {getStateName(list.country, list.city)}
                         </p>
                         <p className="hidden lg:block w-[198px] h-[24px] font-normal text-[16px] leading-[24px] text-[#646D89] lg:w-[302px]">
-                          {list.city},{list.country}
+                          {getStateName(list.country, list.city)},
+                          {getCountryName(list.country)}
                         </p>
                       </section>
                     </section>

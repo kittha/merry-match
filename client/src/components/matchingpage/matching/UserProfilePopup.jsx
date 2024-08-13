@@ -8,6 +8,7 @@ import arrowB from "/assets/profilepicture/arrowB.png";
 import { useState } from "react";
 import { useImage } from "../../../hooks/useImage.mjs";
 import { useForm } from "../../../hooks/useForm";
+import { Country, State } from "country-state-city";
 
 const ProfileDetailModal = ({ user, onClose }) => {
   const { calculateAge } = useForm();
@@ -28,6 +29,16 @@ const ProfileDetailModal = ({ user, onClose }) => {
     setCurrentAvatarIndex(
       (prevIndex) => (prevIndex - 1 + avatarsArr.length) % avatarsArr.length
     );
+  };
+
+  const getCountryName = (isoCode) => {
+    const country = Country.getCountryByCode(isoCode);
+    return country ? country.name : isoCode;
+  };
+
+  const getStateName = (countryIsoCode, stateIsoCode) => {
+    const state = State.getStateByCodeAndCountry(stateIsoCode, countryIsoCode);
+    return state ? state.name : stateIsoCode;
   };
 
   return (
@@ -108,7 +119,8 @@ const ProfileDetailModal = ({ user, onClose }) => {
                 <img src={location} />
                 <div className="flex ml-[20px] text-[#646D89]">
                   <p>
-                    {user.city}, {user.country}
+                    {getStateName(user.country, user.city)},{" "}
+                    {getCountryName(user.country)}
                   </p>
                 </div>
               </div>
