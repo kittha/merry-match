@@ -29,6 +29,8 @@ function ComplaintPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     postComplaintPage();
+    setIssue("");
+    setDescription("");
   };
 
   return (
