@@ -45,7 +45,7 @@ const InputSection = ({ handleSendMsg }) => {
 
   const handleFileChange = (event) => {
     const file = event.target.files;
-    console.log(file[0]);
+    // console.log(file[0]);
     if (file[0]?.type.includes("image")) {
       setInputFile(event.target.files[0]);
     }
@@ -53,7 +53,7 @@ const InputSection = ({ handleSendMsg }) => {
   };
 
   const handleEmojiClick = (emojiObject) => {
-    console.log(emojiObject);
+    // console.log(emojiObject);
     let newInput = inputText;
     newInput += emojiObject.emoji;
     setInputText(newInput);
@@ -128,7 +128,7 @@ const InputSection = ({ handleSendMsg }) => {
         rows="1"
         wrap="soft"
         placeholder="Message here..."
-        maxlength="1000"
+        maxLength="1000"
         className="input-msg flex-1 resize-none placeholder:text-[#9B9EAD] text-[#9B9EAD]
         bg-transparent focus:outline-none "
         value={inputText}

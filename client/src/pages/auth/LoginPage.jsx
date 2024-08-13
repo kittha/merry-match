@@ -37,7 +37,7 @@ const LoginPage = () => {
     try {
       await login({ email: email, password });
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     } finally {
       setLoading(false);
     }

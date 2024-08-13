@@ -18,7 +18,7 @@ const MerryPackage = () => {
       const topThreePackage = result.data.data.slice(0, 3);
       setPackages(topThreePackage);
     } catch (error) {
-      console.error("Error in Merry Package Page: ", error);
+      // console.error("Error in Merry Package Page: ", error);
     }
   };
 

@@ -59,10 +59,10 @@ function MatchProvider(props) {
         setAllUser(response.data.matches);
         setUser(response.data.matches);
       } else {
-        console.error("API response is not an array:", response.data);
+        // console.error("API response is not an array:", response.data);
       }
     } catch (error) {
-      console.error("Failed to fetch potential matches:", error);
+      // console.error("Failed to fetch potential matches:", error);
     }
   };
   /**
@@ -79,7 +79,7 @@ function MatchProvider(props) {
       );
       setAvailableClicksToday((prev) => prev + 1);
       let newUser = [...user];
-      console.log("data", data);
+      // console.log("data", data);
       newUser = newUser.map((user) => {
         if (
           user.user_id === data.user_id_1 ||
@@ -100,11 +100,11 @@ function MatchProvider(props) {
         return user;
       });
 
-      console.log("new", newUser);
+      // console.log("new", newUser);
       setAllUser(newUser);
       return data;
     } catch (error) {
-      console.error("Failed to add merry:", error);
+      // console.error("Failed to add merry:", error);
     }
   };
 
@@ -121,7 +121,7 @@ function MatchProvider(props) {
         { userId: currentUserId, merryUserId: unlikedUserId }
       );
     } catch (error) {
-      console.error("Failed to undo merry:", error);
+      // console.error("Failed to undo merry:", error);
     }
   };
 

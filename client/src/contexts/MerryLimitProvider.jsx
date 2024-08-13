@@ -34,7 +34,7 @@ export function MerryLimitProvider({ children }) {
                 setAvailableClicksToday(availableClicksResponse?.data?.data?.availableClicksToday ?? 0);
                 setMaxDailyQuota(maxDailyQuotaResponse?.data?.data?.merry_limit ?? null);
             } catch (error) {
-                console.error('Error fetching Merry limit data:', error);
+                // console.error('Error fetching Merry limit data:', error);
             }
         };
 

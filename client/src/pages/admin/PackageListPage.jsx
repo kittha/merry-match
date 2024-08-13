@@ -34,7 +34,7 @@ function PackageListPage() {
         })
       );
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
     }
   };
 
@@ -47,7 +47,7 @@ function PackageListPage() {
       newPackage.splice(index, 1);
       setpackage(newPackage);
     } catch (error) {
-      console.error("Error delete data:", error);
+      // console.error("Error delete data:", error);
     }
   };
 

@@ -20,9 +20,9 @@ function ComplaintPage() {
           userId: userId,
         }
       );
-      console.log(result);
+      // console.log(result);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

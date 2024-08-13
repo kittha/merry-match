@@ -8,11 +8,11 @@ const DisplayChat = ({ messages, userId, anotherUser }) => {
     const scrollToBottom = () => {
       const element = document.getElementsByTagName("main")[0];
       const hight = element.scrollHeight;
-      console.log("element", element, "hight", hight);
+      // console.log("element", element, "hight", hight);
       element.scrollTo({ top: hight });
     };
     scrollToBottom();
-    console.log("scrollEffect");
+    // console.log("scrollEffect");
   }, [messages]);
 
   return (

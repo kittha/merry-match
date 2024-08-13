@@ -24,7 +24,7 @@ function CheckBox({
         );
         setProfileData(result.data.sexualPreference);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }
     }
   };

@@ -236,13 +236,13 @@ export const FormProvider = ({ children }) => {
           error: null,
           user: newData,
         }));
-        console.log("Updated Profile successful");
+        // console.log("Updated Profile successful");
       } else {
         await register(sentFormData, resetForm);
         setStep(1);
       }
     } catch (error) {
-      console.error("Submission failed:", error);
+      // console.error("Submission failed:", error);
     } finally {
       setLoading(false);
     }

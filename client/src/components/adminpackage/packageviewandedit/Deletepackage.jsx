@@ -11,7 +11,7 @@ function DeletePackage(props) {
       );
       navigate("/admin/package");
     } catch (error) {
-      console.error("Error delete package data", error);
+      // console.error("Error delete package data", error);
     }
   };
 

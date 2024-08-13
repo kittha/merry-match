@@ -46,7 +46,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
     setUserQueue(newQueue);
   }, [Queue, currentIndex]);
 
-  console.log(userQueue);
+  // console.log(userQueue);
 
   const favourUser = async (userId) => {
     if (availableClicksToday < maxDailyQuota) {
@@ -62,7 +62,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
         );
 
         if (matchedUser) {
-          console.log(`Users matched: ${data.user_id_1} and ${data.user_id_2}`);
+          // console.log(`Users matched: ${data.user_id_1} and ${data.user_id_2}`);
           setSelectedUser(matchedUser);
           setShowMatchPopup(true);
         }
@@ -84,7 +84,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   };
 
   const swiped = (direction, userId) => {
-    console.log(`Removing: ${userId}, Direction: ${direction}`);
+    // console.log(`Removing: ${userId}, Direction: ${direction}`);
     if (direction === 'left') {
       disfavorUser(userId);
     } else if (direction === 'right') {
@@ -97,7 +97,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
   };
 
   const outOfFrame = (userId) => {
-    console.log(`${userId} left the screen`);
+    // console.log(`${userId} left the screen`);
   };
 
   const handlePrevious = () => {

@@ -41,7 +41,7 @@ function MerryListPage() {
         setMatchCount(matchCountsData);
       }
     } catch (error) {
-      console.error("Failed to fetch potential matches:", error);
+      // console.error("Failed to fetch potential matches:", error);
     }
   };
 

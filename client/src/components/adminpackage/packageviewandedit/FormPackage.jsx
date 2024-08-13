@@ -27,7 +27,7 @@ function FormPackage({ packageData, setPackageData }) {
       }
       setPackageData(newPackageData);
     } catch (error) {
-      console.error("Error fetching package data", error);
+      // console.error("Error fetching package data", error);
     }
   };
 
