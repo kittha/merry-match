@@ -44,7 +44,7 @@ function ComplaintListPage() {
           setShow(!show);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }
     } else {
       try {
@@ -62,7 +62,7 @@ function ComplaintListPage() {
           setShow(!show);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }
     }
   };
@@ -78,7 +78,7 @@ function ComplaintListPage() {
       navigate(`/admin/complaint/${exit}`);
       window.scrollTo(0, 0);
     } catch (error) {
-      console.error("Error update status", error);
+      // console.error("Error update status", error);
     }
   };
 

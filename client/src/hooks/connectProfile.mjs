@@ -5,10 +5,10 @@ export const getProfileData = async (userId) => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`
     );
-    console.log("Get data from Database Success.");
+    // console.log("Get data from Database Success.");
     return data;
   } catch (error) {
-    console.error("Error at getProfileData in connectProfile: ", error);
+    // console.error("Error at getProfileData in connectProfile: ", error);
   }
 };
 
@@ -18,10 +18,10 @@ export const updateProfile = async (userId, inputData) => {
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`,
       inputData
     );
-    console.log("Send data to Database Success.");
+    // console.log("Send data to Database Success.");
     return data;
   } catch (error) {
-    console.error("Error at updateProfile in connectProfile: ", error);
+    // console.error("Error at updateProfile in connectProfile: ", error);
   }
 };
 
@@ -32,9 +32,9 @@ export const deleteAccount = async (userId) => {
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/profiles/${userId}`,
       data
     );
-    console.log("Delete Account Success.");
+    // console.log("Delete Account Success.");
     return { message: "Delete Account Success." };
   } catch (error) {
-    console.error("Error at deleteAccount in connectProfile: ", error);
+    // console.error("Error at deleteAccount in connectProfile: ", error);
   }
 };

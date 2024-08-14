@@ -12,7 +12,7 @@ function DeletePackage(props) {
       props.setpackage(newPackage);
       props.setTrigger(false);
     } catch (error) {
-      console.error("Error delete data:", error);
+      // console.error("Error delete data:", error);
     }
   };
 

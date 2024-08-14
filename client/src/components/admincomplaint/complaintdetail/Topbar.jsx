@@ -8,7 +8,7 @@ function Topbar({ complaintData, refresh, setRefresh }) {
   const [cancel, setCancel] = useState(false);
   const [resolve, setResolve] = useState(false);
   const navigate = useNavigate();
-  console.log(typeof typeof complaintData.issue);
+  // console.log(typeof typeof complaintData.issue);
   return (
     <div className="w-full h-[80px] py-4 px-9 font-Nunito border-b-[1px] border-[#E4E6ED] flex justify-between items-center">
       <div className="w-[338px] h-[30px] ml-[60px] flex items-center gap-[16px]">

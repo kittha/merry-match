@@ -5,15 +5,15 @@ export const getPrevMessages = async (matchId) => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/messages/${matchId}`
     );
-    console.log("Get data from Database Success.");
+    // console.log("Get data from Database Success.");
     return data;
   } catch (error) {
-    console.error("Error at getPrevMessages in connectMsg: ", error);
+    // console.error("Error at getPrevMessages in connectMsg: ", error);
   }
 };
 
 export const createMessage = async (sendData) => {
-  console.log("creatMessage", sendData);
+  // console.log("creatMessage", sendData);
   const sentFormData = new FormData();
   for (let key in sendData) {
     if (sendData[key] instanceof File) {
@@ -30,10 +30,10 @@ export const createMessage = async (sendData) => {
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/messages/${sendData.matchId}`,
       sentFormData
     );
-    console.log("Post data to Database Success.", data);
+    // console.log("Post data to Database Success.", data);
     return data;
   } catch (error) {
-    console.error("Error at createMessage in connectMsg: ", error);
+    // console.error("Error at createMessage in connectMsg: ", error);
   }
 };
 
@@ -42,10 +42,10 @@ export const getMatchInfo = async (matchId) => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/match/${matchId}`
     );
-    console.log("Get data from Database Success.");
+    // console.log("Get data from Database Success.");
     return data;
   } catch (error) {
-    console.error("Error at getMatchInfo in connectMsg: ", error);
+    // console.error("Error at getMatchInfo in connectMsg: ", error);
   }
 };
 
@@ -54,9 +54,9 @@ export const getLastMessagesByUserId = async (userId) => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/messages/last/${userId}`
     );
-    console.log("Get data from Database Success.");
+    // console.log("Get data from Database Success.");
     return data;
   } catch (error) {
-    console.error("Error at getLastMessagesByUserId in connectMsg: ", error);
+    // console.error("Error at getLastMessagesByUserId in connectMsg: ", error);
   }
 };

@@ -58,7 +58,7 @@ function BillingHistory({ history }) {
       a.click();
       a.remove();
     } catch (error) {
-      console.error("Error generating PDF:", error);
+      // console.error("Error generating PDF:", error);
       alert("Failed to generate PDF. Please try again later.");
     } finally {
       setIsPdfLoading(false);

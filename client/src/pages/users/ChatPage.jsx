@@ -26,7 +26,7 @@ const Chat = () => {
   // console.log("matchId: ", matchId);
 
   const anotherUser = allUser.find((user) => user.match_id === matchId);
-  console.log(anotherUser);
+  // console.log(anotherUser);
 
   // const [receiver, setReceiver] = useState();
   const [messages, setMessages] = useState([]);
@@ -55,7 +55,7 @@ const Chat = () => {
 
       // connect socket
       socket.current = io(import.meta.env.VITE_BACKEND_URL);
-      console.log("Connected to WebSocket server");
+      // console.log("Connected to WebSocket server");
 
       // add online user
       socket.current.emit("add-user", userId);
@@ -70,7 +70,7 @@ const Chat = () => {
     // listen message from socket
     if (socket.current) {
       socket.current.on("receive-msg", (msg) => {
-        console.log("*****receive*******", msg);
+        // console.log("*****receive*******", msg);
         setArrivalMessage(msg);
       });
     }
@@ -88,10 +88,10 @@ const Chat = () => {
       file: inputFile,
       dateTime: new Date(),
     };
-    console.log("sendData: ", sendData);
+    // console.log("sendData: ", sendData);
 
     const msgResponse = await createMessage(sendData);
-    console.log("fromCreateMessage", msgResponse);
+    // console.log("fromCreateMessage", msgResponse);
     setMessages([msgResponse, ...messages]);
 
     const newlastMsg = [...lastMsg];
@@ -108,7 +108,7 @@ const Chat = () => {
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [arrivalMessage, ...prev]);
-    console.log("arrivalEffect");
+    // console.log("arrivalEffect");
   }, [arrivalMessage]);
 
   return (

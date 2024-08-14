@@ -54,7 +54,7 @@ function AuthProvider(props) {
             role: userDataFromPayload.role,
           });
         } catch (error) {
-          console.error("Error refreshing token:", error);
+          // console.error("Error refreshing token:", error);
           logout();
         }
       }
@@ -100,7 +100,7 @@ function AuthProvider(props) {
         navigate("/");
       }
     } catch (error) {
-      console.error("Login error:", error);
+      // console.error("Login error:", error);
 
       let errorMessage = "An unexpected error occurred";
       if (
@@ -131,7 +131,7 @@ function AuthProvider(props) {
       resetForm();
       alert("Registration successful");
     } catch (error) {
-      console.error("Registration error:", error);
+      // console.error("Registration error:", error);
     }
   };
 
@@ -143,7 +143,7 @@ function AuthProvider(props) {
       localStorage.removeItem("data");
       setState({ ...state, user: null, role: "", error: null });
     } catch (error) {
-      console.error("Logout error:", error);
+      // console.error("Logout error:", error);
     }
   };
 

@@ -13,7 +13,7 @@ function Resolved(props) {
       props.setRefresh();
       props.setTrigger(false);
     } catch (error) {
-      console.error("Error update complaint status", error);
+      // console.error("Error update complaint status", error);
     }
   };
   return props.trigger ? (

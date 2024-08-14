@@ -117,7 +117,7 @@ const PaymentForm = () => {
           const merryLimitToday = response.data.packageDetails.merry_limit;
           setMaxDailyQuota(merryLimitToday);
         } catch (err) {
-          console.error(err);
+          // console.error(err);
         }
         navigate("/payment-success", {
           state: {
@@ -161,10 +161,10 @@ const PaymentForm = () => {
       //   });
       // }
     } catch (error) {
-      console.error(
-        "Payment error:",
-        error.response ? error.response.data : error.message
-      );
+      // console.error(
+      //   "Payment error:",
+      //   error.response ? error.response.data : error.message
+      // );
       setLoading(false); // Reset loading state on error
     }
   };

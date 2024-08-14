@@ -48,7 +48,7 @@ function PackageAddPage() {
       );
       navigate("/admin/package");
     } catch (error) {
-      console.error("Error create data:", error);
+      // console.error("Error create data:", error);
     }
   };
 

@@ -10,7 +10,7 @@ const ChatContainer = () => {
   const navigate = useNavigate();
   const { allUser } = useMatch();
   const { lastMsg } = useChat();
-  console.log("lastMsg", lastMsg);
+  // console.log("lastMsg", lastMsg);
   useEffect(() => {
     const validMatches = allUser
       .filter((match) => match.match_status_1 === "match")
@@ -20,7 +20,7 @@ const ChatContainer = () => {
         // console.log("a", a, "b", b);
         return b.match_matched_at - a.match_matched_at;
       });
-    console.log(validMatches);
+    // console.log(validMatches);
     setMatches(validMatches);
   }, [allUser]);
 

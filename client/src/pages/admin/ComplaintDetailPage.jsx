@@ -20,7 +20,7 @@ function ComplaintDetailPage() {
       );
       setComplaintById(result.data);
     } catch (error) {
-      console.error("Error fetching package data", error);
+      // console.error("Error fetching package data", error);
     }
   };
 

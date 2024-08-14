@@ -82,7 +82,7 @@ export const usePopup = () => {
       });
       navigate("/login");
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
