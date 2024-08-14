@@ -12,6 +12,6 @@ const router = express.Router();
 
 router.get("/last/:userId", [], checkLastMessage);
 router.get("/:matchId", [], getChatHistory);
-router.post("/:matchId", [, avatarUpload], sendMessage);
+router.post("/:matchId", [avatarUpload], sendMessage);
 
 export default router;
