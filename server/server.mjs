@@ -16,10 +16,10 @@ import socket from "./utils/socket.mjs";
 const app = express();
 
 const corsOptions = {
-  origin: `${process.env.FRONTEND_URL}`,
-  optionsSuccessStatus: 200,
+  origin: "*",
   methods: "GET, POST, PUT, DELETE",
   allowedHeaders: "Content-Type, Authorization",
+  optionsSuccessStatus: 200,
   upgradeInsecureRequests: [],
 };
 
