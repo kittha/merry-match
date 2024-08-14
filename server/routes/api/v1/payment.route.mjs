@@ -5,6 +5,6 @@ import { checkResourceOwnerByReqBody } from "../../../middlewares/checkResourceO
 
 const router = express.Router();
 
-router.post("/checkout", [checkResourceOwnerByReqBody], processPayment);
+router.post("/checkout", [], processPayment);
 
 export default router;

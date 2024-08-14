@@ -4,6 +4,6 @@ import { checkResourceOwnerByReqParam } from "../../../middlewares/checkResource
 
 const router = express.Router();
 
-router.get("/:userId", [checkResourceOwnerByReqParam], getMerryLists);
+router.get("/:userId", [], getMerryLists);
 
 export default router;

@@ -8,15 +8,7 @@ import { checkResourceOwnerByReqParam } from "../../../middlewares/checkResource
 
 const router = express.Router();
 
-router.get("/:userId", [checkResourceOwnerByReqParam], getMembershipData);
-router.get(
-  "/:userId/pdf",
-  [checkResourceOwnerByReqParam],
-  generateBillingHistoryPDF
-);
-router.delete(
-  "/:userId/cancel",
-  [checkResourceOwnerByReqParam],
-  cancelUserPackage
-);
+router.get("/:userId", [], getMembershipData);
+router.get("/:userId/pdf", [], generateBillingHistoryPDF);
+router.delete("/:userId/cancel", [], cancelUserPackage);
 export default router;
