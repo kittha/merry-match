@@ -4,6 +4,6 @@ import { checkResourceOwnerByReqBody } from "../../../middlewares/checkResourceO
 
 const router = express.Router();
 
-router.post("/", [checkResourceOwnerByReqBody], fileComplaint);
+router.post("/", [], fileComplaint);
 
 export default router;

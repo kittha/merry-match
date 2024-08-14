@@ -15,27 +15,11 @@ import { checkResourceOwnerAddUndoMerry } from "../../../middlewares/checkResour
 
 const router = express.Router();
 
-router.get(
-  "/available-clicks/:userId",
-  [checkResourceOwnerByReqParam],
-  getAvailableClicksTodayByUserId
-);
+router.get("/available-clicks/:userId", [], getAvailableClicksTodayByUserId);
 // router.get("/available-matches/:userId", getAvailableMatchesByUserId);
-router.get(
-  "/merry-limit/:userId",
-  [checkResourceOwnerByReqParam],
-  getMerryLimitByUserId
-);
-router.get(
-  "/match/:userId",
-  [checkResourceOwnerByReqParam],
-  getMatchListByUserId
-);
-router.get(
-  "/match/filter/:userId",
-  [checkResourceOwnerByReqParam],
-  getMatchListByUserIdFilter
-);
+router.get("/merry-limit/:userId", [], getMerryLimitByUserId);
+router.get("/match/:userId", [], getMatchListByUserId);
+router.get("/match/filter/:userId", [], getMatchListByUserIdFilter);
 router.post("/addMerry", [], addMerry);
 router.post("/undoMerry", [], undoMerry);
 

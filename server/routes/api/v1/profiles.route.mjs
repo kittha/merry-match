@@ -25,11 +25,11 @@ router.put(
     bioCharacterLength,
     validateHobbiesArrayLength,
     blockEmailChange,
-    checkResourceOwnerByReqParam,
+    ,
   ],
   updateUserProfileById
 );
 
-router.delete("/:userId", [checkResourceOwnerByReqParam], deleteUserById);
+router.delete("/:userId", [], deleteUserById);
 
 export default router;

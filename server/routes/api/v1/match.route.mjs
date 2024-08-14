@@ -4,6 +4,6 @@ import { checkResourceOwnerByReqParam } from "../../../middlewares/checkResource
 
 const router = express.Router();
 
-router.get("/:matchId", [checkResourceOwnerByReqParam], getMatchInformation);
+router.get("/:matchId", [], getMatchInformation);
 
 export default router;
