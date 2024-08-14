@@ -88,18 +88,18 @@ export const undoMerry = async (userId, merryUserId) => {
       `UPDATE match_status 
         SET status_1 = CASE 
               WHEN user_id_1 = $1 THEN 'unmatch' 
-              WHEN status_1 = 'match' THEN 'merry' 
-            ELSE status_1 END,
+              WHEN user_id_1 = $2 AND status_1 = 'match' THEN 'merry' 
+              ELSE status_1 END,
             status_2 = CASE 
               WHEN user_id_2 = $1 THEN 'unmatch' 
-              WHEN status_2 = 'match' THEN 'merry' 
-            ELSE status_2 END,
+              WHEN user_id_2 = $2 AND status_2 = 'match' THEN 'merry' 
+              ELSE status_2 END,
             updated_1_at = CASE 
               WHEN user_id_1 = $1 THEN $3 
-            ELSE updated_1_at END,
+              ELSE updated_1_at END,
             updated_2_at = CASE 
               WHEN user_id_2 = $1 THEN $3 
-            ELSE updated_2_at END
+              ELSE updated_2_at END
         WHERE (user_id_1 = $2 AND user_id_2 = $1) 
           OR (user_id_1 = $1 AND user_id_2 = $2)
         RETURNING *;`,
