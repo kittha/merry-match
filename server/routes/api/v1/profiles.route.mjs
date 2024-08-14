@@ -25,7 +25,6 @@ router.put(
     bioCharacterLength,
     validateHobbiesArrayLength,
     blockEmailChange,
-    ,
   ],
   updateUserProfileById
 );
