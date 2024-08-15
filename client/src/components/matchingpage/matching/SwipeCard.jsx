@@ -85,9 +85,9 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
 
   const swiped = (direction, userId) => {
     // console.log(`Removing: ${userId}, Direction: ${direction}`);
-    if (direction === 'left') {
+    if (direction === "left") {
       disfavorUser(userId);
-    } else if (direction === 'right') {
+    } else if (direction === "right") {
       favourUser(userId);
     }
     setUserQueue((prevQueue) => {
@@ -270,7 +270,9 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
             </div>
             <div className=" absolute bottom-24 flex w-full justify-center">
               <button
-                onClick={handleGotoChat}
+                onClick={() => {
+                  handleGotoChat(selectedUser.match_id);
+                }}
                 className="bg-[#FFE1EA] text-[#95002B] rounded-full w-[188px] h-[48px]"
               >
                 Start Conversation
