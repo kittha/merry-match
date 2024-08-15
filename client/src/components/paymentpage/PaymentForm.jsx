@@ -27,10 +27,15 @@ const PaymentForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const package_id = selectedPackage?.package_id;
   const package_name = selectedPackage?.name;
-  const userId = state.user.id;
+  const userId = state?.user?.id;
 
   const { setMaxDailyQuota } = useMatch();
 
+  useEffect(() => {
+    if (!selectedPackage || !state?.user) {
+      navigate("/package");
+    }
+  }, [selectedPackage, state, navigate]);
   useEffect(() => {
     if (errorMessage) {
       alert(`Payment error: ${errorMessage}`);
