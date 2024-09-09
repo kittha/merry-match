@@ -35,7 +35,7 @@ const limiterWindow = process.env.RATE_LIMITER_WINDOW_MS || 60000;
 
 app.use(compression());
 
-app.use(helmet());
+// app.use(helmet());
 
 app.use(
   morgan("combined", {
