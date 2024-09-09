@@ -23,7 +23,7 @@ const corsOptions = {
   upgradeInsecureRequests: [],
 };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 4000;
 
