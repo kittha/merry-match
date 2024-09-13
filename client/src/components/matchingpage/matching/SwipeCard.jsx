@@ -85,6 +85,7 @@ const SwipeCard = ({ Queue, setQueue, userQueue, setUserQueue }) => {
 
   const swiped = (direction, userId) => {
     // console.log(`Removing: ${userId}, Direction: ${direction}`);
+
     if (direction === "left") {
       disfavorUser(userId);
     } else if (direction === "right") {
