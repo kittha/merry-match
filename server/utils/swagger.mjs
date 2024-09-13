@@ -1,5 +1,6 @@
-import swaggerDocument from "../swagger-output.json" assert { type: "json" };
-
-export function loadSwaggerDocument() {
-  return swaggerDocument;
+export async function loadSwaggerDocument() {
+  const swaggerDocument = await import("../swagger-output.json", {
+    assert: { type: "json" },
+  });
+  return swaggerDocument.default;
 }
