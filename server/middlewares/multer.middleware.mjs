@@ -1,4 +1,6 @@
 import multer from "multer";
 
-const multerUpload = multer({ dest: "uploads/" });
-const avatarUpload = multerUpload.fields([{ name: "avatar", maxCount: 5 }]);
+export const multerUpload = multer({ dest: "uploads/" });
+export const avatarUpload = multerUpload.fields([
+  { name: "avatar", maxCount: 5 },
+]);
