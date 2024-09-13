@@ -23,7 +23,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 
 const limiterMax = process.env.RATE_LIMITER_MAX || 50;
 
