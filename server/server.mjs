@@ -16,14 +16,11 @@ import "./controllers/transaction.controller.mjs";
 const app = express();
 
 const corsOptions = {
-  origin: "*",
-  methods: "GET, POST, PUT, DELETE, OPTIONS",
-  allowedHeaders: "Content-Type, Authorization",
-  optionsSuccessStatus: 200,
-  upgradeInsecureRequests: [],
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
 };
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 4000;
 
