@@ -17,10 +17,14 @@ const app = express();
 
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+
+app.options("*", cors(corsOptions));
 
 const PORT = process.env.PORT || 4000;
 
