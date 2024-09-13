@@ -11,21 +11,15 @@ export const getMerryLimit = async (userId) => {
   try {
     const result = await connectionPool.query(
       `
-          SELECT packages.merry_limit
-          FROM users
-          JOIN packages ON users.package_id = packages.package_id
-          WHERE users.user_id = $1
-          `,
+        SELECT packages.merry_limit
+        FROM users
+        JOIN packages ON users.package_id = packages.package_id
+        WHERE users.user_id = $1
+      `,
       [userId]
     );
 
-    let userMerryLimit = null;
-    if (result.rows[0] === undefined) {
-      // merry_limit_freemium_package_default_value
-      userMerryLimit = 20;
-    } else {
-      userMerryLimit = result.rows[0].merry_limit;
-    }
+    let userMerryLimit = result.rows[0]?.merry_limit || 20;
 
     return { merry_limit: userMerryLimit };
   } catch (error) {
