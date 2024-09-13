@@ -63,12 +63,12 @@ const httpServer = http.createServer(app);
 // connect soket io
 socket(httpServer);
 
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
 
 process.on("SIGTERM", () => {
-  server.close(() => {
+  httpServer.close(() => {
     logger.info("Process terminated");
   });
 });

@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "start": "nodemon server.mjs",
+    "start": "node server.mjs",
+    "dev": "nodemon server.mjs",
     "swagger-autogen": "node swaggerConfig.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
