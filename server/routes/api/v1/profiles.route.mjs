@@ -16,19 +16,7 @@ const router = express.Router();
 
 router.get("/:userId", getUserProfileById);
 
-router.put(
-  "/:userId",
-  [
-    avatarUpload,
-    validatePicture,
-    ageValidator,
-    bioCharacterLength,
-    validateHobbiesArrayLength,
-    blockEmailChange,
-    ,
-  ],
-  updateUserProfileById
-);
+router.put("/:userId", [], updateUserProfileById);
 
 router.delete("/:userId", [], deleteUserById);
 
