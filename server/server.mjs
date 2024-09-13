@@ -51,7 +51,7 @@ app.get("/status", (req, res) => {
 
 app.use("/api/v1", apiV1Routes);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(loadSwaggerDocument()));
 
 app.get("*", (req, res) => {
   return res.status(404).json("Not Found");
@@ -60,7 +60,7 @@ app.get("*", (req, res) => {
 app.use(errorHandler);
 
 const httpServer = http.createServer(app);
-// connect soket io
+// connect socket io
 socket(httpServer);
 
 httpServer.listen(PORT, "0.0.0.0", () => {
