@@ -10,9 +10,6 @@ _Merry Match_ is the right place for you!
 
 ---
 
-พิมพ์ .
-แล้วจะเข้าหน้า VS Code Editor
-
 ## Collaborators
 
 @[Marquizx](https://github.com/Marquizx)  
