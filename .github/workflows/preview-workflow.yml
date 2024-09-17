@@ -1,0 +1,76 @@
+name: Preview Workflow
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+  repository_dispatch:
+    types: [tuth-pr-opened, tuth-pr-closed]
+
+jobs:
+  handle-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout learning-platform
+        uses: actions/checkout@v2
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Get learning-platform Preview URL
+        if: github.event.action != 'closed' && github.event.action != 'tuth-pr-closed'
+        id: deploy1
+        run: |
+          DEPLOYMENT_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
+          echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+
+      - name: Trigger techupth Workflow
+        if: github.event.action != 'closed' && github.event.action != 'tuth-pr-closed'
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TECHUPTH_ACCESS_TOKEN }}
+          repository: kittha/practice_react-my-calculator-app
+          event-type: create-preview
+          client-payload: '{"learning_platform_preview_url": "${{ steps.deploy1.outputs.deployment_url }}", "branch_name": "${{ github.head_ref }}", "commit_sha": "${{ github.sha }}"}'
+
+      - name: Create Preview Branch for techupth PR
+        if: github.event.action == 'tuth-pr-opened'
+        run: |
+          git checkout -b preview-frontend-${{ github.event.client_payload.commit_sha }}
+          git push origin preview-frontend-${{ github.event.client_payload.commit_sha }}
+
+      - name: Update learning-platform Environment Variables
+        if: github.event.action != 'closed' && github.event.action != 'tuth-pr-closed'
+        run: |
+          vercel env add NEXT_PUBLIC_LEARNING_PLATFORM_BASE_URL ${{ steps.deploy1.outputs.deployment_url }} --git-branch ${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
+          vercel env add NEXT_PUBLIC_TECHUP_WEBSITE_BASE_URL ${{ github.event.client_payload.techupth_preview_url || steps.deploy2.outputs.deployment_url }} --git-branch ${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Trigger techupth Cleanup
+        if: github.event.action == 'closed'
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TECHUPTH_ACCESS_TOKEN }}
+          repository: kittha/practice_react-my-calculator-app
+          event-type: cleanup-preview
+          client-payload: '{"branch_name": "${{ github.head_ref }}"}'
+
+      - name: Cleanup for techupth PR Closure
+        if: github.event.action == 'tuth-pr-closed'
+        run: |
+          git push origin --delete preview-frontend-${{ github.event.client_payload.branch_name }}
+          vercel env rm NEXT_PUBLIC_LEARNING_PLATFORM_BASE_URL --git-branch ${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
+          vercel env rm NEXT_PUBLIC_TECHUP_WEBSITE_BASE_URL --git-branch ${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
+
+  update-env-vars:
+    runs-on: ubuntu-latest
+    needs: handle-preview
+    if: github.event.action != 'closed' && github.event.action != 'tuth-pr-closed'
+    steps:
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Update learning-platform Environment Variables
+        env:
+          TECHUPTH_PREVIEW_URL: ${{ needs.handle-preview.outputs.techupth_preview_url }}
+        run: |
+          vercel env add NEXT_PUBLIC_LEARNING_PLATFORM_BASE_URL ${{ steps.deploy1.outputs.deployment_url }} --git-branch ${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
+          vercel env add NEXT_PUBLIC_TECHUP_WEBSITE_BASE_URL $TECHUPTH_PREVIEW_URL --git-branch ${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
