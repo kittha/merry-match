@@ -1,12 +1,23 @@
 name: Preview Workflow
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-  repository_dispatch:
-    types: [tuth-pr-opened, tuth-pr-closed]
+  workflow_dispatch:
+  # pull_request:
+  #   types: [opened, synchronize, reopened, closed]
+  # repository_dispatch:
+  #   types: [tuth-pr-opened, tuth-pr-closed]
 
 jobs:
+  update-preview-url:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Preview URL
+        id: get_preview_url
+        run: |
+          DEPLOYMENT_URL=${{ github.event.deployment_status.target_url }}
+          echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+
   handle-preview:
     runs-on: ubuntu-latest
     steps:
@@ -16,15 +27,8 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Get learning-platform Preview URL
-        if: github.event.action != 'closed' && github.event.action != 'tuth-pr-closed'
-        id: deploy1
-        run: |
-          DEPLOYMENT_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
-          echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
-
       - name: Trigger techupth Workflow
-        if: github.event.action != 'closed' && github.event.action != 'tuth-pr-closed'
+        if: github.event.action != 'closed'
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.TECHUPTH_ACCESS_TOKEN }}
