@@ -22,14 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout learning-platform
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
       - name: Trigger techupth Workflow
         if: github.event.action != 'closed'
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.TECHUPTH_ACCESS_TOKEN }}
           repository: kittha/practice_react-my-calculator-app
